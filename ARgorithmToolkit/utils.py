@@ -13,7 +13,7 @@ class ARgorithmError(Exception):
     if self.message:
         return f'{self.message}'
     else:
-        return f'Please check all resources'
+        return f"There's an error within ARgorithm template usage"
 
 
 # the template class proves as a base for our algorithms
@@ -29,7 +29,12 @@ class Template:
 
 
 # the state template class to ensure each state is of same structure
+
 class State:
-    def __init__(self,*args):
-        
-        pass
+    def __init__(self,**kwargs):
+        self.content = {}
+        for x in ['state_type','state_def','comments']:
+            try:
+                self.content[x.replace('_','-')] = kwargs[x]
+            except:
+                raise ARgorithmError(f"{x} should be present in State arguments")

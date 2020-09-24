@@ -15,3 +15,11 @@ class helloworld(ARgorithmToolkit.Template):
 def test_inherit():
     h = helloworld()
     assert( str(h) == f"testing\n" )
+
+def test_state():
+    s = ARgorithmToolkit.State(state_def="Test" , state_type="Test" , comments="test")
+    try:
+        s = ARgorithmToolkit.State(state_def="ErrorTest")
+        assert False , 'No error raised'
+    except ARgorithmToolkit.ARgorithmError:
+        pass
