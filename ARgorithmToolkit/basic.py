@@ -31,4 +31,5 @@ class Template:
 # the state template class to ensure each state is of same structure
 class State:
     def __init__(self,*args):
+        
         pass
