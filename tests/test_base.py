@@ -1,12 +1,12 @@
 import ARgorithmToolkit
 
 def test_base():
-    a = ARgorithmToolkit.ARgorithmTemplate()
+    a = ARgorithmToolkit.Template()
     assert( str(a) == f"Not specified\n" )
     a.states.append('test state')
     assert( len(a.states) == 1 )
     
-class helloworld(ARgorithmToolkit.ARgorithmTemplate):
+class helloworld(ARgorithmToolkit.Template):
 
     def __init__(self):
         super().__init__()
