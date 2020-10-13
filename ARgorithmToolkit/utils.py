@@ -35,6 +35,6 @@ class State:
         self.content = {}
         for x in ['state_type','state_def','comments']:
             try:
-                self.content[x.replace('_','-')] = kwargs[x]
+                self.content[x] = kwargs[x]
             except:
                 raise ARgorithmError(f"{x} should be present in State arguments")

@@ -1,0 +1,98 @@
+date: '2020-10-13'
+category: Array
+author: Alan P John
+
+class:
+  - ARgorithmToolkit.array.Array:
+      description: Class that manages the array interface
+  - ARgorithmToolkit.array.ArrayState:
+      description: State template manager for Array related states
+
+functions:
+  - initialize:
+      description: create new array
+      function:
+        name: ARgorithmToolkit.array.Array.__init__
+        parameters:
+          required:
+            - algo
+          not_required:
+            - body
+      state:
+        objective: create new array
+
+  - index:
+      description: return array item by index
+      function:
+        name: ARgorithmToolkit.array.Array.__getitem__
+        parameters:
+          required:
+            - key
+          not_required:
+            - comments
+      state:
+        objective: highlight array item in index
+        state_def: 
+          variable_name: Required name of array object
+          index: index that has to be highlighted
+
+  - size:
+      description : get size of array
+      function : 
+        name: ARgorithmToolkit.array.Array.__sizeof__
+      state: None
+
+  - iterator:
+      description: returns a iterator object for the array
+      function: None
+      state:
+        objective: As array is iterated , highlight indexes
+        state_def:
+          variable_name: Required name of array object
+          index: index that has to be highlighted
+  
+  - slice:
+      description: returns a sliced array object
+      function: None
+      state: None
+
+  - insert:
+      description: inserts element to array
+      function: None
+      state:
+        objective: Add another element to the array
+        state_def:
+          variable_name: required name of array object
+          value: required value to be inserted
+          index: index if mentioned else last one by default
+  
+  - remove:
+      description: removes element from array
+      function: None
+      state:
+        objective: remove element from array
+        state_def:
+          variable_name: required name of array object
+          index: delete item at index , if not given than default is last element
+          value : if index is not given , search by value and delete first instance of value
+  
+  - compare:
+      description: compare two array elements
+      function: None
+      state:
+        objective: highlight the two indexes that are being compared
+        state_def:
+          variable_name: required name of array object
+          index_1: first index
+          index_2: second index 
+  
+  - swap:
+      description: swap two elements
+      function: None
+      state: 
+        objective: swap elements at the two indexes mentioned
+        state_def:
+          variable_name: required name of array object
+          index_1: first index
+          index_2: second index 
+  

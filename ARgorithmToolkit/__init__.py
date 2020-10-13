@@ -1,2 +1,2 @@
 from ARgorithmToolkit.utils import *
-from ARgorithmToolkit import array
+from ARgorithmToolkit.array import *
