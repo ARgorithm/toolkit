@@ -1,3 +1,4 @@
+![Schema Up to date](https://github.com/ARgorithm/Toolkit/workflows/Schema%20Up%20to%20date/badge.svg) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
 # ToolKit
 Toolkit Package to use to generate your custom algorithms for AR representation
 
@@ -8,7 +9,7 @@ The package is designed to provide an STL like feature to various data structure
 The repository has a make file for all its major functions :
 
 ```bash
-$ make install
+$ make init
 ```
 will install all your dependencies
 

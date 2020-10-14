@@ -10,5 +10,5 @@ jobs:
         with:
           python-version: '3.x' 
           architecture: 'x64'
-      - run: make install
+      - run: make init
       - run: make test
