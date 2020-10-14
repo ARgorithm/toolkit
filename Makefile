@@ -1,6 +1,7 @@
 
 init:
 	python setup.py install
+	pip install pytest
 	
 test:
 	pytest tests
