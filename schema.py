@@ -92,7 +92,7 @@ if __name__ == "__main__":
     with open("shields.json",'w') as file:
         shields = {
             "Schema" : {
-                "label" : "Schema up to date",
+                "label" : "Schema",
                 "status" : tag,
                 "color" : color
             }

@@ -1,4 +1,7 @@
+![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/trial/shields.json)
+
 ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
+
 # ToolKit
 Toolkit Package to use to generate your custom algorithms for AR representation
 
