@@ -18,3 +18,16 @@ jobs:
         with:
           python-version: '3.x' 
           architecture: 'x64'
+      - run: make init
+      - id : color
+        run: echo $(python schema.py --color)
+      - id : tag
+        run : echo $(python schema.py --tag)
+      - name: create badge
+        uses: RubbaBoy/BYOB@v1.1.0
+        with:
+          NAME: Schema
+          LABEL: 'Schema Up to date'
+          STATUS: ${{ steps.tag.outputs.data }}
+          COLOR: ${{ steps.color.outputs.data }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

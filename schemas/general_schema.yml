@@ -11,14 +11,14 @@ states:
         <attribute1>: description [required] # add [required] if it is always present
         <attribute2>: description 
         
-# in class , store a list of classes that handling structure
+# in class , store a list of classes that handling structure [OPTIONAL]
 class:
   - ARgorithmToolkit.subpackage.class:
       description: purpose of class
 
-# in function , add list of functions included for structre along with the state they generate
+# in function , add list of functions included for structure along with the state they generate
 functions:
-  - <function_name>:
+  - <function_name1>:
       description: what function does
       function:
         name: ARgorithmToolkit.subpackage.class.function
@@ -29,4 +29,11 @@ functions:
             - a not required parameter 
           # The state might need the not required parameter , in which case a default value should be set
       state: state that it generates
+  
+  - <function_name2>:
+      description: what function does
+      function: None # Function for this hasnt been added to program
+
+
+
 

@@ -1,7 +1,7 @@
 
 init:
 	python setup.py install
-	pip install pytest
+	pip install -r requirements.txt
 	
 test:
 	pytest tests

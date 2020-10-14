@@ -36,5 +36,18 @@ deploy package to PyPip. Required setup of PyPip before that
 ### Contributing Guidelines
 
 1. **ARgorithmToolkit** is the main package that contains all the functionality for the use case
+
 2. **tests** contains tests created for **ARgorithmToolkit** . These tests are designed for Pytest
+
 3. **schemas** contains schemas for the design each individual data structure
+
+4. Package dependencies that required by **ARgorithmToolkit** should be added in setup.py `install_requires`
+
+   ```python
+   install_requires=[
+      'A>=1',
+      'B>=2'
+   ]
+   ```
+
+5. Packages needed for environment setup for development should be included in requirements.txt
