@@ -1,4 +1,4 @@
-![Schema Up to date](https://github.com/ARgorithm/Toolkit/workflows/Schema%20Up%20to%20date/badge.svg) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
+![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
 # ToolKit
 Toolkit Package to use to generate your custom algorithms for AR representation
 
@@ -18,6 +18,10 @@ $ make test
 ```
 Will run tests on code
 
+```bash
+$ make verify
+```
+to verify schemas
 ```bash
 $ make dist
 ```
@@ -41,7 +45,9 @@ deploy package to PyPip. Required setup of PyPip before that
 
 3. **schemas** contains schemas for the design each individual data structure
 
-4. Package dependencies that required by **ARgorithmToolkit** should be added in setup.py `install_requires`
+4. make sure to run `make verify` before pushing to ensure schemas
+
+5. Package dependencies that required by **ARgorithmToolkit** should be added in setup.py `install_requires`
 
    ```python
    install_requires=[
@@ -50,4 +56,4 @@ deploy package to PyPip. Required setup of PyPip before that
    ]
    ```
 
-5. Packages needed for environment setup for development should be included in requirements.txt
+6. Packages needed for environment setup for development should be included in requirements.txt

@@ -6,6 +6,9 @@ init:
 test:
 	pytest tests
 
+verify:
+	python schema.py
+
 dist:
 	python setup.py sdist bdist_wheel
 
