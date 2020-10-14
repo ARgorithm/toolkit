@@ -1,6 +1,7 @@
 import ARgorithmToolkit
 import yaml
 import sys
+import json
 from os import listdir
 from os.path import join
 
@@ -88,15 +89,19 @@ if __name__ == "__main__":
     else:
         color = "ED1B12"
         tag = "ERROR"
-    if argument == "--color":
-        print(color)
-    elif argument == "--tag":
-        print(tag)
+    with open("shields.json",'w') as file:
+        shields = {
+            "Schema" : {
+                "label" : "Schema up to date",
+                "status" : tag,
+                "color" : color
+            }
+        }
+        file.write(json.dumps(shields))
+    if tag=="ERROR":
+        [print("ERROR : " , x) for x in count['error']]
+    elif tag!="All verified":
+        [print("ABSENT : ",x) for x in count['absent']]
     else:
-        if tag=="ERROR":
-            [print("ERROR : " , x) for x in count['error']]
-        elif tag!="All verified":
-            [print("ABSENT : ",x) for x in count['absent']]
-        else:
-            print(tag)
+        print(tag)
     
