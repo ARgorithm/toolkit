@@ -1,0 +1,78 @@
+date: "2020-10-14"
+author: Alan P John
+category : Stack
+
+states:
+    - stack_declare:
+        description: Creates a stack
+        definition:
+            variable_name: Variable name of the stack [required]
+            body : body if non-empty , default empty
+
+    - stack_push:
+        description: Push item onto stack
+        definition:
+            variable_name: Variable name of the stack [required]
+            body : body after operation [required]
+            element: element to be pushed [required]
+    
+    - stack_pop:
+        description: Pop topmost item
+        definition:
+            variable_name: Variable name of the stack [required]
+            body: body after operation
+            
+    - stack_top:
+        description : highlight top item
+        definition:
+            variable_name: Variable name of the stack [required]
+            body: body of stack
+  
+class:
+    - ARgorithmToolkit.stack.Stack:
+        description: Main class for handling stacks 
+    - ARgorithmToolkit.stack.StackState:
+        description: State generator for stack states
+
+functions:
+    - initialize:
+        description: initializes stack object
+        function: 
+            name: ARgorithmToolkit.stack.Stack.__init__
+            parameters:
+            required:
+                - algo
+        state: stack_declare
+
+    - push:
+        description: push item to top of stack
+        function: 
+            name: ARgorithmToolkit.stack.Stack.push
+            parameters:
+            required:
+                - element
+        state: stack_push
+
+    - pop:
+        description: pop item from top of stack
+        function: 
+            name: ARgorithmToolkit.stack.Stack.pop
+        state: stack_pop
+    
+    - top:
+        description: get top of stack
+        function: 
+            name: ARgorithmToolkit.stack.Stack.top
+        state: stack_top
+
+    - empty:
+        description: return boolean value indicating whether stack is empty
+        function: 
+            name: ARgorithmToolkit.stack.Stack.empty
+        state: None
+
+    - size:
+        description: get stack size
+        function: 
+            name: ARgorithmToolkit.stack.Stack.__len__
+        state: None

@@ -63,8 +63,6 @@ functions:
         parameters:
           required:
             - algo
-          not_required:
-            - body
       state: array_declare
         
   - index:

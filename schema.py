@@ -47,7 +47,7 @@ def check_schema(x):
         func_name = list(f.keys())[0]
         function = f[func_name]['function']
         if function == 'None' :
-            status['functions'][func_name] = "absent"
+            status['functions'][func_name] = "missing"
         else:
             loc = function['name']
             status['functions'][func_name] = "present" if is_present(loc) else "error"
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     count = {
         "total" : 0,
         "present" : [],
-        "absent" : [],
+        "missing" : [],
         "error" : []
     }
     for f in flat_status:
@@ -77,14 +77,14 @@ if __name__ == "__main__":
     
     argument = sys.argv[1] if len(sys.argv) > 1 else None
     present = len(count['present'])
-    absent = len(count['absent'])
+    missing = len(count['missing'])
     color = "00FFEE"
     tag = "All verified"
     if count["total"] == present:
         color = "00ab4b"
-    elif count['total'] == present+absent:
+    elif count['total'] == present+missing:
         color = "CAC235"
-        pc = present/total * 100
+        pc = present/count["total"] * 100
         tag = f"{pc:.2f}%"
     else:
         color = "ED1B12"
@@ -98,10 +98,7 @@ if __name__ == "__main__":
             }
         }
         file.write(json.dumps(shields))
-    if tag=="ERROR":
-        [print("ERROR : " , x) for x in count['error']]
-    elif tag!="All verified":
-        [print("ABSENT : ",x) for x in count['absent']]
-    else:
-        print(tag)
+    [print("ERROR : " , x) for x in count['error']]
+    [print("MISSING : ",x) for x in count['missing']]
+    print(tag)
     

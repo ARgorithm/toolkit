@@ -5,7 +5,7 @@ from .utils import *
 class ArrayState:
     def __init__(self,name):
         self.name = name
-        pass
+    
     
     def array_declare(self,body,comments=""):
         state_type = "array_declare"
@@ -119,7 +119,7 @@ class Array:
             assert type(algo) == Template 
             self.algo = algo
         except:
-            raise ARgorithmError("Array structure needs a reference of template reference to store states")
+            raise ARgorithmError("Array structure needs a reference of template to store states")
         try:
             assert type(body) == list 
             self.body = body
