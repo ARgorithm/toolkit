@@ -2,11 +2,58 @@ date: '2020-10-13'
 category: Array
 author: Alan P John
 
+states: 
+  - array_declare:
+      description : creates new array
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array [required]
+
+  - array_insert:
+      description : to insert or assign elements
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        element : element to be added [required]
+        index : used to insert at index ; default last index
+
+  - array_remove:
+      description : to remove element 
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index : index at which element has to be removed [required]
+  
+  - array_iter:
+      description : highlight element to indicate iteration
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index : index at which element has to be highlighted [reqiured]
+
+  - array_compare:
+      description : highlight elements to indicate comparision
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index_1 : first index at which element has to be highlighted [required]
+        index_2 : first index at which element has to be highlighted [required]
+
+  - array_swap:
+      description : highlight elements to indicate swap
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index_1 : first index at which element has to be highlighted [required]
+        index_2 : first index at which element has to be highlighted [required] 
+        
 class:
   - ARgorithmToolkit.array.Array:
       description: Class that manages the array interface
   - ARgorithmToolkit.array.ArrayState:
       description: State template manager for Array related states
+  - ARgorithmToolkit.array.ArrayIterator:
+      description: Iterator for Array Class
 
 functions:
   - initialize:
@@ -18,9 +65,8 @@ functions:
             - algo
           not_required:
             - body
-      state:
-        objective: create new array
-
+      state: array_declare
+        
   - index:
       description: return array item by index
       function:
@@ -28,13 +74,7 @@ functions:
         parameters:
           required:
             - key
-          not_required:
-            - comments
-      state:
-        objective: highlight array item in index
-        state_def: 
-          variable_name: Required name of array object
-          index: index that has to be highlighted
+      state: array_iter
 
   - size:
       description : get size of array
@@ -44,55 +84,59 @@ functions:
 
   - iterator:
       description: returns a iterator object for the array
-      function: None
-      state:
-        objective: As array is iterated , highlight indexes
-        state_def:
-          variable_name: Required name of array object
-          index: index that has to be highlighted
+      function: 
+        name: ARgorithmToolkit.array.Array.__iter__
+      state: array_iter
   
   - slice:
       description: returns a sliced array object
-      function: None
+      function: 
+        name: ARgorithmToolkit.array.Array.__getitem__
+        parameters:
+          required:
+            - key(slice)
       state: None
 
   - insert:
       description: inserts element to array
-      function: None
-      state:
-        objective: Add another element to the array
-        state_def:
-          variable_name: required name of array object
-          value: required value to be inserted
-          index: index if mentioned else last one by default
+      function: 
+        name : ARgorithmToolkit.array.Array.insert
+        parameters:
+          reqiured:
+            - element
+          not_required:
+            - index
+      state: array_insert
   
   - remove:
       description: removes element from array
-      function: None
-      state:
-        objective: remove element from array
-        state_def:
-          variable_name: required name of array object
-          index: delete item at index , if not given than default is last element
-          value : if index is not given , search by value and delete first instance of value
-  
+      function: 
+        name: ARgorithmToolkit.array.Array.remove
+        parameters:
+          not_reqiured:
+            - index
+            - value
+      state: array_remove
+      
   - compare:
       description: compare two array elements
-      function: None
-      state:
-        objective: highlight the two indexes that are being compared
-        state_def:
-          variable_name: required name of array object
-          index_1: first index
-          index_2: second index 
-  
+      function:
+        name : ARgorithmToolkit.array.Array.compare
+        parameters:
+          reqiured:
+            - index1
+            - index2
+          not_required:
+            - func
+      state: array_compare
+      
   - swap:
       description: swap two elements
-      function: None
-      state: 
-        objective: swap elements at the two indexes mentioned
-        state_def:
-          variable_name: required name of array object
-          index_1: first index
-          index_2: second index 
+      function: 
+        name : ARgorithmToolkit.array.Array.swap
+        parameters:
+          reqiured:
+            - index1
+            - index2
+      state: array_swap 
   

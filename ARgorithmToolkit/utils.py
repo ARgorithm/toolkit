@@ -23,6 +23,10 @@ class Template:
         self.desc = "Not specified"
         self.states = []
 
+    def add_state(self,state):
+        assert type(state) == State , ARgorithmError("state should be of Type state")
+        self.states.append(state)
+
     def __str__(self):
         state_desc = "\n".join([x for x in self.states]) if len(self.states) > 0 else ""
         return f"{self.desc}\n{state_desc}"
@@ -38,3 +42,7 @@ class State:
                 self.content[x] = kwargs[x]
             except:
                 raise ARgorithmError(f"{x} should be present in State arguments")
+
+    def __str__(self):
+        data = str(self.content)
+        return data
