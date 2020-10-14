@@ -1,6 +1,4 @@
-![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/trial/shields.json)
-
-![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
+![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/trial/shields.json) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
 
 # ToolKit
 Toolkit Package to use to generate your custom algorithms for AR representation
@@ -48,7 +46,7 @@ deploy package to PyPip. Required setup of PyPip before that
 
 3. **schemas** contains schemas for the design each individual data structure
 
-4. make sure to run `make verify` before pushing to ensure schemas
+4. make sure to run `make verify` before pushing to ensure schema is up to date with code. This will update `shields.json` , *always push shields.json*
 
 5. Package dependencies that required by **ARgorithmToolkit** should be added in setup.py `install_requires`
 

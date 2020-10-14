@@ -81,7 +81,7 @@ if __name__ == "__main__":
     color = "00FFEE"
     tag = "All verified"
     if count["total"] == present:
-        color = "2FE817"
+        color = "00ab4b"
     elif count['total'] == present+absent:
         color = "CAC235"
         pc = present/total * 100
