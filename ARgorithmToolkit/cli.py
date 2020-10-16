@@ -123,7 +123,6 @@ def submit(*args):
     r = requests.post(url, files=files)
     
     msg.good('Submitted')
-    pass
-
+    
 def help(*args):
     pass

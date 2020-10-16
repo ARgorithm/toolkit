@@ -1,0 +1,42 @@
+date: "2020-10-16"
+category: Variable
+author: Alan John
+
+states: 
+  - variable_declare:
+      description : creates a instance of a int , char or boolean
+      definition:
+        variable_name: name of the variable [required] 
+        value: value [required]
+  
+  - variable_highlight:
+      description : highlights the variable
+      definition:
+        variable_name: name of the variable [required] 
+        value: value [required]
+
+class:
+  - ARgorithmToolkit.utils.Variable:
+      description: purpose of class
+
+functions:
+  - initialize:
+      description: initializes the variable
+      function:
+        name: ARgorithmToolkit.utils.Variable.__init__
+        parameters:
+          required:
+            - algo
+          not_required:
+            - value 
+      state: variable_declare
+  
+  - highlight:
+      description: highlights the variable
+      function: 
+        name: ARgorithmToolkit.utils.Variable.highlight
+      state: variable_highlight
+
+
+
+

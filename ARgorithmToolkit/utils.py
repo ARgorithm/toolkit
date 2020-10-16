@@ -16,11 +16,10 @@ class ARgorithmError(Exception):
         return f"There's an error within ARgorithm template usage"
 
 
-# the template class proves as a base for our algorithms
+# the template class to store states for our algorithms
 class Template:
 
     def __init__(self):
-        self.desc = "Not specified"
         self.states = []
 
     def add_state(self,state):
@@ -29,7 +28,7 @@ class Template:
 
     def __str__(self):
         state_desc = "\n".join([x for x in self.states]) if len(self.states) > 0 else ""
-        return f"{self.desc}\n{state_desc}"
+        return f"{state_desc}"
 
 
 # the state template class to ensure each state is of same structure
@@ -46,3 +45,33 @@ class State:
     def __str__(self):
         data = str(self.content)
         return data
+
+# this is to store any important variables to your algo that you can highlight
+# prefer this for int , char , bool
+class Variable:
+    def __init__(self,name,algo,value=None,comments=""):
+        self.value = value
+        self.algo = algo
+        self.name = name
+        state_type = "variable_declare"
+        state_def = {
+            "variable_name" : name ,
+            "value" : value  
+        }
+        self.algo.add_state(State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        ))
+        
+    def highlight(self,comments=""):
+        state_type = "variable_highlight"
+        state_def = {
+            "variable_name" : self.name,
+            "value" : self.value
+        }
+        self.algo.add_state(State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        ))
