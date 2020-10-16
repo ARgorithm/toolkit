@@ -1,4 +1,4 @@
-from .utils import *
+from ARgorithmToolkit.utils import *
 
 # ArrayState class to create Array related states
 # Refer array_schema.yml for understanding states
