@@ -50,9 +50,10 @@ class State:
 # prefer this for int , char , bool
 class Variable:
     def __init__(self,name,algo,value=None,comments=""):
-        self.value = value
         self.algo = algo
         self.name = name
+        self.__flag = False
+        self.value = value
         state_type = "variable_declare"
         state_def = {
             "variable_name" : name ,
@@ -64,14 +65,18 @@ class Variable:
             comments=comments
         ))
         
-    def highlight(self,comments=""):
-        state_type = "variable_highlight"
-        state_def = {
-            "variable_name" : self.name,
-            "value" : self.value
-        }
-        self.algo.add_state(State(
-            state_type=state_type,
-            state_def=state_def,
-            comments=comments
-        ))
+    def __setattr__(self,key,value):
+        self.__dict__[key] = value
+        if(key == 'value' and self.__flag):
+            state_type = "variable_highlight"
+            state_def = {
+                "variable_name" : self.name,
+                "value" : self.value
+            }
+            self.algo.add_state(State(
+                state_type=state_type,
+                state_def=state_def,
+                comments=""
+            ))
+        elif key=='value':
+            self.__flag = True

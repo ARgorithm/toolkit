@@ -18,6 +18,9 @@ def test_variable():
     s = ARgorithmToolkit.Variable("s",algo,10)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'variable_declare'
-    s.highlight(comments="this is an important 's'")
+    s.value += 1
+    assert s.value == 11
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'variable_highlight'
+
+    

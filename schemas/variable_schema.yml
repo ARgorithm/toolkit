@@ -34,7 +34,7 @@ functions:
   - highlight:
       description: highlights the variable
       function: 
-        name: ARgorithmToolkit.utils.Variable.highlight
+        name: ARgorithmToolkit.utils.Variable.__setattr__
       state: variable_highlight
 
 

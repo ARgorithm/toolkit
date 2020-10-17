@@ -42,6 +42,7 @@ functions:
   - <function_name2>:
       description: what function does
       function: None # Function for this hasnt been added to program
+      state: None # Function does not affect state
 
 
 ```
