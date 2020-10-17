@@ -11,7 +11,7 @@ for doc in os.listdir('docs'):
 
 setuptools.setup(
     name="ARgorithmToolkit", 
-    version="0.1.0",
+    version="0.0.4",
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
     description='''
@@ -23,10 +23,15 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "License :: OSI Approved :: MIT License",
+        'Programming Language :: Python :: 3',
     ],
     python_requires='>=3.6',
     install_requires=[
         'wasabi', #For CLI
         'requests' , #For CLI
-    ]
+    ],
+    project_urls={  # Optional
+        'Source': 'https://github.com/ARgorithm/Toolkit',
+        'Bug Reports' : "https://github.com/ARgorithm/Toolkit/issues" 
+    },
 )
