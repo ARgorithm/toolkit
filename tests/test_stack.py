@@ -1,6 +1,6 @@
 import ARgorithmToolkit
 
-algo = ARgorithmToolkit.Template()
+algo = ARgorithmToolkit.StateSet()
 stack = ARgorithmToolkit.Stack("st",algo)
 
 def test_declare():

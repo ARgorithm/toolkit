@@ -17,7 +17,7 @@ class ARgorithmError(Exception):
 
 
 # the template class to store states for our algorithms
-class Template:
+class StateSet:
 
     def __init__(self):
         self.states = []

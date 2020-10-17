@@ -24,7 +24,7 @@ def init(*args):
 import ARgorithmToolkit
 
 def run(**kwargs):
-    algo = ARgorithmToolkit.Template()
+    algo = ARgorithmToolkit.StateSet()
 
     #
     # Your code
@@ -54,7 +54,7 @@ Please ensure that the config is up to date with your code function that has to 
     
 \tdef <function name>(**kwargs):
 
-and it should return a object of ARgorithmToolkit Template as that is what is storing the states to be rendered
+and it should return a object of ARgorithmToolkit StateSet as that is what is storing the states to be rendered
 IT IS RECOMMENDED THAT YOU DON'T ALTER FILENAMES OF CODE FILE AND CONFIG FILE
     """
     msg.good('success',message)

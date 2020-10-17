@@ -116,7 +116,7 @@ class Array:
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == Template 
+            assert type(algo) == StateSet 
             self.algo = algo
         except:
             raise ARgorithmError("Array structure needs a reference of template to store states")

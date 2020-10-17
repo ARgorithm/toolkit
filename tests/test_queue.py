@@ -1,6 +1,6 @@
 import ARgorithmToolkit
 
-algo = ARgorithmToolkit.Template()
+algo = ARgorithmToolkit.StateSet()
 queue = ARgorithmToolkit.Queue("q",algo)
 
 def test_declare():

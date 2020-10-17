@@ -1,6 +1,6 @@
 import ARgorithmToolkit
 
-algo = ARgorithmToolkit.Template()
+algo = ARgorithmToolkit.StateSet()
 arr = ARgorithmToolkit.Array('arr',algo,[1,2,3,5,2])
 
 def test_body():
