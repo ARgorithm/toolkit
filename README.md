@@ -5,7 +5,11 @@ Toolkit Package to use to generate your custom algorithms for AR representation
 
 The package is designed to provide an STL like feature to various data structures and algorithms to support state generation for ARgorithm Unity Application to utilise while rendering an algorithm.
 
-### Usage
+**FOR REFERENCE MANUAL TO USE TOOLKIT** : Check Docs and Examples
+
+<hr/>
+
+### Repository Usage
 
 The repository has a make file for all its major functions :
 

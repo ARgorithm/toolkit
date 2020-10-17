@@ -27,7 +27,7 @@ class StateSet:
         self.states.append(state)
 
     def __str__(self):
-        state_desc = "\n".join([x for x in self.states]) if len(self.states) > 0 else ""
+        state_desc = "\n".join([x.__str__() for x in self.states]) if len(self.states) > 0 else ""
         return f"{state_desc}"
 
 

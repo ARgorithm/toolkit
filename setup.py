@@ -1,11 +1,17 @@
+import os
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("docs/README.md", "r") as fh:
     long_description = fh.read()
+
+for doc in os.listdir('docs'):
+    if not doc == "README.md":
+        with open(f"docs/{doc}" , 'r') as fh:
+            long_description += '\n'+fh.read()
 
 setuptools.setup(
     name="ARgorithmToolkit", 
-    version="0.0.2",
+    version="0.1.0",
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
     description='''

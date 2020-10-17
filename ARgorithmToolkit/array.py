@@ -196,5 +196,5 @@ class Array:
         
     # print format
     def __str__(self):
-        return (self.body).__str__()
+        return self.body.__str__()
     
