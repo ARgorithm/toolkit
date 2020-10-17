@@ -11,7 +11,7 @@ class ArrayState:
         state_type = "array_declare"
         state_def = {
             "variable_name" : self.name,
-            "body" : body
+            "body" : [x for x in body]
         }
         return State(
             state_type=state_type,
@@ -23,7 +23,7 @@ class ArrayState:
         state_type = "array_iter"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "index" : index
         }
         return State(
@@ -36,7 +36,7 @@ class ArrayState:
         state_type = "array_remove"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "index" : index
         }
         return State(
@@ -49,7 +49,7 @@ class ArrayState:
         state_type = "array_insert"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "element" : element,
             "index" : index
         }
@@ -63,7 +63,7 @@ class ArrayState:
         state_type = "array_swap"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -77,7 +77,7 @@ class ArrayState:
         state_type = "array_compare"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "index1" : indexes[0],
             "index2" : indexes[1]
         }

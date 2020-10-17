@@ -3,7 +3,7 @@ if __name__ == "__main__":
     from wasabi import msg
     import sys
 
-    from cli import init,submit,help
+    from ARgorithmToolkit.cli import init,submit,help
     
     commands = {
         "init" : init,
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     command = sys.argv.pop(1)
     sys.argv[0] = "spacy %s" % command
     if command in commands:
-        commands[command](sys.argv[1:])
+        commands[command](*sys.argv[1:])
     else:
         available = "Available: {}".format(", ".join(commands))
         msg.fail("Unknown command: {}".format(command), available, exits=1)

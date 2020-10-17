@@ -23,7 +23,7 @@ class QueueState():
         state_type = "queue_push"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "element" : element
         }
         return State(
@@ -36,7 +36,7 @@ class QueueState():
         state_type = "queue_pop"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
         }
         return State(
             state_type=state_type,
@@ -48,7 +48,7 @@ class QueueState():
         state_type = "queue_front"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
         }
         return State(
             state_type=state_type,

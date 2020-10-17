@@ -23,7 +23,7 @@ class StackState():
         state_type = "stack_push"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
             "element" : element
         }
         return State(
@@ -36,7 +36,7 @@ class StackState():
         state_type = "stack_pop"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
         }
         return State(
             state_type=state_type,
@@ -48,7 +48,7 @@ class StackState():
         state_type = "stack_top"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : [x for x in body],
         }
         return State(
             state_type=state_type,

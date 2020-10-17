@@ -2,7 +2,7 @@ import json
 import re
 import os
 import requests
-from wasabi import msg
+from wasabi import msg , MarkdownRenderer , color , wrap
 
 import ARgorithmToolkit
 
@@ -47,17 +47,14 @@ def run(**kwargs):
     with open(f"{funcname}.config.json" , "w") as configfile:
         json.dump(config,configfile)
 
-    message = """
-Template files generated
-
-Please ensure that the config is up to date with your code function that has to be called should have the format of
-    
-\tdef <function name>(**kwargs):
-
-and it should return a object of ARgorithmToolkit StateSet as that is what is storing the states to be rendered
-IT IS RECOMMENDED THAT YOU DON'T ALTER FILENAMES OF CODE FILE AND CONFIG FILE
-    """
-    msg.good('success',message)
+    msg.good('success')
+    msg.divider("Template files generated")
+    md=MarkdownRenderer()
+    md.add("Please ensure that the config is up to date with your code function that has to be called should have the format of\n")
+    md.add(wrap(color("def <function_name>(**kwargs)",fg="green",bold=True), indent=2) )
+    md.add("and it should return a object of ARgorithmToolkit StateSet as that is what is storing the states to be rendered.")
+    md.add(color("IT IS RECOMMENDED THAT YOU DON'T ALTER FILENAMES OF CODE FILE AND CONFIG FILE" , bold=True))
+    print(md.text)
     msg.info('Run python -m ARgorithmToolkit submit',"when ready to submit")
     
 
@@ -65,8 +62,9 @@ def submit(*args):
     
     ## ACCESSING FILES
     
-    if args[0][0] == "--name":
-        funcname = args[0][1]
+    if len(args)  == 2:
+        if args[0] == "--name":
+            funcname = args[1]
     else:
         funcname = input("enter name of file to be submitted ")
     
@@ -120,9 +118,17 @@ def submit(*args):
         ('data', ('data', json.dumps(data), 'application/json')),
     ]
 
-    r = requests.post(url, files=files)
-    
-    msg.good('Submitted')
+    # r = requests.post(url, files=files) # Server isnt online yet XD
+    msg.info("Sorry , Server is offline currently")
+    # msg.good('Submitted')
     
 def help(*args):
-    pass
+    md = MarkdownRenderer()
+    msg.divider("CLI HELP",char='~')
+    md.add("For creating the ARgorithm template")
+    md.add(wrap(color("python -m ARgorithmToolkit init",fg="green",bold=True), indent=4) )
+    md.add("For submitting to server")
+    md.add(wrap(color("python -m ARgorithmToolkit submit",fg="green",bold=True), indent=4) )
+    md.add(wrap(color("python -m ARgorithmToolkit submit --name <name>",fg="green",bold=True), indent=4) )
+    print(md.text)
+    print()
