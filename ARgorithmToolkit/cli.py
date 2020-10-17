@@ -118,9 +118,16 @@ def submit(*args):
         ('data', ('data', json.dumps(data), 'application/json')),
     ]
 
-    # r = requests.post(url, files=files) # Server isnt online yet XD
-    msg.info("Sorry , Server is offline currently")
-    # msg.good('Submitted')
+    try:
+        r = requests.post(url, files=files) # Server isnt online yet XD
+        if r.json()['status'] == "successful":
+            msg.good('Submitted')
+        else:
+            raise ARgorithmToolkit.ARgorithmError("submission failed")
+    except ARgorithmToolkit.ARgorithmError:
+        msg.fail("Sorry , File couldnt be accepted")
+    except:
+        msg.info("Sorry , server offline")
     
 def help(*args):
     md = MarkdownRenderer()
