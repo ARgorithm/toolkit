@@ -1,0 +1,11 @@
+{
+    "name": "fibonacci", 
+    "file": "fibonacci.py", 
+    "function": "run", 
+    "parameters": {
+        "n" : "int"
+    }, 
+    "default": {
+        "n" : 1
+    }, 
+    "description": "Print the nth fibonacci number"}

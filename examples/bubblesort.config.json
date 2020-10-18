@@ -1,0 +1,14 @@
+{
+    "name": "bubblesort", 
+    "file": "bubblesort.py", 
+    "function": "run", 
+    "parameters": {
+        "array" : "list"
+    }, 
+    "default": {
+        "array" : [
+            6,3,2,4,5,1
+        ]
+    }, 
+    "description": "demonstrate bubble sort"
+}

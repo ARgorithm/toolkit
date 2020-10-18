@@ -1,0 +1,78 @@
+date: "2020-10-14"
+author: Alan P John
+category : Queue
+
+states:
+    - queue_declare:
+        description: Creates a queue
+        definition:
+            variable_name: Variable name of the queue [required]
+            body : body if non-empty , default empty
+
+    - queue_push:
+        description: Push item to queue
+        definition:
+            variable_name: Variable name of the queue [required]
+            body : body after operation [required]
+            element: element to be pushed [required]
+    
+    - queue_pop:
+        description: Pop front item
+        definition:
+            variable_name: Variable name of the queue [required]
+            body: body after operation
+            
+    - queue_front:
+        description : highlight front item
+        definition:
+            variable_name: Variable name of the queue [required]
+            body: body of queue
+
+class:
+    - ARgorithmToolkit.queue.Queue:
+        description: Main class for handling queues 
+    - ARgorithmToolkit.queue.QueueState:
+        description: State generator for queue states
+
+functions:
+    - initialize:
+        description: initializes queue object
+        function: 
+            name: ARgorithmToolkit.queue.Queue.__init__
+            parameters:
+            required:
+                - algo
+        state: queue_declare
+
+    - push:
+        description: push item to back of queue
+        function: 
+            name: ARgorithmToolkit.queue.Queue.push
+            parameters:
+            required:
+                - element
+        state: queue_push
+
+    - pop:
+        description: pop item from front of queue
+        function: 
+            name: ARgorithmToolkit.queue.Queue.pop
+        state: queue_pop
+    
+    - front:
+        description: get front of queue
+        function: 
+            name: ARgorithmToolkit.queue.Queue.front
+        state: queue_front
+
+    - empty:
+        description: return boolean value indicating whether queue is empty
+        function: 
+            name: ARgorithmToolkit.queue.Queue.empty
+        state: None
+
+    - size:
+        description: get queue size
+        function: 
+            name: ARgorithmToolkit.queue.Queue.__len__
+        state: None
