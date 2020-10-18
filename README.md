@@ -1,4 +1,4 @@
-![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/trial/shields.json) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)[![PyPI version](https://badge.fury.io/py/ARgorithmToolkit.svg)](https://badge.fury.io/py/ARgorithmToolkit)
+![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/master/shields.json) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)[![PyPI version](https://badge.fury.io/py/ARgorithmToolkit.svg)](https://badge.fury.io/py/ARgorithmToolkit)
 
 # ToolKit
 Toolkit Package to use to generate your custom algorithms for AR representation
