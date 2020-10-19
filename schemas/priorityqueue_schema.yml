@@ -1,0 +1,80 @@
+date: "2020-10-14"
+author: Yatharth Mathur
+category : PriorityQueue
+
+states:
+    - priorityqueue_declare:
+        description: Creates a queue
+        definition:
+            variable_name: Variable name of the priorityqueue [required]
+            body : body if non-empty , default empty
+    
+    - priorityqueue_poll:
+        description: Pops item with the least priority
+        definition:
+            variable_name: Variable name of the priorityqueue [required]
+            body: body after operation
+            element: element polled [required]
+
+    - priorityqueue_offer:
+        description: Push item according to its priority
+        definition:
+            variable_name: Variable name of the priorityqueue [required]
+            body : body after operation [required]
+            element: element to be pushed [required]
+            
+    - priorityqueue_peek:
+        description : highlight the top of the priority queue
+        definition:
+            variable_name: Variable name of the queue [required]
+            body: body of priorityqueue
+
+
+class:
+    - ARgorithmToolkit.priorityqueue.PriorityQueue:
+        description: Main class for handling queues 
+    - ARgorithmToolkit.priorityqueue.PriorityQueueState:
+        description: State generator for queue states
+
+functions:
+    - initialize:
+        description: initializes priority queue object
+        function: 
+            name: ARgorithmToolkit.priorityqueue.PriorityQueue.__init__
+            parameters:
+            required:
+                - algo
+        state: priorityqueue_declare
+
+    - offer:
+        description: push item according to its priority
+        function: 
+            name: ARgorithmToolkit.priorityqueue.PriorityQueue.offer
+            parameters:
+            required:
+                - element
+        state: priorityqueue_push
+
+    - poll:
+        description: pop item from front of priorityqueue and return it
+        function: 
+            name: ARgorithmToolkit.priorityqueue.PriorityQueue.poll
+        state: priorityqueue_pop
+    
+    - peek:
+        description: get front of queue
+        function: 
+            name: ARgorithmToolkit.priorityqueue.PriorityQueue.peek
+        state: priorityqueue_front
+
+    - empty:
+        description: return boolean value indicating whether queue is empty
+        function: 
+            name: ARgorithmToolkit.priorityqueue.PriorityQueue.empty
+        state: None
+
+    - size:
+        description: get queue size
+        function: 
+            name: ARgorithmToolkit.priorityqueue.PriorityQueue.__len__
+        state: None

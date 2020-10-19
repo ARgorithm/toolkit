@@ -1,14 +1,14 @@
 from ARgorithmToolkit.utils import *
-
-# QueueState class to create queue related states
-# Refer queue_schema.yml for understanding states
-class QueueState():
+import heapq
+# PriorityQueueState class to create queue related states
+# Refer priorityqueue_schema.yml for understanding states
+class PriorityQueueState():
     
     def __init__(self,name):
         self.name = name
 
-    def queue_declare(self,comments=""):
-        state_type = "queue_declare"
+    def priorityqueue_declare(self,comments=""):
+        state_type = "priorityqueue_declare"
         state_def = {
             "variable_name" : self.name,
             "body" : []
@@ -19,8 +19,8 @@ class QueueState():
             comments=comments
         )
     
-    def queue_push(self,body,element,comments=""):
-        state_type = "queue_push"
+    def priorityqueue_offer(self,body,element,comments=""):
+        state_type = "priorityqueue_offer"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -32,8 +32,8 @@ class QueueState():
             comments=comments
         )
     
-    def queue_pop(self,body,comments=""):
-        state_type = "queue_pop"
+    def priorityqueue_poll(self,body,comments=""):
+        state_type = "priorityqueue_poll"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -44,8 +44,8 @@ class QueueState():
             comments=comments
         )
 
-    def queue_front(self,body,comments=""):
-        state_type = "queue_front"
+    def priorityqueue_peek(self,body,comments=""):
+        state_type = "priorityqueue_peek"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -56,25 +56,14 @@ class QueueState():
             comments=comments
         )
 
-    def queue_back(self,body,comments=""):
-        state_type = "queue_back"
-        state_def = {
-            "variable_name" : self.name,
-            "body" : [x for x in body],
-        }
-        return State(
-            state_type=state_type,
-            state_def=state_def,
-            comments=comments
-        )
     
 # Queue class is an template for queues to be used
-class Queue:
+class PriorityQueue:
     
     def __init__(self, name:str, algo:StateSet, comments:str = ""):
         try:
             assert type(name)==str 
-            self.state_generator = QueueState(name)
+            self.state_generator = PriorityQueueState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
@@ -83,7 +72,7 @@ class Queue:
         except:
             raise ARgorithmError("Queue structure needs a reference of template to store states")
         self.body = []
-        state = self.state_generator.queue_declare(comments)
+        state = self.state_generator.priorityqueue_declare(comments)
         self.algo.add_state(state)
 
     def __len__(self):
@@ -92,34 +81,26 @@ class Queue:
     def empty(self):
         return len(self)==0
 
-    def push(self,element,comments=""):
-        self.body.append(element)
-        state = self.state_generator.queue_push(self.body,element,comments)
+    def offer(self,element,comments=""):
+        heapq.heappush(self.body, element)
+        state = self.state_generator.priorityqueue_offer(self.body,element,comments)
         self.algo.add_state(state)
 
-    def pop(self,comments=""):
+    def poll(self,comments=""):
+        if self.empty():
+            raise ARgorithmError('queue is empty')
+        item = heapq.heappop(self.body)
+        state = self.state_generator.priorityqueue_poll(self.body,comments)
+        self.algo.add_state(state)
+        return item
+
+    def peek(self,comments=""):
         if self.empty():
             raise ARgorithmError('queue is empty')
         item = self.body[0]
-        self.body = self.body[1:]
-        state = self.state_generator.queue_pop(self.body,comments)
+        state = self.state_generator.priorityqueue_peek(self.body,comments)
         self.algo.add_state(state)
         return item
 
-    def front(self,comments=""):
-        if self.empty():
-            raise ARgorithmError('queue is empty')
-        item = self.body[0]
-        state = self.state_generator.queue_front(self.body,comments)
-        self.algo.add_state(state)
-        return item
-
-    def back(self,comments=""):
-        if self.empty():
-            raise ARgorithmError('queue is empty')
-        item = self.body[-1]
-        state = self.state_generator.queue_back(self.body,comments)
-        self.algo.add_state(state)
-        return item
 
         
