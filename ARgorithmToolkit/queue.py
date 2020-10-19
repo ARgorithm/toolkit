@@ -82,8 +82,6 @@ class Queue:
             self.algo = algo
         except:
             raise ARgorithmError("Queue structure needs a reference of template to store states")
-        self.state_generator = QueueState(name)
-        self.algo = algo
         self.body = []
         state = self.state_generator.queue_declare(comments)
         self.algo.add_state(state)
