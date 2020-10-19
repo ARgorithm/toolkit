@@ -62,7 +62,7 @@ functions:
         state: priorityqueue_pop
     
     - peek:
-        description: get front of queue
+        description: get the element in the front of priority queue
         function: 
             name: ARgorithmToolkit.priorityqueue.PriorityQueue.peek
         state: priorityqueue_front
