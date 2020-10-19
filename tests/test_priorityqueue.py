@@ -17,7 +17,7 @@ def test_operations():
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "priorityqueue_offer"
     
-    assert priorityqueue.peek() == 3
+    assert queue.peek() == 3
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "priorityqueue_peek"
 
@@ -26,9 +26,9 @@ def test_operations():
     assert last_state.content["state_type"] == "priorityqueue_poll"
     queue.poll()
     assert queue.body == [9]
-
+    queue.poll()
     try:
-        queue.pop()
+        queue.poll()
     except ARgorithmToolkit.ARgorithmError:
         pass
 
