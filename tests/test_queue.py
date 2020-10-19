@@ -19,6 +19,10 @@ def test_operations():
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "queue_front"
     
+    assert queue.back() == 9
+    last_state = algo.states[-1]
+    assert last_state.content["state_type"] == "queue_back"
+
     assert queue.front() == queue.pop()
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "queue_pop"
