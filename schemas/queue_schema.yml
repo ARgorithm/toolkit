@@ -8,22 +8,29 @@ states:
         definition:
             variable_name: Variable name of the queue [required]
             body : body if non-empty , default empty
-
-    - queue_push:
-        description: Push item to queue
-        definition:
-            variable_name: Variable name of the queue [required]
-            body : body after operation [required]
-            element: element to be pushed [required]
     
     - queue_pop:
         description: Pop front item
         definition:
             variable_name: Variable name of the queue [required]
             body: body after operation
+            element: element popped [required]
+
+    - queue_push:
+        description: Push item to the back of the queue
+        definition:
+            variable_name: Variable name of the queue [required]
+            body : body after operation [required]
+            element: element to be pushed [required]
             
     - queue_front:
         description : highlight front item
+        definition:
+            variable_name: Variable name of the queue [required]
+            body: body of queue
+
+    - queue_back:
+        description : highlight back item
         definition:
             variable_name: Variable name of the queue [required]
             body: body of queue
@@ -64,6 +71,12 @@ functions:
         function: 
             name: ARgorithmToolkit.queue.Queue.front
         state: queue_front
+
+    - back:
+        description: get back of queue
+        function: 
+            name: ARgorithmToolkit.queue.Queue.back
+        state: queue_back
 
     - empty:
         description: return boolean value indicating whether queue is empty

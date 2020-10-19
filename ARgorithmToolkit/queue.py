@@ -55,11 +55,23 @@ class QueueState():
             state_def=state_def,
             comments=comments
         )
+
+    def queue_back(self,body,comments=""):
+        state_type = "queue_back"
+        state_def = {
+            "variable_name" : self.name,
+            "body" : [x for x in body],
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
     
 # Queue class is an template for queues to be used
 class Queue:
     
-    def __init__(self,name,algo,comments=""):
+    def __init__(self, name:str, algo:StateSet, comments:str = ""):
         try:
             assert type(name)==str 
             self.state_generator = QueueState(name)
@@ -70,6 +82,8 @@ class Queue:
             self.algo = algo
         except:
             raise ARgorithmError("Queue structure needs a reference of template to store states")
+        self.state_generator = QueueState(name)
+        self.algo = algo
         self.body = []
         state = self.state_generator.queue_declare(comments)
         self.algo.add_state(state)
@@ -102,5 +116,12 @@ class Queue:
         self.algo.add_state(state)
         return item
 
+    def back(self,comments=""):
+        if self.empty():
+            raise ARgorithmError('queue is empty')
+        item = self.body[-1]
+        state = self.state_generator.queue_back(self.body,comments)
+        self.algo.add_state(state)
+        return item
 
         
