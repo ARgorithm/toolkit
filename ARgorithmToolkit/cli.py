@@ -60,11 +60,26 @@ def run(**kwargs):
 
 def submit(*args):
     
+    # PARSING ARGS
+    local = False
+    name = False
+
+    for i in range(len(args)):
+        if args[i] == '-l' or args[i]=='--local':
+            local = True
+        elif args[i] == '-n' or args[i] == '--name':
+            name = True
+            try:
+                funcname = args[i+1]
+                assert valid_funcname(funcname)
+            except:
+                msg.warn('please follow up on -n or --name with a valid argorithm_ID')
+                return
+    
     ## ACCESSING FILES
     
-    if len(args)  == 2:
-        if args[0] == "--name":
-            funcname = args[1]
+    if name:
+        funcname = funcname
     else:
         funcname = input("enter name of file to be submitted ")
     
@@ -111,7 +126,10 @@ def submit(*args):
     #submitting
     local_file = f"{funcname}.py"
 
-    url = "http://127.0.0.1/argorithms/insert"
+    if local:
+        url = "http://127.0.0.1/argorithms/insert"
+    else:
+        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/insert"
 
     files = [
         ('document', (local_file, open(local_file, 'rb'), 'application/octet')),
@@ -119,7 +137,8 @@ def submit(*args):
     ]
 
     try:
-        r = requests.post(url, files=files) # Server isnt online yet XD
+        with msg.loading("sending..."):
+            r = requests.post(url, files=files)
         if r.json()['status'] == "successful":
             msg.good('Submitted')
         else:
@@ -129,6 +148,60 @@ def submit(*args):
     except:
         msg.info("Sorry , server offline")
     
+
+def render_menu(menu:dict):
+    md = MarkdownRenderer()
+    count = 0
+    msg.divider('Functions available')
+    for k in menu['list']:
+        count += 1
+        md.add(f"{count}."+color(f"{k['argorithmID']}" , fg="green")+f"\n\t{k['description']}")
+    print(md.text)
+    option = int(input("Enter option number : "))
+    try:
+        assert option > 0 and option <= len(menu['list'])
+    except:
+        raise ARgorithmToolkit.ARgorithmError("opt out of range")
+    return menu['list'][option-1]['argorithmID']
+
+def test(*args):
+
+    # check local
+    local =  False
+    if len(args) > 0:
+        try:
+            assert args[0]=='-l' or args[0]=='--local'
+            local = True 
+        except:
+            msg.warn('the only flags supported are -l or --local')
+            return
+    try:
+        if local:
+            url = "http://127.0.0.1/argorithms/"
+        else:
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/"
+        with msg.loading("reading data"):
+            r = requests.get(url+"list")
+        msg.info('argorithm menu recieved')
+        argorithmID = render_menu(r.json())
+    except ARgorithmToolkit.ARgorithmError:
+        msg.fail("please enter valid option no.")
+        return
+    # except:
+    #     msg.info("Sorry , server offline")
+    #     return
+    try:
+        
+        data = {
+            "argorithmID" : argorithmID
+        }
+        with msg.loading("retrieving data from server"):
+            r = requests.post(f"{url}/run", json=data)
+        msg.good("Recieved states")
+        print(json.dumps(r.json() , indent=2))
+    except:
+        msg.fail('Function call has failed')    
+    
 def help(*args):
     md = MarkdownRenderer()
     msg.divider("CLI HELP",char='~')
@@ -137,5 +210,12 @@ def help(*args):
     md.add("For submitting to server")
     md.add(wrap(color("python -m ARgorithmToolkit submit",fg="green",bold=True), indent=4) )
     md.add(wrap(color("python -m ARgorithmToolkit submit --name <name>",fg="green",bold=True), indent=4) )
+    md.add("For submitting to local server")
+    md.add(wrap(color("python -m ARgorithmToolkit submit --local",fg="green",bold=True), indent=4) )
+    md.add(wrap(color("python -m ARgorithmToolkit submit --local --name <name>",fg="green",bold=True), indent=4) )
+    md.add("For testing argorithm in server")
+    md.add(wrap(color("python -m ARgorithmToolkit test",fg="green",bold=True), indent=4) )
+    md.add("For testing argorithm in local server")
+    md.add(wrap(color("python -m ARgorithmToolkit test --local",fg="green",bold=True), indent=4) )
     print(md.text)
     print()
