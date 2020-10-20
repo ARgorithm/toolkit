@@ -1,5 +1,5 @@
 {
-    "name": "fibonacci", 
+    "argorithmID": "fibonacci", 
     "file": "fibonacci.py", 
     "function": "run", 
     "parameters": {

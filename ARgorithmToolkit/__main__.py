@@ -3,11 +3,12 @@ if __name__ == "__main__":
     from wasabi import msg
     import sys
 
-    from ARgorithmToolkit.cli import init,submit,help
+    from ARgorithmToolkit.cli import init,submit,help,test
     
     commands = {
         "init" : init,
         "submit" : submit,
+        "test": test,
         "help" : help
     }
 

@@ -64,7 +64,7 @@ the `<name>.config.json` file is a JSON file storing all the metadata
 
 ```json
 {
-    "name" : "<name>",
+    "argorithmID" : "<name>",
     "file" : "<name>.py",
     "function" : "<function to be called>",
     "parameters" : {
@@ -79,7 +79,7 @@ the `<name>.config.json` file is a JSON file storing all the metadata
 
 | Key         | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
-| name        | name of your ARgorithm , this is generally pre filled from when you run the init command. The name of your code file should be *name*.py and the config should be *name*.config.json. [will be fixed later] |
+| argorithmID | name of your ARgorithm , this is generally pre filled from when you run the init command. The name of your code file should be *name*.py and the config should be *name*.config.json. [will be fixed later] |
 | file        | The file containing your codefile                            |
 | function    | The function that is going to be called                      |
 | parameters  | the parameters that your ARgorithm would need, this helps in anyone using your ARgorithm to understand what is the input format |
@@ -99,6 +99,14 @@ or
 ```bash
 python -m ARgorithmToolkit submit --name <name>
 ```
+
+you can test your ARgorithm submission by using
+
+```bash
+python -m ARgorithmToolkit test
+```
+
+*if running server image on local machine , add **-l** or **--local** flag in the `submit` and `test` commands*
 
 
 

@@ -1,5 +1,5 @@
 {
-    "name": "bubblesort", 
+    "argorithmID": "bubblesort", 
     "file": "bubblesort.py", 
     "function": "run", 
     "parameters": {
