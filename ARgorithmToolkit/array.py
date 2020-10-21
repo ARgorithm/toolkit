@@ -2,6 +2,23 @@ from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 import numpy as np
 # arrayState class to create array related states
 # Refer array_schema.yml for understanding states
+
+def check_dimensions(data):
+    if type(data) != list and type(data)!= tuple:
+        return 1
+    else:
+        check = -1
+        try:
+            for x in data:
+                if check == -1:
+                    check = check_dimensions(x)
+                else:
+                    assert check == check_dimensions(x)    
+            return len(data)
+        except:
+            raise ARgorithmError('please pass array of fixed dimensions')    
+
+
 class ArrayState:
     def __init__(self,name):
         self.name = name
@@ -91,6 +108,7 @@ class Array:
             raise ARgorithmError("array structure needs a reference of template to store states")
         
         if data is not None:
+            check_dimensions(data)
             self.body = np.array(data)
             self.dtype = self.body.dtype
             state = self.state_generator.array_declare(self.body,comments)

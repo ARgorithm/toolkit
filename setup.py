@@ -29,6 +29,7 @@ setuptools.setup(
     install_requires=[
         'wasabi', #For CLI
         'requests' , #For CLI
+        'numpy'
     ],
     project_urls={  # Optional
         'Source': 'https://github.com/ARgorithm/Toolkit',
