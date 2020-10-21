@@ -200,7 +200,7 @@ def delete(*args):
         with msg.loading("deleting argorithm from server"):
             r = requests.post(f"{url}/delete", json=data)
         if r.json()['status'] == "successful":
-            msg.good(" states")
+            msg.good("deleted")
         print(json.dumps(r.json() , indent=2))
     except:
         msg.fail('argorithm delete has failed')
