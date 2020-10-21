@@ -6,6 +6,6 @@
         "n" : "int"
     }, 
     "default": {
-        "n" : 1
+        "n" : 4
     }, 
     "description": "Print the nth fibonacci number"}
