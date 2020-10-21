@@ -142,6 +142,12 @@ class Array:
             self.algo.add_state(state)
             return self.body[key]
 
+
+    def __setitem__(self, key, value):
+        self.body[key] = value
+        state = self.state_generator.array_iter(self.body,key,comments=f'Writing at index {key}')
+        self.algo.add_state(state)
+
     # to provide iterable interface
     def __iter__(self):
         return ArrayIterator(self)
