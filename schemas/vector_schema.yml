@@ -1,0 +1,140 @@
+date: '2020-10-13'
+category: Vector
+author: Alan P John
+
+states: 
+  - vector_declare:
+      description : creates new vector
+      definition:
+        variable_name: The name of the vector [required]
+        body: contents of the vector [required]
+
+  - vector_insert:
+      description : to insert or assign elements
+      definition:
+        variable_name: The name of the vector [required]
+        body: contents of the vector after the operation [required]
+        element : element to be added [required]
+        index : used to insert at index ; default last index
+
+  - vector_remove:
+      description : to remove element 
+      definition:
+        variable_name: The name of the vector [required]
+        body: contents of the vector after the operation [required]
+        index : index at which element has to be removed [required]
+  
+  - vector_iter:
+      description : highlight element to indicate iteration
+      definition:
+        variable_name: The name of the vector [required]
+        body: contents of the vector after the operation [required]
+        index : index at which element has to be highlighted [reqiured]
+
+  - vector_compare:
+      description : highlight elements to indicate comparision
+      definition:
+        variable_name: The name of the vector [required]
+        body: contents of the vector after the operation [required]
+        index_1 : first index at which element has to be highlighted [required]
+        index_2 : first index at which element has to be highlighted [required]
+
+  - vector_swap:
+      description : highlight elements to indicate swap
+      definition:
+        variable_name: The name of the vector [required]
+        body: contents of the vector after the operation [required]
+        index_1 : first index at which element has to be highlighted [required]
+        index_2 : first index at which element has to be highlighted [required] 
+        
+class:
+  - ARgorithmToolkit.vector.Vector:
+      description: Class that manages the vector interface
+  - ARgorithmToolkit.vector.VectorState:
+      description: State template manager for vector related states
+  - ARgorithmToolkit.vector.VectorIterator:
+      description: Iterator for vector Class
+
+functions:
+  - initialize:
+      description: create new vector
+      function:
+        name: ARgorithmToolkit.vector.Vector.__init__
+        parameters:
+          required:
+            - algo
+      state: vector_declare
+        
+  - index:
+      description: return vector item by index
+      function:
+        name: ARgorithmToolkit.vector.Vector.__getitem__
+        parameters:
+          required:
+            - key
+      state: vector_iter
+
+  - size:
+      description : get size of vector
+      function : 
+        name: ARgorithmToolkit.vector.Vector.__sizeof__
+      state: None
+
+  - iterator:
+      description: returns a iterator object for the vector
+      function: 
+        name: ARgorithmToolkit.vector.Vector.__iter__
+      state: vector_iter
+  
+  - slice:
+      description: returns a sliced vector object
+      function: 
+        name: ARgorithmToolkit.vector.Vector.__getitem__
+        parameters:
+          required:
+            - key(slice)
+      state: None
+
+  - insert:
+      description: inserts element to vector
+      function: 
+        name : ARgorithmToolkit.vector.Vector.insert
+        parameters:
+          reqiured:
+            - element
+          not_required:
+            - index
+      state: vector_insert
+  
+  - remove:
+      description: removes element from vector
+      function: 
+        name: ARgorithmToolkit.vector.Vector.remove
+        parameters:
+          not_reqiured:
+            - index
+            - value
+      state: vector_remove
+      
+  - compare:
+      description: compare two vector elements
+      function:
+        name : ARgorithmToolkit.vector.Vector.compare
+        parameters:
+          reqiured:
+            - index1
+            - index2
+          not_required:
+            - func
+      state: vector_compare
+      
+  - swap:
+      description: swap two elements
+      function: 
+        name : ARgorithmToolkit.vector.Vector.swap
+        parameters:
+          reqiured:
+            - index1
+            - index2
+      state: vector_swap 
+  

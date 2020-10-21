@@ -1,14 +1,14 @@
 from ARgorithmToolkit.utils import *
 
-# ArrayState class to create Array related states
-# Refer array_schema.yml for understanding states
-class ArrayState:
+# vectorState class to create vector related states
+# Refer vector_schema.yml for understanding states
+class VectorState:
     def __init__(self,name):
         self.name = name
     
     
-    def array_declare(self,body,comments=""):
-        state_type = "array_declare"
+    def vector_declare(self,body,comments=""):
+        state_type = "vector_declare"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body]
@@ -19,8 +19,8 @@ class ArrayState:
             comments=comments
         )
     
-    def array_iter(self,body,index,comments=""):
-        state_type = "array_iter"
+    def vector_iter(self,body,index,comments=""):
+        state_type = "vector_iter"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -32,8 +32,8 @@ class ArrayState:
             comments=comments
         )
     
-    def array_remove(self,body,index , comments=""):
-        state_type = "array_remove"
+    def vector_remove(self,body,index , comments=""):
+        state_type = "vector_remove"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -45,8 +45,8 @@ class ArrayState:
             comments=comments
         )
     
-    def array_insert(self,body,element,index,comments=""):
-        state_type = "array_insert"
+    def vector_insert(self,body,element,index,comments=""):
+        state_type = "vector_insert"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -59,8 +59,8 @@ class ArrayState:
             comments=comments
         )
     
-    def array_swap(self,body,indexes,comments=""):
-        state_type = "array_swap"
+    def vector_swap(self,body,indexes,comments=""):
+        state_type = "vector_swap"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -73,8 +73,8 @@ class ArrayState:
             comments=comments
         )
     
-    def array_compare(self,body,indexes,comments=""):
-        state_type = "array_compare"
+    def vector_compare(self,body,indexes,comments=""):
+        state_type = "vector_compare"
         state_def = {
             "variable_name" : self.name,
             "body" : [x for x in body],
@@ -88,95 +88,95 @@ class ArrayState:
         )
 
 
-# ArrayIterator to iterate through Array while updating states
-class ArrayIterator:
+# vectorIterator to iterate through vector while updating states
+class VectorIterator:
     
-    def __init__(self,array):
-        assert type(array) == Array
-        self.array = array
+    def __init__(self,vector):
+        assert type(vector) == Vector
+        self.vector = vector
         self._index = 0
-        self.size = len(array)
+        self.size = len(vector)
 
     def __next__(self):
         if self._index == self.size:
             raise StopIteration
         else:
-            v = self.array[self._index]
+            v = self.vector[self._index]
             self._index += 1
             return v
 
 
 
-# Array class is an template for Arrays to be used
-class Array:    
+# vector class is an template for vectors to be used
+class Vector:    
     def __init__(self,name,algo,body=[],comments=""):
         try:
             assert type(name)==str 
-            self.state_generator = ArrayState(name)
+            self.state_generator = VectorState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
             assert type(algo) == StateSet 
             self.algo = algo
         except:
-            raise ARgorithmError("Array structure needs a reference of template to store states")
+            raise ARgorithmError("vector structure needs a reference of template to store states")
         try:
             assert type(body) == list 
             self.body = body
         except:
-            raise ARgorithmError("Array body should be list")
-        state = self.state_generator.array_declare(self.body,comments)
+            raise ARgorithmError("vector body should be list")
+        state = self.state_generator.vector_declare(self.body,comments)
         self.algo.add_state(state)
         
     # overload len function for class
     def __len__(self):
         return len(self.body)
 
-    # to give support for array indexing and slicing 
+    # to give support for vector indexing and slicing 
     def __getitem__(self,key,comments=""):
         if type(key) == slice:
             name = f"{self.state_generator.name}-sub"
-            return Array(name , self.algo , self.body[key] , comments)
+            return Vector(name , self.algo , self.body[key] , comments)
         else:
-            state = self.state_generator.array_iter(self.body,key,comments)
+            state = self.state_generator.vector_iter(self.body,key,comments)
             self.algo.add_state(state)
             return self.body[key]
 
 
     def __setitem__(self, key, value):
         self.body[key] = value
-        state = self.state_generator.array_iter(self.body,key,comments=f'Writing at index {key}')
+        state = self.state_generator.vector_iter(self.body,key,comments=f'Writing at index {key}')
         self.algo.add_state(state)
 
     # to provide iterable interface
     def __iter__(self):
-        return ArrayIterator(self)
+        return VectorIterator(self)
 
     # insertion operation
     def insert(self,value,index=None,comments=""):
         if index==None:
             self.body.append(value)
-            state = self.state_generator.array_insert(self.body , value , len(self) , comments) 
+            state = self.state_generator.vector_insert(self.body , value , len(self) , comments) 
             self.algo.add_state(state)
         elif index >= 0:
             self.body = self.body[:index] + [value] + self.body[index:]
-            state = self.state_generator.array_insert(self.body , value , index , comments) 
+            state = self.state_generator.vector_insert(self.body , value , index , comments) 
             self.algo.add_state(state)
 
     # deletion operation
     def remove(self,value=None,index=None,comments=""):
         if index==None and value==None:
             self.body.pop()
-            state = self.state_generator.array_remove(self.body,len(self)-1,comments)
+            state = self.state_generator.vector_remove(self.body,len(self)-1,comments)
             self.algo.add_state(state)
         elif value==None and index >= 0 and index < len(self):
             self.body = self.body[0:index] + self.body[index+1:]
-            state = self.state_generator.array_remove(self.body,index,comments)
+            state = self.state_generator.vector_remove(self.body,index,comments)
             self.algo.add_state(state)
         elif index==None:
             index = self.body.index(value)
             self.body.remove(value)
-            state = self.state_generator.array_remove(self.body,index,comments)
+            state = self.state_generator.vector_remove(self.body,index,comments)
             self.algo.add_state(state)
         else:
             raise ARgorithmError("Either give only a valid index or only value to be deleted , dont give both")
@@ -185,7 +185,7 @@ class Array:
     def compare(self,index1,index2,func=None,comments=""):
         item1 = self.body[index1]
         item2 = self.body[index2]
-        state = self.state_generator.array_compare(self.body,(index1,index2),comments)
+        state = self.state_generator.vector_compare(self.body,(index1,index2),comments)
         self.algo.add_state(state)
         if func == None:
             return item1 == item2
@@ -197,7 +197,7 @@ class Array:
         temp = self.body[index1]
         self.body[index1] = self.body[index2]
         self.body[index2] = temp
-        state = self.state_generator.array_swap(self.body,(index1,index2),comments)
+        state = self.state_generator.vector_swap(self.body,(index1,index2),comments)
         self.algo.add_state(state)
         
     # print format
