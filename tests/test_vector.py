@@ -69,7 +69,7 @@ def test_compare():
     elemA = arr[0]
     elemB = arr[1]
     
-    assert (elemA==elemB) == arr.compare(0,1)
+    assert arr[0]-arr[1] == arr.compare(0,1)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'vector_compare'
     assert last_state.content["state_def"]["index1"] == 0
