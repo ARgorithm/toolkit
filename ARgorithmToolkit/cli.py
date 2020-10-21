@@ -36,7 +36,7 @@ def run(**kwargs):
         codefile.write(code_starter)
 
     config = {
-        "name" : funcname,
+        "argorithmID" : funcname,
         "file" : funcname+".py",
         "function" : "run",
         "parameters" : {},
@@ -86,7 +86,7 @@ def submit(*args):
     ## VERIFYING FILES
 
     required_tags = {
-        "name" : funcname,
+        "argorithmID" : funcname,
         "file" : funcname+".py",
         "function" : "run",
         "parameters" : {},
