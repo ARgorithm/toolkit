@@ -11,7 +11,7 @@ for doc in os.listdir('docs'):
 
 setuptools.setup(
     name="ARgorithmToolkit", 
-    version="0.0.6",
+    version="0.0.7",
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
     description='''

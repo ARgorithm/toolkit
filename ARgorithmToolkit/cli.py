@@ -164,9 +164,7 @@ def render_menu(menu:dict):
         raise ARgorithmToolkit.ARgorithmError("opt out of range")
     return menu['list'][option-1]['argorithmID']
 
-def test(*args):
-
-    # check local
+def delete(*args):
     local =  False
     if len(args) > 0:
         try:
@@ -183,13 +181,54 @@ def test(*args):
         with msg.loading("reading data"):
             r = requests.get(url+"list")
         msg.info('argorithm menu recieved')
+        assert len(r.json()['list']) > 0
         argorithmID = render_menu(r.json())
+    except AssertionError:
+        msg.info("no function in server")
+        return
     except ARgorithmToolkit.ARgorithmError:
         msg.fail("please enter valid option no.")
         return
-    # except:
-    #     msg.info("Sorry , server offline")
-    #     return
+    except:
+        msg.info("Sorry , server offline")
+        return
+
+    try:
+        data = {
+            "argorithmID" : argorithmID
+        }
+        with msg.loading("deleting argorithm from server"):
+            r = requests.post(f"{url}/delete", json=data)
+        if r.json()['status'] == "successful":
+            msg.good(" states")
+        print(json.dumps(r.json() , indent=2))
+    except:
+        msg.fail('argorithm delete has failed')
+    
+
+def test(*args):
+
+    local =  False
+    if len(args) > 0:
+        try:
+            assert args[0]=='-l' or args[0]=='--local'
+            local = True 
+        except:
+            msg.warn('the only flags supported are -l or --local')
+            return
+    try:
+        if local:
+            url = "http://127.0.0.1/argorithms/"
+        else:
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/"
+        with msg.loading("reading data"):
+            r = requests.get(url+"list")
+        assert len(r.json()['list']) > 0
+        msg.info('argorithm menu recieved')
+        argorithmID = render_menu(r.json())
+    except AssertionError:
+        msg.warn("no function in server")
+        return
     try:
         
         data = {
@@ -217,5 +256,9 @@ def help(*args):
     md.add(wrap(color("python -m ARgorithmToolkit test",fg="green",bold=True), indent=4) )
     md.add("For testing argorithm in local server")
     md.add(wrap(color("python -m ARgorithmToolkit test --local",fg="green",bold=True), indent=4) )
+    md.add("For deleting argorithm from server")
+    md.add(wrap(color("python -m ARgorithmToolkit delete",fg="green",bold=True), indent=4) )
+    md.add("For deleting argorithm from local server")
+    md.add(wrap(color("python -m ARgorithmToolkit delete --local",fg="green",bold=True), indent=4) )
     print(md.text)
     print()
