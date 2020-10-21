@@ -1,0 +1,104 @@
+date: '2020-10-21'
+category: Array
+author: Yatharth Mathur
+
+states: 
+  - array_declare:
+      description : creates new array
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array [required]
+  
+  - array_iter:
+      description : highlight element to indicate iteration
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index : index at which element has to be highlighted [reqiured]
+
+  - array_compare:
+      description : highlight elements to indicate comparision
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index_1 : first index at which element has to be highlighted [required]
+        index_2 : first index at which element has to be highlighted [required]
+
+  - array_swap:
+      description : highlight elements to indicate swap
+      definition:
+        variable_name: The name of the array [required]
+        body: contents of the array after the operation [required]
+        index_1 : first index at which element has to be highlighted [required]
+        index_2 : first index at which element has to be highlighted [required] 
+        
+class:
+  - ARgorithmToolkit.array.Array:
+      description: Class that manages the array interface
+  - ARgorithmToolkit.array.ArrayState:
+      description: State template manager for array related states
+  - ARgorithmToolkit.array.ArrayIterator:
+      description: Iterator for the array class
+
+functions:
+  - initialize:
+      description: create new array
+      function:
+        name: ARgorithmToolkit.array.Array.__init__
+        parameters:
+          required:
+            - algo
+      state: array_declare
+        
+  - index:
+      description: return array item by index
+      function:
+        name: ARgorithmToolkit.array.Array.__getitem__
+        parameters:
+          required:
+            - key
+      state: array_iter
+
+  - shape:
+      description : get shape of array
+      function : 
+        name: ARgorithmToolkit.array.Array.shape
+      state: None
+
+  - iterator:
+      description: returns a iterator object for the array
+      function: 
+        name: ARgorithmToolkit.array.Array.__iter__
+      state: array_iter
+  
+  - slice:
+      description: returns a sliced array object
+      function: 
+        name: ARgorithmToolkit.array.Array.__getitem__
+        parameters:
+          required:
+            - key(slice)
+      state: None
+      
+  - compare:
+      description: compare two array elements
+      function:
+        name : ARgorithmToolkit.array.Array.compare
+        parameters:
+          reqiured:
+            - index1
+            - index2
+          not_required:
+            - func
+      state: array_compare
+      
+  - swap:
+      description: swap two elements
+      function: 
+        name : ARgorithmToolkit.array.Array.swap
+        parameters:
+          reqiured:
+            - index1
+            - index2
+      state: array_swap 
+  

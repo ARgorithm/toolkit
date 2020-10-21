@@ -144,7 +144,7 @@ class Vector:
 
     def __setitem__(self, key, value):
         self.body[key] = value
-        state = self.state_generator.vector_iter(self.body,key,comments=f'Writing at index {key}')
+        state = self.state_generator.vector_iter(self.body,key,comments=f'Writing {value} at index {key}')
         self.algo.add_state(state)
 
     # to provide iterable interface
