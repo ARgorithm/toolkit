@@ -106,9 +106,13 @@ you can test your ARgorithm submission by using
 python -m ARgorithmToolkit test
 ```
 
-*if running server image on local machine , add **-l** or **--local** flag in the `submit` and `test` commands*
+you can delete your ARgorithm submission by using
 
+```
+python -m ARgorithmToolkit delete
+```
 
+*if running server image on local machine , add **-l** or **--local** flag in the `submit`,`delete` and `test` commands . To run the server locally , pull the docker image* `alanjohn/argorithm-server:latest` *and run it. Check out server repo [here](https://github.com/ARgorithm/Server)*
 
 ## Using ARgorithmToolkit
 
