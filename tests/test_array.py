@@ -74,3 +74,9 @@ def test_swap():
     assert last_state.content["state_def"]["index2"] == (1,2)
     assert np.all(last_state.content["state_def"]["body"] == arr.body)
     
+def test_dimension_check():
+    try:
+        arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=[[1,2],[3],[4,5]])
+        assert False
+    except ARgorithmToolkit.ARgorithmError:
+        pass
