@@ -134,7 +134,7 @@ class Vector:
     # to give support for vector indexing and slicing 
     def __getitem__(self,key,comments=""):
         if type(key) == slice:
-            name = f"{self.state_generator.name}-sub"
+            name = f"{self.state_generator.name}_sub"
             return Vector(name , self.algo , self.body[key] , comments)
         else:
             state = self.state_generator.vector_iter(self.body,key,comments)
@@ -155,7 +155,7 @@ class Vector:
     def insert(self,value,index=None,comments=""):
         if index==None:
             self.body.append(value)
-            state = self.state_generator.vector_insert(self.body , value , len(self) , comments) 
+            state = self.state_generator.vector_insert(self.body , value , len(self)-1 , comments) 
             self.algo.add_state(state)
         elif index >= 0:
             self.body = self.body[:index] + [value] + self.body[index:]
