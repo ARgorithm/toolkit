@@ -6,9 +6,8 @@ def test_base():
     assert( len(a.states) == 1 )
     
 def test_state():
-    s = ARgorithmToolkit.State(state_def="Test" , state_type="Test" , comments="test")
     try:
-        s = ARgorithmToolkit.State(state_def="ErrorTest")
+        ARgorithmToolkit.State(state_def="ErrorTest")
         assert False , 'No error raised'
     except ARgorithmToolkit.ARgorithmError:
         pass

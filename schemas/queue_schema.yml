@@ -14,7 +14,6 @@ states:
         definition:
             variable_name: Variable name of the queue [required]
             body: body after operation
-            element: element popped [required]
 
     - queue_push:
         description: Push item to the back of the queue

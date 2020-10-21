@@ -24,6 +24,8 @@ def test_operations():
    
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "priorityqueue_offer"
+    assert last_state.content["state_def"]["body"] == queue_object.body
+    assert last_state.content["state_def"]["element"] == (3,a)
     
     assert queue.peek() == 3
     assert queue_object.peek() == (1, {"A":1})

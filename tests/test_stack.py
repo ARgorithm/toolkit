@@ -14,6 +14,8 @@ def test_operations():
    
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "stack_push"
+    assert last_state.content["state_def"]["body"] == stack.body
+    assert last_state.content["state_def"]["element"] == 9
     
     assert stack.top() == 9
     last_state = algo.states[-1]

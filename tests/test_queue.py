@@ -14,6 +14,8 @@ def test_operations():
    
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "queue_push"
+    assert last_state.content["state_def"]["body"] == queue.body
+    assert last_state.content["state_def"]["element"] == 9
     
     assert queue.front() == 3
     last_state = algo.states[-1]
@@ -27,8 +29,10 @@ def test_operations():
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "queue_pop"
     assert queue.body == [9]
+    
 
     queue.pop()
+    
     try:
         queue.pop()
     except ARgorithmToolkit.ARgorithmError:
