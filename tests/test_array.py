@@ -16,6 +16,11 @@ def test_indexing():
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_iter'
     assert last_state.content["state_def"]["index"] == 1
+
+    assert arr[1,1] == arr.body[1,1]
+    last_state = algo.states[-1]
+    assert last_state.content["state_type"] == 'array_iter'
+    assert last_state.content["state_def"]["index"] == (1,1)
     
     subarr = arr[1:2]
     assert type(subarr) == type(arr)
@@ -26,12 +31,19 @@ def test_indexing():
     
 
 def test_iteration():
-    for i,(a,b) in enumerate(zip(arr,arr.body)):
-        assert np.all(a==b)
-        last_state = algo.states[-1]
-        assert last_state.content["state_type"] == 'array_iter'
-        assert last_state.content["state_def"]["index"] == i
-    
+    for i in range(2):
+        for j in range(2):
+            arr[i,j] = arr[j,i]
+            last_state = algo.states[-1]
+            assert last_state.content["state_type"] == 'array_iter'
+            assert last_state.content["state_def"]["index"] == (i,j)
+
+    for i in range(2):
+        for j in range(3):
+            assert arr[i,j] == arr.body[i,j] 
+            last_state = algo.states[-1]
+            assert last_state.content["state_type"] == 'array_iter'
+            assert last_state.content["state_def"]["index"] == (i,j)
 
 def test_compare():
     func = lambda x,y : x+2 > y/2

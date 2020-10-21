@@ -28,7 +28,7 @@ class ArrayState:
         state_type = "array_declare"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body]
+            "body" : body.tolist()
         }
         return State(
             state_type=state_type,
@@ -40,7 +40,7 @@ class ArrayState:
         state_type = "array_iter"
         state_def = {
             "variable_name" : self.name,
-            "body" : body,
+            "body" : body.tolist(),
             "index" : index
         }
         return State(
@@ -53,7 +53,7 @@ class ArrayState:
         state_type = "array_swap"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : body.tolist(),
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -67,7 +67,7 @@ class ArrayState:
         state_type = "array_compare"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : body.tolist(),
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -92,6 +92,7 @@ class ArrayIterator:
             v = self.array[self._index]
             self._index += 1
             return v
+
 # array class is an template for arrays to be used
 class Array:    
     
@@ -145,7 +146,7 @@ class Array:
 
     # to provide iterable interface
     def __iter__(self):
-        return ArrayIterator(self)
+        return iter(self.body)
 
     # comparision operation with lambda support
     def compare(self,index1,index2,func=None,comments=""):
