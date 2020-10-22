@@ -2,6 +2,18 @@
 
 > ARgorithmToolkit.Stack
 
+Methods supported
+
+| method | parameter   | description                                         | example   |
+| ------ | ----------- | --------------------------------------------------- | --------- |
+| push   | value:`int` | pushes to top of stack                              | q.push(1) |
+| pop    |             | pops from top of stack                              | q.pop()   |
+| top    |             | displays the top of stack                           | q.top()   |
+| empty  |             | boolean value that indicates whether stack is empty | q.empty() |
+
+
+Example
+
 ```python
 >>> import ARgorithmToolkit
 >>> algo = ARgorithmToolkit.StateSet()
@@ -27,13 +39,4 @@
 {'state_type': 'stack_pop', 'state_def': {'variable_name': 'st', 'body': []}, 'comments': ''}
 
 ```
-
-Methods supported
-
-| method | parameter   | description                                         | example   |
-| ------ | ----------- | --------------------------------------------------- | --------- |
-| push   | value:`int` | pushes to top of stack                              | q.push(1) |
-| pop    |             | pops from top of stack                              | q.pop()   |
-| top    |             | displays the top of stack                           | q.top()   |
-| empty  |             | boolean value that indicates whether stack is empty | q.empty() |
 

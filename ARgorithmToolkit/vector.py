@@ -144,7 +144,7 @@ class Vector:
 
     def __setitem__(self, key, value):
         self.body[key] = value
-        state = self.state_generator.vector_iter(self.body,key,comments=f'Writing at index {key}')
+        state = self.state_generator.vector_iter(self.body,key,comments=f'Writing {value} at index {key}')
         self.algo.add_state(state)
 
     # to provide iterable interface
@@ -187,9 +187,10 @@ class Vector:
         state = self.state_generator.vector_compare(self.body,(index1,index2),comments)
         self.algo.add_state(state)
         if func == None:
-            return item1 == item2
-        else:
-            return func(item1,item2)
+            def default_comparator(item1, item2):
+                return item1-item2
+            func = default_comparator 
+        return func(item1, item2)
 
     # swap operation
     def swap(self,index1,index2,comments=""):

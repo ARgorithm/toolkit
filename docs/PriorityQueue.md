@@ -2,6 +2,17 @@
 
 > ARgorithmToolkit.PriorityQueue
 
+Methods Supported
+
+| Method | Parameters      | Description                                              | example        |
+| ------ | --------------- | -------------------------------------------------------- | -------------- |
+| Peek   |                 | returns first element of priority queue                  | pq.peek()      |
+| Poll   |                 | pops and returns first element of priority queue         | pq.poll()      |
+| Offer  | element : `any` | add element to priority queue                            | pq.offer(elem) |
+| Empty  |                 | returns boolean indicating whether queue is empty or not | pq.empty()     |
+
+Example
+
 ```python
 >>> import ARgorithmToolkit
 >>> algo = ARgorithmToolkit.StateSet()
@@ -22,13 +33,4 @@
 >>> pq.empty()
 False
 ```
-
-Methods Supported
-
-| Method | Parameters      | Description                                              | example        |
-| ------ | --------------- | -------------------------------------------------------- | -------------- |
-| Peek   |                 | returns first element of priority queue                  | pq.peek()      |
-| Poll   |                 | pops and returns first element of priority queue         | pq.poll()      |
-| Offer  | element : `any` | add element to priority queue                            | pq.offer(elem) |
-| Empty  |                 | returns boolean indicating whether queue is empty or not | pq.empty()     |
 
