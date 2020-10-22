@@ -10,13 +10,16 @@ def run(**kwargs):
     body = [0]*n
     body[0] = 0
     if n == 1:
-        return ARgorithmToolkit.Vector("arr" , algo, body, "initializing vector with first fibonacci number 0")
+        return ARgorithmToolkit.Array("arr" , algo, data=body, comments="initializing vector with first fibonacci number 0")
 
     body[1] = 1
 
-    arr = ARgorithmToolkit.Vector("arr" , algo, body, "initializing vector with first two fibonacci numbers 0, 1")   
+    arr = ARgorithmToolkit.Array("arr" , algo, data=body, comments="initializing vector with first two fibonacci numbers 0, 1")   
     for i in range(2, n):
-        arr[i] = arr[i-1] + arr[i-2]
+        temp1 = arr[i-2]
+        temp2 = arr[i-1]
+        algo.add_comment(f"adding {temp1} and {temp2} and putting sum {temp1+temp2} in index {i}")
+        arr[i] = temp1+temp2
     return algo
 
         
