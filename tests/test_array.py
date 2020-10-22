@@ -12,8 +12,9 @@ def test_body():
 
 
 def test_indexing():
-    assert np.all(arr[1] == arr.body[1])
-    last_state = algo.states[-1]
+    assert arr[1].tolist() == list(arr.body[1])
+    last_state = algo.states[-2]
+
     assert last_state.content["state_type"] == 'array_iter'
     assert last_state.content["state_def"]["index"] == 1
 
@@ -22,6 +23,15 @@ def test_indexing():
     assert last_state.content["state_type"] == 'array_iter'
     assert last_state.content["state_def"]["index"] == (1,1)
     
+    assert arr[1][2].tolist() == arr.body[1][2]
+    #last and second last iter state
+    last_state = algo.states[-2]
+    second_last_state = algo.states[-4]
+    assert second_last_state.content["state_type"] == 'array_iter'
+    assert second_last_state.content["state_def"]["index"] == 1
+    assert last_state.content["state_type"] == 'array_iter'
+    assert last_state.content["state_def"]["index"] == 2
+
     subarr = arr[1:2]
     assert type(subarr) == type(arr)
     last_state = algo.states[-1]
@@ -75,8 +85,14 @@ def test_swap():
     assert np.all(last_state.content["state_def"]["body"] == arr.body)
     
 def test_dimension_check():
+    assert type(arr[1]) == type(arr)
+    last_state = algo.states[-1]
+    second_last_state = algo.states[-2]
+    assert last_state.content["state_type"] == 'array_declare'
+    assert second_last_state.content["state_type"] == 'array_iter'
+    assert second_last_state.content["state_def"]["index"] == 1
     try:
-        arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=[[1,2],[3],[4,5]])
+        ARgorithmToolkit.Array(name='arr',algo=algo,data=[[1,2],[3],[4,5]])
         assert False
     except ARgorithmToolkit.ARgorithmError:
         pass

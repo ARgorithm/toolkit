@@ -127,13 +127,19 @@ class Array:
         return len(self.body)
 
     def shape(self):
-        return self.body.shape
+        return (self.body.shape) if type(self.body.shape) != tuple else self.body.shape
 
     # to give support for array indexing and slicing 
     def __getitem__(self, key, comments=""):
         if type(key) == slice:
             name = f"{self.state_generator.name}_sub"
             return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
+
+        if type(key)==int or len(key) < len(self.shape()):
+            name = f"{self.state_generator.name}_sub"
+            state = self.state_generator.array_iter(self.body, key, comments)
+            self.algo.add_state(state)
+            return Array(name=name, algo=self.algo, data=self.body[key], comments=comments)
         state = self.state_generator.array_iter(self.body, key, comments)
         self.algo.add_state(state)
         return self.body[key]
@@ -165,6 +171,9 @@ class Array:
         self.body[index1], self.body[index2] = self.body[index2], self.body[index1]
         state = self.state_generator.array_swap(self.body, (index1, index2) ,comments)
         self.algo.add_state(state)
+
+    def tolist(self):
+        return self.body.tolist()
         
     # print format
     def __str__(self):

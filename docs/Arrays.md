@@ -64,7 +64,5 @@ Example
 {'state_type': 'array_iter', 'state_def': {'variable_name': 'arr', 'body': [[1, 4], [3, 8], [2, 5]], 'index': (1, 1)}, 'comments': ''}
 {'state_type': 'array_declare', 'state_def': {'variable_name': 'arr2', 'body': [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]}, 'comments': 'shape_declare'}
 {'state_type': 'array_declare', 'state_def': {'variable_name': 'arr2', 'body': [[3, 3, 3, 3], [3, 3, 3, 3], [3, 3, 3, 3]]}, 'comments': 'shape_declare'}
->>> 
-
 ```
 
