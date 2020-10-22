@@ -137,3 +137,24 @@ As ARgorithm is tool for creating visual demonstration , you can add comments pa
 Make sure you make the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** this is important to identify arrays when rendering them
 
 You can refer the docs and samples in the [repo](https://github.com/ARgorithm/Toolkit) to understand more clearly.
+
+
+
+## StateSet
+
+The core class to all algorithm and data structures in ARgorithmToolkit
+You will always need to declare this and use this when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to ARgorithm App. So obviously all your ARgorithms are supposed to return this
+
+You wont have it to interact with it much other than while initialising objects and returning results.
+It has a `add_comment` method that allows you to create blank states carrying description in the form of comments that you might want to show to the client while the ARgorithm is being rendered. This will prove handy when creating good demonstrations
+
+```python
+>>> import ARgorithmToolkit
+>>> algo = ARgorithmToolkit.StateSet()
+>>> algo.add_comment("Hello world")
+>>> print(algo)
+{'state_type': 'comment', 'state_def': None, 'comments': 'Hello world'}
+```
+
+
+

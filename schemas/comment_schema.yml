@@ -1,0 +1,19 @@
+date: "2020-10-22"
+category: Comment
+author: Alan P John
+
+states:
+  - comment:
+      description: empty state to describe content
+      definition:
+        comments : While all states have a optional comment , this one has nothing but comment so [required]
+
+functions:
+  - initialize:
+      description: create new array
+      function: 
+        name: ARgorithmToolkit.StateSet.add_comment
+        parameters:
+          required:
+            - comments
+      state: comment

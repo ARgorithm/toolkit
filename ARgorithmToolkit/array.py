@@ -131,19 +131,28 @@ class Array:
 
     # to give support for array indexing and slicing 
     def __getitem__(self, key, comments=""):
-        if type(key) == slice:
-            name = f"{self.state_generator.name}_sub"
-            return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
+        try:
+            if type(key) == slice:
+                name = f"{self.state_generator.name}_sub"
+                return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
 
-        if type(key)==int or len(key) < len(self.shape()):
-            name = f"{self.state_generator.name}_sub"
+            if type(key)==int and len(self.body.shape)==1:
+                state = self.state_generator.array_iter(self.body, key, comments)
+                self.algo.add_state(state)
+                return self.body[key]
+
+
+            if type(key)==int or len(key) < len(self.shape()):
+                name = f"{self.state_generator.name}_sub"
+                state = self.state_generator.array_iter(self.body, key, comments)
+                self.algo.add_state(state)
+                return Array(name=name, algo=self.algo, data=self.body[key], comments=comments)
+            
             state = self.state_generator.array_iter(self.body, key, comments)
             self.algo.add_state(state)
-            return Array(name=name, algo=self.algo, data=self.body[key], comments=comments)
-        state = self.state_generator.array_iter(self.body, key, comments)
-        self.algo.add_state(state)
-        return self.body[key]
-
+            return self.body[key]
+        except Exception as e:
+            raise ARgorithmError(f"invalid index error : {str(e)}")
 
     def __setitem__(self, key, value):
         self.body[key] = value

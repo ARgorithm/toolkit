@@ -24,14 +24,19 @@ def test_indexing():
     assert last_state.content["state_def"]["index"] == (1,1)
     
     assert arr[1][2].tolist() == arr.body[1][2]
-    #last and second last iter state
-    last_state = algo.states[-2]
-    second_last_state = algo.states[-4]
-    assert second_last_state.content["state_type"] == 'array_iter'
-    assert second_last_state.content["state_def"]["index"] == 1
+    last_state = algo.states[-1]
+    second_last_state = algo.states[-2]
+    assert second_last_state.content["state_type"] == 'array_declare'
     assert last_state.content["state_type"] == 'array_iter'
     assert last_state.content["state_def"]["index"] == 2
 
+    subarr = arr[1]
+    assert type(subarr) == type(arr)
+    last_state = algo.states[-1]
+    assert last_state.content["state_type"] == 'array_declare'
+    assert last_state.content["state_def"]["variable_name"] == 'arr_sub'
+    assert np.all(last_state.content["state_def"]["body"] == arr.body[1])
+    
     subarr = arr[1:2]
     assert type(subarr) == type(arr)
     last_state = algo.states[-1]
