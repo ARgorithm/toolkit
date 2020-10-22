@@ -133,7 +133,7 @@ class Array:
     def __getitem__(self, key, comments=""):
         if type(key) == slice:
             name = f"{self.state_generator.name}_sub"
-            return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
+            return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments
 
         if type(key)==int or len(key) < len(self.shape()):
             name = f"{self.state_generator.name}_sub"
