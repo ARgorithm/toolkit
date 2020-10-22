@@ -22,4 +22,10 @@ def test_variable():
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'variable_highlight'
 
-    
+def test_comment_state():
+    algo = ARgorithmToolkit.StateSet()
+    algo.add_comment("Hello world")
+    last_state = algo.states[-1]
+    assert last_state.content['state_type'] == 'comment'
+    assert last_state.content['comments'] == 'Hello world'
+    assert last_state.content['state_def'] == None

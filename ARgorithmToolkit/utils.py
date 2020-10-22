@@ -30,6 +30,14 @@ class StateSet:
         state_desc = "\n".join([x.__str__() for x in self.states]) if len(self.states) > 0 else ""
         return f"{state_desc}"
 
+    def add_comment(self,comments:str):
+        comment_state = State(
+            state_type="comment",
+            state_def=None,
+            comments=comments
+        )
+        self.add_state(comment_state)
+
 
 # the state template class to ensure each state is of same structure
 
