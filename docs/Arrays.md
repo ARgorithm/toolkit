@@ -4,12 +4,12 @@
 
 Methods supported
 
-| Method     | Parameter                                                 | Description                                                  | example                        |
-| ---------- | --------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------ |
-| initialise | data:`list` , shape:`tuple` , dtype: `int` , fill:`dtype` | The array can be initialised using a preexisting list or can use  shape that has to be filled, we also offer choice of dtype and fill. Data is prefered over shape. Fill only works if shape is provided | Array("arr2",algo,shape=(3,4)) |
-| indexing   | index:`index`                                             | The array generates states whenever a element is read or set in the array | arr\[1,1] = 8                  |
-| swap       | index1:`index` , index2:`index`                           | Swaps two elements in an array                               | arr.swap((0,1),(2,0))          |
-| compare    | index1:`index` , index2:`index` , func:`function`         | compares the elements at the indexes using the function provided else send difference | arr.compare((0,1),(2,0))       |
+| Method     | Parameter                                                 | Description                                                  |
+| ---------- | --------------------------------------------------------- | ------------------------------------------------------------ |
+| initialise | data:`list` , shape:`tuple` , dtype: `int` , fill:`dtype` | The array can be initialised using a preexisting list or can use  shape that has to be filled, we also offer choice of dtype and fill. Data is prefered over shape. Fill only works if shape is provided |
+| indexing   | index:`index`                                             | The array generates states whenever a element is read or set in the array |
+| swap       | index1:`index` , index2:`index`                           | Swaps two elements in an array                               |
+| compare    | index1:`index` , index2:`index` , func:`function`         | compares the elements at the indexes using the function provided else send difference |
 
 :warning: Please prefer using `arr[i,j]` over `arr[i][j]` as the latter can cause discrepancies
 

@@ -4,13 +4,13 @@
 
 Methods supported
 
-| method | parameter   | description                                         | example   |
-| ------ | ----------- | --------------------------------------------------- | --------- |
-| push   | value:`int` | pushes to back of queue                             | q.push(1) |
-| pop    |             | pops from front of queue                            | q.pop()   |
-| front  |             | displays the front of queue                         | q.front() |
-| back   |             | displays the back of queue                          | q.back()  |
-| empty  |             | boolean value that indicates whether queue is empty | q.empty() |
+| method | parameter   | description                                         |
+| ------ | ----------- | --------------------------------------------------- |
+| push   | value:`int` | pushes to back of queue                             |
+| pop    |             | pops from front of queue                            |
+| front  |             | displays the front of queue                         |
+| back   |             | displays the back of queue                          |
+| empty  |             | boolean value that indicates whether queue is empty |
 
 Example
 

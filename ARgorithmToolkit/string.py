@@ -115,11 +115,15 @@ class String():
         return str(self.body)
 
     def append(self, value, comments=''):
+        if type(value) == String:
+            value = value.body
         self.body += value
         state = self.state_generator.string_append(self.body , value, comments) 
         self.algo.add_state(state)
 
     def __add__(self, value):
+        if type(value) == String:
+            value = value.body
         name = f"{self.state_generator.name}_super"
         new = String(name=name, algo=self.algo, body=self.body, comments=f'creating new string with {value} appended to the original string')
         new.append(value)
