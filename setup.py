@@ -11,7 +11,7 @@ for doc in os.listdir('docs'):
 
 setuptools.setup(
     name="ARgorithmToolkit", 
-    version="0.0.8",
+    version="0.0.9",
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
     description='''
@@ -28,6 +28,7 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires=[
         'wasabi', #For CLI
+        'argparse' , #For CLI
         'requests' , #For CLI
         'numpy'
     ],
@@ -35,4 +36,9 @@ setuptools.setup(
         'Source': 'https://github.com/ARgorithm/Toolkit',
         'Bug Reports' : "https://github.com/ARgorithm/Toolkit/issues" 
     },
+    entry_points = {
+        'console_scripts': [
+            'ARgorithm = ARgorithmToolkit.cli:cmd',
+        ],
+    }
 )

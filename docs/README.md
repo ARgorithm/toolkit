@@ -27,12 +27,26 @@ cd Toolkit
 make init
 ```
 
+This will also setup ARgorithm on your command line
 
+```bash
+user@pc:~$  ARgorithm -h
+usage: ARgorithm [-h] {init,submit,test,delete,account} ...
+
+ARgorithm CLI
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+command:
+  {init,submit,test,delete,account}
+                        try command --help for more details
+```
 
 After that you can get started with your own ARgorithm
 
 ```bash
-python -m ARgorithmToolkit init
+ARgorithm init
 ```
 
 This will generate your `.py` file and your `.config.json` file.
@@ -91,28 +105,44 @@ You can check out ARgorithm examples in our Github Repo
 Once you are done , you can submit to server by running
 
 ```bash
-python -m ARgorithmToolkit submit
+ARgorithm submit
 ```
 
 or 
 
 ```bash
-python -m ARgorithmToolkit submit --name <name>
+ARgorithm submit --name <name>
 ```
 
 you can test your ARgorithm submission by using
 
 ```bash
-python -m ARgorithmToolkit test
+ARgorithm test
 ```
 
 you can delete your ARgorithm submission by using
 
 ```
-python -m ARgorithmToolkit delete
+ARgorithm delete
 ```
 
-*if running server image on local machine , add **-l** or **--local** flag in the `submit`,`delete` and `test` commands . To run the server locally , pull the docker image* `alanjohn/argorithm-server:latest` *and run it. Check out server repo [here](https://github.com/ARgorithm/Server)*
+If the server need authentication for any action , you will be prompted for it. If you do not have a account on the server then you can register using
+
+```
+ARgorithm account new
+```
+
+you can login using
+
+```
+ARgorithm account login
+```
+
+The access token generated during login stays in your system till it expires so you dont have to login again and again. In case the token expires or is invalid , you will be prompted to login again.
+
+you can use the `-o` or `--overwrite` flag to overwrite a pre-existing login
+
+*if running server image on local machine , add **-l** or **--local** flag in the `submit`,`delete`  , `account`and `test` commands . To run the server locally , pull the docker image* `alanjohn/argorithm-server:latest` *and run it. Check out server repo [here](https://github.com/ARgorithm/Server)*
 
 ## Using ARgorithmToolkit
 

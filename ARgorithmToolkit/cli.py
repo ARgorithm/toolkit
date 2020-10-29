@@ -1,10 +1,109 @@
+import argparse
+import getpass
 import json
 import re
 import os
 import requests
 from wasabi import msg , MarkdownRenderer , color , wrap
+from ARgorithmToolkit import ARgorithmError
 
-import ARgorithmToolkit
+from os.path import expanduser
+HOME = expanduser("~")
+
+def auth_check(local=False):
+    try:
+        if local:
+            url = "http://127.0.0.1/auth"
+        else:
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/auth"
+        r = requests.get(url).json()
+        return r["status"] == True
+    except:
+        return False
+       
+def login(local=False):
+    try:
+        email = input("enter email : ")
+        password = getpass.getpass("enter password : ")
+        data = {
+            "email" : email,
+            "password" : password
+        }
+        if local:
+            url = "http://127.0.0.1/users/login"
+        else:
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/users/login"
+        r = requests.post(url,json=data)
+        return r.json()['token']
+    except:
+        raise ARgorithmError("Failed Authentication")
+
+def sign_up(local=False):
+    try:
+        email = input("enter email : ")
+        rules = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        m = re.match(rules,email)
+        if m == None:
+            msg.fail("invalid email")
+            raise ARgorithmError("Invalid email")
+
+        print("\n\tPASSWORD ACCEPTS A-Z,a-z,0-9\nMUST CONTAIN ATLEAST ONE LOWERCASE , ONE UPPERCASE AND ONE NUMBER\nLENGTH BETWEEN 8-25 CHARACTERS")
+        password = getpass.getpass("enter password : ")
+        rules = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$"
+        m = re.match(rules,password)
+        if m == None:
+            msg.fail("invalid password")
+            raise ARgorithmError("invalid password")
+        
+        repassword = getpass.getpass("re-enter password : ")
+        if password != repassword:
+            msg.fail("passwords don't match")
+            raise ARgorithmError("password mismatch")
+        
+        data = {
+            "email" : email,
+            "password" : password
+        }
+        if local:
+            url = "http://127.0.0.1/users/register"
+        else:
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/users/register"
+        r = requests.post(url,json=data)
+        if r.json()['status'] == "already exists":
+            msg.info(f"Account already registered",f"please login with {email}")
+            raise ARgorithmError("Account already registerd")
+    except:
+        raise ARgorithmError("Failed Registration")
+
+def get_token(local=False,overwrite=False):
+    try:
+        storage = True
+        CACHE_DIR = os.path.join(HOME,".argorithm")
+        if not os.path.isdir(CACHE_DIR):
+            os.mkdir(CACHE_DIR)
+        FILENAME = os.path.join(CACHE_DIR , "creds.json")
+    
+        if not overwrite:
+            if os.path.isfile(FILENAME):
+                with open(FILENAME,'r') as cred:
+                    token = json.load(cred)['token']
+                if local:
+                    url = "http://127.0.0.1/users/verify"
+                else:
+                    url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/users/verify"
+                r = requests.get(url,headers={"x-access-token" : token})
+                if r.json()['status'] == True:
+                    return token
+    except:
+        storage = False
+    try:
+        token = login(local=local)
+        if storage:
+            with open(FILENAME,'w') as cred:
+                json.dump({"token" : token},cred)
+        return token
+    except:
+        raise ARgorithmError("Failed Authentication")
 
 def valid_funcname(x):
     rules = r"[A-Za-z_]+"
@@ -14,7 +113,7 @@ def valid_funcname(x):
     else:
         return False
 
-def init(*args):
+def init():
     funcname = input('Enter name for ARgorithm File : ')
     while not valid_funcname(funcname):
         funcname = input('Please enter valid filename [A-Za-z_] : ')
@@ -56,32 +155,15 @@ def run(**kwargs):
     md.add(color("IT IS RECOMMENDED THAT YOU DON'T ALTER FILENAMES OF CODE FILE AND CONFIG FILE" , bold=True))
     print(md.text)
     msg.info('Run python -m ARgorithmToolkit submit',"when ready to submit")
-    
 
-def submit(*args):
-    
-    # PARSING ARGS
-    local = False
-    name = False
-
-    for i in range(len(args)):
-        if args[i] == '-l' or args[i]=='--local':
-            local = True
-        elif args[i] == '-n' or args[i] == '--name':
-            name = True
-            try:
-                funcname = args[i+1]
-                assert valid_funcname(funcname)
-            except:
-                msg.warn('please follow up on -n or --name with a valid argorithm_ID')
-                return
+def submit(local=False,name=None):
     
     ## ACCESSING FILES
     
     if name:
-        funcname = funcname
+        funcname = name
     else:
-        funcname = input("enter name of file to be submitted ")
+        funcname = input("enter name of file to be submitted : ")
     
     funcname = funcname[:-3] if funcname[-3:] == ".py" else funcname
     directory = os.getcwd()
@@ -123,6 +205,15 @@ def submit(*args):
                 msg.fail(f"please check {key} in {funcname}.config.json")
                 return
 
+    #authorizing
+
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+    except:
+        msg.fail("Authentication failed") 
+        return
     #submitting
     local_file = f"{funcname}.py"
 
@@ -138,16 +229,18 @@ def submit(*args):
 
     try:
         with msg.loading("sending..."):
-            r = requests.post(url, files=files)
+            if auth_flag:
+                r = requests.post(url, files=files , headers={"x-access-token" : token})
+            else:
+                r = requests.post(url, files=files)
         if r.json()['status'] == "successful":
             msg.good('Submitted')
         else:
-            raise ARgorithmToolkit.ARgorithmError("submission failed")
-    except ARgorithmToolkit.ARgorithmError:
+            raise ARgorithmError("submission failed")
+    except ARgorithmError:
         msg.fail("Sorry , File couldnt be accepted")
     except:
         msg.info("Sorry , server offline")
-    
 
 def render_menu(menu:dict):
     md = MarkdownRenderer()
@@ -161,18 +254,10 @@ def render_menu(menu:dict):
     try:
         assert option > 0 and option <= len(menu['list'])
     except:
-        raise ARgorithmToolkit.ARgorithmError("opt out of range")
+        raise ARgorithmError("opt out of range")
     return menu['list'][option-1]['argorithmID']
 
-def delete(*args):
-    local =  False
-    if len(args) > 0:
-        try:
-            assert args[0]=='-l' or args[0]=='--local'
-            local = True 
-        except:
-            msg.warn('the only flags supported are -l or --local')
-            return
+def delete(local=False):
     try:
         if local:
             url = "http://127.0.0.1/argorithms/"
@@ -186,11 +271,21 @@ def delete(*args):
     except AssertionError:
         msg.info("no function in server")
         return
-    except ARgorithmToolkit.ARgorithmError:
+    except ARgorithmError:
         msg.fail("please enter valid option no.")
         return
     except:
         msg.info("Sorry , server offline")
+        return
+
+     #authorizing
+
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+    except:
+        msg.fail("Authentication failed") 
         return
 
     try:
@@ -198,7 +293,10 @@ def delete(*args):
             "argorithmID" : argorithmID
         }
         with msg.loading("deleting argorithm from server"):
-            r = requests.post(f"{url}/delete", json=data)
+            if auth_flag:
+                r = requests.post(f"{url}/delete", json=data , headers={"x-access-token" : token})
+            else:
+                r = requests.post(f"{url}/delete", json=data)
         if r.json()['status'] == "successful":
             msg.good("deleted")
         print(json.dumps(r.json() , indent=2))
@@ -206,16 +304,8 @@ def delete(*args):
         msg.fail('argorithm delete has failed')
     
 
-def test(*args):
+def test(local=False):
 
-    local =  False
-    if len(args) > 0:
-        try:
-            assert args[0]=='-l' or args[0]=='--local'
-            local = True 
-        except:
-            msg.warn('the only flags supported are -l or --local')
-            return
     try:
         if local:
             url = "http://127.0.0.1/argorithms/"
@@ -240,25 +330,72 @@ def test(*args):
         print(json.dumps(r.json() , indent=2))
     except:
         msg.fail('Function call has failed')    
+
+
+def cmd():
+    parser = argparse.ArgumentParser(prog="ARgorithm",description="ARgorithm CLI",formatter_class=argparse.RawDescriptionHelpFormatter)
+    subparsers = parser.add_subparsers(title="command",dest="command",help='try command --help for more details',required=True)
+
+    init_parser = subparsers.add_parser(
+        'init',description="initialises files for argorithm", usage='init [-h,--help]')
     
-def help(*args):
-    md = MarkdownRenderer()
-    msg.divider("CLI HELP",char='~')
-    md.add("For creating the ARgorithm template")
-    md.add(wrap(color("python -m ARgorithmToolkit init",fg="green",bold=True), indent=4) )
-    md.add("For submitting to server")
-    md.add(wrap(color("python -m ARgorithmToolkit submit",fg="green",bold=True), indent=4) )
-    md.add(wrap(color("python -m ARgorithmToolkit submit --name <name>",fg="green",bold=True), indent=4) )
-    md.add("For submitting to local server")
-    md.add(wrap(color("python -m ARgorithmToolkit submit --local",fg="green",bold=True), indent=4) )
-    md.add(wrap(color("python -m ARgorithmToolkit submit --local --name <name>",fg="green",bold=True), indent=4) )
-    md.add("For testing argorithm in server")
-    md.add(wrap(color("python -m ARgorithmToolkit test",fg="green",bold=True), indent=4) )
-    md.add("For testing argorithm in local server")
-    md.add(wrap(color("python -m ARgorithmToolkit test --local",fg="green",bold=True), indent=4) )
-    md.add("For deleting argorithm from server")
-    md.add(wrap(color("python -m ARgorithmToolkit delete",fg="green",bold=True), indent=4) )
-    md.add("For deleting argorithm from local server")
-    md.add(wrap(color("python -m ARgorithmToolkit delete --local",fg="green",bold=True), indent=4) )
-    print(md.text)
-    print()
+    submit_parser = subparsers.add_parser(
+        'submit',description="submits files to argorithm-server")
+    submit_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be submitted optional")
+    submit_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
+    
+    test_parser = subparsers.add_parser(
+        'test' , description="tests argorithm stored in server")
+    test_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
+    
+    delete_parser = subparsers.add_parser(
+        'delete' , description="deletes argorithm stored in server")
+    delete_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
+     
+    account_parser = subparsers.add_parser(
+        'account' , description="account operations on server")
+    account_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
+    account_subparsers = account_parser.add_subparsers(title="subcommand",dest="subcommand",help='you can login or create a new account',required=True)
+
+    login_parser = account_subparsers.add_parser(
+        'login' , description="sign in to server to authorise actions")
+    login_parser.add_argument('-o' , '--overwrite' , action="store_true" , help="overwrites any pre-existing login")
+    sign_parser = account_subparsers.add_parser(
+        'new' , description="create new account in server to authorise actions")
+    
+
+    args = parser.parse_args()
+    if args.command == "init":
+        init()
+    elif args.command == "submit":
+        submit(local=args.local,name=args.name)
+    elif args.command == "test":
+        test(local=args.local)
+    elif args.command == 'delete':
+        delete(local=args.local)
+    elif args.command == 'account':
+        if args.subcommand == 'login':
+            try:
+                auth_flag =  auth_check(local=args.local)
+                if auth_flag:
+                    token = get_token(local=args.local,overwrite=args.overwrite)
+                else:
+                    msg.warn("No Authentication Feature at endpoint")
+                    return
+            except:
+                msg.fail("Authentication failed") 
+                return
+            msg.good("Successfully Authenticated")
+    
+        if args.subcommand == 'new':
+            try:
+                auth_flag =  auth_check(local=args.local)
+                if auth_flag:
+                    sign_up(local=args.local)
+                else:
+                    msg.warn("No Authentication Feature at endpoint")
+                    return
+            except:
+                msg.fail("Registration failed") 
+                return
+            msg.good("Successfully Registrated")
