@@ -4,12 +4,12 @@
 
 Methods supported
 
-| method | parameter   | description                                         | example   |
-| ------ | ----------- | --------------------------------------------------- | --------- |
-| push   | value:`int` | pushes to top of stack                              | q.push(1) |
-| pop    |             | pops from top of stack                              | q.pop()   |
-| top    |             | displays the top of stack                           | q.top()   |
-| empty  |             | boolean value that indicates whether stack is empty | q.empty() |
+| method | parameter   | description                                         |
+| ------ | ----------- | --------------------------------------------------- |
+| push   | value:`int` | pushes to top of stack                              |
+| pop    |             | pops from top of stack                              |
+| top    |             | displays the top of stack                           |
+| empty  |             | boolean value that indicates whether stack is empty |
 
 
 Example

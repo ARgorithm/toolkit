@@ -1,18 +1,18 @@
-### vectors
+## vectors
 
 > ARgorithmToolkit.vector
 
 
 Methods supported :
 
-| Method   | Parameters                                                   | Description                                                  | example                                       |
-| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------------------------- |
-| indexing | index : `int`                                                | accessing a certain index of vector                           | arr[0]                                        |
-| slicing  | slice:`slice`                                                | accessing a sub vector of vector                               | arr[1:4]                                      |
-| insert   | value:`any`<br/> index:`int` (optional)                      | inserting a element at an index or if no index specified default last | arr.insert(10) ;<br />arr.insert(10,2)        |
-| remove   | value:`any` (optional)<br />index:`int`(optional)            | removing a particular value or from a particular index. Specify only one of the two | arr.remove(value=10)<br />arr.remove(index=8) |
-| compare  | index1 : `int`<br />index2 : `int`<br />func : `function` (optional) | compares the values at the two indexes. returns result of == if func not specified | arr.compare(1,2)                              |
-| swap     | index1 : `int`<br />index2 : `int`                           | swaps the values at the two indexes                          | arr.swap(2,3)                                 |
+| Method   | Parameters                                                   | Description                                                  |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| indexing | index : `int`                                                | accessing a certain index of vector                          |
+| slicing  | slice:`slice`                                                | accessing a sub vector of vector                             |
+| insert   | value:`any`<br/> index:`int` (optional)                      | inserting a element at an index or if no index specified default last |
+| remove   | value:`any` (optional)<br />index:`int`(optional)            | removing a particular value or from a particular index. Specify only one of the two |
+| compare  | index1 : `int`<br />index2 : `int`<br />func : `function` (optional) | compares the values at the two indexes. returns result of == if func not specified |
+| swap     | index1 : `int`<br />index2 : `int`                           | swaps the values at the two indexes                          |
 
 Example
 

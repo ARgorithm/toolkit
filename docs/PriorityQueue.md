@@ -4,12 +4,12 @@
 
 Methods Supported
 
-| Method | Parameters      | Description                                              | example        |
-| ------ | --------------- | -------------------------------------------------------- | -------------- |
-| Peek   |                 | returns first element of priority queue                  | pq.peek()      |
-| Poll   |                 | pops and returns first element of priority queue         | pq.poll()      |
-| Offer  | element : `any` | add element to priority queue                            | pq.offer(elem) |
-| Empty  |                 | returns boolean indicating whether queue is empty or not | pq.empty()     |
+| Method | Parameters      | Description                                              |
+| ------ | --------------- | -------------------------------------------------------- |
+| Peek   |                 | returns first element of priority queue                  |
+| Poll   |                 | pops and returns first element of priority queue         |
+| Offer  | element : `any` | add element to priority queue                            |
+| Empty  |                 | returns boolean indicating whether queue is empty or not |
 
 Example
 

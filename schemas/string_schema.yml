@@ -1,0 +1,87 @@
+date: '2020-10-23'
+category: String
+author: Yatharth Mathur
+
+states: 
+  - string_declare:
+      description : creates new string
+      definition:
+        variable_name: The name of the string [required]
+        body: contents of the string [required]
+
+  - string_append:
+      description : to insert element at the end of the string
+      definition:
+        variable_name: The name of the string [required]
+        body: contents of the string after the operation [required]
+        element : element to be added [required]
+
+  - string_iter:
+      description : highlight element to indicate iteration
+      definition:
+        variable_name: The name of the string [required]
+        body: contents of the string after the operation [required]
+        index : index at which element has to be highlighted [reqiured]
+
+
+        
+class:
+  - ARgorithmToolkit.string.String:
+      description: Class that manages the string interface
+  - ARgorithmToolkit.string.StringState:
+      description: State template manager for string related states
+  - ARgorithmToolkit.string.StringIterator:
+      description: Iterator for string Class
+
+functions:
+  - initialize:
+      description: create new string
+      function:
+        name: ARgorithmToolkit.string.String.__init__
+        parameters:
+          required:
+            - algo
+      state: string_declare
+        
+  - index:
+      description: return string item by index
+      function:
+        name: ARgorithmToolkit.string.String.__getitem__
+        parameters:
+          required:
+            - key
+      state: string_iter
+
+  - size:
+      description : get length of string
+      function : 
+        name: ARgorithmToolkit.string.String.__len__
+      state: None
+
+  - iterator:
+      description: returns a iterator object for the string
+      function: 
+        name: ARgorithmToolkit.string.String.__iter__
+      state: string_iter
+  
+  - slice:
+      description: returns a sliced string object
+      function: 
+        name: ARgorithmToolkit.string.String.__getitem__
+        parameters:
+          required:
+            - key(slice)
+      state: None
+
+  - append:
+      description: appends element to string
+      function: 
+        name : ARgorithmToolkit.string.String.append
+        parameters:
+          reqiured:
+            - element
+          not_required:
+            - index
+      state: string_append
+
+  
