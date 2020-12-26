@@ -3,6 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+
 ARgorithm
 =========
 
@@ -13,8 +14,11 @@ algorithms for the following.
 
 .. toctree::
     :maxdepth: 2
-
-    utils
+    :caption: Contents:
+    
+    Understanding modules <modules>
+    Need help? <help>
+    License <license>
 
 
 How does it work ?
