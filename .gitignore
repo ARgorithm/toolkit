@@ -91,3 +91,6 @@ ENV/
 
 # Alan's test file
 DevTest.ipynb
+
+# testdocs
+testdocs/*
