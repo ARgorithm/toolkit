@@ -3,3 +3,4 @@ wheel
 pytest
 PyYAML
 numpy
+sphinx
