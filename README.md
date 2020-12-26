@@ -1,4 +1,4 @@
-![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/master/shields.json) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)[![PyPI version](https://badge.fury.io/py/ARgorithmToolkit.svg)](https://badge.fury.io/py/ARgorithmToolkit)
+![](https://byob.yarr.is/ARgorithm/Toolkit/Schema/master/shields.json) ![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)[![PyPI version](https://badge.fury.io/py/ARgorithmToolkit.svg)](https://badge.fury.io/py/ARgorithmToolkit)[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7fc0582b57454179a005cb6821935290)](https://www.codacy.com/gh/ARgorithm/Toolkit/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ARgorithm/Toolkit&amp;utm_campaign=Badge_Grade)[![Documentation Status](https://readthedocs.org/projects/argorithmtoolkit/badge/?version=latest)](https://argorithmtoolkit.readthedocs.io/en/latest/?badge=latest)
 
 # ToolKit
 Toolkit Package to use to generate your custom algorithms for AR representation
