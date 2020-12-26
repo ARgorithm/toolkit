@@ -1,8 +1,6 @@
 # Base template that all algorithms will use
 
-# error class to simplify user debugging
 class ARgorithmError(Exception):
-
   def __init__(self,*args):
     if args:
         self.message = args[0]
