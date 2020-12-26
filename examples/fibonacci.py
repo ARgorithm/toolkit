@@ -10,7 +10,8 @@ def run(**kwargs):
     body = [0]*n
     body[0] = 0
     if n == 1:
-        return ARgorithmToolkit.Array("arr" , algo, data=body, comments="initializing vector with first fibonacci number 0")
+        ARgorithmToolkit.Array("arr" , algo, data=body, comments="just on fibonacci number")
+        return algo
 
     body[1] = 1
 

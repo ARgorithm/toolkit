@@ -8,4 +8,5 @@
     "default": {
         "n" : 4
     }, 
-    "description": "Print the nth fibonacci number"}
+    "description": "Print the nth fibonacci number"
+}
