@@ -1,6 +1,15 @@
 ARgorithmToolkit package
 ========================
 
+Module contents
+---------------
+
+.. automodule:: ARgorithmToolkit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 Submodules
 ----------
 
@@ -8,14 +17,6 @@ ARgorithmToolkit.array module
 -----------------------------
 
 .. automodule:: ARgorithmToolkit.array
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-ARgorithmToolkit.cli module
----------------------------
-
-.. automodule:: ARgorithmToolkit.cli
    :members:
    :undoc-members:
    :show-inheritance:
@@ -64,14 +65,6 @@ ARgorithmToolkit.vector module
 ------------------------------
 
 .. automodule:: ARgorithmToolkit.vector
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: ARgorithmToolkit
    :members:
    :undoc-members:
    :show-inheritance:
