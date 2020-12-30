@@ -6,7 +6,7 @@ with open("docs/README.md", "r") as fh:
 
 setuptools.setup(
     name="ARgorithmToolkit", 
-    version="0.0.9",
+    version="0.0.10",
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
     description='''
@@ -29,7 +29,8 @@ setuptools.setup(
     ],
     project_urls={  # Optional
         'Source': 'https://github.com/ARgorithm/Toolkit',
-        'Bug Reports' : "https://github.com/ARgorithm/Toolkit/issues" 
+        'Bug Reports' : "https://github.com/ARgorithm/Toolkit/issues",
+        'Documentation' : 'https://argorithmtoolkit.readthedocs.io/en/latest' 
     },
     entry_points = {
         'console_scripts': [

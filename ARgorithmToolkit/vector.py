@@ -1,12 +1,33 @@
+"""The vector module provides support for vectors.
+The main class in this module is the Vector class. The other classes act as support class to Vector class.
+For this reason the Vector class can directly be imported from the ARgorithmToolkit library without having to import from the vector module
+Both work:
+    >>> vec = ARgorithmToolkit.Vector(name='vec',algo=algo)
+    >>> vec = ARgorithmToolkit.vector.Vector(name='vec',algo=algo)
+"""
+
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
-# vectorState class to create vector related states
-# Refer vector_schema.yml for understanding states
 class VectorState:
+    """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.vector.Vector`` object.
+    
+    Attributes:
+        
+        name (str) : Name of the variable for whom we are generating states
+    """
     def __init__(self,name):
         self.name = name
     
     
     def vector_declare(self,body,comments=""):
+        """Generates the `vector_declare` state when an instance of Vector class is created
+
+        Args:
+            body (list): The contents of the vector that are to be sent along with the state
+            comments (str,optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``vector_declare`` state for the respective vector mentioned 
+        """
         state_type = "vector_declare"
         state_def = {
             "variable_name" : self.name,
@@ -19,6 +40,16 @@ class VectorState:
         )
     
     def vector_iter(self,body,index,comments=""):
+        """Generates the `vector_iter` state when a particular index of vector has been accessed.
+
+        Args:
+            body (list): The contents of the vector that are to be sent along with the state
+            index (int): The index of vector that has been accessed
+            comments (str,optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``vector_iter`` state for the respective vector mentioned 
+        """
         state_type = "vector_iter"
         state_def = {
             "variable_name" : self.name,
@@ -32,6 +63,16 @@ class VectorState:
         )
     
     def vector_remove(self,body,index , comments=""):
+        """Generates the `vector_remove` state when a element at particular index of vector is removed
+
+        Args:
+            body (list): The contents of the vector that are to be sent along with the state
+            index (int): The index of vector at which the element has to be removed
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``vector_remove`` state for the respective vector mentioned
+        """
         state_type = "vector_remove"
         state_def = {
             "variable_name" : self.name,
@@ -45,6 +86,17 @@ class VectorState:
         )
     
     def vector_insert(self,body,element,index,comments=""):
+        """Generates the `vector_insert` state when a element is to be inserted at particular index of vector
+
+        Args:
+            body (list): The contents of the vector that are to be sent along with the state
+            element : The element that is to be added at index
+            index (int): The index of vector at which the element has to be added
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``vector_insert`` state for the respective vector mentioned
+        """
         state_type = "vector_insert"
         state_def = {
             "variable_name" : self.name,
@@ -59,6 +111,16 @@ class VectorState:
         )
     
     def vector_swap(self,body,indexes,comments=""):
+        """Generates the ``vector_swap`` state when values at two indexes of vector are being swapped
+
+        Args:
+            body (list): The contents of the vector that are to be sent along with the state
+            indexes (tuple): The indexes that are supposed to be swapped
+            comments (str,optional):The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``vector_swap`` state for the respective vector mentioned
+        """
         state_type = "vector_swap"
         state_def = {
             "variable_name" : self.name,
@@ -73,6 +135,16 @@ class VectorState:
         )
     
     def vector_compare(self,body,indexes,comments=""):
+        """Generates the ``vector_compare`` state when values at two indexes of vector are being compared
+
+        Args:
+            body (list): The contents of the vector that are to be sent along with the state
+            indexes (tuple): The indexes that are supposed to be compared
+            comments (str,optional):The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``vector_compare`` state for the respective vector mentioned
+        """
         state_type = "vector_compare"
         state_def = {
             "variable_name" : self.name,
@@ -86,10 +158,15 @@ class VectorState:
             comments=comments
         )
 
-
-# vectorIterator to iterate through vector while updating states
 class VectorIterator:
-    
+    """This class is a generator that is returned each time an vector has to be iterated
+
+    Yields:
+        element of Vector
+
+    Raises:
+        AssertionError: If not declared with an instance of ARgorithmToolkit.vector.Vector
+    """
     def __init__(self,vector):
         assert type(vector) == Vector
         self.vector = vector
@@ -104,11 +181,26 @@ class VectorIterator:
             self._index += 1
             return v
 
-
-
-# vector class is an template for vectors to be used
 class Vector:    
-    def __init__(self,name,algo,body=[],comments=""):
+    """The Vector class provides a wrapped around the python list class to emulate it as a vector. 
+
+    Args:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of Vector Class
+        data (list or tuple,optional): The value of vector if user wants a predefined value. Defaults to None.
+        comments (str,optional): Description of instance of vector and its applications that will be rendered during the ``vector_declare`` state.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+        TypeError: if data is not a list
+
+    Example:
+        >>> algo = ARgorithmToolkit.StateSet()
+        >>> vec = ARgorithmToolkit.Vector("vec",algo)
+
+    """
+
+    def __init__(self,name,algo,data=[],comments=""):
         try:
             assert type(name)==str 
             self.state_generator = VectorState(name)
@@ -120,19 +212,45 @@ class Vector:
         except:
             raise ARgorithmError("vector structure needs a reference of template to store states")
         try:
-            assert type(body) == list 
-            self.body = body
+            assert type(data) == list 
+            self.body = data
         except:
-            raise ARgorithmError("vector body should be list")
+            raise TypeError("vector body should be list")
         state = self.state_generator.vector_declare(self.body,comments)
         self.algo.add_state(state)
         
-    # overload len function for class
     def __len__(self):
+        """Function overload for the len() function. Returns size of vector
+
+        Returns:
+            int: size of vector
+
+        Example:
+            >>> len(vec)
+            0
+        """
         return len(self.body)
 
-    # to give support for vector indexing and slicing 
     def __getitem__(self,key,comments=""):
+        """Operator overload for indexing to access element. Can also be used for slicing
+
+        Args:
+            key (int or slice): The index or range for slicing
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Returns:
+            element: If key is int
+            Vector: if key in slice
+
+        Example:
+            >>> vec
+            Vector([1, 2, 3])
+            >>> vec[2]
+            3
+            >>> vec[1:]
+            Vector([2, 3])
+            
+        """
         if type(key) == slice:
             name = f"{self.state_generator.name}_sub"
             return Vector(name , self.algo , self.body[key] , comments)
@@ -141,18 +259,59 @@ class Vector:
             self.algo.add_state(state)
             return self.body[key]
 
-
     def __setitem__(self, key, value):
+        """Operator overload for indexing for assignment to listen to states if any element is changed
+
+        Args:
+            key (int): Index at which we need assign the value
+            value : The value to be set at index of vector
+
+        Example:
+            >>> vec
+            Vector([1, 2, 3])
+            >>> vec[1] = 5
+            >>> vec
+            Vector([1, 5, 3])
+
+        """
         self.body[key] = value
         state = self.state_generator.vector_iter(self.body,key,comments=f'Writing {value} at index {key}')
         self.algo.add_state(state)
 
-    # to provide iterable interface
     def __iter__(self):
+        """Returns the generator object to iterate through elements of Vector
+
+        Returns:
+            VectorIterator: Generator class for Vector
+
+        Example:
+            >>> [x for x in vec]
+            [1, 5, 3]
+
+        """
         return VectorIterator(self)
 
-    # insertion operation
     def insert(self,value,index=None,comments=""):
+        """Inserts element at particular index, if index not given then element is added to the end
+
+        Args:
+            value : The value to be inserted
+            index (int, optional): The index where element is to be inserted at. If not given , then element is added to end.
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Example:
+            >>> vec
+            Vector([])
+            >>> vec.insert(2)
+            >>> vec
+            Vector([2])
+            >>> vec.insert(3)
+            >>> vec
+            Vector([2, 3])
+            >>> vec.insert(1,0)
+            >>> vec
+            Vector([1, 2, 3])
+        """
         if index==None:
             self.body.append(value)
             state = self.state_generator.vector_insert(self.body , value , len(self)-1 , comments) 
@@ -162,8 +321,34 @@ class Vector:
             state = self.state_generator.vector_insert(self.body , value , index , comments) 
             self.algo.add_state(state)
 
-    # deletion operation
     def remove(self,value=None,index=None,comments=""):
+        """Removes element from vector.If value is given then first instance of element of that value is removed.
+        If index is given instead then the element at that index is removed. If neither is given then the last element is deleted.
+
+        Args:
+            value (optional): Value of element to be deleted
+            index (int, optional): Index of element which has to be deleted
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Raises:
+            ARgorithmError: Raised if both valur and index is given
+
+        Example:
+            >>> vec
+            Vector([3, 3, 3, 3, 4, 5])
+            >>> vec.remove(index=3)
+            >>> vec
+            Vector([3, 3, 3, 4, 5])
+            >>> vec.remove()
+            >>> vec
+            Vector([3, 3, 3, 4])
+            >>> vec.remove(value=3)
+            >>> vec
+            Vector([3, 3, 4])
+
+        Note:
+            Please make note of the position of arguments if passing positional arguments. It is recommended not to do that
+        """
         if index==None and value==None:
             self.body.pop()
             state = self.state_generator.vector_remove(self.body,len(self)-1,comments)
@@ -180,8 +365,25 @@ class Vector:
         else:
             raise ARgorithmError("Either give only a valid index or only value to be deleted , dont give both")
 
-    # comparision operation with lambda support
     def compare(self,index1,index2,func=None,comments=""):
+        """compares elements at 2 indexes of vector
+
+        Args:
+            index1 (int): The index of first element to be compared
+            index2 (int): The index of second element to be compared
+            func (function, optional): [description] The comparision function to be used , defaults to difference
+            comments (str, optional): Any comments to describe comparision
+
+        Returns:
+            Result of comparision operation
+
+        Example:
+            >>> vec
+            Vector([1, 2, 3])
+            >>> vec.compare(0,1)
+            -1
+
+        """
         item1 = self.body[index1]
         item2 = self.body[index2]
         state = self.state_generator.vector_compare(self.body,(index1,index2),comments)
@@ -192,15 +394,42 @@ class Vector:
             func = default_comparator 
         return func(item1, item2)
 
-    # swap operation
     def swap(self,index1,index2,comments=""):
+        """swaps elements at 2 indexes of vector
+
+        Args:
+            index1 (index): The index of first element to be swapped
+            index2 (index): The index of second element to be swapped
+            comments (str, optional): Any comments to describe swap
+
+        Example:
+            >>> vec
+            Vector([1, 2, 3])
+            >>> vec.swap(0,2)
+            >>> vec
+            Vector([3, 2, 1])
+
+            
+        """
         temp = self.body[index1]
         self.body[index1] = self.body[index2]
         self.body[index2] = temp
         state = self.state_generator.vector_swap(self.body,(index1,index2),comments)
         self.algo.add_state(state)
         
-    # print format
     def __str__(self):
-        return self.body.__str__()
+        """Returns string representation of vector
+
+        Returns:
+            str: string representation of vector
+        """
+        return f"Vector({self.body.__str__()})"
+    
+    def __repr__(self):
+        """Returns representation of vector
+
+        Returns:
+            str: representation of vector
+        """
+        return f"Vector({self.body.__repr__()})"
     

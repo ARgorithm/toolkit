@@ -1,3 +1,10 @@
+"""ARgorithmToolkit comes with a powerful CLI to interact with your ARgorithm server and to assist in the process of ARgorithm creation.
+It is installed and setup when you install the ARgorithmToolkit package. you can call it in the commandline::
+    
+    $ ARgorithm -h
+
+"""
+
 import argparse
 import getpass
 import json
@@ -11,6 +18,14 @@ from os.path import expanduser
 HOME = expanduser("~")
 
 def auth_check(local=False):
+    """This function is used to check whether the server accessed by programmer has authorization setup or not
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+
+    Returns:
+        bool: If true means server requires authentication flag
+    """
     try:
         if local:
             url = "http://127.0.0.1/auth"
@@ -22,6 +37,17 @@ def auth_check(local=False):
         return False
        
 def login(local=False):
+    """Logs in programmer into the server where they would be submitting their code
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+
+    Raises:
+        ARgorithmError: Raised when login fauls due to some reason
+
+    Returns:
+        str: JWT token used for authorization headers
+    """
     try:
         email = input("enter email : ")
         password = getpass.getpass("enter password : ")
@@ -39,6 +65,14 @@ def login(local=False):
         raise ARgorithmError("Failed Authentication")
 
 def sign_up(local=False):
+    """Creates new account for programmer on specified server
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+
+    Raises:
+        ARgorithmError: Raised if account creation fails
+    """
     try:
         email = input("enter email : ")
         rules = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
@@ -76,6 +110,18 @@ def sign_up(local=False):
         raise ARgorithmError("Failed Registration")
 
 def get_token(local=False,overwrite=False):
+    """Checks whether the programmer is logged in or not. If logged in , then the JWT token is verified else login action is triggered
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+        overwrite (bool, optional): If true then existing login is ignored and a fresh login is triggered. Defaults to False.
+
+    Raises:
+        ARgorithmError: If token verification and login both fail
+
+    Returns:
+        str : JWT token used for authorization header
+    """
     try:
         storage = True
         CACHE_DIR = os.path.join(HOME,".argorithm")
@@ -106,6 +152,14 @@ def get_token(local=False,overwrite=False):
         raise ARgorithmError("Failed Authentication")
 
 def valid_funcname(x):
+    """Checks whether ARgorithmID selected by user is acceptable or not
+
+    Args:
+        x (str): ARgorithmID
+
+    Returns:
+        bool: whether the selected ARgorithID is acceptable or not
+    """
     rules = r"[A-Za-z_]+"
     m = re.match(rules,x)
     if m!=None:
@@ -114,6 +168,8 @@ def valid_funcname(x):
         return False
 
 def init():
+    """Creates empty template for the programmer to develop argorithm on.
+    """
     funcname = input('Enter name for ARgorithm File : ')
     while not valid_funcname(funcname):
         funcname = input('Please enter valid filename [A-Za-z_] : ')
@@ -157,8 +213,15 @@ def run(**kwargs):
     msg.info('Run python -m ARgorithmToolkit submit',"when ready to submit")
 
 def submit(local=False,name=None):
-    
-    ## ACCESSING FILES
+    """Submits ARgorithm code file as well as ARgorithm config file to server
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
+
+    Raises:
+        ARgorithmError: Raised if submission fails
+    """
     
     if name:
         funcname = name
@@ -243,6 +306,17 @@ def submit(local=False,name=None):
         msg.info("Sorry , server offline")
 
 def render_menu(menu:dict):
+    """Shows list of available ARgorithms on server
+
+    Args:
+        menu (dict): response from server
+
+    Raises:
+        ARgorithmError: If server does not contain any ARgorithm or user has provided invalid option
+
+    Returns:
+        str: ARgorithmID of selected ARgorithm
+    """
     md = MarkdownRenderer()
     count = 0
     msg.divider('Functions available')
@@ -258,6 +332,15 @@ def render_menu(menu:dict):
     return menu['list'][option-1]['argorithmID']
 
 def delete(local=False):
+    """Deletes ARgorithm from server
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
+
+    Raises:
+        ARgorithmError: Raised if deletion fails
+    """
     try:
         if local:
             url = "http://127.0.0.1/argorithms/"
@@ -305,7 +388,15 @@ def delete(local=False):
     
 
 def test(local=False):
+    """Tests ARgorithm in server
 
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
+
+    Raises:
+        ARgorithmError: Raised if test fails
+    """
     try:
         if local:
             url = "http://127.0.0.1/argorithms/"
@@ -333,6 +424,8 @@ def test(local=False):
 
 
 def cmd():
+    """Generates Command Line Interface using powerful ``argparse`` library
+    """
     parser = argparse.ArgumentParser(prog="ARgorithm",description="ARgorithm CLI",formatter_class=argparse.RawDescriptionHelpFormatter)
     subparsers = parser.add_subparsers(title="command",dest="command",help='try command --help for more details',required=True)
 
