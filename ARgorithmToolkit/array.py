@@ -1,10 +1,13 @@
 """The array module provides support for one dimensional arrays as well as multinational arrays.
+The main class in this module is the Array class. The other classes act as support class to Array class.
+For this reason the Array class can directly be imported from the ARgorithmToolkit library without having to import from the array module
+Both work:
+    >>> arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=test_data)
+    >>> arr = ARgorithmToolkit.array.Array(name='arr',algo=algo,data=test_data)
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 import numpy as np
-# arrayState class to create array related states
-# Refer array_schema.yml for understanding states
 
 def check_dimensions(data):
     """This function is an internal function that helps verify the dimensions of array from user input
@@ -32,13 +35,17 @@ def check_dimensions(data):
 
 class ArrayState:
     """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.array.Array`` object.
+    
+    Attributes:
+        
+        name (str) : Name of the variable for whom we are generating states
     """
     def __init__(self,name):
         self.name = name
     
     
     def array_declare(self,body,comments=""):
-        """Generates the `array_declare` state when an instance of this class is created
+        """Generates the `array_declare` state when an instance of Array class is created
 
         Args:
             body: The contents of the array that are to be sent along with the state
@@ -152,7 +159,6 @@ class ArrayIterator:
             self._index += 1
             return v
 
-# array class is an template for arrays to be used
 class Array:
     """The Array class used to emulate multidimensional arrays that can be rendered in the ARgorithm Application as series of blocks
 
@@ -175,14 +181,14 @@ class Array:
         >>> test_data = [[1,2,3],[4,5,6]]
         >>> arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=test_data)
         >>> arr
-        array([[1, 2, 3],[4, 5, 6]])
+        Array([[1, 2, 3],[4, 5, 6]])
 
         This is an example of array being declared with shape and fill
 
         >>> algo = ARgorithmToolkit.StateSet()
         >>> arr = ARgorithmToolkit.Array(name='arr',algo=algo,shape=(2,3),fill=7)
         >>> arr
-        array([[7, 7, 7],[7, 7, 7]])
+        Array([[7, 7, 7],[7, 7, 7]])
 
         The array generated supports all the functionality of regular array
 
@@ -191,7 +197,7 @@ class Array:
         >>> arr.shape()
         (2,3)
         >>> arr[1]
-        array([7, 7, 7])
+        Array([7, 7, 7])
         >>> arr[1][2]
         7
         >>> arr[1,2]
@@ -235,6 +241,15 @@ class Array:
         self.algo.add_state(state)
         
     def __len__(self):
+        """returns length of array when processed by len() function
+
+        Returns:
+            int: length of array or first dimension of array if it is multidimensional
+
+        Example:
+            >>> len(arr)
+            2
+        """
         return len(self.body)
 
     def shape(self):
@@ -242,11 +257,30 @@ class Array:
 
         Returns:
             tuple: shape of array as a tuple
+
+        Example:
+            >>> arr.shape()
+            (2,3)
         """
         return (self.body.shape) if type(self.body.shape) != tuple else self.body.shape
 
-    # to give support for array indexing and slicing 
     def __getitem__(self, key, comments=""):
+        """overloading the item access operator to generate states and create more instances of ARgorithmToolkit Array if subarray is accessed 
+
+        Args:
+            key (index or slice): 
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Raises:
+            ARgorithmError: Raised if key is invalid
+
+        Returns:
+            element or subarray: depending on key , the returned object can be an element or an sub-array
+
+        Examples:
+            >>> arr[1,2]
+            6 
+        """
         try:
             if type(key) == slice:
                 name = f"{self.state_generator.name}_sub"
@@ -271,15 +305,35 @@ class Array:
             raise ARgorithmError(f"invalid index error : {str(e)}")
 
     def __setitem__(self, key, value):
+        """Overload element write operation to trigger state
+
+        Args:
+            key (index): index where element is written
+            value (dtype): value of element that is written
+
+        Example:
+            >>> arr
+            Array([[1, 2, 3],[4, 5, 6]])    
+            >>> arr[1,2] = 0
+            >>> arr
+            Array([[1, 2, 3],[4, 5, 0]])
+        """
         self.body[key] = value
         state = self.state_generator.array_iter(self.body, key, comments=f'Writing {value} at index {key}')
         self.algo.add_state(state)
 
-    # to provide iterable interface
     def __iter__(self):
+        """Generates a iterator object to iterate the array along its first dimension
+
+        Returns:
+            ArrayIterator: Iterator object
+
+        Example:
+            >>> [x for x in arr]
+            [[1,2,3],[4,5,6]]
+        """
         return iter(self.body)
 
-    # comparision operation with lambda support
     def compare(self,index1,index2,func=None,comments=""):
         """compares elements at 2 indexes of array
 
@@ -290,7 +344,11 @@ class Array:
             comments (str, optional): Any comments to describe comparision
 
         Returns:
-            bool: Result of comparision operation
+            Result of comparision operation
+
+        Example:
+            >>> arr.compare((0,0),(1,1))
+            -4
         """
         item1 = self.body[index1]
         item2 = self.body[index2]
@@ -302,7 +360,6 @@ class Array:
             func = default_comparator 
         return func(item1, item2)
 
-    # swap operation
     def swap(self,index1,index2,comments=""):
         """swaps elements at 2 indexes of array
 
@@ -312,15 +369,11 @@ class Array:
             comments (str, optional): Any comments to describe swap
 
         Example:
-            >>> import ARgorithmToolkit
-            >>> algo = ARgorithmToolkit.StateSet()
-            >>> test_data = [[1,2,3],[4,5,6]]
-            >>> arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=test_data)
             >>> arr
-            array([[1, 2, 3],[4, 5, 6]])
+            Array([[1, 2, 3],[4, 5, 6]])
             >>> arr.swap((0,2),(1,2))
             >>> arr
-            array([[1, 2, 6],[4, 5, 3]])
+            Array([[1, 2, 6],[4, 5, 3]])
 
         Note:
             Do not try to swap subarrays in multidimensional arrays. It will lead to unexpected results
@@ -335,15 +388,28 @@ class Array:
         Returns:
             list: multidimensional python list containing value of array
 
+        Example:
+            >>> arr.tolist()
+            [[1,2,3],[4,5,6]]
+
         Note:
             The list generated is a normal python list so will not listen and store states. If you want to do that , store the list in the ARgorithmToolkit.vector.Vector object
         """
         return self.body.tolist()
         
-    # print format
     def __str__(self):
-        return self.body.__str__()
+        """String conversion for Array
+
+        Returns:
+            str: String describing Array
+        """
+        return f"Array({self.tolist.__str__()})"
 
     def __repr__(self):
-        return self.body.__repr__()
+        """Return representation for shell outputs
+
+        Returns:
+            str: shell representation for array
+        """
+        return f"Array({self.tolist.__repr__()})"
     

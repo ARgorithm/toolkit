@@ -3,6 +3,9 @@ init:
 	pip install -U -r requirements.txt
 	python setup.py install
 	
+clean:
+	rm -rf ARgorithmToolkit.egg-info/ build/ dist/
+
 test:
 	pytest tests
 
