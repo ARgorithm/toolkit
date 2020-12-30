@@ -9,6 +9,10 @@ SOURCEDIR     = source
 BUILDDIR      = build
 
 # Put it first so that "make" without argument is like "make help".
+generate:
+	rm source/ARgorithmToolkit* source/modules.rst
+	sphinx-apidoc -o source/ -e -d=4 -M ../ARgorithmToolkit/
+
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 

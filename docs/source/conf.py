@@ -12,6 +12,7 @@
 #
 import os
 import sys
+import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath('../..'))
 
 
@@ -32,9 +33,17 @@ release = '0.0.9'
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinxcontrib.napoleon"
+    "sphinxcontrib.napoleon",
+    "sphinx.ext.autosectionlabel"
 ]
+autosectionlabel_prefix_document = True
 
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'special-members': '__init__,__setitem__,__getitem__',
+    'undoc-members': True,
+}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -55,3 +64,8 @@ html_theme = 'alabaster'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+html_theme_options = {
+    'github_user': 'ARgorithm',
+    'github_repo': 'Toolkit'
+}
