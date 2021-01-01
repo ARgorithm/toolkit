@@ -139,12 +139,6 @@ you can test your ARgorithm submission by using
 
     ARgorithm test
 
-you can delete your ARgorithm submission by using
-
-::
-
-    ARgorithm delete
-
 If the server need authentication for any action , you will be prompted
 for it. If you do not have a account on the server then you can register
 using
@@ -159,18 +153,9 @@ you can login using
 
     ARgorithm account login
 
-The access token generated during login stays in your system till it
-expires so you dont have to login again and again. In case the token
-expires or is invalid , you will be prompted to login again.
+You can find more information regarding CLI and it's powerful features in the `CLI Deepdive <cli.html>`_ section
 
-you can use the ``-o`` or ``--overwrite`` flag to overwrite a
-pre-existing login
-
-*if running server image on local machine , add **-l** or **--local**
-flag in the ``submit``,\ ``delete`` , ``account``\ and ``test`` commands
-. To run the server locally , pull the docker image*
-``alanjohn/argorithm-server:latest`` *and run it. Check out server repo
-`here <https://github.com/ARgorithm/Server>`__*
+Check out server repo to setup your own ARgorithm server `here <https://github.com/ARgorithm/Server>`_
 
 Using ARgorithmToolkit
 ----------------------
@@ -229,4 +214,4 @@ demonstrations
     >>> print(algo)
     {'state_type': 'comment', 'state_def': None, 'comments': 'Hello world'}
 
-Read more about Stateset in :ref:`ARgorithmToolkit.utils` 
+Read more about Stateset in the documentation `here <ARgorithmToolkit.utils.html>`_ 

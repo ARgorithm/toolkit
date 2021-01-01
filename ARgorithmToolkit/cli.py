@@ -16,6 +16,7 @@ from ARgorithmToolkit import ARgorithmError
 
 from os.path import expanduser
 HOME = expanduser("~")
+CLOUD_URL = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com"
 
 def auth_check(local=False):
     """This function is used to check whether the server accessed by programmer has authorization setup or not
@@ -26,6 +27,7 @@ def auth_check(local=False):
     Returns:
         bool: If true means server requires authentication flag
     """
+    
     try:
         if local:
             url = "http://127.0.0.1/auth"
@@ -43,12 +45,13 @@ def login(local=False):
         local (bool, optional): If true checks for local server instance. Defaults to False.
 
     Raises:
-        ARgorithmError: Raised when login fauls due to some reason
+        ARgorithmError: Raised when login fails due to some reason
 
     Returns:
         str: JWT token used for authorization headers
     """
     try:
+        print("You need to enter sign in credentials")
         email = input("enter email : ")
         password = getpass.getpass("enter password : ")
         data = {
@@ -56,9 +59,9 @@ def login(local=False):
             "password" : password
         }
         if local:
-            url = "http://127.0.0.1/users/login"
+            url = "http://127.0.0.1/programmers/login"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/users/login"
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/programmers/login"
         r = requests.post(url,json=data)
         return r.json()['token']
     except:
@@ -99,9 +102,9 @@ def sign_up(local=False):
             "password" : password
         }
         if local:
-            url = "http://127.0.0.1/users/register"
+            url = "http://127.0.0.1/programmers/register"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/users/register"
+            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/programmers/register"
         r = requests.post(url,json=data)
         if r.json()['status'] == "already exists":
             msg.info(f"Account already registered",f"please login with {email}")
@@ -134,9 +137,9 @@ def get_token(local=False,overwrite=False):
                 with open(FILENAME,'r') as cred:
                     token = json.load(cred)['token']
                 if local:
-                    url = "http://127.0.0.1/users/verify"
+                    url = "http://127.0.0.1/programmers/verify"
                 else:
-                    url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/users/verify"
+                    url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/programmers/verify"
                 r = requests.get(url,headers={"x-access-token" : token})
                 if r.json()['status'] == True:
                     return token
@@ -152,7 +155,7 @@ def get_token(local=False,overwrite=False):
         raise ARgorithmError("Failed Authentication")
 
 def valid_funcname(x):
-    """Checks whether ARgorithmID selected by user is acceptable or not
+    """Checks whether ARgorithmID selected by programmer is acceptable or not
 
     Args:
         x (str): ARgorithmID
@@ -210,7 +213,7 @@ def run(**kwargs):
     md.add("and it should return a object of ARgorithmToolkit StateSet as that is what is storing the states to be rendered.")
     md.add(color("IT IS RECOMMENDED THAT YOU DON'T ALTER FILENAMES OF CODE FILE AND CONFIG FILE" , bold=True))
     print(md.text)
-    msg.info('Run python -m ARgorithmToolkit submit',"when ready to submit")
+    msg.info('Run ARgorithm submit',"when ready to submit")
 
 def submit(local=False,name=None):
     """Submits ARgorithm code file as well as ARgorithm config file to server
@@ -299,11 +302,111 @@ def submit(local=False,name=None):
         if r.json()['status'] == "successful":
             msg.good('Submitted')
         else:
+            if 'message' in r.json():
+                print(r.json()['message'])
             raise ARgorithmError("submission failed")
     except ARgorithmError:
         msg.fail("Sorry , File couldnt be accepted")
     except:
         msg.info("Sorry , server offline")
+
+def update(local=False,name=None):
+    """Submits new ARgorithm code file as well as new ARgorithm config file for already existing ARgorithm in server
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
+
+    Raises:
+        ARgorithmError: Raised if updation fails
+    """
+    
+    if name:
+        funcname = name
+    else:
+        funcname = input("enter name of file to be sent : ")
+    
+    funcname = funcname[:-3] if funcname[-3:] == ".py" else funcname
+    directory = os.getcwd()
+    
+    if os.path.isfile( os.path.join(directory,funcname+".py")):
+        if os.path.isfile( os.path.join(directory , f"{funcname}.config.json") ):
+            pass
+        else:
+            msg.fail(f"cant find {funcname}.config.json")
+            return 
+    else:
+        msg.fail(f"{funcname}.py not found")
+        return
+
+    msg.good('files found')
+    
+    ## VERIFYING FILES
+
+    required_tags = {
+        "argorithmID" : funcname,
+        "file" : funcname+".py",
+        "function" : "run",
+        "parameters" : {},
+        "default" : {},
+        "description" : ""
+    }
+
+    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:    
+        data = json.load(configfile)
+        for key in required_tags:
+            if key not in data:
+                msg.fail(f"please check {funcname}.config.json {key} is missing")
+                return
+        for key in data:
+            if key not in required_tags:
+                msg.fail(f"please check {funcname}.config.json {key} is uneccessary")
+                return
+            if type(data[key]) != type(required_tags[key]):
+                msg.fail(f"please check {key} in {funcname}.config.json")
+                return
+
+    #authorizing
+
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+    except:
+        msg.fail("Authentication failed") 
+        return
+    #submitting
+    local_file = f"{funcname}.py"
+
+    if local:
+        url = "http://127.0.0.1/argorithms/update"
+    else:
+        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/update"
+
+    files = [
+        ('document', (local_file, open(local_file, 'rb'), 'application/octet')),
+        ('data', ('data', json.dumps(data), 'application/json')),
+    ]
+
+    try:
+        with msg.loading("sending..."):
+            if auth_flag:
+                r = requests.post(url, files=files , headers={"x-access-token" : token})
+            else:
+                r = requests.post(url, files=files)
+        if r.json()['status'] == "successful":
+            msg.good('updated')
+        elif r.json()['status'] == "not present":
+            msg.warn('ARgorithm not found') 
+        else:
+            if 'message' in r.json():
+                print(r.json()['message'])
+            raise ARgorithmError("update failed")
+    except ARgorithmError:
+        msg.fail("Sorry , ARgorithm couldnt be updated")
+    except Exception as e:
+        msg.info("Sorry , server offline")
+
 
 def render_menu(menu:dict):
     """Shows list of available ARgorithms on server
@@ -312,7 +415,7 @@ def render_menu(menu:dict):
         menu (dict): response from server
 
     Raises:
-        ARgorithmError: If server does not contain any ARgorithm or user has provided invalid option
+        ARgorithmError: If server does not contain any ARgorithm or programmer has provided invalid option
 
     Returns:
         str: ARgorithmID of selected ARgorithm
@@ -382,7 +485,10 @@ def delete(local=False):
                 r = requests.post(f"{url}/delete", json=data)
         if r.json()['status'] == "successful":
             msg.good("deleted")
-        print(json.dumps(r.json() , indent=2))
+        else:
+            if 'message' in r.json():
+                print(r.json()['message'])
+            raise ARgorithmError("update failed")
     except:
         msg.fail('argorithm delete has failed')
     
@@ -410,17 +516,174 @@ def test(local=False):
     except AssertionError:
         msg.warn("no function in server")
         return
+    
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+    except:
+        msg.fail("Authentication failed") 
+        return
+
     try:
         
         data = {
             "argorithmID" : argorithmID
         }
         with msg.loading("retrieving data from server"):
-            r = requests.post(f"{url}/run", json=data)
+            if auth_flag:
+                r = requests.post(f"{url}/run", json=data, headers={"x-access-token" : token})
+            else:
+                r = requests.post(f"{url}/run", json=data)
         msg.good("Recieved states")
         print(json.dumps(r.json() , indent=2))
     except:
         msg.fail('Function call has failed')    
+
+def grant(local=False):
+    """Grants an account admin priveleges
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+    """
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+        else:
+            msg.info("Auth disabled on Server")
+            return
+    except:
+        msg.fail("Authentication failed") 
+        return
+
+    if local:
+        url = "http://127.0.0.1/admin/grant"
+    else:
+        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/grant"
+    email = input("enter email that you want to grant admin access to : ")
+    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    try:
+        if r.json()['status'] == 'successful':
+            msg.good(f"{email} is now an admin")
+        elif r.json()['status'] == 'access denied':
+            msg.warn(f"You dont have admin priveleges")
+        elif r.json()['status'] == 'Not Found':
+            msg.warn(f"{email} cant be found")
+        elif r.json()['status'] == 'blacklisted':
+            msg.info(f"{email} is blacklisted")
+        else:
+            msg.fail("server failure")
+    except:
+        msg.fail("server failure")
+
+def revoke(local=False):
+    """Revokes admin priveleges from specified account
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+    """
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+        else:
+            msg.info("Auth disabled on Server")
+            return
+    except:
+        msg.fail("Authentication failed") 
+        return
+
+    if local:
+        url = "http://127.0.0.1/admin/revoke"
+    else:
+        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/revoke"
+    email = input("enter email that you want to revoke admin access from : ")
+    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    try:
+        if r.json()['status'] == 'successful':
+            msg.warn(f"{email} is not an admin")
+        elif r.json()['status'] == 'access denied':
+            msg.warn(f"You dont have admin priveleges")
+        elif r.json()['status'] == 'Not Found':
+            msg.warn(f"{email} cant be found")
+        else:
+            msg.fail("server failure")
+    except:
+        msg.fail("server failure")
+
+def delete_account(local=False,programmer=False):
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+        else:
+            msg.info("Auth disabled on Server")
+            return
+    except:
+        msg.fail("Authentication failed") 
+        return
+
+    if local:
+        url = "http://127.0.0.1/admin/"
+    else:
+        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/"
+    if programmer:
+        url = url + "delete_programmer"
+    else:
+        url = url + "delete_user"
+    email = input("enter email that you want delete : ")
+    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    try:
+        if r.json()['status'] == 'successful':
+            msg.good(f"{email} is deleted")
+        elif r.json()['status'] == 'access denied':
+            msg.warn(f"You dont have admin priveleges")
+        elif r.json()['status'] == 'Not Found':
+            msg.warn(f"{email} cant be found")
+        else:
+            msg.fail("server failure")
+    except:
+        msg.fail("server failure")
+
+def blacklist(local=False,black=True):
+    try:
+        auth_flag =  auth_check(local=local)
+        if auth_flag:
+            token = get_token(local=local)
+        else:
+            msg.info("Auth disabled on Server")
+            return
+    except:
+        msg.fail("Authentication failed") 
+        return
+
+    if local:
+        url = "http://127.0.0.1/admin/"
+    else:
+        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/"
+    if black:
+        url = url + "black_list"
+        email = input("enter email that you want blacklist : ")
+    else:
+        url = url + "white_list"
+        email = input("enter email that you want whitelist : ")
+    
+    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    try:
+        if r.json()['status'] == 'successful':
+            if black:
+                msg.info(f"{email} is blacklisted")
+            else:
+                msg.good(f"{email} is whitelisted")
+        elif r.json()['status'] == 'access denied':
+            msg.warn(f"You dont have admin priveleges")
+        elif r.json()['status'] == 'Not Found':
+            msg.warn(f"{email} cant be found")
+        else:
+            msg.fail("server failure")
+    except:
+        msg.fail("server failure")
 
 
 def cmd():
@@ -432,11 +695,20 @@ def cmd():
     init_parser = subparsers.add_parser(
         'init',description="initialises files for argorithm", usage='init [-h,--help]')
     
+    # configure_parser = subparsers.add_parser(
+    #     'configure',description="sets cloud server address", usage='configure [-h,--help]')
+
     submit_parser = subparsers.add_parser(
         'submit',description="submits files to argorithm-server")
     submit_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be submitted optional")
     submit_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
     
+    update_parser = subparsers.add_parser(
+        'update',description="submits new code files for already existing argorithm in argorithm-server")
+    update_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be updated optional")
+    update_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
+    
+
     test_parser = subparsers.add_parser(
         'test' , description="tests argorithm stored in server")
     test_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
@@ -456,12 +728,37 @@ def cmd():
     sign_parser = account_subparsers.add_parser(
         'new' , description="create new account in server to authorise actions")
     
-
+    admin_parser = subparsers.add_parser(
+        'admin' , description="admin operations on server"
+    )
+    admin_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
+    admin_subparsers = admin_parser.add_subparsers(title="subcommand",dest="subcommand",help='you can blacklist/whitelists accounts , grant/revoke admin access',required=True)
+    grant_parser = admin_subparsers.add_parser(
+        'grant' , description="grant programmer admin priveleges"
+    )
+    revoke_parser = admin_subparsers.add_parser(
+        'revoke' , description="revoke programmer admin priveleges"
+    )
+    blacklist_parser = admin_subparsers.add_parser(
+        'blacklist' , description="blacklist programmer from using application"
+    )
+    whitelist_parser = admin_subparsers.add_parser(
+        'whitelist' , description="whitelist previously blacklisted programmer"
+    )
+    delete_account_parser = admin_subparsers.add_parser(
+        'delete' , description="delete account"
+    )
+    delete_account_parser.add_argument('-p' , '--programmer' , action="store_true" , help="deletes programmer account. if not given deletes user account")
+    
     args = parser.parse_args()
     if args.command == "init":
         init()
+    # elif args.command == "configure":
+    #     configure()
     elif args.command == "submit":
         submit(local=args.local,name=args.name)
+    elif args.command == "update":
+        update(local=args.local,name=args.name)
     elif args.command == "test":
         test(local=args.local)
     elif args.command == 'delete':
@@ -492,3 +789,16 @@ def cmd():
                 msg.fail("Registration failed") 
                 return
             msg.good("Successfully Registrated")
+    elif args.command == 'admin':
+        if args.subcommand == "grant":
+            grant(args.local)
+        elif args.subcommand == "revoke":
+            revoke(args.local)
+        elif args.subcommand == "blacklist":
+            blacklist(args.local)
+        elif args.subcommand == "whitelist":
+            blacklist(args.local,black=False)
+        elif args.subcommand == "delete":
+            delete_account(args.local,args.programmer)
+        
+        

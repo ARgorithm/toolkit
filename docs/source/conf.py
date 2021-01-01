@@ -66,6 +66,7 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 
 html_theme_options = {
+    'logo' : 'logo.svg',
     'github_user': 'ARgorithm',
     'github_repo': 'Toolkit'
 }
