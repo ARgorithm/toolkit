@@ -13,10 +13,12 @@ offers packages and a command line interface needed to make and submit
 algorithms for the following.
 
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 2
     :caption: Contents:
     
     Introduction <intro>
+    Getting Started <start>
+    Setting up server <server>
     CLI deep dive <cli>
     Modules <modules>
     Need help? <help>

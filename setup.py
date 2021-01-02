@@ -4,9 +4,11 @@ import setuptools
 with open("docs/README.md", "r") as fh:
     long_description = fh.read()
 
+__version__ = "0.0.11"
+
 setuptools.setup(
     name="ARgorithmToolkit", 
-    version="0.0.10",
+    version=__version__,
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
     description='''

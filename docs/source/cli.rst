@@ -8,7 +8,8 @@ server.
 .. code:: bash
 
     $ ARgorithm -h
-    usage: ARgorithm [-h] {init,submit,update,test,delete,account,admin} ...
+    usage: ARgorithm [-h]
+                     {init,configure,submit,update,test,delete,account,admin} ...
 
     ARgorithm CLI
 
@@ -16,8 +17,29 @@ server.
       -h, --help            show this help message and exit
 
     command:
-      {init,submit,update,test,delete,account,admin}
+      {init,configure,submit,update,test,delete,account,admin}
                             try command --help for more details
+
+configure
+---------
+
+This command can be used to set your own server IP.
+
+.. code:: bash
+
+    $ ARgorithm configure -h
+    usage: configure [-h,--help]
+
+    sets cloud server address
+
+    optional arguments:
+      -h, --help  show this help message and exit
+
+.. code:: bash
+
+    $ ARgorithm configure
+    Enter server endpoint or press ENTER to connect to ARgorithm common server : https://customendpoint.com
+    ✔ Cloud requests will now go to https://customendpoint.com
 
 account
 -------

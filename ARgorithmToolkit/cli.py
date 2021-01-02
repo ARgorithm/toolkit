@@ -18,6 +18,50 @@ from os.path import expanduser
 HOME = expanduser("~")
 CLOUD_URL = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com"
 
+
+def configure():
+    """This function sets the cloud server endpoint to connect to
+    """
+    CACHE_DIR = os.path.join(HOME,".argorithm")
+    if not os.path.isdir(CACHE_DIR):
+        os.mkdir(CACHE_DIR)
+    FILENAME = os.path.join(CACHE_DIR , "config")
+    url = input("Enter server endpoint or press ENTER to connect to ARgorithm common server : ")
+    if url == '':
+        url = CLOUD_URL
+        with open(FILENAME,'w') as config:
+            config.write(url)
+    else:
+        try:
+            r = requests.get(url+"/argorithms")
+            if r.status_code == 200:
+                with open(FILENAME,'w') as config:
+                    config.write(url)
+                msg.good(f"Cloud requests will now go to {url}")
+            else:
+                raise ARgorithmError("Not a server endpoint")
+        except ValueError:
+            msg.warn("Please try again with proper URL")
+        except ARgorithmError as e:
+            msg.fail(str(e))
+        except:
+            msg.fail("Endpoint couldnt be found.") 
+
+def get_url():
+    """This function returns the cloud endpoint url from the cache storage
+
+    Returns:
+        str: URL of endpoint
+    """
+    CACHE_DIR = os.path.join(HOME,".argorithm")
+    if not os.path.isdir(CACHE_DIR):
+        os.mkdir(CACHE_DIR)
+    FILENAME = os.path.join(CACHE_DIR , "config")
+    if os.path.isfile(FILENAME):
+        with open(FILENAME,'r') as config:
+            return config.read()
+    return CLOUD_URL
+
 def auth_check(local=False):
     """This function is used to check whether the server accessed by programmer has authorization setup or not
 
@@ -32,7 +76,7 @@ def auth_check(local=False):
         if local:
             url = "http://127.0.0.1/auth"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/auth"
+            url = get_url() + "/auth"
         r = requests.get(url).json()
         return r["status"] == True
     except:
@@ -61,7 +105,7 @@ def login(local=False):
         if local:
             url = "http://127.0.0.1/programmers/login"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/programmers/login"
+            url = get_url()+"/programmers/login"
         r = requests.post(url,json=data)
         return r.json()['token']
     except:
@@ -104,7 +148,7 @@ def sign_up(local=False):
         if local:
             url = "http://127.0.0.1/programmers/register"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/programmers/register"
+            url = get_url() + "/programmers/register"
         r = requests.post(url,json=data)
         if r.json()['status'] == "already exists":
             msg.info(f"Account already registered",f"please login with {email}")
@@ -139,7 +183,7 @@ def get_token(local=False,overwrite=False):
                 if local:
                     url = "http://127.0.0.1/programmers/verify"
                 else:
-                    url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/programmers/verify"
+                    url = get_url()+"/programmers/verify"
                 r = requests.get(url,headers={"x-access-token" : token})
                 if r.json()['status'] == True:
                     return token
@@ -286,7 +330,7 @@ def submit(local=False,name=None):
     if local:
         url = "http://127.0.0.1/argorithms/insert"
     else:
-        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/insert"
+        url = get_url+"/argorithms/insert"
 
     files = [
         ('document', (local_file, open(local_file, 'rb'), 'application/octet')),
@@ -381,7 +425,7 @@ def update(local=False,name=None):
     if local:
         url = "http://127.0.0.1/argorithms/update"
     else:
-        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/update"
+        url = get_url() + "/argorithms/update"
 
     files = [
         ('document', (local_file, open(local_file, 'rb'), 'application/octet')),
@@ -448,7 +492,7 @@ def delete(local=False):
         if local:
             url = "http://127.0.0.1/argorithms/"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/"
+            url = get_url() + "/argorithms/"
         with msg.loading("reading data"):
             r = requests.get(url+"list")
         msg.info('argorithm menu recieved')
@@ -507,7 +551,7 @@ def test(local=False):
         if local:
             url = "http://127.0.0.1/argorithms/"
         else:
-            url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/argorithms/"
+            url = get_url() + "/argorithms/"
         with msg.loading("reading data"):
             r = requests.get(url+"list")
         assert len(r.json()['list']) > 0
@@ -560,7 +604,7 @@ def grant(local=False):
     if local:
         url = "http://127.0.0.1/admin/grant"
     else:
-        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/grant"
+        url = get_url() + "/admin/grant"
     email = input("enter email that you want to grant admin access to : ")
     r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
@@ -597,7 +641,7 @@ def revoke(local=False):
     if local:
         url = "http://127.0.0.1/admin/revoke"
     else:
-        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/revoke"
+        url = get_url() + "/admin/revoke"
     email = input("enter email that you want to revoke admin access from : ")
     r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
@@ -613,6 +657,12 @@ def revoke(local=False):
         msg.fail("server failure")
 
 def delete_account(local=False,programmer=False):
+    """Deletes user account. Can also delete programmer account if programmer flag is set
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.
+        programmer (bool, optional): If true will delete the programmer account associated to email. Defaults to False.
+    """
     try:
         auth_flag =  auth_check(local=local)
         if auth_flag:
@@ -627,7 +677,7 @@ def delete_account(local=False,programmer=False):
     if local:
         url = "http://127.0.0.1/admin/"
     else:
-        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/"
+        url = get_url() + "/admin/"
     if programmer:
         url = url + "delete_programmer"
     else:
@@ -647,6 +697,12 @@ def delete_account(local=False,programmer=False):
         msg.fail("server failure")
 
 def blacklist(local=False,black=True):
+    """Used to blacklist/whitelist users and programmers depending on ``black`` flag
+
+    Args:
+        local (bool, optional): If true checks for local server instance. Defaults to False.    
+        black (bool, optional): If true , blacklists account else whitelists account. Defaults to True.
+    """
     try:
         auth_flag =  auth_check(local=local)
         if auth_flag:
@@ -661,7 +717,7 @@ def blacklist(local=False,black=True):
     if local:
         url = "http://127.0.0.1/admin/"
     else:
-        url = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com/admin/"
+        url = get_url() + "/admin/"
     if black:
         url = url + "black_list"
         email = input("enter email that you want blacklist : ")
@@ -695,8 +751,8 @@ def cmd():
     init_parser = subparsers.add_parser(
         'init',description="initialises files for argorithm", usage='init [-h,--help]')
     
-    # configure_parser = subparsers.add_parser(
-    #     'configure',description="sets cloud server address", usage='configure [-h,--help]')
+    configure_parser = subparsers.add_parser(
+        'configure',description="sets cloud server address", usage='configure [-h,--help]')
 
     submit_parser = subparsers.add_parser(
         'submit',description="submits files to argorithm-server")
@@ -753,8 +809,8 @@ def cmd():
     args = parser.parse_args()
     if args.command == "init":
         init()
-    # elif args.command == "configure":
-    #     configure()
+    elif args.command == "configure":
+        configure()
     elif args.command == "submit":
         submit(local=args.local,name=args.name)
     elif args.command == "update":

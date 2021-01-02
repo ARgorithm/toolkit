@@ -13,8 +13,6 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
-
-
 # -- Project information -----------------------------------------------------
 
 project = 'Toolkit'
@@ -22,7 +20,7 @@ copyright = '2020, ARgorithm'
 author = 'ARgorithm'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.9'
+release = '0.0.11'
 
 
 # -- General configuration ---------------------------------------------------
@@ -40,7 +38,7 @@ autosectionlabel_prefix_document = True
 autodoc_default_options = {
     'members': True,
     'member-order': 'bysource',
-    'special-members': '__init__,__setitem__,__getitem__',
+    'special-members': '__setitem__,__getitem__',
     'undoc-members': True,
 }
 # Add any paths that contain templates here, relative to this directory.
@@ -66,6 +64,4 @@ html_static_path = ['_static']
 
 html_theme_options = {
     'logo' : 'logo.svg',
-    'github_user': 'ARgorithm',
-    'github_repo': 'Toolkit'
 }
