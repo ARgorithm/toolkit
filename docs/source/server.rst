@@ -114,7 +114,9 @@ If server is running on cloud
 
 .. code:: bash
 
-    $ ARgorithm configure    Enter server endpoint or press ENTER to connect to ARgorithm common server : https://customendpoint.com    ✔ Cloud requests will now go to https://customendpoint.com``
+    $ ARgorithm configure    
+    Enter server endpoint or press ENTER to connect to ARgorithm common server : https://customendpoint.com    
+    ✔ Cloud requests will now go to https://customendpoint.com
 
 5. **Connecting mobile application to server**
 
