@@ -33,7 +33,7 @@ def test_indexing():
     assert last_state.content["state_def"]["index"] == 1
     
     subst = st[1:3]
-    assert type(subst) == type(st)
+    assert isinstance(subst,ARgorithmToolkit.String)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'string_declare'
     assert last_state.content["state_def"]["variable_name"] == 'st_super_sub'

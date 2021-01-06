@@ -1,4 +1,3 @@
-import os
 import setuptools
 
 with open("docs/README.md", "r") as fh:
@@ -7,7 +6,7 @@ with open("docs/README.md", "r") as fh:
 __version__ = "0.0.11"
 
 setuptools.setup(
-    name="ARgorithmToolkit", 
+    name="ARgorithmToolkit",
     version=__version__,
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
@@ -32,7 +31,7 @@ setuptools.setup(
     project_urls={  # Optional
         'Source': 'https://github.com/ARgorithm/Toolkit',
         'Bug Reports' : "https://github.com/ARgorithm/Toolkit/issues",
-        'Documentation' : 'https://argorithmtoolkit.readthedocs.io/en/latest' 
+        'Documentation' : 'https://argorithmtoolkit.readthedocs.io/en/latest'
     },
     entry_points = {
         'console_scripts': [

@@ -47,7 +47,7 @@ states:
         index_1 : first index at which element has to be highlighted [required]
         index_2 : first index at which element has to be highlighted [required] 
         
-class:
+classes:
   - ARgorithmToolkit.vector.Vector:
       description: Class that manages the vector interface
   - ARgorithmToolkit.vector.VectorState:

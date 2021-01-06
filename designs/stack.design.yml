@@ -28,7 +28,7 @@ states:
             variable_name: Variable name of the stack [required]
             body: body of stack
   
-class:
+classes:
     - ARgorithmToolkit.stack.Stack:
         description: Main class for handling stacks 
     - ARgorithmToolkit.stack.StackState:
@@ -40,8 +40,8 @@ functions:
         function: 
             name: ARgorithmToolkit.stack.Stack.__init__
             parameters:
-            required:
-                - algo
+                required:
+                    - algo
         state: stack_declare
 
     - push:
@@ -49,8 +49,8 @@ functions:
         function: 
             name: ARgorithmToolkit.stack.Stack.push
             parameters:
-            required:
-                - element
+                required:
+                    - element
         state: stack_push
 
     - pop:

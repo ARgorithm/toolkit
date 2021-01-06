@@ -32,7 +32,7 @@ states:
         index_1 : first index at which element has to be highlighted [required]
         index_2 : first index at which element has to be highlighted [required] 
         
-class:
+classes:
   - ARgorithmToolkit.array.Array:
       description: Class that manages the array interface
   - ARgorithmToolkit.array.ArrayState:
@@ -94,7 +94,7 @@ functions:
       
   - swap:
       description: swap two elements
-      function: 
+      function:
         name : ARgorithmToolkit.array.Array.swap
         parameters:
           reqiured:

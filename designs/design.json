@@ -1,0 +1,146 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ARgorithm design",
+    "description": "ARgorithm data structures designs act as metadata useful for developers and users",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["date","author","category","states","functions"],
+    "properties": {
+        "date" : {
+            "type":"string",
+            "description": "Date of design in YYYY-MM-DD format"
+        },
+        "author" : {
+            "type":"string",
+            "description": "Name of author"
+        },
+        "category" : {
+            "type":"string",
+            "description": "data structure being designed"    
+        },
+        "states":{
+            "type" : "array",
+            "minItems" : 1,
+            "description": "In states , store a list of state related to the data structure",
+            "items": {
+                "type":"object",
+                "patternProperties": {
+                    "^.*$":{
+                        "type" : "object",
+                        "additionalProperties": false,
+                        "required": ["description","definition"],
+                        "description": "Unique name given to state",
+                        "properties": {
+                            "description" : {
+                                "type":"string",
+                                "description": "Description of what this state implies" 
+                            },
+                            "definition" : {
+                                "type":"object",
+                                "description": "the attributes in state definitions",
+                                "patternProperties": {
+                                    "^.*$":{
+                                        "type":"string",
+                                        "description": "Description of attribute"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "classes":{
+            "type" : "array",
+            "minItems" : 1,
+            "description": "In classes , store a list of classes related to the data structure",
+            "items": {
+                "type" : "object",
+                "patternProperties": {
+                    "^ARgorithmToolkit":{
+                        "type": "object",
+                        "description": "The class name should as in package directory e.g. ARgorithmToolkit.<module>.<classname>",
+                        "properties": {
+                            "description":{
+                                "description": "Description of class",
+                                "type":"string"
+                            }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            },
+            "additionalItems": false
+        },
+        "functions":{
+            "type" : "array",
+            "description": "In function , add list of functions included for structure along with the state they generate",
+            "minItems" : 1,
+            "items": {
+                "type":"object",
+                "patternProperties": {
+                    "^.*$":{
+                        "type": "object",
+                        "description": "function name, need not match to actual function name",
+                        "additionalProperties": false,
+                        "required": ["description","function","state"],
+                        "properties": {
+                            "description":{
+                                "description": "description of function",
+                                "type":"string"
+                            },
+                            "function":{
+                                "description": "If no function yet, put None else describe object",
+                                "type":["object","string"],
+                                "anyOf": [
+                                    {
+                                        "required": ["name"],
+                                        "properties": {
+                                            "name" : {
+                                                "type":"string",
+                                                "description": "The class method or function in package relevant to this function"
+                                            },
+                                            "parameters" : {
+                                                "type" : "object",
+                                                "description": "function parameters",
+                                                "properties": {
+                                                    "required":{
+                                                        "type":"array",
+                                                        "description": "List of required parameters",
+                                                        "items": {
+                                                            "type":"string"
+                                                        }
+                                                    },
+                                                    "not_required":{
+                                                        "type":"array",
+                                                        "description": "List of required parameters",
+                                                        "items": {
+                                                            "type":"string"
+                                                        }
+                                                    } 
+                                                }
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "const":"None",
+                                        "description": "No function or class method is mapped to this"
+                                    }
+                                ]
+                                
+                            },
+                            "state":{
+                                "type":"string",
+                                "description": "The state triggered by function"
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+  }
+  

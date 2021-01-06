@@ -6,8 +6,8 @@ from os import listdir
 from os.path import join
 
 def get_files():
-    mypath = 'schemas'
-    onlyfiles = [join(mypath,x) for x in listdir("schemas") if x[-3:]=='yml' and x!='general_schema.yml']
+    mypath = 'designs'
+    onlyfiles = [join(mypath,x) for x in listdir("designs") if x[-9:]=='design.yml']
     return onlyfiles
 
 def get_schema(x):
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     with open("shields.json",'w') as file:
         shields = {
             "Schema" : {
-                "label" : "Schema",
+                "label" : "Up-to-date",
                 "status" : tag,
                 "color" : color
             }

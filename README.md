@@ -9,7 +9,7 @@ The package is designed to provide an STL like feature to various data structure
 
 <hr/>
 
-### Repository Usage
+## Repository Usage
 
 The repository has a make file for all its major functions :
 
@@ -26,7 +26,7 @@ Will run tests on code
 ```bash
 $ make verify
 ```
-to verify schemas
+to verify designs
 ```bash
 $ make dist
 ```
@@ -48,9 +48,9 @@ deploy package to PyPip. Required setup of PyPip before that
 
 2. **tests** contains tests created for **ARgorithmToolkit** . These tests are designed for Pytest
 
-3. **schemas** contains schemas for the design each individual data structure
+3. **designs** contains schemas for each individual data structure
 
-4. make sure to run `make verify` before pushing to ensure schema is up to date with code. This will update `shields.json` , *always push shields.json*
+4. make sure to run `make verify` before pushing to ensure data structure designs are up to date with code. This will update `shields.json` , *always push shields.json*
 
 5. Package dependencies that required by **ARgorithmToolkit** should be added in setup.py `install_requires`
 

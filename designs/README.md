@@ -1,8 +1,8 @@
-## Schemas
+## Designs
 
-This folder contains schema files for each kind of data structure and algorithm included in ARgorithmToolkit. These schemas are logical designs on how  the states are generated and how they should be interpreted during the AR rendering.
+This folder contains design files for each kind of data structure and algorithm included in ARgorithmToolkit. These designs are logical plans on how the states are generated and how they should be interpreted during the AR rendering.
 
-#### Format of writing schema
+### Format of writing design
 
 YAML has been used due to it being easily read by humans compared to json and can also be read by machines
 
@@ -10,7 +10,7 @@ YAML has been used due to it being easily read by humans compared to json and ca
 date: Date
 category: Template
 author: Author
-# This is a template schema that needs to be kept in mind while designing and writing yml files
+# This is a template design that needs to be kept in mind while designing and writing yml files
 
 # in states , store a list of state related to the data structure
 states: 
@@ -47,4 +47,4 @@ functions:
 
 ```
 
-This general format for writing schema has been stored in [`general_schema.yml`]()
+If you using as <img src="https://raw.githubusercontent.com/tomchen/stack-icons/master/logos/visual-studio-code.svg" style="height:21px;" /> VS Code your editor then you should have your editor configured with the schema of `.design.yml`

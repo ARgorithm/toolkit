@@ -1,8 +1,9 @@
-"""ARgorithmToolkit comes with a powerful CLI to interact with your ARgorithm server and to assist in the process of ARgorithm creation.
-It is installed and setup when you install the ARgorithmToolkit package. you can call it in the commandline::
-    
-    $ ARgorithm -h
+"""ARgorithmToolkit comes with a powerful CLI to interact with your ARgorithm
+server and to assist in the process of ARgorithm creation. It is installed and
+setup when you install the ARgorithmToolkit package. you can call it in the
+commandline::
 
+$ ARgorithm -h
 """
 
 import argparse
@@ -20,8 +21,7 @@ CLOUD_URL = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com"
 
 
 def configure():
-    """This function sets the cloud server endpoint to connect to
-    """
+    """This function sets the cloud server endpoint to connect to."""
     CACHE_DIR = os.path.join(HOME,".argorithm")
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
@@ -48,7 +48,7 @@ def configure():
             msg.fail("Endpoint couldnt be found.") 
 
 def get_url():
-    """This function returns the cloud endpoint url from the cache storage
+    """This function returns the cloud endpoint url from the cache storage.
 
     Returns:
         str: URL of endpoint
@@ -63,7 +63,8 @@ def get_url():
     return CLOUD_URL
 
 def auth_check(local=False):
-    """This function is used to check whether the server accessed by programmer has authorization setup or not
+    """This function is used to check whether the server accessed by programmer
+    has authorization setup or not.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -83,7 +84,8 @@ def auth_check(local=False):
         return False
        
 def login(local=False):
-    """Logs in programmer into the server where they would be submitting their code
+    """Logs in programmer into the server where they would be submitting their
+    code.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -112,7 +114,7 @@ def login(local=False):
         raise ARgorithmError("Failed Authentication")
 
 def sign_up(local=False):
-    """Creates new account for programmer on specified server
+    """Creates new account for programmer on specified server.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -157,7 +159,8 @@ def sign_up(local=False):
         raise ARgorithmError("Failed Registration")
 
 def get_token(local=False,overwrite=False):
-    """Checks whether the programmer is logged in or not. If logged in , then the JWT token is verified else login action is triggered
+    """Checks whether the programmer is logged in or not. If logged in , then
+    the JWT token is verified else login action is triggered.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -199,7 +202,7 @@ def get_token(local=False,overwrite=False):
         raise ARgorithmError("Failed Authentication")
 
 def valid_funcname(x):
-    """Checks whether ARgorithmID selected by programmer is acceptable or not
+    """Checks whether ARgorithmID selected by programmer is acceptable or not.
 
     Args:
         x (str): ARgorithmID
@@ -215,8 +218,7 @@ def valid_funcname(x):
         return False
 
 def init():
-    """Creates empty template for the programmer to develop argorithm on.
-    """
+    """Creates empty template for the programmer to develop argorithm on."""
     funcname = input('Enter name for ARgorithm File : ')
     while not valid_funcname(funcname):
         funcname = input('Please enter valid filename [A-Za-z_] : ')
@@ -260,7 +262,7 @@ def run(**kwargs):
     msg.info('Run ARgorithm submit',"when ready to submit")
 
 def submit(local=False,name=None):
-    """Submits ARgorithm code file as well as ARgorithm config file to server
+    """Submits ARgorithm code file as well as ARgorithm config file to server.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -355,7 +357,8 @@ def submit(local=False,name=None):
         msg.info("Sorry , server offline")
 
 def update(local=False,name=None):
-    """Submits new ARgorithm code file as well as new ARgorithm config file for already existing ARgorithm in server
+    """Submits new ARgorithm code file as well as new ARgorithm config file for
+    already existing ARgorithm in server.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -453,7 +456,7 @@ def update(local=False,name=None):
 
 
 def render_menu(menu:dict):
-    """Shows list of available ARgorithms on server
+    """Shows list of available ARgorithms on server.
 
     Args:
         menu (dict): response from server
@@ -479,7 +482,7 @@ def render_menu(menu:dict):
     return menu['list'][option-1]['argorithmID']
 
 def delete(local=False):
-    """Deletes ARgorithm from server
+    """Deletes ARgorithm from server.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -538,7 +541,7 @@ def delete(local=False):
     
 
 def test(local=False):
-    """Tests ARgorithm in server
+    """Tests ARgorithm in server.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -585,7 +588,7 @@ def test(local=False):
         msg.fail('Function call has failed')    
 
 def grant(local=False):
-    """Grants an account admin priveleges
+    """Grants an account admin priveleges.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -622,7 +625,7 @@ def grant(local=False):
         msg.fail("server failure")
 
 def revoke(local=False):
-    """Revokes admin priveleges from specified account
+    """Revokes admin priveleges from specified account.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -657,7 +660,8 @@ def revoke(local=False):
         msg.fail("server failure")
 
 def delete_account(local=False,programmer=False):
-    """Deletes user account. Can also delete programmer account if programmer flag is set
+    """Deletes user account. Can also delete programmer account if programmer
+    flag is set.
 
     Args:
         local (bool, optional): If true checks for local server instance. Defaults to False.
@@ -697,10 +701,11 @@ def delete_account(local=False,programmer=False):
         msg.fail("server failure")
 
 def blacklist(local=False,black=True):
-    """Used to blacklist/whitelist users and programmers depending on ``black`` flag
+    """Used to blacklist/whitelist users and programmers depending on ``black``
+    flag.
 
     Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.    
+        local (bool, optional): If true checks for local server instance. Defaults to False.
         black (bool, optional): If true , blacklists account else whitelists account. Defaults to True.
     """
     try:
@@ -743,8 +748,7 @@ def blacklist(local=False,black=True):
 
 
 def cmd():
-    """Generates Command Line Interface using powerful ``argparse`` library
-    """
+    """Generates Command Line Interface using powerful ``argparse`` library."""
     parser = argparse.ArgumentParser(prog="ARgorithm",description="ARgorithm CLI",formatter_class=argparse.RawDescriptionHelpFormatter)
     subparsers = parser.add_subparsers(title="command",dest="command",help='try command --help for more details',required=True)
 
@@ -856,5 +860,4 @@ def cmd():
             blacklist(args.local,black=False)
         elif args.subcommand == "delete":
             delete_account(args.local,args.programmer)
-        
         

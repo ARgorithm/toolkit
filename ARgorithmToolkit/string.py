@@ -1,21 +1,21 @@
-"""
-The string module provides support for immutable strings.
-The main class in this module is the String class. The StringState acts as a support class to String class.
-For this reason the String class can directly be imported from the ARgorithmToolkit library without having to import from the string module:
-    
+"""The string module provides support for immutable strings. The main class in
+this module is the String class. The StringState acts as a support class to
+String class. For this reason the String class can directly be imported from
+the ARgorithmToolkit library without having to import from the string module:
+
     >>> s = ARgorithmToolkit.string.String(name="s",algo=algo)
     >>> s = ARgorithmToolkit.String(name="s",algo=algo)
-
 """
 
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 
 class StringState:
-    """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.string.String`` object.
-    
+    """This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.string.String`` object.
+
     Attributes:
-        
+
         name (str) : Name of the variable for whom we are generating states
     """
     
@@ -23,7 +23,8 @@ class StringState:
         self.name = name
     
     def string_declare(self, body, comments=""):
-        """Generates the `string_declare` state when an instance of string is created
+        """Generates the `string_declare` state when an instance of string is
+        created.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -44,7 +45,8 @@ class StringState:
         )
     
     def string_iter(self, body, index, comments=""):
-        """Generates the `string_iter` state when an character of string has been accessed
+        """Generates the `string_iter` state when an character of string has
+        been accessed.
 
         Args:
             body (str): The string
@@ -67,7 +69,8 @@ class StringState:
         )
     
     def string_append(self, body, element, comments=""):
-        """Generates the `string_append` state when another string has been appended to this string
+        """Generates the `string_append` state when another string has been
+        appended to this string.
 
         Args:
             body (str): The original string appended with new string
@@ -90,7 +93,8 @@ class StringState:
         )
     
 class StringIterator:
-    """This class is a generator that is returned each time an string has to be iterated
+    """This class is a generator that is returned each time an string has to be
+    iterated.
 
     Yields:
         character of string
@@ -100,7 +104,7 @@ class StringIterator:
     """
     
     def __init__(self,string):
-        assert type(string) == String
+        assert isinstance(string,String)
         self.string = string
         self._index = 0
         self.size = len(string)
@@ -114,7 +118,8 @@ class StringIterator:
             return v
 
 class String():    
-    """The String class is a wrapper around the already existing string class in python adding the feature to store states
+    """The String class is a wrapper around the already existing string class
+    in python adding the feature to store states.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -131,21 +136,20 @@ class String():
         >>> st = ARgorithmToolkit.String('st', algo, "Hello world! 1234")
         >>> st
         String('Hello world! 1234')
-
     """
     def __init__(self,name,algo,body='',comments=""):
         try:
-            assert type(name)==str 
+            assert isinstance(name,str) 
             self.state_generator = StringState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == StateSet 
+            assert isinstance(algo,StateSet) 
             self.algo = algo
         except:
             raise TypeError("string structure needs a reference of template to store states")
         try:
-            assert type(body) == str
+            assert isinstance(body,str)
             self.body = body
         except:
             raise ARgorithmError("String body should be of type string")
@@ -153,7 +157,7 @@ class String():
         self.algo.add_state(state)
         
     def __len__(self):
-        """The operator overload for len() function. Returns size of string
+        """The operator overload for len() function. Returns size of string.
 
         Returns:
             int: size of string
@@ -163,12 +167,12 @@ class String():
             String('Hello world! 1234hahaha')
             >>> len(st)
             23
-
         """
         return len(self.body)
 
     def __getitem__(self,key,comments=""):
-        """The operator overload for string indexing as well as string splicing
+        """The operator overload for string indexing as well as string
+        splicing.
 
         Args:
             key (index): If int then character at index is returned. Else if slice , then substring is returned
@@ -184,9 +188,8 @@ class String():
             'l'
             >>> st[2:6]
             String('llo ')
-            
         """
-        if type(key) == slice:
+        if isinstance(key,slice):
             name = f"{self.state_generator.name}_sub"
             return String(name , self.algo , self.body[key] , comments=f"creating new substring for {key}")
         else:
@@ -196,7 +199,8 @@ class String():
 
 
     def __setitem__(self, key, value):
-        """As this wrapper is for immutable string, set item is not supported so an error is raised
+        """As this wrapper is for immutable string, set item is not supported
+        so an error is raised.
 
         Raises:
             TypeError: Raised always
@@ -204,7 +208,7 @@ class String():
         raise TypeError("'String' object does not support item assignment")
 
     def __iter__(self):
-        """Returns iterator for string
+        """Returns iterator for string.
 
         Returns:
             [StringIterator]: The generator object for the String
@@ -224,7 +228,7 @@ class String():
         return str(self.body)
 
     def append(self, value, comments=''):
-        """appends second string (that is value) to self
+        """appends second string (that is value) to self.
 
         Args:
             value (str or String): The string that is to be appeneded
@@ -236,16 +240,16 @@ class String():
             >>> st.append("hahaha")
             >>> st
             String('Hello world! 1234hahaha')
-
         """
-        if type(value) == String:
+        if isinstance(value,String):
             value = value.body
         self.body += value
         state = self.state_generator.string_append(self.body , value, comments) 
         self.algo.add_state(state)
 
     def __add__(self, value):
-        """Operator overload for addition operation that work similar to append but returns a new String object
+        """Operator overload for addition operation that work similar to append
+        but returns a new String object.
 
         Returns:
             [String]: The new string that is the addition of the 2 strings
@@ -256,9 +260,8 @@ class String():
             >>> x = st + "?!"
             >>> x
             String('Hello world! 1234hahaha?!')
-            
         """
-        if type(value) == String:
+        if isinstance(value,String):
             value = value.body
         name = f"{self.state_generator.name}_super"
         new = String(name=name, algo=self.algo, body=self.body, comments=f'creating new string with {value} appended to the original string')
