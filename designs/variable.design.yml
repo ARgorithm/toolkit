@@ -15,7 +15,7 @@ states:
         variable_name: name of the variable [required] 
         value: value [required]
 
-class:
+classes:
   - ARgorithmToolkit.utils.Variable:
       description: purpose of class
 

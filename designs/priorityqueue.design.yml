@@ -29,7 +29,7 @@ states:
             body: body of priorityqueue
 
 
-class:
+classes:
     - ARgorithmToolkit.priorityqueue.PriorityQueue:
         description: Main class for handling queues 
     - ARgorithmToolkit.priorityqueue.PriorityQueueState:
@@ -41,8 +41,8 @@ functions:
         function: 
             name: ARgorithmToolkit.priorityqueue.PriorityQueue.__init__
             parameters:
-            required:
-                - algo
+                required:
+                    - algo
         state: priorityqueue_declare
 
     - offer:
@@ -50,8 +50,8 @@ functions:
         function: 
             name: ARgorithmToolkit.priorityqueue.PriorityQueue.offer
             parameters:
-            required:
-                - element
+                required:
+                    - element
         state: priorityqueue_push
 
     - poll:

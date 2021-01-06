@@ -34,7 +34,7 @@ states:
             variable_name: Variable name of the queue [required]
             body: body of queue
 
-class:
+classes:
     - ARgorithmToolkit.queue.Queue:
         description: Main class for handling queues 
     - ARgorithmToolkit.queue.QueueState:
@@ -46,8 +46,8 @@ functions:
         function: 
             name: ARgorithmToolkit.queue.Queue.__init__
             parameters:
-            required:
-                - algo
+                required:
+                    - algo
         state: queue_declare
 
     - push:
@@ -55,8 +55,8 @@ functions:
         function: 
             name: ARgorithmToolkit.queue.Queue.push
             parameters:
-            required:
-                - element
+                required:
+                    - element
         state: queue_push
 
     - pop:

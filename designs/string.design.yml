@@ -25,7 +25,7 @@ states:
 
 
         
-class:
+classes:
   - ARgorithmToolkit.string.String:
       description: Class that manages the string interface
   - ARgorithmToolkit.string.StringState:
