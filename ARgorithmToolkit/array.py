@@ -1,7 +1,9 @@
-"""The array module provides support for one dimensional arrays as well as multinational arrays.
-The main class in this module is the Array class. The other classes act as support class to Array class.
-For this reason the Array class can directly be imported from the ARgorithmToolkit library without having to import from the array module
-Both work:
+"""The array module provides support for one dimensional arrays as well as
+multinational arrays. The main class in this module is the Array class. The
+other classes act as support class to Array class. For this reason the Array
+class can directly be imported from the ARgorithmToolkit library without having
+to import from the array module Both work:
+
     >>> arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=test_data)
     >>> arr = ARgorithmToolkit.array.Array(name='arr',algo=algo,data=test_data)
 """
@@ -10,7 +12,8 @@ from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 import numpy as np
 
 def check_dimensions(data):
-    """This function is an internal function that helps verify the dimensions of array from user input
+    """This function is an internal function that helps verify the dimensions
+    of array from user input.
 
     Args:
         data : data is a multi-dimensional list or tuple
@@ -34,10 +37,11 @@ def check_dimensions(data):
 
 
 class ArrayState:
-    """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.array.Array`` object.
-    
+    """This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.array.Array`` object.
+
     Attributes:
-        
+
         name (str) : Name of the variable for whom we are generating states
     """
     def __init__(self,name):
@@ -45,14 +49,15 @@ class ArrayState:
     
     
     def array_declare(self,body,comments=""):
-        """Generates the `array_declare` state when an instance of Array class is created
+        """Generates the `array_declare` state when an instance of Array class
+        is created.
 
         Args:
             body: The contents of the array that are to be sent along with the state
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
-            ARgorithmToolkit.utils.State: returns the ``array_declare`` state for the respective array mentioned 
+            ARgorithmToolkit.utils.State: returns the ``array_declare`` state for the respective array mentioned
         """
         state_type = "array_declare"
         state_def = {
@@ -66,7 +71,8 @@ class ArrayState:
         )
     
     def array_iter(self,body,index,comments=""):
-        """Generates the `array_iter` state when a particular index of array has been accessed.
+        """Generates the `array_iter` state when a particular index of array
+        has been accessed.
 
         Args:
             body: The contents of the array that are to be sent along with the state
@@ -74,7 +80,7 @@ class ArrayState:
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
-            ARgorithmToolkit.utils.State: returns the ``array_iter`` state for the respective array mentioned 
+            ARgorithmToolkit.utils.State: returns the ``array_iter`` state for the respective array mentioned
         """
         state_type = "array_iter"
         state_def = {
@@ -89,7 +95,8 @@ class ArrayState:
         )
 
     def array_swap(self,body,indexes,comments=""):
-        """Generates the ``array_swap`` state when values at two indexes of array are being swapped
+        """Generates the ``array_swap`` state when values at two indexes of
+        array are being swapped.
 
         Args:
             body: The contents of the array that are to be sent along with the state
@@ -113,7 +120,8 @@ class ArrayState:
         )
     
     def array_compare(self,body,indexes,comments=""):
-        """Generates the ``array_compare`` state when values at two indexes of array are being compared
+        """Generates the ``array_compare`` state when values at two indexes of
+        array are being compared.
 
         Args:
             body: The contents of the array that are to be sent along with the state
@@ -137,7 +145,8 @@ class ArrayState:
         )
 
 class ArrayIterator:
-    """This class is a generator that is returned each time an array has to be iterated
+    """This class is a generator that is returned each time an array has to be
+    iterated.
 
     Yields:
         element of Array
@@ -160,7 +169,8 @@ class ArrayIterator:
             return v
 
 class Array:
-    """The Array class used to emulate multidimensional arrays that can be rendered in the ARgorithm Application as series of blocks
+    """The Array class used to emulate multidimensional arrays that can be
+    rendered in the ARgorithm Application as series of blocks.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -211,7 +221,6 @@ class Array:
         7
         7
         7
-
     """    
     def __init__(self, name:str, algo:StateSet, data=None, shape=None, fill=0, dtype=int, comments=""):
         try:
@@ -241,7 +250,7 @@ class Array:
         self.algo.add_state(state)
         
     def __len__(self):
-        """returns length of array when processed by len() function
+        """returns length of array when processed by len() function.
 
         Returns:
             int: length of array or first dimension of array if it is multidimensional
@@ -253,7 +262,7 @@ class Array:
         return len(self.body)
 
     def shape(self):
-        """Get shape of array. As shown in above example
+        """Get shape of array. As shown in above example.
 
         Returns:
             tuple: shape of array as a tuple
@@ -265,7 +274,8 @@ class Array:
         return (self.body.shape) if type(self.body.shape) != tuple else self.body.shape
 
     def __getitem__(self, key, comments=""):
-        """overloading the item access operator to generate states and create more instances of ARgorithmToolkit Array if subarray is accessed 
+        """overloading the item access operator to generate states and create
+        more instances of ARgorithmToolkit Array if subarray is accessed.
 
         Args:
             key (index or slice): 
@@ -279,7 +289,7 @@ class Array:
 
         Examples:
             >>> arr[1,2]
-            6 
+            6
         """
         try:
             if type(key) == slice:
@@ -305,7 +315,7 @@ class Array:
             raise ARgorithmError(f"invalid index error : {str(e)}")
 
     def __setitem__(self, key, value):
-        """Overload element write operation to trigger state
+        """Overload element write operation to trigger state.
 
         Args:
             key (index): index where element is written
@@ -323,7 +333,8 @@ class Array:
         self.algo.add_state(state)
 
     def __iter__(self):
-        """Generates a iterator object to iterate the array along its first dimension
+        """Generates a iterator object to iterate the array along its first
+        dimension.
 
         Returns:
             ArrayIterator: Iterator object
@@ -335,7 +346,7 @@ class Array:
         return iter(self.body)
 
     def compare(self,index1,index2,func=None,comments=""):
-        """compares elements at 2 indexes of array
+        """compares elements at 2 indexes of array.
 
         Args:
             index1 (index): The index of first element to be compared
@@ -361,7 +372,7 @@ class Array:
         return func(item1, item2)
 
     def swap(self,index1,index2,comments=""):
-        """swaps elements at 2 indexes of array
+        """swaps elements at 2 indexes of array.
 
         Args:
             index1 (index): The index of first element to be swapped
@@ -383,7 +394,7 @@ class Array:
         self.algo.add_state(state)
 
     def tolist(self):
-        """Returns array as multidimensional list
+        """Returns array as multidimensional list.
 
         Returns:
             list: multidimensional python list containing value of array
@@ -398,7 +409,7 @@ class Array:
         return self.body.tolist()
         
     def __str__(self):
-        """String conversion for Array
+        """String conversion for Array.
 
         Returns:
             str: String describing Array
@@ -406,7 +417,7 @@ class Array:
         return f"Array({self.tolist.__str__()})"
 
     def __repr__(self):
-        """Return representation for shell outputs
+        """Return representation for shell outputs.
 
         Returns:
             str: shell representation for array

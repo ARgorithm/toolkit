@@ -1,20 +1,20 @@
-"""
-The stack module provides support for stacks.
-The main class in this module is the Stack class. The StackState acts as a support class to Stack class.
-For this reason the Stack class can directly be imported from the ARgorithmToolkit library without having to import from the stack module:
-    
+"""The stack module provides support for stacks. The main class in this module
+is the Stack class. The StackState acts as a support class to Stack class. For
+this reason the Stack class can directly be imported from the ARgorithmToolkit
+library without having to import from the stack module:
+
     >>> st = ARgorithmToolkit.stack.Stack(name="st",algo=algo)
     >>> st = ARgorithmToolkit.Stack(name="st",algo=algo)
-
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 
 class StackState():
-    """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.stack.Stack`` object.
-    
+    """This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.stack.Stack`` object.
+
     Attributes:
-        
+
         name (str) : Name of the variable for whom we are generating states
     """
     
@@ -22,7 +22,8 @@ class StackState():
         self.name = name
 
     def stack_declare(self,comments=""):
-        """Generates the `stack_declare` state when an instance of stack is created
+        """Generates the `stack_declare` state when an instance of stack is
+        created.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -42,7 +43,7 @@ class StackState():
         )
     
     def stack_push(self,body,element,comments=""):
-        """Generates the `stack_push` state when an element is added to stack
+        """Generates the `stack_push` state when an element is added to stack.
 
         Args:
             body (list): contents of stack
@@ -65,7 +66,8 @@ class StackState():
         )
     
     def stack_pop(self,body,comments=""):
-        """Generates the `stack_pop` state when an element is popped from stack
+        """Generates the `stack_pop` state when an element is popped from
+        stack.
 
         Args:
             body (list): contents of stack
@@ -86,7 +88,7 @@ class StackState():
         )
 
     def stack_top(self,body,comments=""):
-        """Generates the `stack_push` state when top of stack is accessed 
+        """Generates the `stack_push` state when top of stack is accessed.
 
         Args:
             body (list): contents of stack
@@ -107,7 +109,8 @@ class StackState():
         )
     
 class Stack:
-    """The Stack class is a container interface for the stack, a linear container implementation of LIFO
+    """The Stack class is a container interface for the stack, a linear
+    container implementation of LIFO.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -120,7 +123,6 @@ class Stack:
     Example:
         >>> algo = ARgorithmToolkit.StateSet()
         >>> st = ARgorithmToolkit.stack.Stack(name="st",algo=algo)
-
     """
     def __init__(self,name:str,algo:StateSet,comments=""):
         try:
@@ -138,7 +140,7 @@ class Stack:
         self.algo.add_state(state)
 
     def __len__(self):
-        """Operator overload for len() function , returns size of stack
+        """Operator overload for len() function , returns size of stack.
 
         Returns:
             int: size of stack
@@ -150,7 +152,7 @@ class Stack:
         return len(self.body)
     
     def empty(self):
-        """Checks whether stack is empty or not
+        """Checks whether stack is empty or not.
 
         Returns:
             bool: if true then stack is empty
@@ -161,12 +163,11 @@ class Stack:
             >>> st.push(1)
             >>> st.empty()
             False
-
         """
         return len(self)==0
 
     def push(self,element,comments=""):
-        """Pushes element to stack top
+        """Pushes element to stack top.
 
         Args:
             element: Element to be pushed to stack top
@@ -180,7 +181,7 @@ class Stack:
         self.algo.add_state(state)
 
     def pop(self,comments=""):
-        """Pops element from stack top
+        """Pops element from stack top.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -197,7 +198,6 @@ class Stack:
             >>> st.push(1)
             >>> st.pop()
             1
-
         """
         if self.empty():
             raise ARgorithmError('Stack is empty')
@@ -208,7 +208,7 @@ class Stack:
         return item
 
     def top(self,comments=""):
-        """returns element from stack top
+        """returns element from stack top.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -225,7 +225,6 @@ class Stack:
             >>> st.push(3)
             >>> st.top()
             3
-
         """
         if self.empty():
             raise ARgorithmError('Stack is empty')
@@ -235,7 +234,7 @@ class Stack:
         return item
 
     def __str__(self):
-        """String conversion for Stack
+        """String conversion for Stack.
 
         Returns:
             str: String describing Stack
@@ -243,7 +242,7 @@ class Stack:
         return f"Stack({self.body.__str__()})"
 
     def __repr__(self):
-        """Return representation for shell outputs
+        """Return representation for shell outputs.
 
         Returns:
             str: shell representation for stack
@@ -251,4 +250,3 @@ class Stack:
         return f"Stack({self.body.__repr__()})"
 
 
-        

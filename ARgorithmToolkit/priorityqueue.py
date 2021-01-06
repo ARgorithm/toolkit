@@ -1,35 +1,38 @@
-"""
-The priorityqueue module provides support for priority queues maintained using min heap tree.
-The main class in this module is the PriorityQueue class. The PriorityQueueState acts as a support class to PriorityQueue class.
-For this reason the PriorityQueue class can directly be imported from the ARgorithmToolkit library without having to import from the priorityqueue module:
-    
+"""The priorityqueue module provides support for priority queues maintained
+using min heap tree. The main class in this module is the PriorityQueue class.
+The PriorityQueueState acts as a support class to PriorityQueue class. For this
+reason the PriorityQueue class can directly be imported from the
+ARgorithmToolkit library without having to import from the priorityqueue
+module:
+
     >>> pq = ARgorithmToolkit.priorityqueue.PriorityQueue(name="pq",algo=algo)
     >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
-
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 import heapq
 
 class PriorityQueueState():
-    """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.priorityqueue.PriorityQueue`` object.
-    
+    """This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.priorityqueue.PriorityQueue`` object.
+
     Attributes:
-        
+
         name (str) : Name of the variable for whom we are generating states
     """
     def __init__(self,name):
         self.name = name
 
     def priorityqueue_declare(self,comments=""):
-        """Generates the `priorityqueue_declare` state when an instance of PriorityQueue is created
+        """Generates the `priorityqueue_declare` state when an instance of
+        PriorityQueue is created.
 
         Args:
             body: The contents of the PriorityQueue that are to be sent along with the state
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
-            ARgorithmToolkit.utils.State: returns the ``priorityqueue_declare`` state for the respective PriorityQueue mentioned 
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_declare`` state for the respective PriorityQueue mentioned
         """
         state_type = "priorityqueue_declare"
         state_def = {
@@ -43,7 +46,8 @@ class PriorityQueueState():
         )
     
     def priorityqueue_offer(self,body,element,comments=""):
-        """Generates the `priorityqueue_offer` when an element is added to priority queue
+        """Generates the `priorityqueue_offer` when an element is added to
+        priority queue.
 
         Args:
             body: The contents of the PriorityQueue that are to be sent along with the state
@@ -52,7 +56,6 @@ class PriorityQueueState():
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``priorityqueue_offer`` state for the respective PriorityQueue mentioned
-             
         """
         state_type = "priorityqueue_offer"
         state_def = {
@@ -67,7 +70,8 @@ class PriorityQueueState():
         )
     
     def priorityqueue_poll(self,body,comments=""):
-        """Generates the `priorityqueue_offer` when an element is popped from priority queue
+        """Generates the `priorityqueue_offer` when an element is popped from
+        priority queue.
 
         Args:
             body: The contents of the PriorityQueue that are to be sent along with the state
@@ -75,7 +79,6 @@ class PriorityQueueState():
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
-        
         """
         state_type = "priorityqueue_poll"
         state_def = {
@@ -89,14 +92,15 @@ class PriorityQueueState():
         )
 
     def priorityqueue_peek(self,body,comments=""):
-        """Generates the `priorityqueue_peek` when first element of priority queue is accessed
+        """Generates the `priorityqueue_peek` when first element of priority
+        queue is accessed.
 
         Args:
             body: The contents of the PriorityQueue that are to be sent along with the state
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
-            ARgorithmToolkit.utils.State: returns the ``priorityqueue_peek`` state for the respective PriorityQueue mentioned 
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_peek`` state for the respective PriorityQueue mentioned
         """
         state_type = "priorityqueue_peek"
         state_def = {
@@ -110,8 +114,9 @@ class PriorityQueueState():
         )
 
 class PriorityQueue:
-    """The PriorityQueue class offes a priority queue container that stores states in its stateset which later are used to 
-    make dynamic Augmented reality visualizations
+    """The PriorityQueue class offes a priority queue container that stores
+    states in its stateset which later are used to make dynamic Augmented
+    reality visualizations.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -123,7 +128,7 @@ class PriorityQueue:
 
     Examples:
         >>> algo = ARgorithmToolkit.StateSet()
-        >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo) 
+        >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
     """
     
     def __init__(self, name:str, algo:StateSet, comments:str = ""):
@@ -142,7 +147,7 @@ class PriorityQueue:
         self.algo.add_state(state)
 
     def __len__(self):
-        """returns length of PriorityQueue when processed by len() function
+        """returns length of PriorityQueue when processed by len() function.
 
         Returns:
             int: Size of PriorityQueue
@@ -154,7 +159,7 @@ class PriorityQueue:
         return len(self.body)
     
     def empty(self):
-        """Checks whether PriorityQueue is empty or not
+        """Checks whether PriorityQueue is empty or not.
 
         Returns:
             bool: flag that is true if PriorityQueue is empty
@@ -166,12 +171,11 @@ class PriorityQueue:
             >>> pq.offer(1)
             >>> pq.empty()
             False
-
         """
         return len(self)==0
 
     def offer(self,element,comments=""):
-        """Add element to priority queue
+        """Add element to priority queue.
 
         Args:
             element : element to be added to priority queue
@@ -183,14 +187,13 @@ class PriorityQueue:
             >>> pq.offer(5)
             >>> pq
             PriorityQueue([3, 4, 5])
-
         """
         heapq.heappush(self.body, element)
         state = self.state_generator.priorityqueue_offer(self.body,element,comments)
         self.algo.add_state(state)
 
     def poll(self,comments=""):
-        """pops first element from priority queue
+        """pops first element from priority queue.
 
         Args:
             comments (str, optional): Comments for descriptive format. Defaults to "".
@@ -211,7 +214,6 @@ class PriorityQueue:
             3
             >>> pq.poll()
             4
-
         """
         if self.empty():
             raise ARgorithmError('queue is empty')
@@ -221,7 +223,7 @@ class PriorityQueue:
         return item
 
     def peek(self,comments=""):
-        """peeks at first element of priority queue
+        """peeks at first element of priority queue.
 
         Args:
             comments (str, optional): Comments for descriptive format. Defaults to "".
@@ -249,7 +251,7 @@ class PriorityQueue:
         return item
     
     def __str__(self):
-        """String conversion for Priority Queue
+        """String conversion for Priority Queue.
 
         Returns:
             str: String describing Priority Queue
@@ -257,7 +259,7 @@ class PriorityQueue:
         return f"PriorityQueue({self.body.__str__()})"
 
     def __repr__(self):
-        """Return representation for shell outputs
+        """Return representation for shell outputs.
 
         Returns:
             str: shell representation for priority queue
@@ -265,4 +267,3 @@ class PriorityQueue:
         return f"PriorityQueue({self.body.__repr__()})"
 
 
-        

@@ -1,27 +1,28 @@
-"""
-The queue module provides support for queues.
-The main class in this module is the Queue class. The QueueState acts as a support class to Queue class.
-For this reason the Queue class can directly be imported from the ARgorithmToolkit library without having to import from the queue module:
-    
+"""The queue module provides support for queues. The main class in this module
+is the Queue class. The QueueState acts as a support class to Queue class. For
+this reason the Queue class can directly be imported from the ARgorithmToolkit
+library without having to import from the queue module:
+
     >>> q = ARgorithmToolkit.queue.Queue(name="q",algo=algo)
     >>> q = ARgorithmToolkit.Queue(name="q",algo=algo)
-
 """
 
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 class QueueState():
-    """This class is used to generate states for various actions performed on the ``ARgorithmToolkit.queue.Queue`` object.
-    
+    """This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.queue.Queue`` object.
+
     Attributes:
-        
+
         name (str) : Name of the variable for whom we are generating states
     """
     def __init__(self,name):
         self.name = name
 
     def queue_declare(self,comments=""):
-        """Generates the `queue_declare` state when an instance of queue is created
+        """Generates the `queue_declare` state when an instance of queue is
+        created.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -64,7 +65,8 @@ class QueueState():
         )
     
     def queue_pop(self,body,comments=""):
-        """Generates the `queue_pop` state when an element is removed from queue.
+        """Generates the `queue_pop` state when an element is removed from
+        queue.
 
         Args:
             body (list): Body of queue
@@ -127,7 +129,8 @@ class QueueState():
         )
         
 class Queue:
-    """The Queue class is a container interface for the queue, a linear container implementation of FIFO
+    """The Queue class is a container interface for the queue, a linear
+    container implementation of FIFO.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -158,7 +161,7 @@ class Queue:
         self.algo.add_state(state)
 
     def __len__(self):
-        """The operator overload for len() function that returns size of queue
+        """The operator overload for len() function that returns size of queue.
 
         Returns:
             int: Size of queue
@@ -170,7 +173,7 @@ class Queue:
         return len(self.body)
     
     def empty(self):
-        """Checks whether queue is empty or not
+        """Checks whether queue is empty or not.
 
         Returns:
             bool: If true , it means queue is empty
@@ -181,12 +184,11 @@ class Queue:
             >>> q.push(3)
             >>> q.empty()
             False
-
         """
         return len(self)==0
 
     def push(self,element,comments=""):
-        """Adds element to back of queue
+        """Adds element to back of queue.
 
         Args:
             element : Element to be added to queue
@@ -205,7 +207,7 @@ class Queue:
         self.algo.add_state(state)
 
     def pop(self,comments=""):
-        """Removes element from front of queue and returns it
+        """Removes element from front of queue and returns it.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -225,7 +227,6 @@ class Queue:
             5
             >>> q
             Queue([4])
-
         """
         if self.empty():
             raise ARgorithmError('queue is empty')
@@ -236,7 +237,7 @@ class Queue:
         return item
 
     def front(self,comments=""):
-        """Returns front element of queue
+        """Returns front element of queue.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -252,7 +253,6 @@ class Queue:
             Queue([4, 2, 1])
             >>> q.front()
             4
-
         """
         if self.empty():
             raise ARgorithmError('queue is empty')
@@ -262,7 +262,7 @@ class Queue:
         return item
 
     def back(self,comments=""):
-        """Returns back element of queue
+        """Returns back element of queue.
 
         Args:
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
@@ -278,7 +278,6 @@ class Queue:
             Queue([4, 2, 1])
             >>> q.back()
             1
-
         """
         if self.empty():
             raise ARgorithmError('queue is empty')
@@ -288,7 +287,7 @@ class Queue:
         return item
 
     def __str__(self):
-        """String conversion for Queue
+        """String conversion for Queue.
 
         Returns:
             str: String describing Queue
@@ -296,7 +295,7 @@ class Queue:
         return f"Queue({self.body.__str__()})"
 
     def __repr__(self):
-        """Return representation for shell outputs
+        """Return representation for shell outputs.
 
         Returns:
             str: shell representation for queue
@@ -304,4 +303,3 @@ class Queue:
         return f"Queue({self.body.__repr__()})"
 
 
-        

@@ -8,7 +8,7 @@ def test_body():
     assert np.all(arr.body == test_data)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_declare'
-    assert np.all(last_state.content["state_def"]["body"] == arr.body) 
+    assert np.all(last_state.content["state_def"]["body"] == arr.body)
 
 
 def test_indexing():

@@ -9,7 +9,7 @@ The package is designed to provide an STL like feature to various data structure
 
 <hr/>
 
-### Repository Usage
+## Repository Usage
 
 The repository has a make file for all its major functions :
 

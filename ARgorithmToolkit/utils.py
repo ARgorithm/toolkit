@@ -1,14 +1,18 @@
-"""The utils module is the most important module of the entire library with the most important classes stored in the utils module.
-Due to the importance of these classes, all these classes can be directly imported from ARgorithmToolkit.
+"""The utils module is the most important module of the entire library with the
+most important classes stored in the utils module. Due to the importance of
+these classes, all these classes can be directly imported from
+ARgorithmToolkit.
 
 Both work:
     >>> algo = ARgorithmToolkit.utils.StateSet()
     >>> algo = ARgorithmToolkit.StateSet()
-    
 """
 
 class ARgorithmError(Exception):
-    """The error class for ARgorithmToolkit. Used to debug errors that are caused due to the logic and internal workings of ARgorithmToolkit
+    """The error class for ARgorithmToolkit.
+
+    Used to debug errors that are caused due to the logic and internal
+    workings of ARgorithmToolkit
     """        
     def __init__(self,*args):
         if args:
@@ -23,8 +27,12 @@ class ARgorithmError(Exception):
             return f"There's an error within ARgorithm template usage"
 
 class State:
-    """The Instance of State class can be considered as an event in the sequential order of events that get played out in Augmented Reality
-    Each Data structure has a helper class that makes states for it. For example , ARgorithmToolkit.array.Array has ARgorithmToolkit.array.ArrayState
+    """The Instance of State class can be considered as an event in the
+    sequential order of events that get played out in Augmented Reality Each
+    Data structure has a helper class that makes states for it.
+
+    For example , ARgorithmToolkit.array.Array has
+    ARgorithmToolkit.array.ArrayState
     """
     def __init__(self,**kwargs):
         self.content = {}
@@ -40,9 +48,11 @@ class State:
 
 
 class StateSet:
-    """The most important class in the entire Toolkit. An object of this class has to exist in every algorithm.
-    That object of StateSet is what should returned by ARgorithm as that is what is rendered in Augmented Reality
-    As these are what contain the metadata for rendering the algorithm. Instance of this class is conventionally called ``algo``
+    """The most important class in the entire Toolkit. An object of this class
+    has to exist in every algorithm. That object of StateSet is what should
+    returned by ARgorithm as that is what is rendered in Augmented Reality As
+    these are what contain the metadata for rendering the algorithm. Instance
+    of this class is conventionally called ``algo``
 
     Attributes:
         states (list): This is list of State objects that is sequentially rendered in Augmented Reality.
@@ -54,7 +64,7 @@ class StateSet:
         self.states = []
 
     def add_state(self,state):
-        """This method adds State to the list of states
+        """This method adds State to the list of states.
 
         Args:
             state (ARgorithmToolkit.utils.State): The state that has to be added
@@ -69,7 +79,7 @@ class StateSet:
         self.states.append(state)
 
     def __str__(self):
-        """String representation of StateSet
+        """String representation of StateSet.
 
         Returns:
             str: The list of all states in a multiline string
@@ -78,7 +88,8 @@ class StateSet:
         return f"{state_desc}"
 
     def add_comment(self,comments:str):
-        """Adds a blank state with just text information that could be used for describing content. Check the comments section for more info
+        """Adds a blank state with just text information that could be used for
+        describing content. Check the comments section for more info.
 
         Args:
             comments (str): Comments for descriptive purpose
@@ -91,8 +102,9 @@ class StateSet:
         self.add_state(comment_state)
 
 class Variable:
-    """Some programs might need us to listen and store states of primitive datatypes like int, str , bool etc. For tha purpose, we have
-    the Variable class
+    """Some programs might need us to listen and store states of primitive
+    datatypes like int, str , bool etc. For tha purpose, we have the Variable
+    class.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -123,7 +135,7 @@ class Variable:
         ))
         
     def __setattr__(self,key,value):
-        """Operator overload to listen to changes in value of Variables
+        """Operator overload to listen to changes in value of Variables.
 
         Args:
             key ([type]): [description]
