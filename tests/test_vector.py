@@ -49,7 +49,7 @@ def test_indexing():
     assert last_state.content["state_def"]["index"] == 1
     
     subarr = arr[1:3]
-    assert type(subarr) == type(arr)
+    assert isinstance(subarr,ARgorithmToolkit.Vector)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'vector_declare'
     assert last_state.content["state_def"]["variable_name"] == 'arr_sub'

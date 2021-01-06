@@ -75,7 +75,7 @@ class StateSet:
         Example:
             >>> algo.add_state(state)
         """
-        assert type(state) == State , ARgorithmError("state should be of Type state")
+        assert isinstance(state,State) , ARgorithmError("state should be of Type state")
         self.states.append(state)
 
     def __str__(self):

@@ -126,12 +126,12 @@ class Stack:
     """
     def __init__(self,name:str,algo:StateSet,comments=""):
         try:
-            assert type(name)==str 
+            assert isinstance(name,str) 
             self.state_generator = StackState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == StateSet 
+            assert isinstance(algo,StateSet)
             self.algo = algo
         except:
             raise ARgorithmError("Stack structure needs a reference of template to store states")

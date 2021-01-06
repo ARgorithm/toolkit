@@ -31,14 +31,14 @@ def test_indexing():
     assert last_state.content["state_def"]["index"] == 2
 
     subarr = arr[1]
-    assert type(subarr) == type(arr)
+    assert isinstance(subarr,ARgorithmToolkit.Array)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_declare'
     assert last_state.content["state_def"]["variable_name"] == 'arr_sub'
     assert np.all(last_state.content["state_def"]["body"] == arr.body[1])
     
     subarr = arr[1:2]
-    assert type(subarr) == type(arr)
+    assert isinstance(subarr,ARgorithmToolkit.Array)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_declare'
     assert last_state.content["state_def"]["variable_name"] == 'arr_sub'
@@ -90,7 +90,7 @@ def test_swap():
     assert np.all(last_state.content["state_def"]["body"] == arr.body)
     
 def test_dimension_check():
-    assert type(arr[1]) == type(arr)
+    assert isinstance(arr[1],ARgorithmToolkit.Array)
     last_state = algo.states[-1]
     second_last_state = algo.states[-2]
     assert last_state.content["state_type"] == 'array_declare'

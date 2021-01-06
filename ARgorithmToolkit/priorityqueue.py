@@ -133,12 +133,12 @@ class PriorityQueue:
     
     def __init__(self, name:str, algo:StateSet, comments:str = ""):
         try:
-            assert type(name)==str 
+            assert isinstance(name,str) 
             self.state_generator = PriorityQueueState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == StateSet 
+            assert isinstance(algo,StateSet) 
             self.algo = algo
         except:
             raise ARgorithmError("Queue structure needs a reference of template to store states")

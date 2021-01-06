@@ -21,7 +21,7 @@ def check_dimensions(data):
     Raises:
         ARgorithmError: if data is not of correct format , it raises an ARgorithmError
     """
-    if type(data) != list and type(data)!= tuple:
+    if not isinstance(data,list) and not isinstance(data,tuple):
         return 1
     else:
         check = -1
@@ -155,7 +155,7 @@ class ArrayIterator:
         AssertionError: If not declared with an instance of ARgorithmToolkit.array.Array
     """
     def __init__(self,array):
-        assert type(array) == Array
+        assert isinstance(array,Array) 
         self.array = array
         self._index = 0
         self.size = len(array)
@@ -224,12 +224,12 @@ class Array:
     """    
     def __init__(self, name:str, algo:StateSet, data=None, shape=None, fill=0, dtype=int, comments=""):
         try:
-            assert type(name)==str 
+            assert isinstance(name,str)
             self.state_generator = ArrayState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == StateSet 
+            assert isinstance(algo, StateSet) 
             self.algo = algo
         except:
             raise ARgorithmError("array structure needs a reference of template to store states")
@@ -271,7 +271,7 @@ class Array:
             >>> arr.shape()
             (2,3)
         """
-        return (self.body.shape) if type(self.body.shape) != tuple else self.body.shape
+        return (self.body.shape) if isinstance(self.body.shape,tuple) else self.body.shape
 
     def __getitem__(self, key, comments=""):
         """overloading the item access operator to generate states and create
@@ -292,17 +292,17 @@ class Array:
             6
         """
         try:
-            if type(key) == slice:
+            if isinstance(key,slice):
                 name = f"{self.state_generator.name}_sub"
                 return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
 
-            if type(key)==int and len(self.body.shape)==1:
+            if isinstance(key,int) and len(self.body.shape)==1:
                 state = self.state_generator.array_iter(self.body, key, comments)
                 self.algo.add_state(state)
                 return self.body[key]
 
 
-            if type(key)==int or len(key) < len(self.shape()):
+            if isinstance(key,int) or len(key) < len(self.shape()):
                 name = f"{self.state_generator.name}_sub"
                 state = self.state_generator.array_iter(self.body, key, comments)
                 self.algo.add_state(state)

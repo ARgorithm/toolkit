@@ -178,7 +178,7 @@ class VectorIterator:
         AssertionError: If not declared with an instance of ARgorithmToolkit.vector.Vector
     """
     def __init__(self,vector):
-        assert type(vector) == Vector
+        assert isinstance(vector,Vector)
         self.vector = vector
         self._index = 0
         self.size = len(vector)
@@ -212,17 +212,17 @@ class Vector:
 
     def __init__(self,name,algo,data=[],comments=""):
         try:
-            assert type(name)==str 
+            assert isinstance(name,str) 
             self.state_generator = VectorState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == StateSet 
+            assert isinstance(algo,StateSet) 
             self.algo = algo
         except:
             raise ARgorithmError("vector structure needs a reference of template to store states")
         try:
-            assert type(data) == list 
+            assert isinstance(data,list) 
             self.body = data
         except:
             raise TypeError("vector body should be list")
@@ -261,7 +261,7 @@ class Vector:
             >>> vec[1:]
             Vector([2, 3])
         """
-        if type(key) == slice:
+        if isinstance(key,slice):
             name = f"{self.state_generator.name}_sub"
             return Vector(name , self.algo , self.body[key] , comments)
         else:

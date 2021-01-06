@@ -104,7 +104,7 @@ class StringIterator:
     """
     
     def __init__(self,string):
-        assert type(string) == String
+        assert isinstance(string,String)
         self.string = string
         self._index = 0
         self.size = len(string)
@@ -139,17 +139,17 @@ class String():
     """
     def __init__(self,name,algo,body='',comments=""):
         try:
-            assert type(name)==str 
+            assert isinstance(name,str) 
             self.state_generator = StringState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert type(algo) == StateSet 
+            assert isinstance(algo,StateSet) 
             self.algo = algo
         except:
             raise TypeError("string structure needs a reference of template to store states")
         try:
-            assert type(body) == str
+            assert isinstance(body,str)
             self.body = body
         except:
             raise ARgorithmError("String body should be of type string")
@@ -189,7 +189,7 @@ class String():
             >>> st[2:6]
             String('llo ')
         """
-        if type(key) == slice:
+        if isinstance(key,slice):
             name = f"{self.state_generator.name}_sub"
             return String(name , self.algo , self.body[key] , comments=f"creating new substring for {key}")
         else:
@@ -241,7 +241,7 @@ class String():
             >>> st
             String('Hello world! 1234hahaha')
         """
-        if type(value) == String:
+        if isinstance(value,String):
             value = value.body
         self.body += value
         state = self.state_generator.string_append(self.body , value, comments) 
@@ -261,7 +261,7 @@ class String():
             >>> x
             String('Hello world! 1234hahaha?!')
         """
-        if type(value) == String:
+        if isinstance(value,String):
             value = value.body
         name = f"{self.state_generator.name}_super"
         new = String(name=name, algo=self.algo, body=self.body, comments=f'creating new string with {value} appended to the original string')
