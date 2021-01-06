@@ -1,3 +1,12 @@
+## 0.0.11
+
+- CLI not can be configured to connect to Server endpoint of choice
+- Documentation pages added
+  - Introduction to ARgorithm
+  - Server Setup
+  - Getting started
+- Alabaster theme for RTD customized
+
 ## 0.0.10
 
 - Following Data structures implemented
