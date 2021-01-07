@@ -29,7 +29,7 @@ states:
       definition:
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
-        index : index at which element has to be highlighted [reqiured]
+        index : index at which element has to be highlighted [required]
 
   - vector_compare:
       description : highlight elements to indicate comparision
@@ -100,7 +100,7 @@ functions:
       function: 
         name : ARgorithmToolkit.vector.Vector.insert
         parameters:
-          reqiured:
+          required:
             - element
           not_required:
             - index
@@ -111,7 +111,7 @@ functions:
       function: 
         name: ARgorithmToolkit.vector.Vector.remove
         parameters:
-          not_reqiured:
+          not_required:
             - index
             - value
       state: vector_remove
@@ -121,7 +121,7 @@ functions:
       function:
         name : ARgorithmToolkit.vector.Vector.compare
         parameters:
-          reqiured:
+          required:
             - index1
             - index2
           not_required:
@@ -133,7 +133,7 @@ functions:
       function: 
         name : ARgorithmToolkit.vector.Vector.swap
         parameters:
-          reqiured:
+          required:
             - index1
             - index2
       state: vector_swap 

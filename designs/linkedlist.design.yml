@@ -1,0 +1,115 @@
+author: Alan John
+date: "2020-01-06"
+category: Linked List
+
+states:
+  - llnode_declare:
+        description: Indicates that a new Node has been created
+        definition:
+          variable_name: The id of the linkedlist Node
+          value: The value in the node
+          next: The id of the next linkedlist node. Default "none"
+  
+  - llnode_iter:
+        description: Highlights an node in case the value is changed
+        definition:
+          variable_name: The id of the linkedlist Node
+          value: The value in the node
+          next: The id of the next linkedlist node. Default "none"
+
+  - llnode_next:
+        description: Indicates that the reference to next node has been changed
+        definition:
+          variable_name: The id of the linkedlist Node
+          value: The value in the node
+          next: The id of the next linkedlist node. Default "none"
+
+  - llnode_delete:
+        description: Deletes the node
+        definition:
+          variable_name: The id of the linkedlist Node
+       
+  - ll_declare:
+        description: Creates a head pointer for start of singly linkedlist
+        definition:
+          variable_name: The id of the linkedlist Node
+          head: The id of the head linkedlist node. Default "none"
+  
+  - ll_head:
+        description: Changes head pointer of singly linkedlist
+        definition:
+          variable_name: The id of the linkedlist Node
+          head: The id of the head linkedlist node. Default "none"
+  
+classes:
+  - ARgorithmToolkit.linkedlist.LinkedListNode:
+      description: Class emulating the node of linked list
+  - ARgorithmToolkit.linkedlist.LinkedListNodeState:
+      description: Helper class generating states for LinkedListNode 
+  - ARgorithmToolkit.linkedlist.LinkedList:
+      description: Class emulating linked list head pointer
+  - ARgorithmToolkit.linkedlist.LinkedListState:
+      description: Helper class generating states for LinkedListNode
+  - ARgorithmToolkit.linkedlist.ForwardList:
+      description: Class implementing complete Forward list i.e singly linked list
+  - ARgorithmToolkit.linkedlist.ForwardListIterator:
+      description: Iterator Class for ForwardList
+
+functions:
+  - node_creation:
+      description: This function creates the Node
+      state: llnode_declare
+      function: 
+        name: ARgorithmToolkit.linkedlist.LinkedListNode.__init__
+        parameters:
+          required:
+            - algo
+            - value
+
+  - node_value_change:
+      description: This function updates value of the node
+      state: llnode_iter
+      function: 
+        name: ARgorithmToolkit.linkedlist.LinkedListNode.__setattr__
+        parameters:
+          required:
+            - key
+            - value
+  
+  - node_next_change:
+      description: This function updates next pointer of the node
+      state: llnode_next
+      function: 
+        name: ARgorithmToolkit.linkedlist.LinkedListNode.__setattr__
+        parameters:
+          required:
+            - key
+            - value
+  
+  - node_delete:
+      description: This function deletes the node
+      state: llnode_delete
+      function: 
+        name: ARgorithmToolkit.linkedlist.LinkedListNode.__del__
+
+  - linkedlist_create:
+      description: This function creates a linkedlist with a head pointer
+      state: ll_declare
+      function:
+        name: ARgorithmToolkit.linkedlist.LinkedListNode.__init__
+        parameters:
+          required:
+            - name
+            - algo
+          not_required:
+            - head
+
+  - linkedlist_head_change:
+      description: This function changes the linkedlist's head pointer
+      state: ll_head
+      function:
+        name: ARgorithmToolkit.linkedlist.LinkedListNode.__setattr__
+        parameters:
+          required:
+            - key
+            - value

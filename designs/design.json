@@ -103,6 +103,7 @@
                                             },
                                             "parameters" : {
                                                 "type" : "object",
+                                                "additionalProperties": false,
                                                 "description": "function parameters",
                                                 "properties": {
                                                     "required":{
@@ -114,7 +115,7 @@
                                                     },
                                                     "not_required":{
                                                         "type":"array",
-                                                        "description": "List of required parameters",
+                                                        "description": "List of non-required parameters",
                                                         "items": {
                                                             "type":"string"
                                                         }

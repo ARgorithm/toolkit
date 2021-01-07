@@ -78,7 +78,7 @@ functions:
       function: 
         name : ARgorithmToolkit.string.String.append
         parameters:
-          reqiured:
+          required:
             - element
           not_required:
             - index
