@@ -29,7 +29,7 @@ class LinkedListNodeState:
     def __init__(self,name:str):
         self.name = name
 
-    def llnode_declare(self,value,next,comments=""):
+    def llnode_declare(self,value,_next,comments=""):
         """Generates the `llnode_declare` state when a new node is created.
 
         Args:
@@ -44,7 +44,7 @@ class LinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none"
+            "next" : _next.name if _next else "none"
         }
         return State(
             state_type=state_type,
@@ -52,7 +52,7 @@ class LinkedListNodeState:
             comments=comments
         )
 
-    def llnode_iter(self,value,next,comments=""):
+    def llnode_iter(self,value,_next,comments=""):
         """Generates the `llnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -68,15 +68,15 @@ class LinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none"
+            "next" : _next.name if _next else "none"
         }
         return State(
             state_type=state_type,
             state_def=state_def,
-            comments=comments if next else "none"
+            comments=comments
         )
 
-    def llnode_next(self,value,next,comments=""):
+    def llnode_next(self,value,_next,comments=""):
         """Generates the `llnode_next` state when the next pointer changes.
 
         Args:
@@ -91,7 +91,7 @@ class LinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none"
+            "next" : _next.name if _next else "none"
         }
         return State(
             state_type=state_type,

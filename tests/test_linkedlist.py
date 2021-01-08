@@ -61,12 +61,12 @@ def test_forwardlist():
     assert len(fl) == 2
     assert last_state(algo)['state_type'] == "llnode_delete"
 
-    for i in range(5):
+    for _ in range(5):
         fl.insert(9,2)
 
     assert fl.tolist() == [5,4,9,9,9,9,9]
 
-    for i in range(5):
+    for _ in range(5):
         fl.push_front(9)
 
     fl.remove(9)

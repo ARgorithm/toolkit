@@ -29,13 +29,13 @@ class DoublyLinkedListNodeState:
     def __init__(self,name:str):
         self.name = name
 
-    def dllnode_declare(self,value,next,prev,comments=""):
+    def dllnode_declare(self,value,next_node,prev_node,comments=""):
         """Generates the `dllnode_declare` state when a new node is created.
 
         Args:
             value : The value stored in the doubly linked list node
-            next (DoublyLinkedListNode): The next pointer
-            prev (DoublyLinkedListNode): The prev pointer
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Returns:
@@ -45,8 +45,8 @@ class DoublyLinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none",
-            "prev" : prev.name if prev else "none",
+            "next" : next_node.name if next_node else "none",
+            "prev" : prev_node.name if prev_node else "none",
         }
         return State(
             state_type=state_type,
@@ -54,14 +54,14 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_iter(self,value,next,prev,comments=""):
+    def dllnode_iter(self,value,next_node,prev_node,comments=""):
         """Generates the `dllnode_iter` state when a node is accessed or its
         value is changed.
 
         Args:
             value : The value stored in the linked list node
-            next (DoublyLinkedListNode): The next pointer
-            prev (DoublyLinkedListNode): The prev pointer
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Returns:
@@ -71,22 +71,22 @@ class DoublyLinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none",
-            "prev" : prev.name if prev else "none",
+            "next" : next_node.name if next_node else "none",
+            "prev" : prev_node.name if prev_node else "none",
         }
         return State(
             state_type=state_type,
             state_def=state_def,
-            comments=comments if next else "none"
+            comments=comments
         )
 
-    def dllnode_next(self,value,next,prev,comments=""):
+    def dllnode_next(self,value,next_node,prev_node,comments=""):
         """Generates the `dllnode_next` state when the next pointer changes.
 
         Args:
             value : The value stored in the linked list node
-            next (DoublyLinkedListNode): The next pointer
-            prev (DoublyLinkedListNode): The prev pointer
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Returns:
@@ -96,8 +96,8 @@ class DoublyLinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none",
-            "prev" : prev.name if prev else "none",
+            "next" : next_node.name if next_node else "none",
+            "prev" : prev_node.name if prev_node else "none",
         }
         return State(
             state_type=state_type,
@@ -105,24 +105,24 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_prev(self,value,next,prev,comments=""):
+    def dllnode_prev(self,value,next_node,prev_node,comments=""):
         """Generates the `dllnode_prev` state when the prev pointer changes.
 
         Args:
             value : The value stored in the linked list node
-            next (DoublyLinkedListNode): The next pointer
-            prev (DoublyLinkedListNode): The prev pointer
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Returns:
-            State: Returns the `dllnode_next` state
+            State: Returns the `dllnode_prev` state
         """
         state_type = "dllnode_prev"
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : next.name if next else "none",
-            "prev" : prev.name if prev else "none",
+            "next" : next_node.name if next_node else "none",
+            "prev" : prev_node.name if prev_node else "none",
         }
         return State(
             state_type=state_type,
