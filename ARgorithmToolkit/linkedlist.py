@@ -147,8 +147,8 @@ class LinkedListNode:
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("algo should be of type StateSet")
+        except AssertionError as e:
+            raise ARgorithmError("algo should be of type StateSet") from e
 
         self.state_generator = LinkedListNodeState(self.name)
 
@@ -284,8 +284,8 @@ class LinkedList:
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("algo should be of type StateSet")
+        except AssertionError as e:
+            raise ARgorithmError("algo should be of type StateSet") from e
         self.state_generator = LinkedListState(self.name)
 
         self._flag = False
@@ -336,8 +336,7 @@ class ForwardListIterator:
             data = self._curr.value
             self._curr = self._curr.next
             return data
-        else:
-            raise StopIteration
+        raise StopIteration
 
 class ForwardList(LinkedList):
     """The ForwardList class is proper implementation of singly linked list.

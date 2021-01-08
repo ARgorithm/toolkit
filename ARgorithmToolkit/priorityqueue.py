@@ -8,9 +8,8 @@ module:
     >>> pq = ARgorithmToolkit.priorityqueue.PriorityQueue(name="pq",algo=algo)
     >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
 """
-
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 import heapq
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 
 class PriorityQueueState():
     """This class is used to generate states for various actions performed on
@@ -60,7 +59,7 @@ class PriorityQueueState():
         state_type = "priorityqueue_offer"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "element" : element
         }
         return State(
@@ -83,7 +82,7 @@ class PriorityQueueState():
         state_type = "priorityqueue_poll"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -105,7 +104,7 @@ class PriorityQueueState():
         state_type = "priorityqueue_peek"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -135,13 +134,13 @@ class PriorityQueue:
         try:
             assert isinstance(name,str)
             self.state_generator = PriorityQueueState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("Queue structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise ARgorithmError("Queue structure needs a reference of template to store states") from e
         self.body = []
         state = self.state_generator.priorityqueue_declare(comments)
         self.algo.add_state(state)
@@ -265,5 +264,3 @@ class PriorityQueue:
             str: shell representation for priority queue
         """
         return f"PriorityQueue({self.body.__repr__()})"
-
-

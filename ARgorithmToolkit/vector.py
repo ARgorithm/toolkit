@@ -35,7 +35,7 @@ class VectorState:
         state_type = "vector_declare"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body]
+            "body" : list(body)
         }
         return State(
             state_type=state_type,
@@ -58,7 +58,7 @@ class VectorState:
         state_type = "vector_iter"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index" : index
         }
         return State(
@@ -82,7 +82,7 @@ class VectorState:
         state_type = "vector_remove"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index" : index
         }
         return State(
@@ -107,7 +107,7 @@ class VectorState:
         state_type = "vector_insert"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "element" : element,
             "index" : index
         }
@@ -132,7 +132,7 @@ class VectorState:
         state_type = "vector_swap"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -157,7 +157,7 @@ class VectorState:
         state_type = "vector_compare"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -186,10 +186,9 @@ class VectorIterator:
     def __next__(self):
         if self._index == self.size:
             raise StopIteration
-        else:
-            v = self.vector[self._index]
-            self._index += 1
-            return v
+        v = self.vector[self._index]
+        self._index += 1
+        return v
 
 class Vector:
     """The Vector class provides a wrapped around the python list class to
@@ -210,22 +209,24 @@ class Vector:
         >>> vec = ARgorithmToolkit.Vector("vec",algo)
     """
 
-    def __init__(self,name,algo,data=[],comments=""):
+    def __init__(self,name,algo,data=None,comments=""):
         try:
             assert isinstance(name,str)
             self.state_generator = VectorState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("vector structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise ARgorithmError("vector structure needs a reference of template to store states") from e
         try:
-            assert isinstance(data,list)
+            if data is None:
+                data = []
+            assert isinstance(data,list) or data
             self.body = data
-        except:
-            raise TypeError("vector body should be list")
+        except AssertionError as e:
+            raise TypeError("vector body should be list") from e
         state = self.state_generator.vector_declare(self.body,comments)
         self.algo.add_state(state)
 
@@ -264,10 +265,9 @@ class Vector:
         if isinstance(key,slice):
             name = f"{self.state_generator.name}_sub"
             return Vector(name , self.algo , self.body[key] , comments)
-        else:
-            state = self.state_generator.vector_iter(self.body,key,comments)
-            self.algo.add_state(state)
-            return self.body[key]
+        state = self.state_generator.vector_iter(self.body,key,comments)
+        self.algo.add_state(state)
+        return self.body[key]
 
     def __setitem__(self, key, value):
         """Operator overload for indexing for assignment to listen to states if
@@ -365,7 +365,7 @@ class Vector:
             self.body.pop()
             state = self.state_generator.vector_remove(self.body,len(self)-1,comments)
             self.algo.add_state(state)
-        elif value is None and index >= 0 and index < len(self):
+        elif value is None and 0 <= index < len(self):
             self.body = self.body[0:index] + self.body[index+1:]
             state = self.state_generator.vector_remove(self.body,index,comments)
             self.algo.add_state(state)

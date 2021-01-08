@@ -56,7 +56,7 @@ class StackState():
         state_type = "stack_push"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "element" : element
         }
         return State(
@@ -79,7 +79,7 @@ class StackState():
         state_type = "stack_pop"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -100,7 +100,7 @@ class StackState():
         state_type = "stack_top"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -128,13 +128,13 @@ class Stack:
         try:
             assert isinstance(name,str)
             self.state_generator = StackState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("Stack structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise ARgorithmError("Stack structure needs a reference of template to store states") from e
         self.body = []
         state = self.state_generator.stack_declare(comments)
         self.algo.add_state(state)
@@ -248,5 +248,3 @@ class Stack:
             str: shell representation for stack
         """
         return f"Stack({self.body.__repr__()})"
-
-

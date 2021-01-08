@@ -1,3 +1,5 @@
+# pylint: disable=unused-variable
+# pylint: disable=singleton-comparison
 """ARgorithmToolkit comes with a powerful CLI to interact with your ARgorithm
 server and to assist in the process of ARgorithm creation. It is installed and
 setup when you install the ARgorithmToolkit package. you can call it in the
@@ -15,8 +17,7 @@ import requests
 from wasabi import msg , MarkdownRenderer , color , wrap
 from ARgorithmToolkit import ARgorithmError
 
-from os.path import expanduser
-HOME = expanduser("~")
+HOME = os.path.expanduser("~")
 CLOUD_URL = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com"
 
 
@@ -33,8 +34,8 @@ def configure():
             config.write(url)
     else:
         try:
-            r = requests.get(url+"/argorithms")
-            if r.status_code == 200:
+            rq = requests.get(url+"/argorithms")
+            if rq.status_code == 200:
                 with open(FILENAME,'w') as config:
                     config.write(url)
                 msg.good(f"Cloud requests will now go to {url}")
@@ -42,9 +43,9 @@ def configure():
                 raise ARgorithmError("Not a server endpoint")
         except ValueError:
             msg.warn("Please try again with proper URL")
-        except ARgorithmError as e:
-            msg.fail(str(e))
-        except:
+        except ARgorithmError as ex:
+            msg.fail(str(ex))
+        except Exception as ex:
             msg.fail("Endpoint couldnt be found.")
 
 def get_url():
@@ -78,9 +79,9 @@ def auth_check(local=False):
             url = "http://127.0.0.1/auth"
         else:
             url = get_url() + "/auth"
-        r = requests.get(url).json()
-        return r["status"] == True
-    except:
+        rq = requests.get(url).json()
+        return rq["status"] == True
+    except Exception as ex:
         return False
 
 def login(local=False):
@@ -108,10 +109,10 @@ def login(local=False):
             url = "http://127.0.0.1/programmers/login"
         else:
             url = get_url()+"/programmers/login"
-        r = requests.post(url,json=data)
-        return r.json()['token']
-    except:
-        raise ARgorithmError("Failed Authentication")
+        rq = requests.post(url,json=data)
+        return rq.json()['token']
+    except Exception as ex:
+        raise ARgorithmError("Failed Authentication") from ex
 
 def sign_up(local=False):
     """Creates new account for programmer on specified server.
@@ -151,12 +152,12 @@ def sign_up(local=False):
             url = "http://127.0.0.1/programmers/register"
         else:
             url = get_url() + "/programmers/register"
-        r = requests.post(url,json=data)
-        if r.json()['status'] == "already exists":
-            msg.info(f"Account already registered",f"please login with {email}")
+        rq = requests.post(url,json=data)
+        if rq.json()['status'] == "already exists":
+            msg.info("Account already registered",f"please login with {email}")
             raise ARgorithmError("Account already registerd")
-    except:
-        raise ARgorithmError("Failed Registration")
+    except Exception as ex:
+        raise ARgorithmError("Failed Registration") from ex
 
 def get_token(local=False,overwrite=False):
     """Checks whether the programmer is logged in or not. If logged in , then
@@ -187,10 +188,10 @@ def get_token(local=False,overwrite=False):
                     url = "http://127.0.0.1/programmers/verify"
                 else:
                     url = get_url()+"/programmers/verify"
-                r = requests.get(url,headers={"x-access-token" : token})
-                if r.json()['status'] == True:
+                rq = requests.get(url,headers={"x-access-token" : token})
+                if rq.json()['status'] == True:
                     return token
-    except:
+    except Exception as ex:
         storage = False
     try:
         token = login(local=local)
@@ -198,10 +199,10 @@ def get_token(local=False,overwrite=False):
             with open(FILENAME,'w') as cred:
                 json.dump({"token" : token},cred)
         return token
-    except:
-        raise ARgorithmError("Failed Authentication")
+    except Exception as ex:
+        raise ARgorithmError("Failed Authentication") from ex
 
-def valid_funcname(x):
+def valid_funcname(func_name):
     """Checks whether ARgorithmID selected by programmer is acceptable or not.
 
     Args:
@@ -211,11 +212,8 @@ def valid_funcname(x):
         bool: whether the selected ARgorithID is acceptable or not
     """
     rules = r"[A-Za-z_]+"
-    m = re.match(rules,x)
-    if m!=None:
-        return True
-    else:
-        return False
+    m = re.match(rules,func_name)
+    return m is not None
 
 def init():
     """Creates empty template for the programmer to develop argorithm on."""
@@ -323,7 +321,7 @@ def submit(local=False,name=None):
         auth_flag =  auth_check(local=local)
         if auth_flag:
             token = get_token(local=local)
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
     #submitting
@@ -342,18 +340,18 @@ def submit(local=False,name=None):
     try:
         with msg.loading("sending..."):
             if auth_flag:
-                r = requests.post(url, files=files , headers={"x-access-token" : token})
+                rq = requests.post(url, files=files , headers={"x-access-token" : token})
             else:
-                r = requests.post(url, files=files)
-        if r.json()['status'] == "successful":
+                rq = requests.post(url, files=files)
+        if rq.json()['status'] == "successful":
             msg.good('Submitted')
         else:
-            if 'message' in r.json():
-                print(r.json()['message'])
+            if 'message' in rq.json():
+                print(rq.json()['message'])
             raise ARgorithmError("submission failed")
-    except ARgorithmError:
+    except ARgorithmError as ex:
         msg.fail("Sorry , File couldnt be accepted")
-    except:
+    except Exception as ex:
         msg.info("Sorry , server offline")
 
 def update(local=False,name=None):
@@ -419,7 +417,7 @@ def update(local=False,name=None):
         auth_flag =  auth_check(local=local)
         if auth_flag:
             token = get_token(local=local)
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
     #submitting
@@ -438,20 +436,20 @@ def update(local=False,name=None):
     try:
         with msg.loading("sending..."):
             if auth_flag:
-                r = requests.post(url, files=files , headers={"x-access-token" : token})
+                rq = requests.post(url, files=files , headers={"x-access-token" : token})
             else:
-                r = requests.post(url, files=files)
-        if r.json()['status'] == "successful":
+                rq = requests.post(url, files=files)
+        if rq.json()['status'] == "successful":
             msg.good('updated')
-        elif r.json()['status'] == "not present":
+        elif rq.json()['status'] == "not present":
             msg.warn('ARgorithm not found')
         else:
-            if 'message' in r.json():
-                print(r.json()['message'])
+            if 'message' in rq.json():
+                print(rq.json()['message'])
             raise ARgorithmError("update failed")
     except ARgorithmError:
         msg.fail("Sorry , ARgorithm couldnt be updated")
-    except Exception as e:
+    except requests.RequestException as ex:
         msg.info("Sorry , server offline")
 
 
@@ -477,8 +475,8 @@ def render_menu(menu:dict):
     option = int(input("Enter option number : "))
     try:
         assert option > 0 and option <= len(menu['list'])
-    except:
-        raise ARgorithmError("opt out of range")
+    except Exception as ex:
+        raise ARgorithmError("opt out of range") from ex
     return menu['list'][option-1]['argorithmID']
 
 def delete(local=False):
@@ -497,17 +495,17 @@ def delete(local=False):
         else:
             url = get_url() + "/argorithms/"
         with msg.loading("reading data"):
-            r = requests.get(url+"list")
+            rq = requests.get(url+"list")
         msg.info('argorithm menu recieved')
-        assert len(r.json()['list']) > 0
-        argorithmID = render_menu(r.json())
+        assert len(rq.json()['list']) > 0
+        argorithmID = render_menu(rq.json())
     except AssertionError:
         msg.info("no function in server")
         return
     except ARgorithmError:
         msg.fail("please enter valid option no.")
         return
-    except:
+    except Exception:
         msg.info("Sorry , server offline")
         return
 
@@ -517,7 +515,7 @@ def delete(local=False):
         auth_flag =  auth_check(local=local)
         if auth_flag:
             token = get_token(local=local)
-    except:
+    except Exception:
         msg.fail("Authentication failed")
         return
 
@@ -527,16 +525,16 @@ def delete(local=False):
         }
         with msg.loading("deleting argorithm from server"):
             if auth_flag:
-                r = requests.post(f"{url}/delete", json=data , headers={"x-access-token" : token})
+                rq = requests.post(f"{url}/delete", json=data , headers={"x-access-token" : token})
             else:
-                r = requests.post(f"{url}/delete", json=data)
-        if r.json()['status'] == "successful":
+                rq = requests.post(f"{url}/delete", json=data)
+        if rq.json()['status'] == "successful":
             msg.good("deleted")
         else:
-            if 'message' in r.json():
-                print(r.json()['message'])
+            if 'message' in rq.json():
+                print(rq.json()['message'])
             raise ARgorithmError("update failed")
-    except:
+    except Exception as ex:
         msg.fail('argorithm delete has failed')
 
 
@@ -556,10 +554,10 @@ def test(local=False):
         else:
             url = get_url() + "/argorithms/"
         with msg.loading("reading data"):
-            r = requests.get(url+"list")
-        assert len(r.json()['list']) > 0
+            rq = requests.get(url+"list")
+        assert len(rq.json()['list']) > 0
         msg.info('argorithm menu recieved')
-        argorithmID = render_menu(r.json())
+        argorithmID = render_menu(rq.json())
     except AssertionError:
         msg.warn("no function in server")
         return
@@ -568,7 +566,7 @@ def test(local=False):
         auth_flag =  auth_check(local=local)
         if auth_flag:
             token = get_token(local=local)
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
 
@@ -579,12 +577,12 @@ def test(local=False):
         }
         with msg.loading("retrieving data from server"):
             if auth_flag:
-                r = requests.post(f"{url}/run", json=data, headers={"x-access-token" : token})
+                rq = requests.post(f"{url}/run", json=data, headers={"x-access-token" : token})
             else:
-                r = requests.post(f"{url}/run", json=data)
+                rq = requests.post(f"{url}/run", json=data)
         msg.good("Recieved states")
-        print(json.dumps(r.json() , indent=2))
-    except:
+        print(json.dumps(rq.json() , indent=2))
+    except Exception as ex:
         msg.fail('Function call has failed')
 
 def grant(local=False):
@@ -600,7 +598,7 @@ def grant(local=False):
         else:
             msg.info("Auth disabled on Server")
             return
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
 
@@ -609,19 +607,19 @@ def grant(local=False):
     else:
         url = get_url() + "/admin/grant"
     email = input("enter email that you want to grant admin access to : ")
-    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
-        if r.json()['status'] == 'successful':
+        if rq.json()['status'] == 'successful':
             msg.good(f"{email} is now an admin")
-        elif r.json()['status'] == 'access denied':
-            msg.warn(f"You dont have admin priveleges")
-        elif r.json()['status'] == 'Not Found':
+        elif rq.json()['status'] == 'access denied':
+            msg.warn("You dont have admin priveleges")
+        elif rq.json()['status'] == 'Not Found':
             msg.warn(f"{email} cant be found")
-        elif r.json()['status'] == 'blacklisted':
+        elif rq.json()['status'] == 'blacklisted':
             msg.info(f"{email} is blacklisted")
         else:
             msg.fail("server failure")
-    except:
+    except Exception as ex:
         msg.fail("server failure")
 
 def revoke(local=False):
@@ -637,7 +635,7 @@ def revoke(local=False):
         else:
             msg.info("Auth disabled on Server")
             return
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
 
@@ -646,17 +644,17 @@ def revoke(local=False):
     else:
         url = get_url() + "/admin/revoke"
     email = input("enter email that you want to revoke admin access from : ")
-    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
-        if r.json()['status'] == 'successful':
+        if rq.json()['status'] == 'successful':
             msg.warn(f"{email} is not an admin")
-        elif r.json()['status'] == 'access denied':
-            msg.warn(f"You dont have admin priveleges")
-        elif r.json()['status'] == 'Not Found':
+        elif rq.json()['status'] == 'access denied':
+            msg.warn("You dont have admin priveleges")
+        elif rq.json()['status'] == 'Not Found':
             msg.warn(f"{email} cant be found")
         else:
             msg.fail("server failure")
-    except:
+    except Exception as ex:
         msg.fail("server failure")
 
 def delete_account(local=False,programmer=False):
@@ -674,7 +672,7 @@ def delete_account(local=False,programmer=False):
         else:
             msg.info("Auth disabled on Server")
             return
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
 
@@ -687,17 +685,17 @@ def delete_account(local=False,programmer=False):
     else:
         url = url + "delete_user"
     email = input("enter email that you want delete : ")
-    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
-        if r.json()['status'] == 'successful':
+        if rq.json()['status'] == 'successful':
             msg.good(f"{email} is deleted")
-        elif r.json()['status'] == 'access denied':
-            msg.warn(f"You dont have admin priveleges")
-        elif r.json()['status'] == 'Not Found':
+        elif rq.json()['status'] == 'access denied':
+            msg.warn("You dont have admin priveleges")
+        elif rq.json()['status'] == 'Not Found':
             msg.warn(f"{email} cant be found")
         else:
             msg.fail("server failure")
-    except:
+    except Exception as ex:
         msg.fail("server failure")
 
 def blacklist(local=False,black=True):
@@ -715,7 +713,7 @@ def blacklist(local=False,black=True):
         else:
             msg.info("Auth disabled on Server")
             return
-    except:
+    except Exception as ex:
         msg.fail("Authentication failed")
         return
 
@@ -730,20 +728,20 @@ def blacklist(local=False,black=True):
         url = url + "white_list"
         email = input("enter email that you want whitelist : ")
 
-    r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
-        if r.json()['status'] == 'successful':
+        if rq.json()['status'] == 'successful':
             if black:
                 msg.info(f"{email} is blacklisted")
             else:
                 msg.good(f"{email} is whitelisted")
-        elif r.json()['status'] == 'access denied':
-            msg.warn(f"You dont have admin priveleges")
-        elif r.json()['status'] == 'Not Found':
+        elif rq.json()['status'] == 'access denied':
+            msg.warn("You dont have admin priveleges")
+        elif rq.json()['status'] == 'Not Found':
             msg.warn(f"{email} cant be found")
         else:
             msg.fail("server failure")
-    except:
+    except Exception as ex:
         msg.fail("server failure")
 
 
@@ -832,7 +830,7 @@ def cmd():
                 else:
                     msg.warn("No Authentication Feature at endpoint")
                     return
-            except:
+            except Exception as ex:
                 msg.fail("Authentication failed")
                 return
             msg.good("Successfully Authenticated")
@@ -845,7 +843,7 @@ def cmd():
                 else:
                     msg.warn("No Authentication Feature at endpoint")
                     return
-            except:
+            except Exception as ex:
                 msg.fail("Registration failed")
                 return
             msg.good("Successfully Registrated")
@@ -860,4 +858,3 @@ def cmd():
             blacklist(args.local,black=False)
         elif args.subcommand == "delete":
             delete_account(args.local,args.programmer)
-

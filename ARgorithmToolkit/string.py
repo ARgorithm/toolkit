@@ -112,10 +112,9 @@ class StringIterator:
     def __next__(self):
         if self._index == self.size:
             raise StopIteration
-        else:
-            v = self.string[self._index]
-            self._index += 1
-            return v
+        v = self.string[self._index]
+        self._index += 1
+        return v
 
 class String():
     """The String class is a wrapper around the already existing string class
@@ -140,18 +139,18 @@ class String():
         try:
             assert isinstance(name,str)
             self.state_generator = StringState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise TypeError("string structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise TypeError("string structure needs a reference of StateSet to store states") from e
         try:
             assert isinstance(body,str)
             self.body = body
-        except:
-            raise ARgorithmError("String body should be of type string")
+        except AssertionError as e:
+            raise ARgorithmError("String body should be of type string") from e
         state = self.state_generator.string_declare(self.body,comments)
         self.algo.add_state(state)
 
@@ -191,10 +190,9 @@ class String():
         if isinstance(key,slice):
             name = f"{self.state_generator.name}_sub"
             return String(name , self.algo , self.body[key] , comments=f"creating new substring for {key}")
-        else:
-            state = self.state_generator.string_iter(self.body,key,comments=f"accessing character at {key}")
-            self.algo.add_state(state)
-            return self.body[key]
+        state = self.state_generator.string_iter(self.body,key,comments=f"accessing character at {key}")
+        self.algo.add_state(state)
+        return self.body[key]
 
 
     def __setitem__(self, key, value):
@@ -204,7 +202,7 @@ class String():
         Raises:
             TypeError: Raised always
         """
-        raise TypeError("'String' object does not support item assignment")
+        raise ARgorithmError("'String' object does not support item assignment")
 
     def __iter__(self):
         """Returns iterator for string.

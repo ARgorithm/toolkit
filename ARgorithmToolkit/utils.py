@@ -15,6 +15,7 @@ class ARgorithmError(Exception):
     workings of ARgorithmToolkit
     """
     def __init__(self,*args):
+        super().__init__(*args)
         if args:
             self.message = args[0]
         else:
@@ -23,8 +24,7 @@ class ARgorithmError(Exception):
     def __str__(self):
         if self.message:
             return f'{self.message}'
-        else:
-            return f"There's an error within ARgorithm template usage"
+        return "There's an error within ARgorithm template usage"
 
 class State:
     """The Instance of State class can be considered as an event in the
@@ -39,8 +39,8 @@ class State:
         for x in ['state_type','state_def','comments']:
             try:
                 self.content[x] = kwargs[x]
-            except:
-                raise ARgorithmError(f"{x} should be present in State arguments")
+            except KeyError as e:
+                raise ARgorithmError(f"{x} should be present in State arguments") from e
 
     def __str__(self):
         data = str(self.content)

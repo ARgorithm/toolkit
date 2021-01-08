@@ -180,8 +180,8 @@ class DoublyLinkedListNode:
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("algo should be of type StateSet")
+        except AssertionError as e:
+            raise ARgorithmError("algo should be of type StateSet") from e
 
         self.state_generator = DoublyLinkedListNodeState(self.name)
 
@@ -357,8 +357,8 @@ class DoublyLinkedList:
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("algo should be of type StateSet")
+        except AssertionError as e:
+            raise ARgorithmError("algo should be of type StateSet") from e
         self.state_generator = DoublyLinkedListState(self.name)
 
         if head:
@@ -415,8 +415,7 @@ class ListIterator:
             data = self._curr.value
             self._curr = self._curr.next
             return data
-        else:
-            raise StopIteration
+        raise StopIteration
 
 class List(DoublyLinkedList):
     """The List class is proper implementation of doubly linked list.

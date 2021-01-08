@@ -8,8 +8,8 @@ to import from the array module Both work:
     >>> arr = ARgorithmToolkit.array.Array(name='arr',algo=algo,data=test_data)
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 import numpy as np
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 
 def check_dimensions(data):
     """This function is an internal function that helps verify the dimensions
@@ -23,17 +23,16 @@ def check_dimensions(data):
     """
     if not isinstance(data,list) and not isinstance(data,tuple):
         return 1
-    else:
-        check = -1
-        try:
-            for x in data:
-                if check == -1:
-                    check = check_dimensions(x)
-                else:
-                    assert check == check_dimensions(x)
-            return len(data)
-        except:
-            raise ARgorithmError('please pass array of fixed dimensions')
+    check = -1
+    try:
+        for x in data:
+            if check == -1:
+                check = check_dimensions(x)
+            else:
+                assert check == check_dimensions(x)
+        return len(data)
+    except Exception as ex:
+        raise ARgorithmError('please pass array of fixed dimensions') from ex
 
 
 class ArrayState:
@@ -163,10 +162,9 @@ class ArrayIterator:
     def __next__(self):
         if self._index == self.size:
             raise StopIteration
-        else:
-            v = self.array[self._index]
-            self._index += 1
-            return v
+        v = self.array[self._index]
+        self._index += 1
+        return v
 
 class Array:
     """The Array class used to emulate multidimensional arrays that can be
@@ -226,13 +224,13 @@ class Array:
         try:
             assert isinstance(name,str)
             self.state_generator = ArrayState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except Exception as ex:
+            raise ARgorithmError('Give valid name to data structure') from ex
         try:
             assert isinstance(algo, StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("array structure needs a reference of template to store states")
+        except Exception as ex:
+            raise ARgorithmError("array structure needs a reference of template to store states") from ex
 
         if data is not None:
             check_dimensions(data)
@@ -311,8 +309,8 @@ class Array:
             state = self.state_generator.array_iter(self.body, key, comments)
             self.algo.add_state(state)
             return self.body[key]
-        except Exception as e:
-            raise ARgorithmError(f"invalid index error : {str(e)}")
+        except Exception as ex:
+            raise ARgorithmError(f"invalid index error : {str(ex)}") from ex
 
     def __setitem__(self, key, value):
         """Overload element write operation to trigger state.
@@ -414,7 +412,7 @@ class Array:
         Returns:
             str: String describing Array
         """
-        return f"Array({self.tolist.__str__()})"
+        return f"Array({self.tolist().__str__()})"
 
     def __repr__(self):
         """Return representation for shell outputs.
@@ -422,5 +420,4 @@ class Array:
         Returns:
             str: shell representation for array
         """
-        return f"Array({self.tolist.__repr__()})"
-
+        return f"Array({self.tolist().__repr__()})"
