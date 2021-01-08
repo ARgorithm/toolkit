@@ -1,6 +1,6 @@
 {
     "restructuredtext.confPath": "${workspaceFolder}/docs/source",
     "yaml.schemas": {
-        "./designs/design.json": ".design.yml",
+        "./designs/design.json": ".design.yml"
     }
 }
