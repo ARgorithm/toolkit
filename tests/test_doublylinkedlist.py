@@ -34,7 +34,7 @@ def test_node():
     assert last_state(algo)['state_type'] == "dllnode_delete"
 
 def test_ll():
-    """Test doubly linked list 
+    """Test doubly linked list
     """
     dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     dll = ARgorithmToolkit.DoublyLinkedList("dllnode",algo,dllnode)
