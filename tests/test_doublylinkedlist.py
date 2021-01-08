@@ -1,8 +1,12 @@
+"""Testing Doubly linked list
+"""
 import ARgorithmToolkit
 from .utils import last_state
 algo = ARgorithmToolkit.StateSet()
 
 def test_node():
+    """Test Doubly linked list node
+    """
     dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     assert dllnode.value == 7
     assert dllnode.next is None
@@ -30,6 +34,8 @@ def test_node():
     assert last_state(algo)['state_type'] == "dllnode_delete"
 
 def test_ll():
+    """Test doubly linked list 
+    """
     dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     dll = ARgorithmToolkit.DoublyLinkedList("dllnode",algo,dllnode)
 
@@ -44,7 +50,9 @@ def test_ll():
     assert dll.tail == dllnode
     assert last_state(algo)['state_type'] == "dll_head"
 
-def test_forwardlist():
+def test_list():
+    """Test List class
+    """
     dl = ARgorithmToolkit.List("dl",algo)
     assert last_state(algo)['state_type'] == "dll_declare"
 

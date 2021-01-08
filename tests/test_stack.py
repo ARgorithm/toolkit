@@ -1,13 +1,19 @@
+"""Test stack
+"""
 import ARgorithmToolkit
 
 algo = ARgorithmToolkit.StateSet()
 stack = ARgorithmToolkit.Stack("st",algo)
 
 def test_declare():
+    """Test stack creation
+    """
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "stack_declare"
 
 def test_operations():
+    """Test stack operations
+    """
     stack.push(3)
     stack.push(9)
     assert stack.body == [3,9]
@@ -33,6 +39,8 @@ def test_operations():
         pass
 
 def test_size():
+    """Test size operations
+    """
     assert stack.empty() and len(stack)==0
 
 

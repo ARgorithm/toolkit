@@ -1,9 +1,13 @@
+"""Testing linked list
+"""
 import ARgorithmToolkit
 from .utils import last_state
 algo = ARgorithmToolkit.StateSet()
 fl = ARgorithmToolkit.ForwardList("fl",algo)
 
 def test_node():
+    """Testing linked list node
+    """
     llnode = ARgorithmToolkit.LinkedListNode(algo,7)
     assert llnode.value == 7
     assert llnode.next is None
@@ -28,6 +32,8 @@ def test_node():
     assert last_state(algo)['state_type'] == "llnode_delete"
 
 def test_ll():
+    """Testing linked list class
+    """
     llnode = ARgorithmToolkit.LinkedListNode(algo,7)
     ll = ARgorithmToolkit.LinkedList("llnode",algo,llnode)
 
@@ -39,6 +45,8 @@ def test_ll():
     assert last_state(algo)['state_type'] == "ll_head"
 
 def test_forwardlist():
+    """Testing forwardlist
+    """
     fl = ARgorithmToolkit.ForwardList("fl",algo)
     assert last_state(algo)['state_type'] == "ll_declare"
 
