@@ -460,7 +460,7 @@ class ForwardList(LinkedList):
             2
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         data = self.head.value
         temp = self.head
@@ -486,7 +486,7 @@ class ForwardList(LinkedList):
             2
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         return self.head.value
     
@@ -523,14 +523,14 @@ class ForwardList(LinkedList):
             ForwardList([1])
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         while value == self.head.value:
             temp = self.head
             self.head = self.head.next
             del temp
             self.size -= 1
-            if self.head == None:
+            if self.head is None:
                 return
         curr = self.head
         while curr:

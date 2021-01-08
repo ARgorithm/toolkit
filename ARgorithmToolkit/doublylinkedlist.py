@@ -480,7 +480,7 @@ class List(DoublyLinkedList):
         """
         if self.size == 0 or index == 0:
             self.push_front(value)
-        elif index == None or self.size < index:
+        elif index is None or self.size < index:
             self.push_back(value)
         else:
             count = 1
@@ -569,7 +569,7 @@ class List(DoublyLinkedList):
             List([1, 2, 3, 7])
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         data = self.head.value
         self.head = self.head.next
@@ -598,7 +598,7 @@ class List(DoublyLinkedList):
             List([1, 2, 3])
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         data = self.tail.value
         self.tail = self.tail.prev
@@ -628,7 +628,7 @@ class List(DoublyLinkedList):
             List([1, 2, 3])
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         return self.head.value
     
@@ -651,7 +651,7 @@ class List(DoublyLinkedList):
             List([2, 3, 5, 4, 4, 3, 3])
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         return self.tail.value
     
@@ -687,7 +687,7 @@ class List(DoublyLinkedList):
             List([2, 5, 4, 4])
 
         """
-        if self.head == None:
+        if self.head is None:
             raise ARgorithmError("Empty list")
         curr = self.head
         while curr:

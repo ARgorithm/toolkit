@@ -322,7 +322,7 @@ class Vector:
             >>> vec
             Vector([1, 2, 3])
         """
-        if index==None:
+        if index is None:
             self.body.append(value)
             state = self.state_generator.vector_insert(self.body , value , len(self)-1 , comments) 
             self.algo.add_state(state)
@@ -361,15 +361,15 @@ class Vector:
         Note:
             Please make note of the position of arguments if passing positional arguments. It is recommended not to do that
         """
-        if index==None and value==None:
+        if index is None and value is None:
             self.body.pop()
             state = self.state_generator.vector_remove(self.body,len(self)-1,comments)
             self.algo.add_state(state)
-        elif value==None and index >= 0 and index < len(self):
+        elif value is None and index >= 0 and index < len(self):
             self.body = self.body[0:index] + self.body[index+1:]
             state = self.state_generator.vector_remove(self.body,index,comments)
             self.algo.add_state(state)
-        elif index==None:
+        elif index is None:
             index = self.body.index(value)
             self.body.remove(value)
             state = self.state_generator.vector_remove(self.body,index,comments)
@@ -399,7 +399,7 @@ class Vector:
         item2 = self.body[index2]
         state = self.state_generator.vector_compare(self.body,(index1,index2),comments)
         self.algo.add_state(state)
-        if func == None:
+        if func is None:
             def default_comparator(item1, item2):
                 return item1-item2
             func = default_comparator 

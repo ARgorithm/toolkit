@@ -5,14 +5,14 @@ algo = ARgorithmToolkit.StateSet()
 def test_node():
     dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     assert dllnode.value == 7
-    assert dllnode.next == None
-    assert dllnode.prev == None
+    assert dllnode.next is None
+    assert dllnode.prev is None
     assert last_state(algo)['state_type'] == "dllnode_declare"
 
     dllnode.value = 5
     assert dllnode.value == 5
-    assert dllnode.next == None
-    assert dllnode.prev == None
+    assert dllnode.next is None
+    assert dllnode.prev is None
     assert last_state(algo)['state_type'] == "dllnode_iter"
 
 
@@ -20,13 +20,13 @@ def test_node():
     dllnode.prev = temp
 
     assert isinstance(dllnode.prev,ARgorithmToolkit.DoublyLinkedListNode)
-    assert dllnode.next == None
+    assert dllnode.next is None
     assert dllnode.prev == temp
     assert last_state(algo)['state_type'] == "dllnode_prev"
     
     dllnode.prev = None
     del temp
-    assert dllnode.next == None
+    assert dllnode.next is None
     assert last_state(algo)['state_type'] == "dllnode_delete"
 
 def test_ll():
@@ -91,7 +91,7 @@ def test_forwardlist():
     k = dl.pop_front()
     assert k == 3
     assert len(dl) == 0
-    assert dl.tail == None
+    assert dl.tail is None
     assert last_state(algo)['state_type'] == "dll_tail"
     assert last_state(algo)['state_type'] == "dllnode_delete"
     assert last_state(algo)['state_type'] == "dll_head"

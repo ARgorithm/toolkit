@@ -28,4 +28,4 @@ def test_comment_state():
     last_state = algo.states[-1]
     assert last_state.content['state_type'] == 'comment'
     assert last_state.content['comments'] == 'Hello world'
-    assert last_state.content['state_def'] == None
+    assert last_state.content['state_def'] is None

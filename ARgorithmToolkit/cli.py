@@ -126,7 +126,7 @@ def sign_up(local=False):
         email = input("enter email : ")
         rules = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         m = re.match(rules,email)
-        if m == None:
+        if m is None:
             msg.fail("invalid email")
             raise ARgorithmError("Invalid email")
 
@@ -134,7 +134,7 @@ def sign_up(local=False):
         password = getpass.getpass("enter password : ")
         rules = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$"
         m = re.match(rules,password)
-        if m == None:
+        if m is None:
             msg.fail("invalid password")
             raise ARgorithmError("invalid password")
         

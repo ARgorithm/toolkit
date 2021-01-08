@@ -365,7 +365,7 @@ class Array:
         item2 = self.body[index2]
         state = self.state_generator.array_compare(self.body,(index1,index2),comments)
         self.algo.add_state(state)
-        if func == None:
+        if func is None:
             def default_comparator(item1, item2):
                 return item1-item2
             func = default_comparator 

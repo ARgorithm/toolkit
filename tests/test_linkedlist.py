@@ -6,12 +6,12 @@ fl = ARgorithmToolkit.ForwardList("fl",algo)
 def test_node():
     llnode = ARgorithmToolkit.LinkedListNode(algo,7)
     assert llnode.value == 7
-    assert llnode.next == None
+    assert llnode.next is None
     assert last_state(algo)['state_type'] == "llnode_declare"
 
     llnode.value = 5
     assert llnode.value == 5
-    assert llnode.next == None
+    assert llnode.next is None
     assert last_state(algo)['state_type'] == "llnode_iter"
 
 
@@ -24,7 +24,7 @@ def test_node():
     
     llnode.next = None
     del temp
-    assert llnode.next == None
+    assert llnode.next is None
     assert last_state(algo)['state_type'] == "llnode_delete"
 
 def test_ll():
