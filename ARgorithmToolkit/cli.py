@@ -45,7 +45,7 @@ def configure():
         except ARgorithmError as e:
             msg.fail(str(e))
         except:
-            msg.fail("Endpoint couldnt be found.") 
+            msg.fail("Endpoint couldnt be found.")
 
 def get_url():
     """This function returns the cloud endpoint url from the cache storage.
@@ -72,7 +72,7 @@ def auth_check(local=False):
     Returns:
         bool: If true means server requires authentication flag
     """
-    
+
     try:
         if local:
             url = "http://127.0.0.1/auth"
@@ -82,7 +82,7 @@ def auth_check(local=False):
         return r["status"] == True
     except:
         return False
-       
+
 def login(local=False):
     """Logs in programmer into the server where they would be submitting their
     code.
@@ -137,12 +137,12 @@ def sign_up(local=False):
         if m is None:
             msg.fail("invalid password")
             raise ARgorithmError("invalid password")
-        
+
         repassword = getpass.getpass("re-enter password : ")
         if password != repassword:
             msg.fail("passwords don't match")
             raise ARgorithmError("password mismatch")
-        
+
         data = {
             "email" : email,
             "password" : password
@@ -178,7 +178,7 @@ def get_token(local=False,overwrite=False):
         if not os.path.isdir(CACHE_DIR):
             os.mkdir(CACHE_DIR)
         FILENAME = os.path.join(CACHE_DIR , "creds.json")
-    
+
         if not overwrite:
             if os.path.isfile(FILENAME):
                 with open(FILENAME,'r') as cred:
@@ -271,27 +271,27 @@ def submit(local=False,name=None):
     Raises:
         ARgorithmError: Raised if submission fails
     """
-    
+
     if name:
         funcname = name
     else:
         funcname = input("enter name of file to be submitted : ")
-    
+
     funcname = funcname[:-3] if funcname[-3:] == ".py" else funcname
     directory = os.getcwd()
-    
+
     if os.path.isfile( os.path.join(directory,funcname+".py")):
         if os.path.isfile( os.path.join(directory , f"{funcname}.config.json") ):
             pass
         else:
             msg.fail(f"cant find {funcname}.config.json")
-            return 
+            return
     else:
         msg.fail(f"{funcname}.py not found")
         return
 
     msg.good('files found')
-    
+
     ## VERIFYING FILES
 
     required_tags = {
@@ -303,7 +303,7 @@ def submit(local=False,name=None):
         "description" : ""
     }
 
-    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:    
+    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:
         data = json.load(configfile)
         for key in required_tags:
             if key not in data:
@@ -324,7 +324,7 @@ def submit(local=False,name=None):
         if auth_flag:
             token = get_token(local=local)
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
     #submitting
     local_file = f"{funcname}.py"
@@ -367,27 +367,27 @@ def update(local=False,name=None):
     Raises:
         ARgorithmError: Raised if updation fails
     """
-    
+
     if name:
         funcname = name
     else:
         funcname = input("enter name of file to be sent : ")
-    
+
     funcname = funcname[:-3] if funcname[-3:] == ".py" else funcname
     directory = os.getcwd()
-    
+
     if os.path.isfile( os.path.join(directory,funcname+".py")):
         if os.path.isfile( os.path.join(directory , f"{funcname}.config.json") ):
             pass
         else:
             msg.fail(f"cant find {funcname}.config.json")
-            return 
+            return
     else:
         msg.fail(f"{funcname}.py not found")
         return
 
     msg.good('files found')
-    
+
     ## VERIFYING FILES
 
     required_tags = {
@@ -399,7 +399,7 @@ def update(local=False,name=None):
         "description" : ""
     }
 
-    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:    
+    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:
         data = json.load(configfile)
         for key in required_tags:
             if key not in data:
@@ -420,7 +420,7 @@ def update(local=False,name=None):
         if auth_flag:
             token = get_token(local=local)
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
     #submitting
     local_file = f"{funcname}.py"
@@ -444,7 +444,7 @@ def update(local=False,name=None):
         if r.json()['status'] == "successful":
             msg.good('updated')
         elif r.json()['status'] == "not present":
-            msg.warn('ARgorithm not found') 
+            msg.warn('ARgorithm not found')
         else:
             if 'message' in r.json():
                 print(r.json()['message'])
@@ -518,7 +518,7 @@ def delete(local=False):
         if auth_flag:
             token = get_token(local=local)
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
 
     try:
@@ -538,7 +538,7 @@ def delete(local=False):
             raise ARgorithmError("update failed")
     except:
         msg.fail('argorithm delete has failed')
-    
+
 
 def test(local=False):
     """Tests ARgorithm in server.
@@ -563,17 +563,17 @@ def test(local=False):
     except AssertionError:
         msg.warn("no function in server")
         return
-    
+
     try:
         auth_flag =  auth_check(local=local)
         if auth_flag:
             token = get_token(local=local)
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
 
     try:
-        
+
         data = {
             "argorithmID" : argorithmID
         }
@@ -585,7 +585,7 @@ def test(local=False):
         msg.good("Recieved states")
         print(json.dumps(r.json() , indent=2))
     except:
-        msg.fail('Function call has failed')    
+        msg.fail('Function call has failed')
 
 def grant(local=False):
     """Grants an account admin priveleges.
@@ -601,7 +601,7 @@ def grant(local=False):
             msg.info("Auth disabled on Server")
             return
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
 
     if local:
@@ -638,7 +638,7 @@ def revoke(local=False):
             msg.info("Auth disabled on Server")
             return
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
 
     if local:
@@ -675,7 +675,7 @@ def delete_account(local=False,programmer=False):
             msg.info("Auth disabled on Server")
             return
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
 
     if local:
@@ -716,7 +716,7 @@ def blacklist(local=False,black=True):
             msg.info("Auth disabled on Server")
             return
     except:
-        msg.fail("Authentication failed") 
+        msg.fail("Authentication failed")
         return
 
     if local:
@@ -729,7 +729,7 @@ def blacklist(local=False,black=True):
     else:
         url = url + "white_list"
         email = input("enter email that you want whitelist : ")
-    
+
     r = requests.post(url,json={"email" : email},headers={"x-access-token":token})
     try:
         if r.json()['status'] == 'successful':
@@ -754,7 +754,7 @@ def cmd():
 
     init_parser = subparsers.add_parser(
         'init',description="initialises files for argorithm", usage='init [-h,--help]')
-    
+
     configure_parser = subparsers.add_parser(
         'configure',description="sets cloud server address", usage='configure [-h,--help]')
 
@@ -762,21 +762,21 @@ def cmd():
         'submit',description="submits files to argorithm-server")
     submit_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be submitted optional")
     submit_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-    
+
     update_parser = subparsers.add_parser(
         'update',description="submits new code files for already existing argorithm in argorithm-server")
     update_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be updated optional")
     update_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-    
+
 
     test_parser = subparsers.add_parser(
         'test' , description="tests argorithm stored in server")
     test_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-    
+
     delete_parser = subparsers.add_parser(
         'delete' , description="deletes argorithm stored in server")
     delete_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-     
+
     account_parser = subparsers.add_parser(
         'account' , description="account operations on server")
     account_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
@@ -787,7 +787,7 @@ def cmd():
     login_parser.add_argument('-o' , '--overwrite' , action="store_true" , help="overwrites any pre-existing login")
     sign_parser = account_subparsers.add_parser(
         'new' , description="create new account in server to authorise actions")
-    
+
     admin_parser = subparsers.add_parser(
         'admin' , description="admin operations on server"
     )
@@ -809,7 +809,7 @@ def cmd():
         'delete' , description="delete account"
     )
     delete_account_parser.add_argument('-p' , '--programmer' , action="store_true" , help="deletes programmer account. if not given deletes user account")
-    
+
     args = parser.parse_args()
     if args.command == "init":
         init()
@@ -833,10 +833,10 @@ def cmd():
                     msg.warn("No Authentication Feature at endpoint")
                     return
             except:
-                msg.fail("Authentication failed") 
+                msg.fail("Authentication failed")
                 return
             msg.good("Successfully Authenticated")
-    
+
         if args.subcommand == 'new':
             try:
                 auth_flag =  auth_check(local=args.local)
@@ -846,7 +846,7 @@ def cmd():
                     msg.warn("No Authentication Feature at endpoint")
                     return
             except:
-                msg.fail("Registration failed") 
+                msg.fail("Registration failed")
                 return
             msg.good("Successfully Registrated")
     elif args.command == 'admin':
@@ -860,4 +860,4 @@ def cmd():
             blacklist(args.local,black=False)
         elif args.subcommand == "delete":
             delete_account(args.local,args.programmer)
-        
+

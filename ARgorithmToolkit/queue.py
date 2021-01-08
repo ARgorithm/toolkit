@@ -40,7 +40,7 @@ class QueueState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def queue_push(self,body,element,comments=""):
         """Generates the `queue_push` state when an element is added to queue.
 
@@ -63,7 +63,7 @@ class QueueState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def queue_pop(self,body,comments=""):
         """Generates the `queue_pop` state when an element is removed from
         queue.
@@ -127,7 +127,7 @@ class QueueState():
             state_def=state_def,
             comments=comments
         )
-        
+
 class Queue:
     """The Queue class is a container interface for the queue, a linear
     container implementation of FIFO.
@@ -152,7 +152,7 @@ class Queue:
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert isinstance(algo,StateSet) 
+            assert isinstance(algo,StateSet)
             self.algo = algo
         except:
             raise ARgorithmError("Queue structure needs a reference of template to store states")
@@ -171,7 +171,7 @@ class Queue:
             0
         """
         return len(self.body)
-    
+
     def empty(self):
         """Checks whether queue is empty or not.
 
@@ -217,7 +217,7 @@ class Queue:
 
         Returns:
             element: The element popped from queue
-        
+
         Example:
             >>> q
             Queue([3, 5, 4])

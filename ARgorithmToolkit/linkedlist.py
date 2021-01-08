@@ -12,7 +12,7 @@ These three classes can be directly imported from the toolkit:
     >>> llnode = ARgorithmToolkit.LinkedListNode(algo,7)
     >>> ll = ARgorithmToolkit.LinkedList("llnode",algo,llnode)
     >>> fl = ARgorithmToolkit.ForwardList("fl",algo)
-    
+
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
@@ -28,7 +28,7 @@ class LinkedListNodeState:
 
     def __init__(self,name:str):
         self.name = name
-        
+
     def llnode_declare(self,value,next,comments=""):
         """Generates the `llnode_declare` state when a new node is created.
 
@@ -51,7 +51,7 @@ class LinkedListNodeState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def llnode_iter(self,value,next,comments=""):
         """Generates the `llnode_iter` state when a node is accessed or its
         value is changed.
@@ -75,7 +75,7 @@ class LinkedListNodeState:
             state_def=state_def,
             comments=comments if next else "none"
         )
-    
+
     def llnode_next(self,value,next,comments=""):
         """Generates the `llnode_next` state when the next pointer changes.
 
@@ -98,7 +98,7 @@ class LinkedListNodeState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def llnode_delete(self,comments=""):
         """Generates the `llnode_delete` state when a node is deleted.
 
@@ -133,7 +133,7 @@ class LinkedListNode:
         ARgorithmError: Raised if algo is not of type StateSet
 
     Example:
-        
+
         >>> llnode = ARgorithmToolkit.LinkedListNode(algo,7)
         >>> llnode.value = 10
         >>> temp = = ARgorithmToolkit.LinkedListNode(algo,7)
@@ -149,19 +149,19 @@ class LinkedListNode:
             self.algo = algo
         except:
             raise ARgorithmError("algo should be of type StateSet")
-        
+
         self.state_generator = LinkedListNodeState(self.name)
-        
+
         self._flag = False
         self.value = value
         self.next = None
         self._flag = True
-        
+
         state = self.state_generator.llnode_declare(
             self.value,self.next,comments
         )
         self.algo.add_state(state)
-        
+
     def __setattr__(self,key,value):
         """The __setattr__ function is overriden to listen to state changes in
         the value of node or the next attribute.
@@ -187,7 +187,7 @@ class LinkedListNode:
                 "value updated"
             )
             self.algo.add_state(state)
-            
+
     def __del__(self):
         """The __del__ function is overriden is there to listen to node
         deletion."""
@@ -233,7 +233,7 @@ class LinkedListState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def ll_head(self,head,comments=""):
         """Generates the `ll_head` state when linkedlist head is changed.
 
@@ -278,7 +278,7 @@ class LinkedList:
     """
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=""):
-        
+
         assert isinstance(name,str) , ARgorithmError("Name should be of type string")
         self.name = name
         try:
@@ -287,16 +287,16 @@ class LinkedList:
         except:
             raise ARgorithmError("algo should be of type StateSet")
         self.state_generator = LinkedListState(self.name)
-        
+
         self._flag = False
         if head:
             assert self.algo == head.algo, ARgorithmError("The head node belongs to a different StateSet")
         self.head = head
         self._flag = True
-        
+
         state = self.state_generator.ll_declare(self.head,comments)
         self.algo.add_state(state)
-        
+
     def __setattr__(self,key,value):
         """The __setattr__ function is overriden to listen to state changes in
         the head.
@@ -316,7 +316,7 @@ class LinkedList:
 
     def __repr__(self):
         return f"LinkedList(head at {self.head})"
-        
+
 class ForwardListIterator:
     """This class is a generator that is returned each time an ForwardList has
     to be iterated.
@@ -364,7 +364,7 @@ class ForwardList(LinkedList):
     def __init__(self,name:str,algo:StateSet,comments=""):
         super().__init__(name,algo,comments="")
         self.size = 0
-    
+
     def __len__(self):
         """overloads the len() operator to return size of list.
 
@@ -377,10 +377,10 @@ class ForwardList(LinkedList):
             >>> fl.push_front(1)
             >>> fl.size()
             1
-        
+
         """
         return self.size
-    
+
     def insert(self,value,index=0):
         """Insert node with given value at particular index. If index is not
         given,insert at front.
@@ -418,7 +418,7 @@ class ForwardList(LinkedList):
             curr.next = temp.next
             temp.next = curr
             self.size += 1
-    
+
     def push_front(self,value):
         """Pushes value to front.
 
@@ -442,7 +442,7 @@ class ForwardList(LinkedList):
             curr.next = None
             self.head = curr
         self.size+=1
-    
+
     def pop_front(self):
         """Pops first element of forwardlist.
 
@@ -468,7 +468,7 @@ class ForwardList(LinkedList):
         del temp
         self.size -= 1
         return data
-    
+
     def front(self):
         """Returns the first element of list.
 
@@ -489,7 +489,7 @@ class ForwardList(LinkedList):
         if self.head is None:
             raise ARgorithmError("Empty list")
         return self.head.value
-    
+
     def __iter__(self):
         """Returns the generator object to iterate through elements of
         ForwardList.
@@ -504,7 +504,7 @@ class ForwardList(LinkedList):
 
         """
         return ForwardListIterator(self)
-    
+
     def remove(self,value):
         """Remove elements with given value from list.
 
@@ -542,7 +542,7 @@ class ForwardList(LinkedList):
                     self.size -= 1
                     continue
             curr = curr.next
-            
+
     def tolist(self):
         """Converts the ForwardList to python list.
 
@@ -566,6 +566,6 @@ class ForwardList(LinkedList):
 
     def __repr__(self):
         return f"ForwardList({self.tolist()})"
-    
+
     def __str__(self):
         return f"ForwardList({self.tolist()})"

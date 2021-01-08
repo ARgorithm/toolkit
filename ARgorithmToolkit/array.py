@@ -30,10 +30,10 @@ def check_dimensions(data):
                 if check == -1:
                     check = check_dimensions(x)
                 else:
-                    assert check == check_dimensions(x)    
+                    assert check == check_dimensions(x)
             return len(data)
         except:
-            raise ARgorithmError('please pass array of fixed dimensions')    
+            raise ARgorithmError('please pass array of fixed dimensions')
 
 
 class ArrayState:
@@ -46,8 +46,8 @@ class ArrayState:
     """
     def __init__(self,name):
         self.name = name
-    
-    
+
+
     def array_declare(self,body,comments=""):
         """Generates the `array_declare` state when an instance of Array class
         is created.
@@ -69,7 +69,7 @@ class ArrayState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def array_iter(self,body,index,comments=""):
         """Generates the `array_iter` state when a particular index of array
         has been accessed.
@@ -118,7 +118,7 @@ class ArrayState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def array_compare(self,body,indexes,comments=""):
         """Generates the ``array_compare`` state when values at two indexes of
         array are being compared.
@@ -155,7 +155,7 @@ class ArrayIterator:
         AssertionError: If not declared with an instance of ARgorithmToolkit.array.Array
     """
     def __init__(self,array):
-        assert isinstance(array,Array) 
+        assert isinstance(array,Array)
         self.array = array
         self._index = 0
         self.size = len(array)
@@ -221,7 +221,7 @@ class Array:
         7
         7
         7
-    """    
+    """
     def __init__(self, name:str, algo:StateSet, data=None, shape=None, fill=0, dtype=int, comments=""):
         try:
             assert isinstance(name,str)
@@ -229,11 +229,11 @@ class Array:
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert isinstance(algo, StateSet) 
+            assert isinstance(algo, StateSet)
             self.algo = algo
         except:
             raise ARgorithmError("array structure needs a reference of template to store states")
-        
+
         if data is not None:
             check_dimensions(data)
             self.body = np.array(data)
@@ -241,14 +241,14 @@ class Array:
             state = self.state_generator.array_declare(self.body,comments)
             self.algo.add_state(state)
             return
-            
-            
+
+
         self.dtype = dtype
         self.body = np.full(fill_value = fill, shape=shape, dtype=dtype)
 
         state = self.state_generator.array_declare(self.body,comments)
         self.algo.add_state(state)
-        
+
     def __len__(self):
         """returns length of array when processed by len() function.
 
@@ -278,7 +278,7 @@ class Array:
         more instances of ARgorithmToolkit Array if subarray is accessed.
 
         Args:
-            key (index or slice): 
+            key (index or slice):
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Raises:
@@ -307,7 +307,7 @@ class Array:
                 state = self.state_generator.array_iter(self.body, key, comments)
                 self.algo.add_state(state)
                 return Array(name=name, algo=self.algo, data=self.body[key], comments=comments)
-            
+
             state = self.state_generator.array_iter(self.body, key, comments)
             self.algo.add_state(state)
             return self.body[key]
@@ -323,7 +323,7 @@ class Array:
 
         Example:
             >>> arr
-            Array([[1, 2, 3],[4, 5, 6]])    
+            Array([[1, 2, 3],[4, 5, 6]])
             >>> arr[1,2] = 0
             >>> arr
             Array([[1, 2, 3],[4, 5, 0]])
@@ -368,7 +368,7 @@ class Array:
         if func is None:
             def default_comparator(item1, item2):
                 return item1-item2
-            func = default_comparator 
+            func = default_comparator
         return func(item1, item2)
 
     def swap(self,index1,index2,comments=""):
@@ -407,7 +407,7 @@ class Array:
             The list generated is a normal python list so will not listen and store states. If you want to do that , store the list in the ARgorithmToolkit.vector.Vector object
         """
         return self.body.tolist()
-        
+
     def __str__(self):
         """String conversion for Array.
 
@@ -423,4 +423,4 @@ class Array:
             str: shell representation for array
         """
         return f"Array({self.tolist.__repr__()})"
-    
+

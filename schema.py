@@ -53,11 +53,11 @@ def check_schema(x):
             status['functions'][func_name] = "present" if is_present(loc) else "error"
     return status
 
-def flatten_dict(dd, separator ='_', prefix =''): 
-    return { prefix + separator + k if prefix else k : v 
-             for kk, vv in dd.items() 
-             for k, v in flatten_dict(vv, separator, kk).items() 
-             } if isinstance(dd, dict) else { prefix : dd } 
+def flatten_dict(dd, separator ='_', prefix =''):
+    return { prefix + separator + k if prefix else k : v
+             for kk, vv in dd.items()
+             for k, v in flatten_dict(vv, separator, kk).items()
+             } if isinstance(dd, dict) else { prefix : dd }
 
 if __name__ == "__main__":
     files = get_files()
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     for f in flat_status:
         count["total"] += 1
         count[flat_status[f]].append(f)
-    
+
     argument = sys.argv[1] if len(sys.argv) > 1 else None
     present = len(count['present'])
     missing = len(count['missing'])
@@ -101,4 +101,4 @@ if __name__ == "__main__":
     [print("ERROR : " , x) for x in count['error']]
     [print("MISSING : ",x) for x in count['missing']]
     print(tag)
-    
+

@@ -22,7 +22,7 @@ def test_indexing():
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_iter'
     assert last_state.content["state_def"]["index"] == (1,1)
-    
+
     assert arr[1][2].tolist() == arr.body[1][2]
     last_state = algo.states[-1]
     second_last_state = algo.states[-2]
@@ -36,14 +36,14 @@ def test_indexing():
     assert last_state.content["state_type"] == 'array_declare'
     assert last_state.content["state_def"]["variable_name"] == 'arr_sub'
     assert np.all(last_state.content["state_def"]["body"] == arr.body[1])
-    
+
     subarr = arr[1:2]
     assert isinstance(subarr,ARgorithmToolkit.Array)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_declare'
     assert last_state.content["state_def"]["variable_name"] == 'arr_sub'
     assert np.all(last_state.content["state_def"]["body"] == arr.body[1:2])
-    
+
 
 def test_iteration():
     for i in range(2):
@@ -55,7 +55,7 @@ def test_iteration():
 
     for i in range(2):
         for j in range(3):
-            assert arr[i,j] == arr.body[i,j] 
+            assert arr[i,j] == arr.body[i,j]
             last_state = algo.states[-1]
             assert last_state.content["state_type"] == 'array_iter'
             assert last_state.content["state_def"]["index"] == (i,j)
@@ -64,19 +64,19 @@ def test_compare():
     func = lambda x,y : x+2 > y/2
     elemA = arr[0,1]
     elemB = arr[1,1]
-    
+
     assert arr[0,1]-arr[1,1] == arr.compare((0,1),(1,1))
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_compare'
     assert last_state.content["state_def"]["index1"] == (0,1)
     assert last_state.content["state_def"]["index2"] == (1,1)
-    
+
     assert func(elemA,elemB) == arr.compare((0,1),(1,1),func)
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == 'array_compare'
     assert last_state.content["state_def"]["index1"] == (0,1)
     assert last_state.content["state_def"]["index2"] == (1,1)
-    
+
 
 def test_swap():
     elemA = arr[0,2]
@@ -88,7 +88,7 @@ def test_swap():
     assert last_state.content["state_def"]["index1"] == (0,2)
     assert last_state.content["state_def"]["index2"] == (1,2)
     assert np.all(last_state.content["state_def"]["body"] == arr.body)
-    
+
 def test_dimension_check():
     assert isinstance(arr[1],ARgorithmToolkit.Array)
     last_state = algo.states[-1]

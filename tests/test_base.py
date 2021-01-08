@@ -4,7 +4,7 @@ def test_base():
     a = ARgorithmToolkit.StateSet()
     a.states.append('test state')
     assert( len(a.states) == 1 )
-    
+
 def test_state():
     try:
         ARgorithmToolkit.State(state_def="ErrorTest")

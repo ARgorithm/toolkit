@@ -28,7 +28,7 @@ class DoublyLinkedListNodeState:
 
     def __init__(self,name:str):
         self.name = name
-        
+
     def dllnode_declare(self,value,next,prev,comments=""):
         """Generates the `dllnode_declare` state when a new node is created.
 
@@ -53,7 +53,7 @@ class DoublyLinkedListNodeState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def dllnode_iter(self,value,next,prev,comments=""):
         """Generates the `dllnode_iter` state when a node is accessed or its
         value is changed.
@@ -79,7 +79,7 @@ class DoublyLinkedListNodeState:
             state_def=state_def,
             comments=comments if next else "none"
         )
-    
+
     def dllnode_next(self,value,next,prev,comments=""):
         """Generates the `dllnode_next` state when the next pointer changes.
 
@@ -130,7 +130,7 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    
+
     def dllnode_delete(self,comments=""):
         """Generates the `dllnode_delete` state when a node is deleted.
 
@@ -172,7 +172,7 @@ class DoublyLinkedListNode:
         >>> temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
         >>> temp.next = dllnode
         >>> dllnode.prev = temp
-        
+
     """
 
     def __init__(self,algo:StateSet,value=None,comments=""):
@@ -182,20 +182,20 @@ class DoublyLinkedListNode:
             self.algo = algo
         except:
             raise ARgorithmError("algo should be of type StateSet")
-        
+
         self.state_generator = DoublyLinkedListNodeState(self.name)
-        
+
         self._flag = False
         self.value = value
         self.prev = None
         self.next = None
         self._flag = True
-        
+
         state = self.state_generator.dllnode_declare(
             self.value,self.next,self.prev,comments
         )
         self.algo.add_state(state)
-        
+
     def __setattr__(self,key,value):
         """The __setattr__ function is overriden to listen to state changes in
         the value of node or the next attribute.
@@ -232,7 +232,7 @@ class DoublyLinkedListNode:
                 "value updated"
             )
             self.algo.add_state(state)
-            
+
     def __del__(self):
         """The __del__ function is overriden is there to listen to node
         deletion."""
@@ -280,7 +280,7 @@ class DoublyLinkedListState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def dll_head(self,head,tail,comments=""):
         """Generates the `dll_head` state when linked list head is changed.
 
@@ -303,7 +303,7 @@ class DoublyLinkedListState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def dll_tail(self,head,tail,comments=""):
         """Generates the `dll_tail` state when linked list tail is changed.
 
@@ -351,7 +351,7 @@ class DoublyLinkedList:
     """
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=""):
-        
+
         assert isinstance(name,str) , ARgorithmError("Name should be of type string")
         self.name = name
         try:
@@ -360,18 +360,18 @@ class DoublyLinkedList:
         except:
             raise ARgorithmError("algo should be of type StateSet")
         self.state_generator = DoublyLinkedListState(self.name)
-        
+
         if head:
             assert self.algo == head.algo, ARgorithmError("The head node belongs to a different StateSet")
-        
+
         self._flag = False
         self.head = head
         self.tail = head
         self._flag = True
-        
+
         state = self.state_generator.dll_declare(self.head,self.tail,comments)
         self.algo.add_state(state)
-        
+
     def __setattr__(self,key,value):
         """The __setattr__ function is overriden to listen to state changes in
         the head.
@@ -394,7 +394,7 @@ class DoublyLinkedList:
 
     def __repr__(self):
         return f"DoublyLinkedList(head at {self.head})"
-        
+
 
 class ListIterator:
     """This class is a generator that is returned each time an List has to be
@@ -446,20 +446,20 @@ class List(DoublyLinkedList):
     def __init__(self,name:str,algo:StateSet,comments=""):
         super().__init__(name,algo,comments="")
         self.size = 0
-      
+
     def __len__(self):
         """overloads the len() operator to return size of list.
 
         Returns:
             int: size of list
-        
+
         Example:
 
             >>> len(lis)
 
         """
         return self.size
-    
+
     def insert(self,value,index=None):
         """Insert node with given value at particular index. If index is not
         given,insert at back.
@@ -496,7 +496,7 @@ class List(DoublyLinkedList):
             if curr.prev:
                 curr.prev.next = curr
             self.size += 1
-    
+
     def push_front(self,value):
         """Pushes value to front.
 
@@ -522,7 +522,7 @@ class List(DoublyLinkedList):
             self.head = curr
             self.tail = curr
         self.size+=1
-    
+
     def push_back(self,value):
         """Pushes value to back.
 
@@ -548,8 +548,8 @@ class List(DoublyLinkedList):
             self.head = curr
             self.tail = curr
         self.size+=1
-    
-    
+
+
     def pop_front(self):
         """Pops first element of List.
 
@@ -579,7 +579,7 @@ class List(DoublyLinkedList):
             self.tail = None
         self.size -= 1
         return data
-    
+
     def pop_back(self):
         """Pops first element of List.
 
@@ -608,7 +608,7 @@ class List(DoublyLinkedList):
             self.head = None
         self.size -= 1
         return data
-    
+
     def front(self):
         """Returns the first element of list.
 
@@ -631,7 +631,7 @@ class List(DoublyLinkedList):
         if self.head is None:
             raise ARgorithmError("Empty list")
         return self.head.value
-    
+
     def back(self):
         """Returns the last element of list.
 
@@ -654,7 +654,7 @@ class List(DoublyLinkedList):
         if self.head is None:
             raise ARgorithmError("Empty list")
         return self.tail.value
-    
+
     def __iter__(self):
         """Returns the generator object to iterate through elements of List.
 
@@ -668,7 +668,7 @@ class List(DoublyLinkedList):
 
         """
         return ListIterator(self)
-    
+
     def remove(self,value):
         """Remove elements with given value from list.
 
@@ -695,7 +695,7 @@ class List(DoublyLinkedList):
                 self.size -= 1
                 if self.size == 1:
                     self.head = None
-                    self.tail = None    
+                    self.tail = None
                     break
                 if curr.prev:
                     curr.prev.next = curr.next
@@ -708,7 +708,7 @@ class List(DoublyLinkedList):
                     self.tail = curr.prev
                     self.tail.next = None
             curr = curr.next
-            
+
     def tolist(self):
         """Converts the List to python list.
 
@@ -732,6 +732,6 @@ class List(DoublyLinkedList):
 
     def __repr__(self):
         return f"List({self.tolist()})"
-    
+
     def __str__(self):
         return f"List({self.tolist()})"

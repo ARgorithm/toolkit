@@ -1,5 +1,5 @@
 import ARgorithmToolkit
-from .utils import last_state 
+from .utils import last_state
 algo = ARgorithmToolkit.StateSet()
 
 def test_node():
@@ -23,7 +23,7 @@ def test_node():
     assert dllnode.next is None
     assert dllnode.prev == temp
     assert last_state(algo)['state_type'] == "dllnode_prev"
-    
+
     dllnode.prev = None
     del temp
     assert dllnode.next is None
@@ -79,7 +79,7 @@ def test_forwardlist():
     dl.remove(5)
     assert dl.tolist() == [3,4]
     assert dl.head.value == 3
-    assert dl.tail.value == 4    
+    assert dl.tail.value == 4
     assert last_state(algo)['state_type'] == "dllnode_delete"
 
     k = dl.pop_back()
@@ -95,15 +95,15 @@ def test_forwardlist():
     assert last_state(algo)['state_type'] == "dll_tail"
     assert last_state(algo)['state_type'] == "dllnode_delete"
     assert last_state(algo)['state_type'] == "dll_head"
-    
+
     dl.push_front(3)
     dl.push_back(4)
-    
+
     k = dl.pop_front()
     assert k == 3
     assert last_state(algo)['state_type'] == "dllnode_delete"
     assert last_state(algo)['state_type'] == "dll_head"
-    
+
     k = dl.pop_back()
     assert k == 4
     assert last_state(algo)['state_type'] == "dll_head"

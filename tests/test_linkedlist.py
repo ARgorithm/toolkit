@@ -1,5 +1,5 @@
 import ARgorithmToolkit
-from .utils import last_state 
+from .utils import last_state
 algo = ARgorithmToolkit.StateSet()
 fl = ARgorithmToolkit.ForwardList("fl",algo)
 
@@ -21,7 +21,7 @@ def test_node():
     assert isinstance(llnode.next,ARgorithmToolkit.LinkedListNode)
     assert llnode.next == temp
     assert last_state(algo)['state_type'] == "llnode_next"
-    
+
     llnode.next = None
     del temp
     assert llnode.next is None
@@ -53,32 +53,32 @@ def test_forwardlist():
     fl.insert(5,1)
     assert len(fl) == 3
     assert isinstance(fl.head,ARgorithmToolkit.LinkedListNode)
-    assert last_state(algo)['state_type'] == "llnode_next" 
+    assert last_state(algo)['state_type'] == "llnode_next"
     assert fl.tolist() == [3,5,4]
 
     k = fl.pop_front()
     assert k == 3
     assert len(fl) == 2
-    assert last_state(algo)['state_type'] == "llnode_delete" 
+    assert last_state(algo)['state_type'] == "llnode_delete"
 
     for i in range(5):
         fl.insert(9,2)
 
     assert fl.tolist() == [5,4,9,9,9,9,9]
-    
+
     for i in range(5):
         fl.push_front(9)
 
     fl.remove(9)
     assert fl.tolist() == [5,4]
-    assert last_state(algo)['state_type'] == "llnode_delete" 
+    assert last_state(algo)['state_type'] == "llnode_delete"
 
     fl.remove(5)
     fl.pop_front()
 
     assert fl.tolist() == []
     assert len(fl) == 0
-    assert last_state(algo)['state_type'] == "llnode_delete" 
+    assert last_state(algo)['state_type'] == "llnode_delete"
 
     try:
         fl.pop_front()

@@ -9,7 +9,7 @@ def test_declare():
     assert last_state.content["state_type"] == "priorityqueue_declare"
 
 def test_operations():
-    
+
     queue.offer(9)
     queue.offer(3)
     queue.offer(7)
@@ -21,12 +21,12 @@ def test_operations():
     queue_object.offer((3, a))
     assert queue.body[0] == 3
     assert queue_object.body[0] == (1, {"A":1})
-   
+
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "priorityqueue_offer"
     assert last_state.content["state_def"]["body"] == queue_object.body
     assert last_state.content["state_def"]["element"] == (3,a)
-    
+
     assert queue.peek() == 3
     assert queue_object.peek() == (1, {"A":1})
     last_state = algo.states[-1]
@@ -50,4 +50,4 @@ def test_operations():
 def test_size():
     assert queue.empty() and len(queue)==0
 
-    
+

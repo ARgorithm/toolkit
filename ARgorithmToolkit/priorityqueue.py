@@ -44,7 +44,7 @@ class PriorityQueueState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def priorityqueue_offer(self,body,element,comments=""):
         """Generates the `priorityqueue_offer` when an element is added to
         priority queue.
@@ -68,7 +68,7 @@ class PriorityQueueState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def priorityqueue_poll(self,body,comments=""):
         """Generates the `priorityqueue_offer` when an element is popped from
         priority queue.
@@ -130,15 +130,15 @@ class PriorityQueue:
         >>> algo = ARgorithmToolkit.StateSet()
         >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
     """
-    
+
     def __init__(self, name:str, algo:StateSet, comments:str = ""):
         try:
-            assert isinstance(name,str) 
+            assert isinstance(name,str)
             self.state_generator = PriorityQueueState(name)
         except:
             raise ARgorithmError('Give valid name to data structure')
         try:
-            assert isinstance(algo,StateSet) 
+            assert isinstance(algo,StateSet)
             self.algo = algo
         except:
             raise ARgorithmError("Queue structure needs a reference of template to store states")
@@ -157,7 +157,7 @@ class PriorityQueue:
             0
         """
         return len(self.body)
-    
+
     def empty(self):
         """Checks whether PriorityQueue is empty or not.
 
@@ -249,7 +249,7 @@ class PriorityQueue:
         state = self.state_generator.priorityqueue_peek(self.body,comments)
         self.algo.add_state(state)
         return item
-    
+
     def __str__(self):
         """String conversion for Priority Queue.
 

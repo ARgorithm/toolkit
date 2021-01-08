@@ -2,8 +2,8 @@
 structures and algorithms.
 
 Out of these modules, the utils modules is of upmost importance as the
-classes within the modules are neccessary for any Argorithm:     
-    
+classes within the modules are neccessary for any Argorithm:
+
     >>> import ARgorithmToolkit
 """
 from ARgorithmToolkit.utils import *

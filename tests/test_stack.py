@@ -11,16 +11,16 @@ def test_operations():
     stack.push(3)
     stack.push(9)
     assert stack.body == [3,9]
-   
+
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "stack_push"
     assert last_state.content["state_def"]["body"] == stack.body
     assert last_state.content["state_def"]["element"] == 9
-    
+
     assert stack.top() == 9
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "stack_top"
-    
+
     assert stack.top() == stack.pop()
     last_state = algo.states[-1]
     assert last_state.content["state_type"] == "stack_pop"
@@ -35,4 +35,4 @@ def test_operations():
 def test_size():
     assert stack.empty() and len(stack)==0
 
-    
+

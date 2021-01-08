@@ -13,13 +13,13 @@ class ARgorithmError(Exception):
 
     Used to debug errors that are caused due to the logic and internal
     workings of ARgorithmToolkit
-    """        
+    """
     def __init__(self,*args):
         if args:
             self.message = args[0]
         else:
             self.message = None
-            
+
     def __str__(self):
         if self.message:
             return f'{self.message}'
@@ -126,14 +126,14 @@ class Variable:
         state_type = "variable_declare"
         state_def = {
             "variable_name" : name ,
-            "value" : value  
+            "value" : value
         }
         self.algo.add_state(State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         ))
-        
+
     def __setattr__(self,key,value):
         """Operator overload to listen to changes in value of Variables.
 
