@@ -23,8 +23,7 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'wasabi', #For CLI
-        'argparse' , #For CLI
+        'typer', # For CLI
         'requests' , #For CLI
         'numpy'
     ],
@@ -35,7 +34,7 @@ setuptools.setup(
     },
     entry_points = {
         'console_scripts': [
-            'ARgorithm = ARgorithmToolkit.cli:cmd',
+            'ARgorithm = ARgorithmToolkit.cli:app',
         ],
     }
 )
