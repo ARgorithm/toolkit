@@ -14,6 +14,7 @@ Submodules
 
    ARgorithmToolkit.array
    ARgorithmToolkit.cli
+   ARgorithmToolkit.doublylinkedlist
    ARgorithmToolkit.linkedlist
    ARgorithmToolkit.priorityqueue
    ARgorithmToolkit.queue

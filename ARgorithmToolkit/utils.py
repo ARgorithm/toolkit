@@ -13,18 +13,18 @@ class ARgorithmError(Exception):
 
     Used to debug errors that are caused due to the logic and internal
     workings of ARgorithmToolkit
-    """        
+    """
     def __init__(self,*args):
+        super().__init__(*args)
         if args:
             self.message = args[0]
         else:
             self.message = None
-            
+
     def __str__(self):
         if self.message:
             return f'{self.message}'
-        else:
-            return f"There's an error within ARgorithm template usage"
+        return "There's an error within ARgorithm template usage"
 
 class State:
     """The Instance of State class can be considered as an event in the
@@ -39,8 +39,8 @@ class State:
         for x in ['state_type','state_def','comments']:
             try:
                 self.content[x] = kwargs[x]
-            except:
-                raise ARgorithmError(f"{x} should be present in State arguments")
+            except KeyError as e:
+                raise ARgorithmError(f"{x} should be present in State arguments") from e
 
     def __str__(self):
         data = str(self.content)
@@ -126,14 +126,14 @@ class Variable:
         state_type = "variable_declare"
         state_def = {
             "variable_name" : name ,
-            "value" : value  
+            "value" : value
         }
         self.algo.add_state(State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         ))
-        
+
     def __setattr__(self,key,value):
         """Operator overload to listen to changes in value of Variables.
 

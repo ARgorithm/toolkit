@@ -6,7 +6,7 @@ def run(**kwargs):
     algo = ARgorithmToolkit.StateSet()
     if n <= 0:
         return algo
-    
+
     body = [0]*n
     body[0] = 0
     if n == 1:
@@ -15,7 +15,7 @@ def run(**kwargs):
 
     body[1] = 1
 
-    arr = ARgorithmToolkit.Array("arr" , algo, data=body, comments="initializing vector with first two fibonacci numbers 0, 1")   
+    arr = ARgorithmToolkit.Array("arr" , algo, data=body, comments="initializing vector with first two fibonacci numbers 0, 1")
     for i in range(2, n):
         temp1 = arr[i-2]
         temp2 = arr[i-1]
@@ -23,4 +23,4 @@ def run(**kwargs):
         arr[i] = temp1+temp2
     return algo
 
-        
+

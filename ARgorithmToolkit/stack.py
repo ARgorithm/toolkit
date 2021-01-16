@@ -17,7 +17,7 @@ class StackState():
 
         name (str) : Name of the variable for whom we are generating states
     """
-    
+
     def __init__(self,name):
         self.name = name
 
@@ -41,7 +41,7 @@ class StackState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def stack_push(self,body,element,comments=""):
         """Generates the `stack_push` state when an element is added to stack.
 
@@ -56,7 +56,7 @@ class StackState():
         state_type = "stack_push"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "element" : element
         }
         return State(
@@ -64,7 +64,7 @@ class StackState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def stack_pop(self,body,comments=""):
         """Generates the `stack_pop` state when an element is popped from
         stack.
@@ -79,7 +79,7 @@ class StackState():
         state_type = "stack_pop"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -100,14 +100,14 @@ class StackState():
         state_type = "stack_top"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
-    
+
 class Stack:
     """The Stack class is a container interface for the stack, a linear
     container implementation of LIFO.
@@ -126,15 +126,15 @@ class Stack:
     """
     def __init__(self,name:str,algo:StateSet,comments=""):
         try:
-            assert isinstance(name,str) 
+            assert isinstance(name,str)
             self.state_generator = StackState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("Stack structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise ARgorithmError("Stack structure needs a reference of template to store states") from e
         self.body = []
         state = self.state_generator.stack_declare(comments)
         self.algo.add_state(state)
@@ -150,13 +150,13 @@ class Stack:
             0
         """
         return len(self.body)
-    
+
     def empty(self):
         """Checks whether stack is empty or not.
 
         Returns:
             bool: if true then stack is empty
-        
+
         Example:
             >>> st.empty()
             True
@@ -248,5 +248,3 @@ class Stack:
             str: shell representation for stack
         """
         return f"Stack({self.body.__repr__()})"
-
-

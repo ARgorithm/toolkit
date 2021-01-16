@@ -6,6 +6,10 @@ init:
 clean:
 	rm -rf ARgorithmToolkit.egg-info/ build/ dist/
 
+lint:
+	pylint ARgorithmToolkit
+	pylint tests/
+
 test:
 	pytest tests
 

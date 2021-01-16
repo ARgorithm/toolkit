@@ -38,7 +38,7 @@ autosectionlabel_prefix_document = True
 autodoc_default_options = {
     'members': True,
     'member-order': 'bysource',
-    'special-members': '__setitem__,__getitem__',
+    'special-members': '__setitem__,__getitem__,__iter__,__len__',
     'undoc-members': True,
 }
 # Add any paths that contain templates here, relative to this directory.

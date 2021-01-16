@@ -40,7 +40,7 @@ class QueueState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def queue_push(self,body,element,comments=""):
         """Generates the `queue_push` state when an element is added to queue.
 
@@ -55,7 +55,7 @@ class QueueState():
         state_type = "queue_push"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "element" : element
         }
         return State(
@@ -63,7 +63,7 @@ class QueueState():
             state_def=state_def,
             comments=comments
         )
-    
+
     def queue_pop(self,body,comments=""):
         """Generates the `queue_pop` state when an element is removed from
         queue.
@@ -78,7 +78,7 @@ class QueueState():
         state_type = "queue_pop"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -99,7 +99,7 @@ class QueueState():
         state_type = "queue_front"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
@@ -120,14 +120,14 @@ class QueueState():
         state_type = "queue_back"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
         }
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
-        
+
 class Queue:
     """The Queue class is a container interface for the queue, a linear
     container implementation of FIFO.
@@ -149,13 +149,13 @@ class Queue:
         try:
             assert isinstance(name,str)
             self.state_generator = QueueState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
-            assert isinstance(algo,StateSet) 
+            assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("Queue structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise ARgorithmError("Queue structure needs a reference of template to store states") from e
         self.body = []
         state = self.state_generator.queue_declare(comments)
         self.algo.add_state(state)
@@ -171,7 +171,7 @@ class Queue:
             0
         """
         return len(self.body)
-    
+
     def empty(self):
         """Checks whether queue is empty or not.
 
@@ -217,7 +217,7 @@ class Queue:
 
         Returns:
             element: The element popped from queue
-        
+
         Example:
             >>> q
             Queue([3, 5, 4])
@@ -301,5 +301,3 @@ class Queue:
             str: shell representation for queue
         """
         return f"Queue({self.body.__repr__()})"
-
-

@@ -19,8 +19,8 @@ class VectorState:
     """
     def __init__(self,name):
         self.name = name
-    
-    
+
+
     def vector_declare(self,body,comments=""):
         """Generates the `vector_declare` state when an instance of Vector
         class is created.
@@ -35,14 +35,14 @@ class VectorState:
         state_type = "vector_declare"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body]
+            "body" : list(body)
         }
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
-    
+
     def vector_iter(self,body,index,comments=""):
         """Generates the `vector_iter` state when a particular index of vector
         has been accessed.
@@ -58,7 +58,7 @@ class VectorState:
         state_type = "vector_iter"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index" : index
         }
         return State(
@@ -66,7 +66,7 @@ class VectorState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def vector_remove(self,body,index , comments=""):
         """Generates the `vector_remove` state when a element at particular
         index of vector is removed.
@@ -82,7 +82,7 @@ class VectorState:
         state_type = "vector_remove"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index" : index
         }
         return State(
@@ -90,7 +90,7 @@ class VectorState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def vector_insert(self,body,element,index,comments=""):
         """Generates the `vector_insert` state when a element is to be inserted
         at particular index of vector.
@@ -107,7 +107,7 @@ class VectorState:
         state_type = "vector_insert"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "element" : element,
             "index" : index
         }
@@ -116,7 +116,7 @@ class VectorState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def vector_swap(self,body,indexes,comments=""):
         """Generates the ``vector_swap`` state when values at two indexes of
         vector are being swapped.
@@ -132,7 +132,7 @@ class VectorState:
         state_type = "vector_swap"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -141,7 +141,7 @@ class VectorState:
             state_def=state_def,
             comments=comments
         )
-    
+
     def vector_compare(self,body,indexes,comments=""):
         """Generates the ``vector_compare`` state when values at two indexes of
         vector are being compared.
@@ -157,7 +157,7 @@ class VectorState:
         state_type = "vector_compare"
         state_def = {
             "variable_name" : self.name,
-            "body" : [x for x in body],
+            "body" : list(body),
             "index1" : indexes[0],
             "index2" : indexes[1]
         }
@@ -186,12 +186,11 @@ class VectorIterator:
     def __next__(self):
         if self._index == self.size:
             raise StopIteration
-        else:
-            v = self.vector[self._index]
-            self._index += 1
-            return v
+        v = self.vector[self._index]
+        self._index += 1
+        return v
 
-class Vector:    
+class Vector:
     """The Vector class provides a wrapped around the python list class to
     emulate it as a vector.
 
@@ -210,25 +209,27 @@ class Vector:
         >>> vec = ARgorithmToolkit.Vector("vec",algo)
     """
 
-    def __init__(self,name,algo,data=[],comments=""):
+    def __init__(self,name,algo,data=None,comments=""):
         try:
-            assert isinstance(name,str) 
+            assert isinstance(name,str)
             self.state_generator = VectorState(name)
-        except:
-            raise ARgorithmError('Give valid name to data structure')
+        except AssertionError as e:
+            raise ARgorithmError('Give valid name to data structure') from e
         try:
-            assert isinstance(algo,StateSet) 
+            assert isinstance(algo,StateSet)
             self.algo = algo
-        except:
-            raise ARgorithmError("vector structure needs a reference of template to store states")
+        except AssertionError as e:
+            raise ARgorithmError("vector structure needs a reference of template to store states") from e
         try:
-            assert isinstance(data,list) 
+            if data is None:
+                data = []
+            assert isinstance(data,list) or data
             self.body = data
-        except:
-            raise TypeError("vector body should be list")
+        except AssertionError as e:
+            raise TypeError("vector body should be list") from e
         state = self.state_generator.vector_declare(self.body,comments)
         self.algo.add_state(state)
-        
+
     def __len__(self):
         """Function overload for the len() function. Returns size of vector.
 
@@ -264,10 +265,9 @@ class Vector:
         if isinstance(key,slice):
             name = f"{self.state_generator.name}_sub"
             return Vector(name , self.algo , self.body[key] , comments)
-        else:
-            state = self.state_generator.vector_iter(self.body,key,comments)
-            self.algo.add_state(state)
-            return self.body[key]
+        state = self.state_generator.vector_iter(self.body,key,comments)
+        self.algo.add_state(state)
+        return self.body[key]
 
     def __setitem__(self, key, value):
         """Operator overload for indexing for assignment to listen to states if
@@ -322,13 +322,13 @@ class Vector:
             >>> vec
             Vector([1, 2, 3])
         """
-        if index==None:
+        if index is None:
             self.body.append(value)
-            state = self.state_generator.vector_insert(self.body , value , len(self)-1 , comments) 
+            state = self.state_generator.vector_insert(self.body , value , len(self)-1 , comments)
             self.algo.add_state(state)
         elif index >= 0:
             self.body = self.body[:index] + [value] + self.body[index:]
-            state = self.state_generator.vector_insert(self.body , value , index , comments) 
+            state = self.state_generator.vector_insert(self.body , value , index , comments)
             self.algo.add_state(state)
 
     def remove(self,value=None,index=None,comments=""):
@@ -361,15 +361,15 @@ class Vector:
         Note:
             Please make note of the position of arguments if passing positional arguments. It is recommended not to do that
         """
-        if index==None and value==None:
+        if index is None and value is None:
             self.body.pop()
             state = self.state_generator.vector_remove(self.body,len(self)-1,comments)
             self.algo.add_state(state)
-        elif value==None and index >= 0 and index < len(self):
+        elif value is None and 0 <= index < len(self):
             self.body = self.body[0:index] + self.body[index+1:]
             state = self.state_generator.vector_remove(self.body,index,comments)
             self.algo.add_state(state)
-        elif index==None:
+        elif index is None:
             index = self.body.index(value)
             self.body.remove(value)
             state = self.state_generator.vector_remove(self.body,index,comments)
@@ -399,10 +399,10 @@ class Vector:
         item2 = self.body[index2]
         state = self.state_generator.vector_compare(self.body,(index1,index2),comments)
         self.algo.add_state(state)
-        if func == None:
+        if func is None:
             def default_comparator(item1, item2):
                 return item1-item2
-            func = default_comparator 
+            func = default_comparator
         return func(item1, item2)
 
     def swap(self,index1,index2,comments=""):
@@ -425,7 +425,7 @@ class Vector:
         self.body[index2] = temp
         state = self.state_generator.vector_swap(self.body,(index1,index2),comments)
         self.algo.add_state(state)
-        
+
     def __str__(self):
         """Returns string representation of vector.
 
@@ -433,7 +433,7 @@ class Vector:
             str: string representation of vector
         """
         return f"Vector({self.body.__str__()})"
-    
+
     def __repr__(self):
         """Returns representation of vector.
 

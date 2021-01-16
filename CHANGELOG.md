@@ -1,6 +1,10 @@
+## Unreleased
+
+- Linkedlist and DoublyLinkedList have been implemented
+
 ## 0.0.11
 
--  CLI not can be configured to connect to Server endpoint of choice
+-  CLI now can be configured to connect to Server endpoint of choice
 
 -  Documentation pages added
   -  Introduction to ARgorithm

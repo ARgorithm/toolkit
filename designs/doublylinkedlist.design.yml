@@ -1,0 +1,120 @@
+author: Alan John
+date: "2020-01-06"
+category: Doubly Linked List
+
+states:
+  - dllnode_declare:
+        description: Indicates that a new Node has been created
+        definition:
+          variable_name: The id of the doubly doubly linked list Node
+          value: The value in the node
+          next: The id of the next doubly doubly linked list node. Default "none"
+          prev: The id of the prev doubly doubly linked list node. Default "none"
+  
+  - dllnode_iter:
+        description: Highlights an node in case the value is changed
+        definition:
+          variable_name: The id of the doubly doubly linked list Node
+          value: The value in the node
+          next: The id of the next doubly doubly linked list node. Default "none"
+          prev: The id of the prev doubly doubly linked list node. Default "none"
+
+  - dllnode_next:
+        description: Indicates that the reference to next node has been changed
+        definition:
+          variable_name: The id of the doubly doubly linked list Node
+          value: The value in the node
+          next: The id of the next doubly doubly linked list node. Default "none"
+          prev: The id of the prev doubly doubly linked list node. Default "none"
+
+  - dllnode_delete:
+        description: Deletes the node
+        definition:
+          variable_name: The id of the doubly doubly linked list Node
+       
+  - dll_declare:
+        description: Creates a head pointer for start of doubly doubly linked list
+        definition:
+          variable_name: The id of the doubly doubly linked list Node
+          head: The id of the head doubly doubly linked list node. Default "none"
+          tail: The id of the tail doubly doubly linked list node. Default "none"
+  
+  - dll_head:
+        description: Changes head pointer of doubly doubly linked list
+        definition:
+          variable_name: The id of the doubly doubly linked list Node
+          head: The id of the head doubly doubly linked list node. Default "none"
+          tail: The id of the tail doubly doubly linked list node. Default "none"
+          
+classes:
+  - ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode:
+      description: Class emulating the node of linked list
+  - ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState:
+      description: Helper class generating states for DoublyLinkedListNode 
+  - ARgorithmToolkit.doublylinkedlist.DoublyLinkedList:
+      description: Class emulating linked list head pointer
+  - ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState:
+      description: Helper class generating states for DoublyLinkedListNode
+  - ARgorithmToolkit.doublylinkedlist.List:
+      description: Class implementing complete list i.e singly linked list
+  - ARgorithmToolkit.doublylinkedlist.ListIterator:
+      description: Iterator Class for List
+
+functions:
+  - node_creation:
+      description: This function creates the Node
+      state: dllnode_declare
+      function: 
+        name: ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.__init__
+        parameters:
+          required:
+            - algo
+            - value
+
+  - node_value_change:
+      description: This function updates value of the node
+      state: dllnode_iter
+      function: 
+        name: ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.__setattr__
+        parameters:
+          required:
+            - key
+            - value
+  
+  - node_next_change:
+      description: This function updates next pointer of the node
+      state: dllnode_next
+      function: 
+        name: ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.__setattr__
+        parameters:
+          required:
+            - key
+            - value
+  
+  - node_delete:
+      description: This function deletes the node
+      state: dllnode_delete
+      function: 
+        name: ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.__del__
+
+  - doublylinkedlist_create:
+      description: This function creates a doubly linked list with a head pointer
+      state: dll_declare
+      function:
+        name: ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.__init__
+        parameters:
+          required:
+            - name
+            - algo
+          not_required:
+            - head
+
+  - doublylinkedlist_head_change:
+      description: This function changes the doublylinkedlist's head pointer
+      state: dll_head
+      function:
+        name: ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.__setattr__
+        parameters:
+          required:
+            - key
+            - value

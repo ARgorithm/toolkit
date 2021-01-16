@@ -85,7 +85,7 @@ functions:
       function:
         name : ARgorithmToolkit.array.Array.compare
         parameters:
-          reqiured:
+          required:
             - index1
             - index2
           not_required:
@@ -97,7 +97,7 @@ functions:
       function:
         name : ARgorithmToolkit.array.Array.swap
         parameters:
-          reqiured:
+          required:
             - index1
             - index2
       state: array_swap 
