@@ -178,3 +178,18 @@ Creating server_arserver_1 ... done
 Attaching to server_mongodb_1,server_arserver_1
 ```
 </div>
+
+## Interacting with server
+
+1. Once the server is running, you can check whether its running by entering the public IP on the browswer. You should get the server running page. you can check the api routes on `/docs` page with help of FastAPI Swagger UI. You can get the api routes in json format at the `/openapi.json`.
+
+    ![](https://user-images.githubusercontent.com/35735486/104831190-97d6fb80-58ac-11eb-92d3-bd7a6d823cfe.png)
+
+2. There are two type of accounts in the server:
+
+    - `Programmer`
+    - `User`
+
+3. The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI [account new](\cli#new) command, it create both a progammer and a user account for that email. The mobile application can only create user accounts.
+
+4. logs are generated in server.log file which you will find in `\uploads`. The `server.log` file contains request based logs for every path. The `process.log` has logs regarding state generation for argorithm.

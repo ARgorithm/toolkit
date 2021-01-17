@@ -49,8 +49,7 @@ The account command consists of two subcommands which are shown below
 
 ### New
 
-The new subcommand in account creates a new account in the server. The
-account you make will be ``programmer`` account. Learn more about `programmer` accounts in [introduction](/).
+The new subcommand in account creates a new account in the server. The email you will use will be registered as both ``programmer`` account and `user` account. Learn more [here](/server#interacting-with-server).
 
 <div class="termy">
 ```console
@@ -267,11 +266,12 @@ The delete subcommand in admin is used to delete accounts.
 	```
 <div class="termy">
 ```console
-$ ARgorithm admin whitelist sample@user.com
-[SUCCESS]: WHITELISTED ACCOUNT
+$ ARgorithm admin delete sample@user.com
+[SUCCESS]: DELETED ACCOUNT
 ```
 </div>
 
-By default, this subcommand only deletes the `user` account  (Refer [introduction](/)). To delete the progammer account as well use the `-p` or `--programmer` flag.
+By default, this subcommand only deletes the `user` account  (Refer [here](/server#interacting-with-server)). To delete the progammer account as well use the `-p` or `--programmer` flag.
+
 !!! warning
 	It is not recommended to delete programmer accounts. Programmer accounts are useful for finding authors of ARgorithm. Try `blacklist` instead

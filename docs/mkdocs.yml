@@ -22,13 +22,13 @@ plugins:
 - markdownextradata:
     data: data
 nav:
-- Introduction: index.md
+- index.md
 - Getting Started: start.md
 - Server Setup: server.md
 - Command Line Interface: cli.md
 - API Documentation: api/index.html
+- Releases: CHANGELOG.md
 - Need help?: help.md
-# - contributing.md
 # - release-notes.md
 markdown_extensions:
 - toc:

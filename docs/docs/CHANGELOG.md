@@ -1,6 +1,8 @@
-## Unreleased
+## 0.0.12
 
 - Linkedlist and DoublyLinkedList have been implemented
+- Command line interface migrated from argparse and wasabi to Typer
+- Shifted documentation from sphinx to mkdocs for better functionality
 
 ## 0.0.11
 
