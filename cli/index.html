@@ -1,0 +1,926 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AR visualizations of data structures">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
+    
+    
+      
+        <title>Command Line Interface - ARgorithm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.15aa0b43.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.75751829.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/termynal.css">
+    
+      <link rel="stylesheet" href="../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue-grey">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#command-line-interface" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="ARgorithm" class="md-header-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../img/Logo_black.svg" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            ARgorithm
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              Command Line Interface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ARgorithm/Toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/Toolkit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARgorithm" class="md-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../img/Logo_black.svg" alt="logo">
+
+    </a>
+    ARgorithm
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ARgorithm/Toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/Toolkit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../start/" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../server/" class="md-nav__link">
+      Server Setup
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Command Line Interface
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Command Line Interface
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    Configure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#account" class="md-nav__link">
+    Account
+  </a>
+  
+    <nav class="md-nav" aria-label="Account">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    New
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    Login
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    Init
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submit" class="md-nav__link">
+    Submit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    List
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    Update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    Test
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin" class="md-nav__link">
+    Admin
+  </a>
+  
+    <nav class="md-nav" aria-label="Admin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grant" class="md-nav__link">
+    Grant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revoke" class="md-nav__link">
+    Revoke
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklist" class="md-nav__link">
+    Blacklist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whitelist" class="md-nav__link">
+    Whitelist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_1" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/" class="md-nav__link">
+      API Documentation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../CHANGELOG/" class="md-nav__link">
+      Releases
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../help/" class="md-nav__link">
+      Need help?
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    Configure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#account" class="md-nav__link">
+    Account
+  </a>
+  
+    <nav class="md-nav" aria-label="Account">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    New
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    Login
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    Init
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submit" class="md-nav__link">
+    Submit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    List
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    Update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    Test
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin" class="md-nav__link">
+    Admin
+  </a>
+  
+    <nav class="md-nav" aria-label="Admin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grant" class="md-nav__link">
+    Grant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revoke" class="md-nav__link">
+    Revoke
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklist" class="md-nav__link">
+    Blacklist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whitelist" class="md-nav__link">
+    Whitelist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_1" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="command-line-interface">Command line interface<a class="headerlink" href="#command-line-interface" title="Permanent link">&para;</a></h1>
+<p>The command line interface for ARgorithmToolkit helps programmers to
+create and manage their argorithms along with control and manage their
+server.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span>  ARgorithm --help
+<span class="go">Usage: ARgorithm [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">  ARgorithm CLI</span>
+
+<span class="go">Options:</span>
+<span class="go">  -l, --local           Connects to server running on localhost</span>
+<span class="go">  --install-completion  Install completion for the current shell.</span>
+<span class="go">  --show-completion     Show completion for the current shell, to copy it or</span>
+<span class="go">                        customize the installation.</span>
+
+<span class="go">  --help                Show this message and exit.</span>
+</code></pre></div>
+</div>
+
+<h2 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h2>
+<p>This command can be used to set your own server IP. All your requests will be sent to this IP. If you are running server locally you dont need to configure IP, instead you can use the <code>-l</code> or <code>--local</code> flag to connect to local servers.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>when using the local flag before use it before the command
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm --local <span class="o">[</span>COMMAND<span class="o">]</span>
+</code></pre></div></p>
+</div>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm configure
+<span class="gp">#</span> Enter server endpoint :$ http://myserverendpoint.com 
+<span class="go">[SUCCESS]: CONNECTED</span>
+<span class="go">Cloud requests will now go to http://myserverendpoint.com</span>
+</code></pre></div>
+</div>
+
+<h2 id="account">Account<a class="headerlink" href="#account" title="Permanent link">&para;</a></h2>
+<p>This command can only be used if the server you are connected to has authorization feature enabled. Refer the <a href="/server/#configuring-the-server">configuration section</a> in <a href="/server">server setup</a> to learn more about authentication and authorization setup.</p>
+<p>The account command consists of two subcommands which are shown below</p>
+<h3 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h3>
+<p>The new subcommand in account creates a new account in the server. The email you will use will be registered as both <code>programmer</code> account and <code>user</code> account. Learn more <a href="/server#interacting-with-server">here</a>.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm account new
+<span class="gp">#</span> Enter email address:$ sample@user.com
+<span class="go">[INFO]: PASSWORD CRITERIA</span>
+<span class="go">- between 8 to 25 characters</span>
+<span class="go"> - contains atleast one number</span>
+<span class="go"> - contains atleast lower case alphabet</span>
+<span class="go"> - contains atleast uppercase alphabet</span>
+<span class="gp">#</span> Enter password:$ ********
+<span class="gp">#</span> Repeat <span class="k">for</span> confirmation:$ ********* 
+<span class="go">[SUCCESS]: ACCOUNT CREATED</span>
+<span class="go">These credentials will be used as both programmer and user credentials</span>
+</code></pre></div>
+</div>
+
+<h3 id="login">Login<a class="headerlink" href="#login" title="Permanent link">&para;</a></h3>
+<p>The login command can be used to login to your server. Once logged in, these credentials will be used when you interact with the server.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm account login
+<span class="gp">#</span> Enter email address:$ sample@user.com
+<span class="gp">#</span> Enter password:$ ******** 
+<span class="go">[SUCCESS]: LOGGED IN SUCCESSFULLY</span>
+</code></pre></div>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you are already logged in and you want to login using different credentials,use the <code>-o</code> or <code>--override</code> flag after <code>login</code> command.</p>
+</div>
+<h2 id="init">Init<a class="headerlink" href="#init" title="Permanent link">&para;</a></h2>
+<p>The <code>init</code> command is used to generate templates for ARgorithm. It creates a code file <code>.py</code> and a config file <code>.config.json</code>.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm init hello_world
+<span class="go">Creating empty template for hello_world</span>
+<span class="go">[SUCCESS]: TEMPLATE GENERATED</span>
+<span class="go">refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it</span>
+<span class="go">chech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples</span>
+
+<span class="gp">$</span> ls
+<span class="go">hello_world.config.json hello_world.py</span>
+</code></pre></div>
+</div>
+
+<p>The files generated are shown below
+<strong>hello_world.py</strong>
+<div class="highlight"><pre><span></span><code>    <span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
+
+        <span class="c1">#</span>
+        <span class="c1"># Your code</span>
+        <span class="c1">#</span>
+
+        <span class="k">return</span> <span class="n">algo</span>
+</code></pre></div>
+<strong>hello_world.config.json</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;hello_world&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;hello_world.py&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{},</span> 
+    <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{},</span> 
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="submit">Submit<a class="headerlink" href="#submit" title="Permanent link">&para;</a></h2>
+<p>The submit command is used to submit new ARgorithm to server. This comand takes the name of the argorithm for eg: <code>fibonacci</code>. In this case , it will search for <code>fibonacci.py</code> and <code>fibonacci.config.json</code> and after verification send them to server.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm submit fibonacci
+<span class="go">[SUCCESS]: FILES FOUND</span>
+<span class="go">[SUCCESS]: FILES VERIFIED</span>
+<span class="go">[SUCCESS]: SUBMITTED</span>
+</code></pre></div>
+</div>
+
+<h2 id="list">List<a class="headerlink" href="#list" title="Permanent link">&para;</a></h2>
+<p>The list command can be used to check what all ARgorithms are available in server. When <code>AUTH</code> is enabled, it shows the programmer email that created it, if not it shows the admin email.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm list
+<span class="go">- fibonacci</span>
+<span class="go">    by sample@user.com</span>
+<span class="go">    Parameters</span>
+<span class="go">        n : int</span>
+</code></pre></div>
+</div>
+
+<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<p>The update command is used to overwrite/update pre-existing ARgorithm with different code or/and configuration. If <code>AUTH</code> is enabled, then ARgorithm can only be updated by its author or by a programmer with admin priveleges.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm update fibonacci
+<span class="go">[SUCCESS]: FILES FOUND</span>
+<span class="go">[SUCCESS]: FILES VERIFIED</span>
+<span class="go">[SUCCESS]: SUBMITTED</span>
+</code></pre></div>
+</div>
+
+<h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
+<p>The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format in a file of your choice using the <code>--to-file</code> or <code>-t</code> option.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm <span class="nb">test</span> fibonacci
+<span class="go">Found argorithm</span>
+<span class="go">- fibonacci</span>
+<span class="go">    by sample@user.com</span>
+<span class="go">    Parameters</span>
+<span class="go">        n : int</span>
+
+<span class="go">---------------STATES---------------------------</span>
+</code></pre></div>
+</div>
+
+<h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h2>
+<p>The delete command is used to delete ARgorithm from server. If <code>AUTH</code> is enabled, then ARgorithm can only be deleted by its author or by a programmer with admin priveleges.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="go">ARgorithm delete fibonacci</span>
+<span class="go">Found argorithm</span>
+<span class="go">- fibonacci</span>
+<span class="go">    by sample@user.com</span>
+<span class="go">    Parameters</span>
+<span class="go">        n : int</span>
+<span class="gp">#</span> Are you sure you want to delete it <span class="o">[</span>y/N<span class="o">]</span>:$ y
+<span class="go">[INFO]: DELETED SUCCESSFULLY</span>
+</code></pre></div>
+</div>
+
+<h2 id="admin">Admin<a class="headerlink" href="#admin" title="Permanent link">&para;</a></h2>
+<p>The admin command like the <a href="#account">account</a> command can only be used if the server has authentication and authorization enabled. This command also has the added requirement that the programmer logged in must have admin priveleges. The subcommands under this command are used to manage accounts.</p>
+<h3 id="grant">Grant<a class="headerlink" href="#grant" title="Permanent link">&para;</a></h3>
+<p>The grant subcommand is used to grant other programmer accounts admin access. Blacklisted accounts cannot be granted admin priveleges.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm admin grant sample@user.com
+<span class="go">[SUCCESS]: GRANTED ADMIN PRIVELEGES</span>
+</code></pre></div>
+</div>
+
+<h3 id="revoke">Revoke<a class="headerlink" href="#revoke" title="Permanent link">&para;</a></h3>
+<p>The revoke subcommand is used to take away admin access from programmer
+accounts. </p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm admin revoke sample@user.com
+<span class="go">[SUCCESS]: REVOKED ADMIN PRIVELEGES</span>
+</code></pre></div>
+</div>
+
+<h3 id="blacklist">Blacklist<a class="headerlink" href="#blacklist" title="Permanent link">&para;</a></h3>
+<p>The blacklist command can be used to block programmer accounts from submitting and testing ARgorithms and user accounts from running ARgorithms. This command can be used to handle cases of misconduct with server.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm admin blacklist sample@user.com
+<span class="go">[SUCCESS]: BLACKLISTED ACCOUNT</span>
+</code></pre></div>
+</div>
+
+<h3 id="whitelist">Whitelist<a class="headerlink" href="#whitelist" title="Permanent link">&para;</a></h3>
+<p>The whitelist command can be used to whitelist previously blacklisted
+accounts.</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm admin whitelist sample@user.com
+<span class="go">[SUCCESS]: WHITELISTED ACCOUNT</span>
+</code></pre></div>
+</div>
+
+<h3 id="delete_1">Delete<a class="headerlink" href="#delete_1" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This <code>delete</code> is different from <a href="#delete">delete command</a> as this is a subcommand to the admin command
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm admin delete <span class="o">[</span>USER<span class="o">]</span>
+</code></pre></div>
+and that is to delete argorithms
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm delete <span class="o">[</span>ARGORITHM<span class="o">]</span>
+</code></pre></div></p>
+</div>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm admin delete sample@user.com
+<span class="go">[SUCCESS]: DELETED ACCOUNT</span>
+</code></pre></div>
+</div>
+
+<p>By default, this subcommand only deletes the <code>user</code> account  (Refer <a href="/server#interacting-with-server">here</a>). To delete the progammer account as well use the <code>-p</code> or <code>--programmer</code> flag.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is not recommended to delete programmer accounts. Programmer accounts are useful for finding authors of ARgorithm. Try <code>blacklist</code> instead</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../server/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Server Setup
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../api/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                API Documentation
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ARgorithm/Toolkit" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['search.suggest', 'search.highlight'],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js"></script>
+      
+        <script src="../js/termynal.js"></script>
+      
+        <script src="../js/custom.js"></script>
+      
+    
+  </body>
+</html>

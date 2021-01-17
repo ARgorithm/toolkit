@@ -1,0 +1,2616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ARgorithmToolkit.doublylinkedlist API documentation</title>
+<meta name="description" content="The Doubly linked list module provides support for rendering doubly linked
+lists …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<link rel="stylesheet" href="../css/font-awesome.css">
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ARgorithmToolkit.doublylinkedlist</code></h1>
+</header>
+<section id="section-intro">
+<p>The Doubly linked list module provides support for rendering doubly linked
+lists.</p>
+<p>The classes are designed similar to that of classes in linkedlist module.</p>
+<ul>
+<li>The DoublyLinkedListNode class is used to represent a node.</li>
+<li>The DoublyLinkedList class is used to store the head pointer.</li>
+<li>The List class is a complete implementation of doubly linked list</li>
+</ul>
+<p>These three classes can be directly imported from the toolkit:</p>
+<pre><code>&gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+&gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList("dllnode",algo)
+&gt;&gt;&gt; dl = ARgorithmToolkit.List("dl",algo)
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The Doubly linked list module provides support for rendering doubly linked
+lists.
+
+The classes are designed similar to that of classes in linkedlist module.
+
+- The DoublyLinkedListNode class is used to represent a node.
+- The DoublyLinkedList class is used to store the head pointer.
+- The List class is a complete implementation of doubly linked list
+
+These three classes can be directly imported from the toolkit:
+
+    &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+    &gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&#34;dllnode&#34;,algo)
+    &gt;&gt;&gt; dl = ARgorithmToolkit.List(&#34;dl&#34;,algo)
+
+&#34;&#34;&#34;
+
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+
+class DoublyLinkedListNodeState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode`` object.
+
+    Attributes:
+
+        name (str) : Name of the variable for whom we are generating states
+    &#34;&#34;&#34;
+
+    def __init__(self,name:str):
+        self.name = name
+
+    def dllnode_declare(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_declare` state when a new node is created.
+
+        Args:
+            value : The value stored in the doubly linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_declare` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_declare&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dllnode_iter(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_iter` state when a node is accessed or its
+        value is changed.
+
+        Args:
+            value : The value stored in the linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_iter` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_iter&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dllnode_next(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_next` state when the next pointer changes.
+
+        Args:
+            value : The value stored in the linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_next` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_next&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dllnode_prev(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_prev` state when the prev pointer changes.
+
+        Args:
+            value : The value stored in the linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_prev` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_prev&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+
+    def dllnode_delete(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_delete` state when a node is deleted.
+
+        Args:
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_delete` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_delete&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+class DoublyLinkedListNode:
+    &#34;&#34;&#34;The DoublyLinkedListNode class is an implementation of a Linked list
+    Node for which we store states. Unlike other data structure classes, in
+    which we have to give a name to the instance, we dont have to provide name
+    in the DoublyLinkedListNode Class.
+
+    Attributes:
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of DoublyLinkedListNode Class
+        value: The value stored in the node
+        next (DoublyLinkedListNode): The reference to next node
+        prev (DoublyLinkedListNode): The reference to prev node
+
+    Raises:
+        ARgorithmError: Raised if algo is not of type StateSet
+
+    Example:
+
+        &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+        &gt;&gt;&gt; dllnode.value = 10
+        &gt;&gt;&gt; temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
+        &gt;&gt;&gt; temp.next = dllnode
+        &gt;&gt;&gt; dllnode.prev = temp
+
+    &#34;&#34;&#34;
+
+    def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
+        self.name = id(self)
+        try:
+            assert isinstance(algo,StateSet)
+            self.algo = algo
+        except AssertionError as e:
+            raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
+
+        self.state_generator = DoublyLinkedListNodeState(self.name)
+
+        self._flag = False
+        self.value = value
+        self.prev = None
+        self.next = None
+        self._flag = True
+
+        state = self.state_generator.dllnode_declare(
+            self.value,self.next,self.prev,comments
+        )
+        self.algo.add_state(state)
+
+    def __setattr__(self,key,value):
+        &#34;&#34;&#34;The __setattr__ function is overriden to listen to state changes in
+        the value of node or the next attribute.
+
+        Raises:
+            ARgorithmError: Raised if next pointer is not type None or DoublyLinkedListNode
+        &#34;&#34;&#34;
+        if key in [&#39;next&#39;,&#39;prev&#39;] and value:
+            assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        self.__dict__[key] = value
+        if key == &#39;prev&#39; and self._flag:
+            if value or self.prev:
+                state = self.state_generator.dllnode_prev(
+                    self.value,
+                    self.next,
+                    self.prev,
+                    &#34;prev pointer updated&#34;
+                )
+                self.algo.add_state(state)
+        elif key == &#39;next&#39; and self._flag:
+            if value or self.next:
+                state = self.state_generator.dllnode_next(
+                    self.value,
+                    self.next,
+                    self.prev,
+                    &#34;next pointer updated&#34;
+                )
+                self.algo.add_state(state)
+        elif key == &#39;value&#39; and self._flag:
+            state = self.state_generator.dllnode_iter(
+                self.value,
+                self.next,
+                self.prev,
+                &#34;value updated&#34;
+            )
+            self.algo.add_state(state)
+
+    def __del__(self):
+        &#34;&#34;&#34;The __del__ function is overriden is there to listen to node
+        deletion.&#34;&#34;&#34;
+        state = self.state_generator.dllnode_delete(
+            &#34;Node was deleted&#34;
+        )
+        self.algo.add_state(state)
+
+    def __str__(self):
+        return f&#34;DoublyLinkedListNode({self.value}) at {self.name}&#34;
+
+    def __repr__(self):
+        return f&#34;DoublyLinkedListNode({self.value}) at {self.name}&#34;
+
+class DoublyLinkedListState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.doublylinkedlist.DoublyLinkedList`` object.
+
+    Attributes:
+
+        name (str) : Name of the variable for whom we are generating states
+    &#34;&#34;&#34;
+    def __init__(self,name:str):
+        self.name = name
+
+    def dll_declare(self,head,tail,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dll_declare` state when a new linked list is created.
+
+        Args:
+            head (DoublyLinkedListNode): The head pointer
+            tail (DoublyLinkedListNode): The tail pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dll_declare` state
+        &#34;&#34;&#34;
+        state_type = &#34;dll_declare&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;head&#34; : head.name if head else &#34;none&#34;,
+            &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dll_head(self,head,tail,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dll_head` state when linked list head is changed.
+
+        Args:
+            head (DoublyLinkedListNode): The head pointer
+            tail (DoublyLinkedListNode): The tail pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dll_head` state
+        &#34;&#34;&#34;
+        state_type = &#34;dll_head&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;head&#34; : head.name if head else &#34;none&#34;,
+            &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dll_tail(self,head,tail,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dll_tail` state when linked list tail is changed.
+
+        Args:
+            head (DoublyLinkedListNode): The head pointer
+            tail (DoublyLinkedListNode): The tail pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dll_tail` state
+        &#34;&#34;&#34;
+        state_type = &#34;dll_tail&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;head&#34; : head.name if head else &#34;none&#34;,
+            &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+class DoublyLinkedList:
+    &#34;&#34;&#34;The DoublyLinkedList class is used to just store the head of the linked
+    list.
+
+    This class is useful when programmer want to program his own List class using
+    the nodes. Only contains head attribute and no methods
+
+    Attributes:
+        name (str): The name given to the linked list
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of DoublyLinkedList Class
+        head (DoublyLinkedListNode): The referece to head and tail of linked list as initially they will be same
+
+    Raises:
+        ARgorithmError: Raised if algo is not of type StateSet
+
+    Example:
+
+        &gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&#34;llnode&#34;,algo)
+        &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+        &gt;&gt;&gt; dll.head = llnode
+
+    &#34;&#34;&#34;
+
+    def __init__(self,name:str,algo:StateSet,head=None,comments=&#34;&#34;):
+
+        assert isinstance(name,str) , ARgorithmError(&#34;Name should be of type string&#34;)
+        self.name = name
+        try:
+            assert isinstance(algo,StateSet)
+            self.algo = algo
+        except AssertionError as e:
+            raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
+        self.state_generator = DoublyLinkedListState(self.name)
+
+        if head:
+            assert self.algo == head.algo, ARgorithmError(&#34;The head node belongs to a different StateSet&#34;)
+
+        self._flag = False
+        self.head = head
+        self.tail = head
+        self._flag = True
+
+        state = self.state_generator.dll_declare(self.head,self.tail,comments)
+        self.algo.add_state(state)
+
+    def __setattr__(self,key,value):
+        &#34;&#34;&#34;The __setattr__ function is overriden to listen to state changes in
+        the head.
+
+        Raises:
+            ARgorithmError: Raised if head pointer is not type None or DoublyLinkedListNode
+        &#34;&#34;&#34;
+        if key in [&#39;head&#39;,&#39;tail&#39;] and value:
+            assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        self.__dict__[key] = value
+        if key == &#39;head&#39; and self._flag:
+            state = self.state_generator.dll_head(self.head,self.tail,&#34;head pointer shifts&#34;)
+            self.algo.add_state(state)
+        if key == &#39;tail&#39; and self._flag:
+            state = self.state_generator.dll_tail(self.head,self.tail,&#34;tail pointer shifts&#34;)
+            self.algo.add_state(state)
+
+    def __str__(self):
+        return f&#34;DoublyLinkedList(head at {self.head})&#34;
+
+    def __repr__(self):
+        return f&#34;DoublyLinkedList(head at {self.head})&#34;
+
+
+class ListIterator:
+    &#34;&#34;&#34;This class is a generator that is returned each time an List has to be
+    iterated.
+
+    Yields:
+        Value of List Node
+
+    Raises:
+        AssertionError: If not declared with an instance of ARgorithmToolkit.doublylinkedlist.List
+    &#34;&#34;&#34;
+    def __init__(self,doublylist):
+        assert isinstance(doublylist,List)
+        self._curr = doublylist.head
+
+    def __next__(self):
+        if self._curr:
+            data = self._curr.value
+            self._curr = self._curr.next
+            return data
+        raise StopIteration
+
+class List(DoublyLinkedList):
+    &#34;&#34;&#34;The List class is proper implementation of doubly linked list.
+
+    The difference between DoublyLinkedList and List class is that List
+    is a ready implementation of singly linked list. In the DoublyLinkedList class the
+    programmer will have to make their own methods.
+
+    Attributes:
+        name (str): The name given to the linked list
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of List Class
+        head (DoublyLinkedListNode): The referece to head of linked list
+        tail (DoublyLinkedListNode): The referece to tail of linked list
+        size (int): Number of nodes i.e size of list
+
+    Raises:
+        ARgorithmError: Raised if algo is not of type StateSet
+
+    Example:
+
+        &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+        &gt;&gt;&gt; lis
+        List([])
+
+    &#34;&#34;&#34;
+
+    def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
+        super().__init__(name,algo,comments=&#34;&#34;)
+        self.size = 0
+
+    def __len__(self):
+        &#34;&#34;&#34;overloads the len() operator to return size of list.
+
+        Returns:
+            int: size of list
+
+        Example:
+
+            &gt;&gt;&gt; len(lis)
+
+        &#34;&#34;&#34;
+        return self.size
+
+    def insert(self,value,index=None):
+        &#34;&#34;&#34;Insert node with given value at particular index. If index is not
+        given,insert at back.
+
+        Args:
+            value : The value to be inserted
+            index (int, optional): The index where value has to inserted . Defaults to None.
+
+        Example:
+
+            &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+            &gt;&gt;&gt; lis.insert(1)
+            &gt;&gt;&gt; lis.insert(3)
+            &gt;&gt;&gt; lis.insert(2,1)
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+
+        &#34;&#34;&#34;
+        if self.size == 0 or index == 0:
+            self.push_front(value)
+        elif index is None or self.size &lt; index:
+            self.push_back(value)
+        else:
+            count = 1
+            temp = self.head
+            while index &gt; count:
+                count += 1
+                temp = temp.next
+            curr = DoublyLinkedListNode(self.algo,value)
+            curr.next = temp.next
+            curr.prev = temp
+            if curr.next:
+                curr.next.prev = curr
+            if curr.prev:
+                curr.prev.next = curr
+            self.size += 1
+
+    def push_front(self,value):
+        &#34;&#34;&#34;Pushes value to front.
+
+        Args:
+            value : Value to be appended to front
+
+        Example:
+
+            &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+            &gt;&gt;&gt; lis.push_front(2)
+            &gt;&gt;&gt; lis.push_front(1)
+            &gt;&gt;&gt; lis
+            List([1, 2])
+        &#34;&#34;&#34;
+        curr = DoublyLinkedListNode(self.algo,value)
+        if self.head:
+            curr.next = self.head
+            self.head.prev = curr
+            self.head = curr
+        else:
+            curr.next = None
+            curr.prev = None
+            self.head = curr
+            self.tail = curr
+        self.size+=1
+
+    def push_back(self,value):
+        &#34;&#34;&#34;Pushes value to back.
+
+        Args:
+            value : Value to be appended to back
+
+        Example:
+
+            &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+            &gt;&gt;&gt; lis.push_back(1)
+            &gt;&gt;&gt; lis.push_back(3)
+            &gt;&gt;&gt; lis
+            List([1, 3])
+
+        &#34;&#34;&#34;
+        curr = DoublyLinkedListNode(self.algo,value)
+        if self.tail:
+            curr.prev = self.tail
+            self.tail.next = curr
+            self.tail = curr
+        else:
+            curr.next = None
+            self.head = curr
+            self.tail = curr
+        self.size+=1
+
+
+    def pop_front(self):
+        &#34;&#34;&#34;Pops first element of List.
+
+        Raises:
+            ARgorithmError: Raised if list is empty
+
+        Returns:
+            element: The first element of list
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([5, 1, 2, 3, 7])
+            &gt;&gt;&gt; lis.pop_front()
+            5
+            &gt;&gt;&gt; lis
+            List([1, 2, 3, 7])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        data = self.head.value
+        self.head = self.head.next
+        if self.head:
+            self.head.prev = None
+        else:
+            self.tail = None
+        self.size -= 1
+        return data
+
+    def pop_back(self):
+        &#34;&#34;&#34;Pops first element of List.
+
+        Raises:
+            ARgorithmError: Raised if list is empty
+
+        Returns:
+            element: The first element of list
+
+        Example:
+
+            List([1, 2, 3, 7])
+            &gt;&gt;&gt; lis.pop_back()
+            7
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        data = self.tail.value
+        self.tail = self.tail.prev
+        if self.tail:
+            self.tail.next = None
+        else:
+            self.head = None
+        self.size -= 1
+        return data
+
+    def front(self):
+        &#34;&#34;&#34;Returns the first element of list.
+
+        Raises:
+            ARgorithmError: Raised when list is empty
+
+        Returns:
+            element: The first element of list
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+            &gt;&gt;&gt; lis.front()
+            1
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        return self.head.value
+
+    def back(self):
+        &#34;&#34;&#34;Returns the last element of list.
+
+        Raises:
+            ARgorithmError: Raised when list is empty
+
+        Returns:
+            element: The last element of list
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([2, 3, 5, 4, 4, 3, 3])
+            &gt;&gt;&gt; lis.back()
+            3
+            &gt;&gt;&gt; lis
+            List([2, 3, 5, 4, 4, 3, 3])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        return self.tail.value
+
+    def __iter__(self):
+        &#34;&#34;&#34;Returns the generator object to iterate through elements of List.
+
+        Returns:
+            ListIterator: Generator class for List
+
+        Example:
+
+            &gt;&gt;&gt; [x for x in lis]
+            [2, 3, 5, 4, 4, 3, 3]
+
+        &#34;&#34;&#34;
+        return ListIterator(self)
+
+    def remove(self,value):
+        &#34;&#34;&#34;Remove elements with given value from list.
+
+        Args:
+            value : The value which has to be removed
+
+        Raises:
+            ARgorithmError: Raised if list is empty
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([2, 3, 5, 4, 4, 3, 3])
+            &gt;&gt;&gt; lis.remove(3)
+            &gt;&gt;&gt; lis
+            List([2, 5, 4, 4])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        curr = self.head
+        while curr:
+            if curr.value == value:
+                self.size -= 1
+                if self.size == 1:
+                    self.head = None
+                    self.tail = None
+                    break
+                if curr.prev:
+                    curr.prev.next = curr.next
+                else:
+                    self.head = curr.next
+                    self.head.prev = None
+                if curr.next:
+                    curr.next.prev = curr.prev
+                else:
+                    self.tail = curr.prev
+                    self.tail.next = None
+            curr = curr.next
+
+    def tolist(self):
+        &#34;&#34;&#34;Converts the List to python list.
+
+        Returns:
+            list: list of List items
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([2, 5, 4, 4])
+            &gt;&gt;&gt; lis.tolist()
+            [2, 5, 4, 4]
+
+        &#34;&#34;&#34;
+        curr = self.head
+        data = []
+        while curr:
+            data.append(curr.value)
+            curr = curr.next
+        return data
+
+    def __repr__(self):
+        return f&#34;List({self.tolist()})&#34;
+
+    def __str__(self):
+        return f&#34;List({self.tolist()})&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList"><code class="flex name class">
+<span>class <span class="ident">DoublyLinkedList</span></span>
+<span>(</span><span>name: str, algo: <a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a>, head=None, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The DoublyLinkedList class is used to just store the head of the linked
+list.</p>
+<p>This class is useful when programmer want to program his own List class using
+the nodes. Only contains head attribute and no methods</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name given to the linked list</dd>
+<dt><strong><code>algo</code></strong> :&ensp;<code><a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a></code></dt>
+<dd>The stateset that will store the states generated by the instance of DoublyLinkedList Class</dd>
+<dt><strong><code>head</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The referece to head and tail of linked list as initially they will be same</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised if algo is not of type StateSet</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&quot;llnode&quot;,algo)
+&gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+&gt;&gt;&gt; dll.head = llnode
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DoublyLinkedList:
+    &#34;&#34;&#34;The DoublyLinkedList class is used to just store the head of the linked
+    list.
+
+    This class is useful when programmer want to program his own List class using
+    the nodes. Only contains head attribute and no methods
+
+    Attributes:
+        name (str): The name given to the linked list
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of DoublyLinkedList Class
+        head (DoublyLinkedListNode): The referece to head and tail of linked list as initially they will be same
+
+    Raises:
+        ARgorithmError: Raised if algo is not of type StateSet
+
+    Example:
+
+        &gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&#34;llnode&#34;,algo)
+        &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+        &gt;&gt;&gt; dll.head = llnode
+
+    &#34;&#34;&#34;
+
+    def __init__(self,name:str,algo:StateSet,head=None,comments=&#34;&#34;):
+
+        assert isinstance(name,str) , ARgorithmError(&#34;Name should be of type string&#34;)
+        self.name = name
+        try:
+            assert isinstance(algo,StateSet)
+            self.algo = algo
+        except AssertionError as e:
+            raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
+        self.state_generator = DoublyLinkedListState(self.name)
+
+        if head:
+            assert self.algo == head.algo, ARgorithmError(&#34;The head node belongs to a different StateSet&#34;)
+
+        self._flag = False
+        self.head = head
+        self.tail = head
+        self._flag = True
+
+        state = self.state_generator.dll_declare(self.head,self.tail,comments)
+        self.algo.add_state(state)
+
+    def __setattr__(self,key,value):
+        &#34;&#34;&#34;The __setattr__ function is overriden to listen to state changes in
+        the head.
+
+        Raises:
+            ARgorithmError: Raised if head pointer is not type None or DoublyLinkedListNode
+        &#34;&#34;&#34;
+        if key in [&#39;head&#39;,&#39;tail&#39;] and value:
+            assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        self.__dict__[key] = value
+        if key == &#39;head&#39; and self._flag:
+            state = self.state_generator.dll_head(self.head,self.tail,&#34;head pointer shifts&#34;)
+            self.algo.add_state(state)
+        if key == &#39;tail&#39; and self._flag:
+            state = self.state_generator.dll_tail(self.head,self.tail,&#34;tail pointer shifts&#34;)
+            self.algo.add_state(state)
+
+    def __str__(self):
+        return f&#34;DoublyLinkedList(head at {self.head})&#34;
+
+    def __repr__(self):
+        return f&#34;DoublyLinkedList(head at {self.head})&#34;</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.doublylinkedlist.List" href="#ARgorithmToolkit.doublylinkedlist.List">List</a></li>
+</ul>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode"><code class="flex name class">
+<span>class <span class="ident">DoublyLinkedListNode</span></span>
+<span>(</span><span>algo: <a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a>, value=None, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The DoublyLinkedListNode class is an implementation of a Linked list
+Node for which we store states. Unlike other data structure classes, in
+which we have to give a name to the instance, we dont have to provide name
+in the DoublyLinkedListNode Class.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>algo</code></strong> :&ensp;<code><a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a></code></dt>
+<dd>The stateset that will store the states generated by the instance of DoublyLinkedListNode Class</dd>
+<dt><strong><code>value</code></strong></dt>
+<dd>The value stored in the node</dd>
+<dt><strong><code>next</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The reference to next node</dd>
+<dt><strong><code>prev</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The reference to prev node</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised if algo is not of type StateSet</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+&gt;&gt;&gt; dllnode.value = 10
+&gt;&gt;&gt; temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
+&gt;&gt;&gt; temp.next = dllnode
+&gt;&gt;&gt; dllnode.prev = temp
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DoublyLinkedListNode:
+    &#34;&#34;&#34;The DoublyLinkedListNode class is an implementation of a Linked list
+    Node for which we store states. Unlike other data structure classes, in
+    which we have to give a name to the instance, we dont have to provide name
+    in the DoublyLinkedListNode Class.
+
+    Attributes:
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of DoublyLinkedListNode Class
+        value: The value stored in the node
+        next (DoublyLinkedListNode): The reference to next node
+        prev (DoublyLinkedListNode): The reference to prev node
+
+    Raises:
+        ARgorithmError: Raised if algo is not of type StateSet
+
+    Example:
+
+        &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
+        &gt;&gt;&gt; dllnode.value = 10
+        &gt;&gt;&gt; temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
+        &gt;&gt;&gt; temp.next = dllnode
+        &gt;&gt;&gt; dllnode.prev = temp
+
+    &#34;&#34;&#34;
+
+    def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
+        self.name = id(self)
+        try:
+            assert isinstance(algo,StateSet)
+            self.algo = algo
+        except AssertionError as e:
+            raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
+
+        self.state_generator = DoublyLinkedListNodeState(self.name)
+
+        self._flag = False
+        self.value = value
+        self.prev = None
+        self.next = None
+        self._flag = True
+
+        state = self.state_generator.dllnode_declare(
+            self.value,self.next,self.prev,comments
+        )
+        self.algo.add_state(state)
+
+    def __setattr__(self,key,value):
+        &#34;&#34;&#34;The __setattr__ function is overriden to listen to state changes in
+        the value of node or the next attribute.
+
+        Raises:
+            ARgorithmError: Raised if next pointer is not type None or DoublyLinkedListNode
+        &#34;&#34;&#34;
+        if key in [&#39;next&#39;,&#39;prev&#39;] and value:
+            assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        self.__dict__[key] = value
+        if key == &#39;prev&#39; and self._flag:
+            if value or self.prev:
+                state = self.state_generator.dllnode_prev(
+                    self.value,
+                    self.next,
+                    self.prev,
+                    &#34;prev pointer updated&#34;
+                )
+                self.algo.add_state(state)
+        elif key == &#39;next&#39; and self._flag:
+            if value or self.next:
+                state = self.state_generator.dllnode_next(
+                    self.value,
+                    self.next,
+                    self.prev,
+                    &#34;next pointer updated&#34;
+                )
+                self.algo.add_state(state)
+        elif key == &#39;value&#39; and self._flag:
+            state = self.state_generator.dllnode_iter(
+                self.value,
+                self.next,
+                self.prev,
+                &#34;value updated&#34;
+            )
+            self.algo.add_state(state)
+
+    def __del__(self):
+        &#34;&#34;&#34;The __del__ function is overriden is there to listen to node
+        deletion.&#34;&#34;&#34;
+        state = self.state_generator.dllnode_delete(
+            &#34;Node was deleted&#34;
+        )
+        self.algo.add_state(state)
+
+    def __str__(self):
+        return f&#34;DoublyLinkedListNode({self.value}) at {self.name}&#34;
+
+    def __repr__(self):
+        return f&#34;DoublyLinkedListNode({self.value}) at {self.name}&#34;</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState"><code class="flex name class">
+<span>class <span class="ident">DoublyLinkedListNodeState</span></span>
+<span>(</span><span>name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is used to generate states for various actions performed on
+the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code> object.</p>
+<h2 id="attributes">Attributes</h2>
+<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DoublyLinkedListNodeState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode`` object.
+
+    Attributes:
+
+        name (str) : Name of the variable for whom we are generating states
+    &#34;&#34;&#34;
+
+    def __init__(self,name:str):
+        self.name = name
+
+    def dllnode_declare(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_declare` state when a new node is created.
+
+        Args:
+            value : The value stored in the doubly linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_declare` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_declare&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dllnode_iter(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_iter` state when a node is accessed or its
+        value is changed.
+
+        Args:
+            value : The value stored in the linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_iter` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_iter&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dllnode_next(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_next` state when the next pointer changes.
+
+        Args:
+            value : The value stored in the linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_next` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_next&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dllnode_prev(self,value,next_node,prev_node,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_prev` state when the prev pointer changes.
+
+        Args:
+            value : The value stored in the linked list node
+            next_node (DoublyLinkedListNode): The next pointer
+            prev_node (DoublyLinkedListNode): The prev pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_prev` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_prev&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;value&#34; : value,
+            &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+            &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+
+    def dllnode_delete(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dllnode_delete` state when a node is deleted.
+
+        Args:
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dllnode_delete` state
+        &#34;&#34;&#34;
+        state_type = &#34;dllnode_delete&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_declare"><code class="name flex">
+<span>def <span class="ident">dllnode_declare</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dllnode_declare</code> state when a new node is created.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>value : The value stored in the doubly linked list node</dt>
+<dt><strong><code>next_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The next pointer</dd>
+<dt><strong><code>prev_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The prev pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dllnode_declare</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dllnode_declare(self,value,next_node,prev_node,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dllnode_declare` state when a new node is created.
+
+    Args:
+        value : The value stored in the doubly linked list node
+        next_node (DoublyLinkedListNode): The next pointer
+        prev_node (DoublyLinkedListNode): The prev pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dllnode_declare` state
+    &#34;&#34;&#34;
+    state_type = &#34;dllnode_declare&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;value&#34; : value,
+        &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+        &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_delete"><code class="name flex">
+<span>def <span class="ident">dllnode_delete</span></span>(<span>self, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dllnode_delete</code> state when a node is deleted.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dllnode_delete</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dllnode_delete(self,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dllnode_delete` state when a node is deleted.
+
+    Args:
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dllnode_delete` state
+    &#34;&#34;&#34;
+    state_type = &#34;dllnode_delete&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_iter"><code class="name flex">
+<span>def <span class="ident">dllnode_iter</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dllnode_iter</code> state when a node is accessed or its
+value is changed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>value : The value stored in the linked list node</dt>
+<dt><strong><code>next_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The next pointer</dd>
+<dt><strong><code>prev_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The prev pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dllnode_iter</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dllnode_iter(self,value,next_node,prev_node,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dllnode_iter` state when a node is accessed or its
+    value is changed.
+
+    Args:
+        value : The value stored in the linked list node
+        next_node (DoublyLinkedListNode): The next pointer
+        prev_node (DoublyLinkedListNode): The prev pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dllnode_iter` state
+    &#34;&#34;&#34;
+    state_type = &#34;dllnode_iter&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;value&#34; : value,
+        &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+        &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_next"><code class="name flex">
+<span>def <span class="ident">dllnode_next</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dllnode_next</code> state when the next pointer changes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>value : The value stored in the linked list node</dt>
+<dt><strong><code>next_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The next pointer</dd>
+<dt><strong><code>prev_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The prev pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dllnode_next</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dllnode_next(self,value,next_node,prev_node,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dllnode_next` state when the next pointer changes.
+
+    Args:
+        value : The value stored in the linked list node
+        next_node (DoublyLinkedListNode): The next pointer
+        prev_node (DoublyLinkedListNode): The prev pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dllnode_next` state
+    &#34;&#34;&#34;
+    state_type = &#34;dllnode_next&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;value&#34; : value,
+        &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+        &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_prev"><code class="name flex">
+<span>def <span class="ident">dllnode_prev</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dllnode_prev</code> state when the prev pointer changes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>value : The value stored in the linked list node</dt>
+<dt><strong><code>next_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The next pointer</dd>
+<dt><strong><code>prev_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The prev pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dllnode_prev</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dllnode_prev(self,value,next_node,prev_node,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dllnode_prev` state when the prev pointer changes.
+
+    Args:
+        value : The value stored in the linked list node
+        next_node (DoublyLinkedListNode): The next pointer
+        prev_node (DoublyLinkedListNode): The prev pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dllnode_prev` state
+    &#34;&#34;&#34;
+    state_type = &#34;dllnode_prev&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;value&#34; : value,
+        &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
+        &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState"><code class="flex name class">
+<span>class <span class="ident">DoublyLinkedListState</span></span>
+<span>(</span><span>name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is used to generate states for various actions performed on
+the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></code> object.</p>
+<h2 id="attributes">Attributes</h2>
+<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DoublyLinkedListState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.doublylinkedlist.DoublyLinkedList`` object.
+
+    Attributes:
+
+        name (str) : Name of the variable for whom we are generating states
+    &#34;&#34;&#34;
+    def __init__(self,name:str):
+        self.name = name
+
+    def dll_declare(self,head,tail,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dll_declare` state when a new linked list is created.
+
+        Args:
+            head (DoublyLinkedListNode): The head pointer
+            tail (DoublyLinkedListNode): The tail pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dll_declare` state
+        &#34;&#34;&#34;
+        state_type = &#34;dll_declare&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;head&#34; : head.name if head else &#34;none&#34;,
+            &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dll_head(self,head,tail,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dll_head` state when linked list head is changed.
+
+        Args:
+            head (DoublyLinkedListNode): The head pointer
+            tail (DoublyLinkedListNode): The tail pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dll_head` state
+        &#34;&#34;&#34;
+        state_type = &#34;dll_head&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;head&#34; : head.name if head else &#34;none&#34;,
+            &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def dll_tail(self,head,tail,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `dll_tail` state when linked list tail is changed.
+
+        Args:
+            head (DoublyLinkedListNode): The head pointer
+            tail (DoublyLinkedListNode): The tail pointer
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            State: Returns the `dll_tail` state
+        &#34;&#34;&#34;
+        state_type = &#34;dll_tail&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;head&#34; : head.name if head else &#34;none&#34;,
+            &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_declare"><code class="name flex">
+<span>def <span class="ident">dll_declare</span></span>(<span>self, head, tail, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dll_declare</code> state when a new linked list is created.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>head</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The head pointer</dd>
+<dt><strong><code>tail</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The tail pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dll_declare</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dll_declare(self,head,tail,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dll_declare` state when a new linked list is created.
+
+    Args:
+        head (DoublyLinkedListNode): The head pointer
+        tail (DoublyLinkedListNode): The tail pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dll_declare` state
+    &#34;&#34;&#34;
+    state_type = &#34;dll_declare&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;head&#34; : head.name if head else &#34;none&#34;,
+        &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_head"><code class="name flex">
+<span>def <span class="ident">dll_head</span></span>(<span>self, head, tail, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dll_head</code> state when linked list head is changed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>head</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The head pointer</dd>
+<dt><strong><code>tail</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The tail pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dll_head</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dll_head(self,head,tail,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dll_head` state when linked list head is changed.
+
+    Args:
+        head (DoublyLinkedListNode): The head pointer
+        tail (DoublyLinkedListNode): The tail pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dll_head` state
+    &#34;&#34;&#34;
+    state_type = &#34;dll_head&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;head&#34; : head.name if head else &#34;none&#34;,
+        &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_tail"><code class="name flex">
+<span>def <span class="ident">dll_tail</span></span>(<span>self, head, tail, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>dll_tail</code> state when linked list tail is changed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>head</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The head pointer</dd>
+<dt><strong><code>tail</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The tail pointer</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>State</code></dt>
+<dd>Returns the <code>dll_tail</code> state</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dll_tail(self,head,tail,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `dll_tail` state when linked list tail is changed.
+
+    Args:
+        head (DoublyLinkedListNode): The head pointer
+        tail (DoublyLinkedListNode): The tail pointer
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        State: Returns the `dll_tail` state
+    &#34;&#34;&#34;
+    state_type = &#34;dll_tail&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;head&#34; : head.name if head else &#34;none&#34;,
+        &#34;tail&#34; : tail.name if tail else &#34;none&#34;
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List"><code class="flex name class">
+<span>class <span class="ident">List</span></span>
+<span>(</span><span>name: str, algo: <a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a>, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The List class is proper implementation of doubly linked list.</p>
+<p>The difference between DoublyLinkedList and List class is that List
+is a ready implementation of singly linked list. In the DoublyLinkedList class the
+programmer will have to make their own methods.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name given to the linked list</dd>
+<dt><strong><code>algo</code></strong> :&ensp;<code><a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a></code></dt>
+<dd>The stateset that will store the states generated by the instance of List Class</dd>
+<dt><strong><code>head</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The referece to head of linked list</dd>
+<dt><strong><code>tail</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
+<dd>The referece to tail of linked list</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of nodes i.e size of list</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised if algo is not of type StateSet</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis = ARgorithmToolkit.List(&quot;list&quot;,algo)
+&gt;&gt;&gt; lis
+List([])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class List(DoublyLinkedList):
+    &#34;&#34;&#34;The List class is proper implementation of doubly linked list.
+
+    The difference between DoublyLinkedList and List class is that List
+    is a ready implementation of singly linked list. In the DoublyLinkedList class the
+    programmer will have to make their own methods.
+
+    Attributes:
+        name (str): The name given to the linked list
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of List Class
+        head (DoublyLinkedListNode): The referece to head of linked list
+        tail (DoublyLinkedListNode): The referece to tail of linked list
+        size (int): Number of nodes i.e size of list
+
+    Raises:
+        ARgorithmError: Raised if algo is not of type StateSet
+
+    Example:
+
+        &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+        &gt;&gt;&gt; lis
+        List([])
+
+    &#34;&#34;&#34;
+
+    def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
+        super().__init__(name,algo,comments=&#34;&#34;)
+        self.size = 0
+
+    def __len__(self):
+        &#34;&#34;&#34;overloads the len() operator to return size of list.
+
+        Returns:
+            int: size of list
+
+        Example:
+
+            &gt;&gt;&gt; len(lis)
+
+        &#34;&#34;&#34;
+        return self.size
+
+    def insert(self,value,index=None):
+        &#34;&#34;&#34;Insert node with given value at particular index. If index is not
+        given,insert at back.
+
+        Args:
+            value : The value to be inserted
+            index (int, optional): The index where value has to inserted . Defaults to None.
+
+        Example:
+
+            &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+            &gt;&gt;&gt; lis.insert(1)
+            &gt;&gt;&gt; lis.insert(3)
+            &gt;&gt;&gt; lis.insert(2,1)
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+
+        &#34;&#34;&#34;
+        if self.size == 0 or index == 0:
+            self.push_front(value)
+        elif index is None or self.size &lt; index:
+            self.push_back(value)
+        else:
+            count = 1
+            temp = self.head
+            while index &gt; count:
+                count += 1
+                temp = temp.next
+            curr = DoublyLinkedListNode(self.algo,value)
+            curr.next = temp.next
+            curr.prev = temp
+            if curr.next:
+                curr.next.prev = curr
+            if curr.prev:
+                curr.prev.next = curr
+            self.size += 1
+
+    def push_front(self,value):
+        &#34;&#34;&#34;Pushes value to front.
+
+        Args:
+            value : Value to be appended to front
+
+        Example:
+
+            &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+            &gt;&gt;&gt; lis.push_front(2)
+            &gt;&gt;&gt; lis.push_front(1)
+            &gt;&gt;&gt; lis
+            List([1, 2])
+        &#34;&#34;&#34;
+        curr = DoublyLinkedListNode(self.algo,value)
+        if self.head:
+            curr.next = self.head
+            self.head.prev = curr
+            self.head = curr
+        else:
+            curr.next = None
+            curr.prev = None
+            self.head = curr
+            self.tail = curr
+        self.size+=1
+
+    def push_back(self,value):
+        &#34;&#34;&#34;Pushes value to back.
+
+        Args:
+            value : Value to be appended to back
+
+        Example:
+
+            &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+            &gt;&gt;&gt; lis.push_back(1)
+            &gt;&gt;&gt; lis.push_back(3)
+            &gt;&gt;&gt; lis
+            List([1, 3])
+
+        &#34;&#34;&#34;
+        curr = DoublyLinkedListNode(self.algo,value)
+        if self.tail:
+            curr.prev = self.tail
+            self.tail.next = curr
+            self.tail = curr
+        else:
+            curr.next = None
+            self.head = curr
+            self.tail = curr
+        self.size+=1
+
+
+    def pop_front(self):
+        &#34;&#34;&#34;Pops first element of List.
+
+        Raises:
+            ARgorithmError: Raised if list is empty
+
+        Returns:
+            element: The first element of list
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([5, 1, 2, 3, 7])
+            &gt;&gt;&gt; lis.pop_front()
+            5
+            &gt;&gt;&gt; lis
+            List([1, 2, 3, 7])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        data = self.head.value
+        self.head = self.head.next
+        if self.head:
+            self.head.prev = None
+        else:
+            self.tail = None
+        self.size -= 1
+        return data
+
+    def pop_back(self):
+        &#34;&#34;&#34;Pops first element of List.
+
+        Raises:
+            ARgorithmError: Raised if list is empty
+
+        Returns:
+            element: The first element of list
+
+        Example:
+
+            List([1, 2, 3, 7])
+            &gt;&gt;&gt; lis.pop_back()
+            7
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        data = self.tail.value
+        self.tail = self.tail.prev
+        if self.tail:
+            self.tail.next = None
+        else:
+            self.head = None
+        self.size -= 1
+        return data
+
+    def front(self):
+        &#34;&#34;&#34;Returns the first element of list.
+
+        Raises:
+            ARgorithmError: Raised when list is empty
+
+        Returns:
+            element: The first element of list
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+            &gt;&gt;&gt; lis.front()
+            1
+            &gt;&gt;&gt; lis
+            List([1, 2, 3])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        return self.head.value
+
+    def back(self):
+        &#34;&#34;&#34;Returns the last element of list.
+
+        Raises:
+            ARgorithmError: Raised when list is empty
+
+        Returns:
+            element: The last element of list
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([2, 3, 5, 4, 4, 3, 3])
+            &gt;&gt;&gt; lis.back()
+            3
+            &gt;&gt;&gt; lis
+            List([2, 3, 5, 4, 4, 3, 3])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        return self.tail.value
+
+    def __iter__(self):
+        &#34;&#34;&#34;Returns the generator object to iterate through elements of List.
+
+        Returns:
+            ListIterator: Generator class for List
+
+        Example:
+
+            &gt;&gt;&gt; [x for x in lis]
+            [2, 3, 5, 4, 4, 3, 3]
+
+        &#34;&#34;&#34;
+        return ListIterator(self)
+
+    def remove(self,value):
+        &#34;&#34;&#34;Remove elements with given value from list.
+
+        Args:
+            value : The value which has to be removed
+
+        Raises:
+            ARgorithmError: Raised if list is empty
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([2, 3, 5, 4, 4, 3, 3])
+            &gt;&gt;&gt; lis.remove(3)
+            &gt;&gt;&gt; lis
+            List([2, 5, 4, 4])
+
+        &#34;&#34;&#34;
+        if self.head is None:
+            raise ARgorithmError(&#34;Empty list&#34;)
+        curr = self.head
+        while curr:
+            if curr.value == value:
+                self.size -= 1
+                if self.size == 1:
+                    self.head = None
+                    self.tail = None
+                    break
+                if curr.prev:
+                    curr.prev.next = curr.next
+                else:
+                    self.head = curr.next
+                    self.head.prev = None
+                if curr.next:
+                    curr.next.prev = curr.prev
+                else:
+                    self.tail = curr.prev
+                    self.tail.next = None
+            curr = curr.next
+
+    def tolist(self):
+        &#34;&#34;&#34;Converts the List to python list.
+
+        Returns:
+            list: list of List items
+
+        Example:
+
+            &gt;&gt;&gt; lis
+            List([2, 5, 4, 4])
+            &gt;&gt;&gt; lis.tolist()
+            [2, 5, 4, 4]
+
+        &#34;&#34;&#34;
+        curr = self.head
+        data = []
+        while curr:
+            data.append(curr.value)
+            curr = curr.next
+        return data
+
+    def __repr__(self):
+        return f&#34;List({self.tolist()})&#34;
+
+    def __str__(self):
+        return f&#34;List({self.tolist()})&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.back"><code class="name flex">
+<span>def <span class="ident">back</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the last element of list.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised when list is empty</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>element</code></dt>
+<dd>The last element of list</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis
+List([2, 3, 5, 4, 4, 3, 3])
+&gt;&gt;&gt; lis.back()
+3
+&gt;&gt;&gt; lis
+List([2, 3, 5, 4, 4, 3, 3])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def back(self):
+    &#34;&#34;&#34;Returns the last element of list.
+
+    Raises:
+        ARgorithmError: Raised when list is empty
+
+    Returns:
+        element: The last element of list
+
+    Example:
+
+        &gt;&gt;&gt; lis
+        List([2, 3, 5, 4, 4, 3, 3])
+        &gt;&gt;&gt; lis.back()
+        3
+        &gt;&gt;&gt; lis
+        List([2, 3, 5, 4, 4, 3, 3])
+
+    &#34;&#34;&#34;
+    if self.head is None:
+        raise ARgorithmError(&#34;Empty list&#34;)
+    return self.tail.value</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.front"><code class="name flex">
+<span>def <span class="ident">front</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the first element of list.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised when list is empty</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>element</code></dt>
+<dd>The first element of list</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis
+List([1, 2, 3])
+&gt;&gt;&gt; lis.front()
+1
+&gt;&gt;&gt; lis
+List([1, 2, 3])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def front(self):
+    &#34;&#34;&#34;Returns the first element of list.
+
+    Raises:
+        ARgorithmError: Raised when list is empty
+
+    Returns:
+        element: The first element of list
+
+    Example:
+
+        &gt;&gt;&gt; lis
+        List([1, 2, 3])
+        &gt;&gt;&gt; lis.front()
+        1
+        &gt;&gt;&gt; lis
+        List([1, 2, 3])
+
+    &#34;&#34;&#34;
+    if self.head is None:
+        raise ARgorithmError(&#34;Empty list&#34;)
+    return self.head.value</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.insert"><code class="name flex">
+<span>def <span class="ident">insert</span></span>(<span>self, value, index=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Insert node with given value at particular index. If index is not
+given,insert at back.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>value : The value to be inserted</dt>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The index where value has to inserted . Defaults to None.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis = ARgorithmToolkit.List(&quot;list&quot;,algo)
+&gt;&gt;&gt; lis.insert(1)
+&gt;&gt;&gt; lis.insert(3)
+&gt;&gt;&gt; lis.insert(2,1)
+&gt;&gt;&gt; lis
+List([1, 2, 3])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def insert(self,value,index=None):
+    &#34;&#34;&#34;Insert node with given value at particular index. If index is not
+    given,insert at back.
+
+    Args:
+        value : The value to be inserted
+        index (int, optional): The index where value has to inserted . Defaults to None.
+
+    Example:
+
+        &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+        &gt;&gt;&gt; lis.insert(1)
+        &gt;&gt;&gt; lis.insert(3)
+        &gt;&gt;&gt; lis.insert(2,1)
+        &gt;&gt;&gt; lis
+        List([1, 2, 3])
+
+    &#34;&#34;&#34;
+    if self.size == 0 or index == 0:
+        self.push_front(value)
+    elif index is None or self.size &lt; index:
+        self.push_back(value)
+    else:
+        count = 1
+        temp = self.head
+        while index &gt; count:
+            count += 1
+            temp = temp.next
+        curr = DoublyLinkedListNode(self.algo,value)
+        curr.next = temp.next
+        curr.prev = temp
+        if curr.next:
+            curr.next.prev = curr
+        if curr.prev:
+            curr.prev.next = curr
+        self.size += 1</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.pop_back"><code class="name flex">
+<span>def <span class="ident">pop_back</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pops first element of List.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised if list is empty</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>element</code></dt>
+<dd>The first element of list</dd>
+</dl>
+<h2 id="example">Example</h2>
+<p>List([1, 2, 3, 7])</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis.pop_back()
+7
+&gt;&gt;&gt; lis
+List([1, 2, 3])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_back(self):
+    &#34;&#34;&#34;Pops first element of List.
+
+    Raises:
+        ARgorithmError: Raised if list is empty
+
+    Returns:
+        element: The first element of list
+
+    Example:
+
+        List([1, 2, 3, 7])
+        &gt;&gt;&gt; lis.pop_back()
+        7
+        &gt;&gt;&gt; lis
+        List([1, 2, 3])
+
+    &#34;&#34;&#34;
+    if self.head is None:
+        raise ARgorithmError(&#34;Empty list&#34;)
+    data = self.tail.value
+    self.tail = self.tail.prev
+    if self.tail:
+        self.tail.next = None
+    else:
+        self.head = None
+    self.size -= 1
+    return data</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.pop_front"><code class="name flex">
+<span>def <span class="ident">pop_front</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pops first element of List.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised if list is empty</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>element</code></dt>
+<dd>The first element of list</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis
+List([5, 1, 2, 3, 7])
+&gt;&gt;&gt; lis.pop_front()
+5
+&gt;&gt;&gt; lis
+List([1, 2, 3, 7])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_front(self):
+    &#34;&#34;&#34;Pops first element of List.
+
+    Raises:
+        ARgorithmError: Raised if list is empty
+
+    Returns:
+        element: The first element of list
+
+    Example:
+
+        &gt;&gt;&gt; lis
+        List([5, 1, 2, 3, 7])
+        &gt;&gt;&gt; lis.pop_front()
+        5
+        &gt;&gt;&gt; lis
+        List([1, 2, 3, 7])
+
+    &#34;&#34;&#34;
+    if self.head is None:
+        raise ARgorithmError(&#34;Empty list&#34;)
+    data = self.head.value
+    self.head = self.head.next
+    if self.head:
+        self.head.prev = None
+    else:
+        self.tail = None
+    self.size -= 1
+    return data</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.push_back"><code class="name flex">
+<span>def <span class="ident">push_back</span></span>(<span>self, value)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pushes value to back.</p>
+<h2 id="args">Args</h2>
+<p>value : Value to be appended to back</p>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis = ARgorithmToolkit.List(&quot;list&quot;,algo)
+&gt;&gt;&gt; lis.push_back(1)
+&gt;&gt;&gt; lis.push_back(3)
+&gt;&gt;&gt; lis
+List([1, 3])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def push_back(self,value):
+    &#34;&#34;&#34;Pushes value to back.
+
+    Args:
+        value : Value to be appended to back
+
+    Example:
+
+        &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+        &gt;&gt;&gt; lis.push_back(1)
+        &gt;&gt;&gt; lis.push_back(3)
+        &gt;&gt;&gt; lis
+        List([1, 3])
+
+    &#34;&#34;&#34;
+    curr = DoublyLinkedListNode(self.algo,value)
+    if self.tail:
+        curr.prev = self.tail
+        self.tail.next = curr
+        self.tail = curr
+    else:
+        curr.next = None
+        self.head = curr
+        self.tail = curr
+    self.size+=1</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.push_front"><code class="name flex">
+<span>def <span class="ident">push_front</span></span>(<span>self, value)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pushes value to front.</p>
+<h2 id="args">Args</h2>
+<p>value : Value to be appended to front</p>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis = ARgorithmToolkit.List(&quot;list&quot;,algo)
+&gt;&gt;&gt; lis.push_front(2)
+&gt;&gt;&gt; lis.push_front(1)
+&gt;&gt;&gt; lis
+List([1, 2])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def push_front(self,value):
+    &#34;&#34;&#34;Pushes value to front.
+
+    Args:
+        value : Value to be appended to front
+
+    Example:
+
+        &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
+        &gt;&gt;&gt; lis.push_front(2)
+        &gt;&gt;&gt; lis.push_front(1)
+        &gt;&gt;&gt; lis
+        List([1, 2])
+    &#34;&#34;&#34;
+    curr = DoublyLinkedListNode(self.algo,value)
+    if self.head:
+        curr.next = self.head
+        self.head.prev = curr
+        self.head = curr
+    else:
+        curr.next = None
+        curr.prev = None
+        self.head = curr
+        self.tail = curr
+    self.size+=1</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self, value)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Remove elements with given value from list.</p>
+<h2 id="args">Args</h2>
+<p>value : The value which has to be removed</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>Raised if list is empty</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis
+List([2, 3, 5, 4, 4, 3, 3])
+&gt;&gt;&gt; lis.remove(3)
+&gt;&gt;&gt; lis
+List([2, 5, 4, 4])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self,value):
+    &#34;&#34;&#34;Remove elements with given value from list.
+
+    Args:
+        value : The value which has to be removed
+
+    Raises:
+        ARgorithmError: Raised if list is empty
+
+    Example:
+
+        &gt;&gt;&gt; lis
+        List([2, 3, 5, 4, 4, 3, 3])
+        &gt;&gt;&gt; lis.remove(3)
+        &gt;&gt;&gt; lis
+        List([2, 5, 4, 4])
+
+    &#34;&#34;&#34;
+    if self.head is None:
+        raise ARgorithmError(&#34;Empty list&#34;)
+    curr = self.head
+    while curr:
+        if curr.value == value:
+            self.size -= 1
+            if self.size == 1:
+                self.head = None
+                self.tail = None
+                break
+            if curr.prev:
+                curr.prev.next = curr.next
+            else:
+                self.head = curr.next
+                self.head.prev = None
+            if curr.next:
+                curr.next.prev = curr.prev
+            else:
+                self.tail = curr.prev
+                self.tail.next = None
+        curr = curr.next</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.List.tolist"><code class="name flex">
+<span>def <span class="ident">tolist</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts the List to python list.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>list of List items</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; lis
+List([2, 5, 4, 4])
+&gt;&gt;&gt; lis.tolist()
+[2, 5, 4, 4]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tolist(self):
+    &#34;&#34;&#34;Converts the List to python list.
+
+    Returns:
+        list: list of List items
+
+    Example:
+
+        &gt;&gt;&gt; lis
+        List([2, 5, 4, 4])
+        &gt;&gt;&gt; lis.tolist()
+        [2, 5, 4, 4]
+
+    &#34;&#34;&#34;
+    curr = self.head
+    data = []
+    while curr:
+        data.append(curr.value)
+        curr = curr.next
+    return data</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.doublylinkedlist.ListIterator"><code class="flex name class">
+<span>class <span class="ident">ListIterator</span></span>
+<span>(</span><span>doublylist)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is a generator that is returned each time an List has to be
+iterated.</p>
+<h2 id="yields">Yields</h2>
+<p>Value of List Node</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>AssertionError</code></dt>
+<dd>If not declared with an instance of ARgorithmToolkit.doublylinkedlist.List</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ListIterator:
+    &#34;&#34;&#34;This class is a generator that is returned each time an List has to be
+    iterated.
+
+    Yields:
+        Value of List Node
+
+    Raises:
+        AssertionError: If not declared with an instance of ARgorithmToolkit.doublylinkedlist.List
+    &#34;&#34;&#34;
+    def __init__(self,doublylist):
+        assert isinstance(doublylist,List)
+        self._curr = doublylist.head
+
+    def __next__(self):
+        if self._curr:
+            data = self._curr.value
+            self._curr = self._curr.next
+            return data
+        raise StopIteration</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap');
+#back {
+box-sizing: border-box;
+padding: 5px;
+background-color: #dadada;
+color: black;
+border-radius: 5px;
+font-family: 'IBM Plex Sans', sans-serif;
+text-decoration: none;
+}
+</style>
+<a href='/' id="back">
+<i class="fa fa-home" aria-hidden="true"></i> Back
+</a>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ARgorithmToolkit" href="index.html">ARgorithmToolkit</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></code></h4>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></h4>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState">DoublyLinkedListNodeState</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_declare" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_declare">dllnode_declare</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_delete" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_delete">dllnode_delete</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_iter" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_iter">dllnode_iter</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_next" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_next">dllnode_next</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_prev" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_prev">dllnode_prev</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState">DoublyLinkedListState</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_declare" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_declare">dll_declare</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_head" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_head">dll_head</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_tail" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_tail">dll_tail</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.doublylinkedlist.List" href="#ARgorithmToolkit.doublylinkedlist.List">List</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.back" href="#ARgorithmToolkit.doublylinkedlist.List.back">back</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.front" href="#ARgorithmToolkit.doublylinkedlist.List.front">front</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.insert" href="#ARgorithmToolkit.doublylinkedlist.List.insert">insert</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.pop_back" href="#ARgorithmToolkit.doublylinkedlist.List.pop_back">pop_back</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.pop_front" href="#ARgorithmToolkit.doublylinkedlist.List.pop_front">pop_front</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.push_back" href="#ARgorithmToolkit.doublylinkedlist.List.push_back">push_back</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.push_front" href="#ARgorithmToolkit.doublylinkedlist.List.push_front">push_front</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.remove" href="#ARgorithmToolkit.doublylinkedlist.List.remove">remove</a></code></li>
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.List.tolist" href="#ARgorithmToolkit.doublylinkedlist.List.tolist">tolist</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.doublylinkedlist.ListIterator" href="#ARgorithmToolkit.doublylinkedlist.ListIterator">ListIterator</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

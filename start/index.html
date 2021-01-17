@@ -1,0 +1,611 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AR visualizations of data structures">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
+    
+    
+      
+        <title>Getting Started - ARgorithm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.15aa0b43.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.75751829.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/termynal.css">
+    
+      <link rel="stylesheet" href="../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue-grey">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-argorithmtoolkit" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="ARgorithm" class="md-header-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../img/Logo_black.svg" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            ARgorithm
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ARgorithm/Toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/Toolkit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARgorithm" class="md-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../img/Logo_black.svg" alt="logo">
+
+    </a>
+    ARgorithm
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ARgorithm/Toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/Toolkit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Getting Started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Getting Started
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-argorithmtoolkit" class="md-nav__link">
+    Using ARgorithmToolkit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateset" class="md-nav__link">
+    StateSet
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../server/" class="md-nav__link">
+      Server Setup
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" class="md-nav__link">
+      Command Line Interface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/" class="md-nav__link">
+      API Documentation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../CHANGELOG/" class="md-nav__link">
+      Releases
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../help/" class="md-nav__link">
+      Need help?
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-argorithmtoolkit" class="md-nav__link">
+    Using ARgorithmToolkit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateset" class="md-nav__link">
+    StateSet
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Getting Started</h1>
+                
+                <p>You can install the ARgorithmToolkit using pip </p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> pip install ARgorithmToolkit
+
+<span class="go">---&gt; 100%</span>
+<span class="go">Successfully installed ARgorithmToolkit</span>
+</code></pre></div>
+</div>
+
+<p>You can setup auto completion for your shell by using --install-completion option provided by <code>Typer</code>. After that you can get started with your own ARgorithm</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm init hello_world
+<span class="go">Creating empty template for hello_world</span>
+<span class="go">[SUCCESS]: TEMPLATE GENERATED</span>
+<span class="go">refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it</span>
+<span class="go">chech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples</span>
+
+<span class="gp">$</span> ls
+<span class="go">hello_world.config.json  hello_world.py</span>
+</code></pre></div>
+</div>
+
+<p>This will generate your <code>.py</code> file and your <code>.config.json</code> file.</p>
+<ol>
+<li>The  <code>&lt;name&gt;.py</code> file will store your code that you will submit to the server hosting all ARgorithms</li>
+<li>The <code>&lt;name&gt;.config.json</code>  stores important details about your ARgorithm such as its purpose and parameters required</li>
+</ol>
+<p>The <code>&lt;name&gt;.py</code> file initially looks like this</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">stateset</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
+
+    <span class="c1">#</span>
+    <span class="c1">#   Your code</span>
+    <span class="c1">#</span>
+
+    <span class="k">return</span>
+</code></pre></div>
+<p>You can add whatever code you want to this file using all the tools and classes present in ARgorithmToolkit but be sure to</p>
+<ol>
+<li>Your file should have one function which takes <code>**kwargs</code> input (refer <a href="https://book.pythontips.com/en/latest/args_and_kwargs.html">here</a> to know more about kwargs) that will should perform whatever you desire and should return the stateset. You can check out later in the document on how to use this stateset</li>
+<li>you can create classes and additional functions in your code. Support for importing external modules is not yet added so its advisable not to add those.</li>
+</ol>
+<p>the <code>&lt;name&gt;.config.json</code> file is a JSON file storing all the metadata</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;name&gt;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;name&gt;.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;function to be called&gt;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;variable-name&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;data-type&gt;&quot;</span>
+    <span class="p">}</span> <span class="p">,</span> 
+    <span class="nt">&quot;default&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;variable-name&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;value&gt;&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;description&quot;</span> <span class="p">:</span> <span class="s2">&quot;Tell us about your ARgorithm&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>argorithmID</td>
+<td>name of your ARgorithm , this is generally pre filled from when you run the init command. The name of your code file should be <em>name</em>.py and the config should be <em>name</em>.config.json. [will be fixed later]</td>
+</tr>
+<tr>
+<td>file</td>
+<td>The file containing your codefile</td>
+</tr>
+<tr>
+<td>function</td>
+<td>The function that is going to be called</td>
+</tr>
+<tr>
+<td>parameters</td>
+<td>the parameters that your ARgorithm would need, this helps in anyone using your ARgorithm to understand what is the input format</td>
+</tr>
+<tr>
+<td>default</td>
+<td>default parameters in case no parameters are passed</td>
+</tr>
+<tr>
+<td>description</td>
+<td>The description of ARgorithm. Helpful to people using your ARgorithm as well as other developers</td>
+</tr>
+</tbody>
+</table>
+<p>You can check out ARgorithm examples in our Github Repo.
+Check out the commandline interface for more details</p>
+<h2 id="using-argorithmtoolkit">Using ARgorithmToolkit<a class="headerlink" href="#using-argorithmtoolkit" title="Permanent link">&para;</a></h2>
+<p>ARgorithmToolkit adds a few extra steps when it comes to initializing instances whose states you want to record but thats because a lot of data has to be maintained in order for smooth transitions</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
+</span><span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
+</span><span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="s1">&#39;Our first variable&#39;</span><span class="p">)</span>
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span>
+<span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable_declare&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;variable_name&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;Our first variable&#39;</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable_highlight&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;variable_name&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+    <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>As ARgorithm is tool for creating visual demonstration , you can add comments parameter to most functions. These comments get included in states and get featured as text when that state is rendered in AR.</p>
+<p>Make sure you make the objects you want to keep track of as part of the same stateset. Each object is instantiated with a <strong>name</strong> this is important to identify arrays when rendering them</p>
+<p>You can refer the docs and samples in the <a href="https://github.com/ARgorithm/Toolkit">repo</a> to understand more clearly.</p>
+<h2 id="stateset">StateSet<a class="headerlink" href="#stateset" title="Permanent link">&para;</a></h2>
+<p>The core class to all algorithm and data structures in ARgorithmToolkit
+You will always need to declare this and use this when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to ARgorithm App. So obviously all your ARgorithms are supposed to return this</p>
+<p>You wont have it to interact with it much other than while initialising objects and returning results.
+It has a <code>add_comment</code> method that allows you to create blank states carrying description in the form of comments that you might want to show to the client while the ARgorithm is being rendered. This will prove handy when creating good demonstrations</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;comment&#39;</span><span class="p">,</span> <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello world&#39;</span><span class="p">}</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../server/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Server Setup
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ARgorithm/Toolkit" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['search.suggest', 'search.highlight'],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js"></script>
+      
+        <script src="../js/termynal.js"></script>
+      
+        <script src="../js/custom.js"></script>
+      
+    
+  </body>
+</html>
