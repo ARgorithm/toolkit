@@ -43,13 +43,13 @@ Cloud requests will now go to http://myserverendpoint.com
 
 ## Account
 
-This command can only be used if the server you are connected to has authorization feature enabled. Refer the [configuration section](/server/#configuring-the-server) in [server setup](/server) to learn more about authentication and authorization setup.
+This command can only be used if the server you are connected to has authorization feature enabled. Refer the [configuration section](/toolkit/server/#configuring-the-server) in [server setup](/toolkit/server) to learn more about authentication and authorization setup.
 
 The account command consists of two subcommands which are shown below
 
 ### New
 
-The new subcommand in account creates a new account in the server. The email you will use will be registered as both ``programmer`` account and `user` account. Learn more [here](/server#interacting-with-server).
+The new subcommand in account creates a new account in the server. The email you will use will be registered as both ``programmer`` account and `user` account. Learn more [here](/toolkit/server#interacting-with-server).
 
 <div class="termy">
 ```console
@@ -93,8 +93,8 @@ The `init` command is used to generate templates for ARgorithm. It creates a cod
 $ ARgorithm init hello_world
 Creating empty template for hello_world
 [SUCCESS]: TEMPLATE GENERATED
-refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it
-chech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples
+refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it
+chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples
 
 $ ls
 hello_world.config.json	hello_world.py
@@ -271,7 +271,7 @@ $ ARgorithm admin delete sample@user.com
 ```
 </div>
 
-By default, this subcommand only deletes the `user` account  (Refer [here](/server#interacting-with-server)). To delete the progammer account as well use the `-p` or `--programmer` flag.
+By default, this subcommand only deletes the `user` account  (Refer [here](/toolkit/server#interacting-with-server)). To delete the progammer account as well use the `-p` or `--programmer` flag.
 
 !!! warning
 	It is not recommended to delete programmer accounts. Programmer accounts are useful for finding authors of ARgorithm. Try `blacklist` instead

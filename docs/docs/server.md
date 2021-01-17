@@ -2,7 +2,7 @@
 
 ARgorithm has a common server endpoint where the community can create
 and contribute their own ARgorithms. This is by default the endpoint for
-the Toolkit command line. But in case , a programmer wants to setup a
+the toolkit command line. But in case , a programmer wants to setup a
 local server for testing purposes or wants to setup a specific server
 for their class or organisation. The following steps are to be followed.
 

@@ -17,8 +17,8 @@ You can setup auto completion for your shell by using --install-completion optio
 $ ARgorithm init hello_world
 Creating empty template for hello_world
 [SUCCESS]: TEMPLATE GENERATED
-refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it
-chech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples
+refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it
+chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples
 
 $ ls
 hello_world.config.json  hello_world.py
@@ -109,7 +109,7 @@ As ARgorithm is tool for creating visual demonstration , you can add comments pa
 
 Make sure you make the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** this is important to identify arrays when rendering them
 
-You can refer the docs and samples in the [repo](https://github.com/ARgorithm/Toolkit) to understand more clearly.
+You can refer the docs and samples in the [repo](https://github.com/ARgorithm/toolkit) to understand more clearly.
 
 
 

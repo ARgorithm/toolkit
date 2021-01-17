@@ -1,4 +1,4 @@
-Drop an issue at the [repository](https://github.com/ARgorithm/Toolkit/issues) and add the `question` label.<br>
+Drop an issue at the [repository](https://github.com/ARgorithm/toolkit/issues) and add the `question` label.<br>
 <br>
 you can also get in touch with us
 

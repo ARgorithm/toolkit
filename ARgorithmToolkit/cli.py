@@ -271,7 +271,7 @@ def run(**kwargs):
     with open(config_file, "w") as configfile:
         json.dump(config,configfile)
 
-    msg.good("Template generated","refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples")
+    msg.good("Template generated","refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples")
 
 @app.command()
 def configure():

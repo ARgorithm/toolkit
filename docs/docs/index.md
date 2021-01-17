@@ -7,11 +7,11 @@ How does it work ?
 
 The project consists of three parts
 
-- Toolkit
+- toolkit
 - Server
 - Mobile application
 
-The Toolkit package is for developers who want to transport their own algorithms into augmented reality. The toolkit provides you with a template library which works just like your usual template library except this one records states . Each state is an event that occurs in your data structure and by keeping track of the states of your variables , data structures etc we then render them in augmented reality.
+The toolkit package is for developers who want to transport their own algorithms into augmented reality. The toolkit provides you with a template library which works just like your usual template library except this one records states . Each state is an event that occurs in your data structure and by keeping track of the states of your variables , data structures etc we then render them in augmented reality.
 
 The server takes the ARgorithm and runs it with custom user input to generate states which the mobile application converts to AR visualizations.
 

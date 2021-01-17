@@ -2,14 +2,14 @@
 
 >  Work in Progress
 
-![Tests](https://github.com/ARgorithm/Toolkit/workflows/Tests/badge.svg)
+![Tests](https://github.com/ARgorithm/toolkit/workflows/Tests/badge.svg)
 
 The ARgorithm project provides an interface to render your algorithms and data structures in augmented reality.
 The ARgorithmToolkit package offers packages and a command line interface needed to make and submit algorithms for the following.
 
 ### How does it work ?
 
-The Toolkit package is for developers who want to transport their own algorithms into augmented reality. The toolkit provides you with a **template library** which works just like your usual template library except this one records **states** . Each state is an event that occurs in your data structure and by keeping track of the states of your variables , data structures etc we then render them in augmented reality.
+The toolkit package is for developers who want to transport their own algorithms into augmented reality. The toolkit provides you with a **template library** which works just like your usual template library except this one records **states** . Each state is an event that occurs in your data structure and by keeping track of the states of your variables , data structures etc we then render them in augmented reality.
 
 ### Getting started 
 
@@ -22,8 +22,8 @@ pip install ARgorithmToolkit
 or you can clone the repo
 
 ```bash
-git clone https://github.com/ARgorithm/Toolkit.git 
-cd Toolkit
+git clone https://github.com/ARgorithm/toolkit.git 
+cd toolkit
 make init
 ```
 
@@ -166,7 +166,7 @@ As ARgorithm is tool for creating visual demonstration , you can add comments pa
 
 Make sure you make the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** this is important to identify arrays when rendering them
 
-You can refer the docs and samples in the [repo](https://github.com/ARgorithm/Toolkit) to understand more clearly.
+You can refer the docs and samples in the [repo](https://github.com/ARgorithm/toolkit) to understand more clearly.
 
 
 

@@ -26,9 +26,9 @@ setuptools.setup(
         'numpy'
     ],
     project_urls={  # Optional
-        'Source': 'https://github.com/ARgorithm/Toolkit',
-        'Bug Reports' : "https://github.com/ARgorithm/Toolkit/issues",
-        'Documentation' : 'https://argorithmtoolkit.readthedocs.io/en/latest'
+        'Source': 'https://github.com/ARgorithm/toolkit',
+        'Bug Reports' : "https://github.com/ARgorithm/toolkit/issues",
+        'Documentation' : 'https://argorithm.github.io/toolkit/en/latest'
     },
     entry_points = {
         'console_scripts': [

@@ -48,7 +48,7 @@ class State:
 
 
 class StateSet:
-    """The most important class in the entire Toolkit. An object of this class
+    """The most important class in the entire toolkit. An object of this class
     has to exist in every algorithm. That object of StateSet is what should
     returned by ARgorithm as that is what is rendered in Augmented Reality As
     these are what contain the metadata for rendering the algorithm. Instance

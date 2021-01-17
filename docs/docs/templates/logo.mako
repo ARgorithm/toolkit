@@ -11,6 +11,6 @@
             text-decoration: none;
         }
     </style>
-<a href='/' id="back">
+<a href='/toolkit' id="back">
     <i class="fa fa-home" aria-hidden="true"></i> Back
 </a>

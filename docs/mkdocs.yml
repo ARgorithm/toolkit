@@ -14,8 +14,8 @@ theme:
   logo: img/Logo_black.svg
   favicon: img/favicon.ico
   language: en
-repo_name: ARgorithm/Toolkit
-repo_url: https://github.com/ARgorithm/Toolkit
+repo_name: ARgorithm/toolkit
+repo_url: https://github.com/ARgorithm/toolkit
 edit_uri: ''
 plugins:
 - search
@@ -49,7 +49,7 @@ markdown_extensions:
 extra:
   social:
   - icon: fontawesome/brands/github-alt
-    link: https://github.com/ARgorithm/Toolkit
+    link: https://github.com/ARgorithm/toolkit
 extra_css:
 - css/termynal.css
 - css/custom.css
