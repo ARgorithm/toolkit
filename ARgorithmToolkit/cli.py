@@ -158,7 +158,6 @@ class AuthManager():
         except requests.RequestException as rqe:
             msg.fail("Connection failed",str(rqe))
             raise typer.Abort()
-        
         if rq.status_code == 404:
             msg.warn("User not found","please enter valid email")
             raise typer.Exit(1)
@@ -187,7 +186,7 @@ class AuthManager():
                 rq = requests.post(f"{url}/programmers/verify" , headers = {"authorization" : "Bearer "+token})
             except requests.RequestException as rqe:
                 msg.fail("Connection failed",str(rqe))
-                raise typer.Abort()    
+                raise typer.Abort()
             if rq.status_code == 200:
                 return token
             msg.warn("Token expired","Please enter login credentials again")
