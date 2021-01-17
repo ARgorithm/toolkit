@@ -3,16 +3,14 @@ import setuptools
 with open("docs/README.md", "r") as fh:
     long_description = fh.read()
 
-__version__ = "0.0.11"
+__version__ = "0.0.12"
 
 setuptools.setup(
     name="ARgorithmToolkit",
     version=__version__,
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
-    description='''
-        A utility toolkit to help develop algorithms suitable for ARgorithm
-    ''',
+    description='A utility toolkit to help develop algorithms suitable for ARgorithm',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ARgorithm",
@@ -23,8 +21,7 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'wasabi', #For CLI
-        'argparse' , #For CLI
+        'typer', # For CLI
         'requests' , #For CLI
         'numpy'
     ],
@@ -35,7 +32,7 @@ setuptools.setup(
     },
     entry_points = {
         'console_scripts': [
-            'ARgorithm = ARgorithmToolkit.cli:cmd',
+            'ARgorithm = ARgorithmToolkit.cli:app',
         ],
     }
 )

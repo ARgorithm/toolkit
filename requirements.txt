@@ -3,5 +3,8 @@ wheel
 pytest
 PyYAML
 numpy
-sphinx
-sphinxcontrib-napoleon
+mkdocs >=1.1.2,<2.0.0
+mkdocs-material >=6.1.4,<7.0.0
+markdown-include >=0.5.1,<0.6.0
+mkdocs-markdownextradata-plugin >=0.1.7,<0.2.0
+pdoc3

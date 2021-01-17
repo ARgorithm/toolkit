@@ -1,0 +1,2070 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ARgorithmToolkit.cli API documentation</title>
+<meta name="description" content="CLI tool for ARgorithm made using typer" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<link rel="stylesheet" href="../css/font-awesome.css">
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ARgorithmToolkit.cli</code></h1>
+</header>
+<section id="section-intro">
+<p>CLI tool for ARgorithm made using typer</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># pylint: disable=no-self-use
+&#34;&#34;&#34;CLI tool for ARgorithm made using typer
+&#34;&#34;&#34;
+import os
+import re
+import json
+import requests
+import typer
+
+CLOUD_URL = &#34;https://argorithm.io&#34;
+CACHE_DIR = typer.get_app_dir(&#34;ARgorithm&#34;)
+
+if not os.path.isdir(CACHE_DIR):
+    os.mkdir(CACHE_DIR)
+
+class Messager():
+    &#34;&#34;&#34;Class for pretty printing messages using typer
+    &#34;&#34;&#34;
+    def msg(self,tag:str,title:str,message:str,color:str):
+        &#34;&#34;&#34;Pretty messaging for standard log messages
+        &#34;&#34;&#34;
+        code = typer.style(f&#34;[{tag.upper()}]: {title.upper()}&#34; , fg=color , bold=True)
+        typer.echo(code)
+        if message:
+            typer.echo(message)
+
+    def info(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Information message
+        &#34;&#34;&#34;
+        self.msg(&#34;info&#34;,title,message,typer.colors.BLUE)
+
+    def warn(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Warning message
+        &#34;&#34;&#34;
+        self.msg(&#34;error&#34;,title,message,typer.colors.YELLOW)
+
+    def fail(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Error message
+        &#34;&#34;&#34;
+        self.msg(&#34;critical error&#34;,title,message,typer.colors.RED)
+
+    def good(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Success message
+        &#34;&#34;&#34;
+        self.msg(&#34;success&#34;,title,message,typer.colors.GREEN)
+
+    def menuitem(self,argorithm):
+        &#34;&#34;&#34;pretty print argorithm details
+        &#34;&#34;&#34;
+        head = typer.style(f&#34;- {argorithm[&#39;argorithmID&#39;]}&#34;,fg=typer.colors.GREEN)
+        typer.echo(head)
+        typer.secho(f&#34;\tby {argorithm[&#39;maintainer&#39;]}&#34;,fg=typer.colors.CYAN)
+        typer.echo(&#34;\tParameters&#34;)
+        for key in argorithm[&#39;parameters&#39;]:
+            typer.echo(f&#34;\t\t{key} : {argorithm[&#39;parameters&#39;][key]}&#34;)
+
+    def state(self,states):
+        &#34;&#34;&#34;pretty print states
+        &#34;&#34;&#34;
+        states = states[&#39;data&#39;]
+        for state in states:
+            typer.echo(&#39;\n&#39;+&#39;-&#39;*50)
+            typer.secho(state[&#39;state_type&#39;],bold=True)
+            typer.secho(&#39;\t&#39;+state[&#39;comments&#39;],fg=typer.colors.CYAN)
+            if state[&#39;state_def&#39;]:
+                for key in state[&#39;state_def&#39;]:
+                    typer.echo(f&#34;\t{key} : {state[&#39;state_def&#39;][key]}&#34;)
+
+msg = Messager()
+
+class Settings():
+    &#34;&#34;&#34;handles endpoint settings&#34;&#34;&#34;
+    local:bool = False
+    endpoint:str=CLOUD_URL
+
+    def get_endpoint(self):
+        &#34;&#34;&#34;returns required endpoint&#34;&#34;&#34;
+        if self.local:
+            return &#34;http://127.0.0.1&#34;
+        config_file = os.path.join(CACHE_DIR , &#34;config&#34;)
+        if os.path.isfile(config_file):
+            with open(config_file,&#34;r&#34;) as conf:
+                self.endpoint = conf.read()
+        return self.endpoint
+
+    def set_endpoint(self,url):
+        &#34;&#34;&#34;set up cloud endpoint&#34;&#34;&#34;
+        try:
+            rq = requests.get(url+&#34;/argorithms/list&#34;)
+            if rq.status_code == 200:
+                msg.good(&#34;Connected&#34;,f&#34;Cloud requests will now go to {url}&#34;)
+            else:
+                raise AttributeError(&#34;Not a server endpoint&#34;)
+        except ValueError as ve:
+            msg.warn(&#34;Please try again with proper URL&#34;)
+            raise typer.Exit(1) from ve
+        except AttributeError as ex:
+            msg.fail(str(ex))
+            raise typer.Exit(1) from ex
+        except Exception as ex:
+            msg.fail(&#34;Endpoint couldnt be found.&#34;)
+            raise typer.Exit(2) from ex
+        config_file = os.path.join(CACHE_DIR , &#34;config&#34;)
+        with open(config_file,&#39;w&#39;) as config:
+            config.write(url)
+
+settings = Settings()
+
+class AuthManager():
+    &#34;&#34;&#34;AuthManager handles authentication tokens for AUTH enabled servers
+    &#34;&#34;&#34;
+    def __init__(self):
+        &#34;&#34;&#34;sets up credfile to store credentials
+        &#34;&#34;&#34;
+        self.credfile = os.path.join(CACHE_DIR,&#34;.credentials&#34;)
+
+    def register(self):
+        &#34;&#34;&#34;registers account
+        &#34;&#34;&#34;
+        email = typer.prompt(&#34;Enter email address&#34;)
+        msg.info(&#34;Password criteria&#34;,&#39;- between 8 to 25 characters\n - contains atleast one number\n - contains atleast lower case alphabet\n - contains atleast uppercase alphabet&#39;)
+        rules = r&#34;^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$&#34;
+        password = typer.prompt(&#34;Enter password&#34;,confirmation_prompt=True,hide_input=True)
+        if not re.search(rules,password):
+            msg.warn(&#34;password unacceptable&#34;)
+            typer.Exit(1)
+            return
+        url = settings.get_endpoint()+&#39;/programmers/register&#39;
+        data = {
+            &#34;username&#34; : email,
+            &#34;password&#34; : password
+        }
+        try:
+            rq = requests.post(url,data)
+        except requests.RequestException as rqe:
+            msg.fail(&#34;Connection failed&#34;,str(rqe))
+            raise typer.Abort()
+        if rq.status_code == 200:
+            msg.good(&#34;Account created&#34;,&#34;These credentials will be used as both programmer and user credentials&#34;)
+            return
+        if rq.status_code == 409:
+            msg.warn(&#34;Invalid email&#34;,&#34;email is already in use. Try login&#34;)
+            typer.Exit(0)
+        msg.fail(&#34;Error&#34;,&#34;Contact developer&#34;)
+
+    def login_prompt(self):
+        &#34;&#34;&#34;login prompt to enter credentials
+        &#34;&#34;&#34;
+        email = typer.prompt(&#34;Enter email address&#34;)
+        password = typer.prompt(&#34;Enter password&#34;,hide_input=True)
+        url = f&#34;{settings.get_endpoint()}/programmers/login&#34;
+        data = {
+            &#34;username&#34; : email,
+            &#34;password&#34; : password
+        }
+        try:
+            rq = requests.post(url,data)
+        except requests.RequestException as rqe:
+            msg.fail(&#34;Connection failed&#34;,str(rqe))
+            raise typer.Abort()
+        
+        if rq.status_code == 404:
+            msg.warn(&#34;User not found&#34;,&#34;please enter valid email&#34;)
+            raise typer.Exit(1)
+        if rq.status_code == 500:
+            msg.fail(&#34;Server error&#34;,&#34;contact developer&#34;)
+            raise typer.Exit(2)
+        if rq.status_code == 401:
+            msg.warn(&#34;incorrect password&#34;)
+            raise typer.Exit(1)
+        if rq.status_code == 200:
+            msg.good(&#34;logged in successfully&#34;,&#34;credentials saved in cache&#34;)
+            token = json.loads(rq.content)[&#39;access_token&#39;]
+            with open(self.credfile,&#39;w+&#39;) as cred:
+                cred.write(token)
+            return token
+        raise typer.Exit(1)
+
+    def get_token(self):
+        &#34;&#34;&#34;returns valid authorization token
+        &#34;&#34;&#34;
+        url = settings.get_endpoint()
+        if os.path.isfile(self.credfile):
+            with open(self.credfile,&#39;r&#39;) as cred:
+                token = cred.read()
+            try:
+                rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
+            except requests.RequestException as rqe:
+                msg.fail(&#34;Connection failed&#34;,str(rqe))
+                raise typer.Abort()    
+            if rq.status_code == 200:
+                return token
+            msg.warn(&#34;Token expired&#34;,&#34;Please enter login credentials again&#34;)
+        token = self.login_prompt()
+        with open(self.credfile,&#39;w+&#39;) as cred:
+            cred.write(token)
+        return token
+
+    def auth_check(self):
+        &#34;&#34;&#34;checks if AUTH is enabled on server
+        &#34;&#34;&#34;
+        try:
+            url = settings.get_endpoint() + &#34;/auth&#34;
+            try:
+                rq = requests.get(url)
+            except requests.RequestException as rqe:
+                msg.fail(&#34;Connection failed&#34;,str(rqe))
+                raise typer.Abort()    
+            if rq.status_code == 200:
+                return True
+            return False
+        except Exception as ex:
+            msg.warn(&#34;authentication error&#34;,str(ex))
+
+authmanager = AuthManager()
+
+app = typer.Typer(help=&#34;ARgorithm CLI&#34;)
+
+@app.callback()
+def main(
+        local:bool = typer.Option(False,&#34;--local&#34;,&#39;-l&#39;,help=&#34;Connects to server running on localhost&#34;,show_default=False)
+    ):
+    &#34;&#34;&#34;callback that adds the local option to app
+    &#34;&#34;&#34;
+    settings.local = local
+
+def name_check(value:str):
+    &#34;&#34;&#34;checks validity of argorithmID
+    &#34;&#34;&#34;
+    rules = r&#34;^[A-Za-z_]+$&#34;
+    m = re.search(rules,value)
+    if m is None:
+        msg.fail(&#34;Invalid name&#34; , &#34;argorithm name should be [A-Za-z_]&#34;)
+        raise typer.Exit(code=1)
+    return value
+
+@app.command()
+def init(
+        name:str = typer.Argument(...,help=&#34;The name given to the argorithm [A-Za-z_]&#34;,callback=name_check)
+    ):
+    &#34;&#34;&#34;
+    Create Blank code template and config template for ARgorithm
+    &#34;&#34;&#34;
+    typer.echo(f&#34;Creating empty template for {name}&#34;)
+
+    filename = f&#34;{name}.py&#34;
+    with open(filename , &#34;w&#34;) as codefile:
+        code_starter = &#34;&#34;&#34;
+import ARgorithmToolkit
+
+def run(**kwargs):
+    algo = ARgorithmToolkit.StateSet()
+
+    #
+    # Your code
+    #
+
+    return algo
+
+        &#34;&#34;&#34;
+        codefile.write(code_starter)
+
+    config = {
+        &#34;argorithmID&#34; : name,
+        &#34;file&#34; : name+&#34;.py&#34;,
+        &#34;function&#34; : &#34;run&#34;,
+        &#34;parameters&#34; : {},
+        &#34;default&#34; : {},
+        &#34;description&#34; : &#34;&#34;
+    }
+    config_file=f&#34;{name}.config.json&#34;
+    with open(config_file, &#34;w&#34;) as configfile:
+        json.dump(config,configfile)
+
+    msg.good(&#34;Template generated&#34;,&#34;refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples&#34;)
+
+@app.command()
+def configure():
+    &#34;&#34;&#34;
+    Connect to your endpoint
+    &#34;&#34;&#34;
+    endpoint = typer.prompt(&#34;Enter server endpoint&#34;,default=settings.get_endpoint())
+    settings.set_endpoint(endpoint)
+
+def autocomplete(incomplete:str):
+    &#34;&#34;&#34;autocomplete function for finding argorithms&#34;&#34;&#34;
+    files = os.listdir(&#39;.&#39;)
+    res = []
+    l = len(incomplete)
+    for filename in files:
+        if filename[:l] == incomplete and filename[-3:] == &#39;.py&#39;:
+            res.append(filename[:-4])
+    return res
+
+def file_reader(filename):
+    &#34;&#34;&#34;finds anf checks argorithm files&#34;&#34;&#34;
+    directory = os.getcwd()
+    if os.path.isfile( os.path.join(directory,filename+&#34;.py&#34;)):
+        if os.path.isfile( os.path.join(directory , f&#34;{filename}.config.json&#34;) ):
+            pass
+        else:
+            msg.warn(f&#34;cant find {filename}.config.json&#34;)
+            raise typer.Exit(1)
+    else:
+        msg.warn(f&#34;{filename}.py not found&#34;)
+        raise typer.Exit(1)
+    msg.good(&#39;files found&#39;)
+
+    required_tags = {
+        &#34;argorithmID&#34; : filename,
+        &#34;file&#34; : filename+&#34;.py&#34;,
+        &#34;function&#34; : &#34;run&#34;,
+        &#34;parameters&#34; : {},
+        &#34;default&#34; : {},
+        &#34;description&#34; : &#34;&#34;
+    }
+
+    with open(os.path.join(directory , f&#34;{filename}.config.json&#34;) , &#39;r&#39;) as configfile:
+        data = json.load(configfile)
+        for key in required_tags:
+            if key not in data:
+                msg.warn(f&#34;please check {filename}.config.json {key} is missing&#34;)
+                raise typer.Exit(1)
+        for key in data:
+            if key not in required_tags:
+                msg.warn(f&#34;please check {filename}.config.json {key} is uneccessary&#34;)
+                raise typer.Exit(1)
+            if type(data[key]) != type(required_tags[key]):
+                msg.warn(f&#34;please check {key} in {filename}.config.json&#34;)
+                raise typer.Exit(1)
+
+    msg.good(&#34;Files Verified&#34;)
+    return data
+
+@app.command()
+def submit(
+        filename:str=typer.Argument(... , help=&#34;name of argorithm&#34; , autocompletion=autocomplete)
+    ):
+    &#34;&#34;&#34;submit argorithms to server&#34;&#34;&#34;
+
+    filename = filename.split(&#39;.&#39;)[0]
+    data = file_reader(filename)
+
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    url = settings.get_endpoint()+&#34;/argorithms/insert&#34;
+    local_file = filename+&#34;.py&#34;
+    files = [
+        (&#39;file&#39;, (local_file, open(local_file, &#39;rb&#39;), &#39;application/octet&#39;)),
+        (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
+    ]
+    try:
+        rq = requests.post(url,files=files,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;Submitted&#34;)
+    elif rq.status_code == 409:
+        msg.warn(&#34;Already exists&#34;,&#34;An argorithm with this name already exists,try another argorithm name&#34;)
+    elif rq.status_code == 406:
+        msg.warn(&#34;File name was invalid&#34;,&#34;The name shoud be of type [A-Za-z_]&#34;)
+    elif rq.status_code == 400:
+        msg.warn(&#34;Incorrect file format&#34;,&#34;please refer documentation&#34;)
+    else:
+        msg.fail(&#34;Application error&#34;)
+
+@app.command()
+def update(
+        filename:str=typer.Argument(... , help=&#34;name of argorithm&#34; , autocompletion=autocomplete)
+    ):
+    &#34;&#34;&#34;updates pre existing argorithms to server&#34;&#34;&#34;
+
+    filename = filename.split(&#39;.&#39;)[0]
+    data = file_reader(filename)
+
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    url = settings.get_endpoint()+&#34;/argorithms/update&#34;
+    local_file = filename+&#34;.py&#34;
+    files = [
+        (&#39;file&#39;, (local_file, open(local_file, &#39;rb&#39;), &#39;application/octet&#39;)),
+        (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
+    ]
+    try:
+        rq = requests.post(url,files=files,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;updated&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;Try submit command to add argorithm to server&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Unauthorized&#34;,&#34;Only author of argorithm or admin is allowed to alter argorithms&#34;)
+    else:
+        msg.fail(&#34;Application error&#34;)
+
+def search(argid):
+    &#34;&#34;&#34;Searches argorithm on server
+    &#34;&#34;&#34;
+    url = settings.get_endpoint()+&#34;/argorithms/view/&#34;+argid
+    try:
+        rq = requests.get(url)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        typer.echo(&#34;Found argorithm&#34;)
+        data = json.loads(rq.content)
+        msg.menuitem(data)
+        return data
+    if rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,f&#34;{argid} not found in database&#34;)
+        raise typer.Exit(1)
+    msg.fail(&#34;Application error&#34;)
+    raise typer.Exit(1)
+
+@app.command(&#34;list&#34;)
+def list_argorithms():
+    &#34;&#34;&#34;Get list of argorithms in server
+    &#34;&#34;&#34;
+    url = settings.get_endpoint()+&#34;/argorithms/list&#34;
+    try:
+        rq = requests.get(url)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        menu = json.loads(rq.content)
+        if len(menu) == 0:
+            msg.warn(&#34;No argorithms&#34;)
+            raise typer.Exit(1)
+        for item in menu:
+            msg.menuitem(item)
+
+def verify_json(filename:str):
+    &#34;&#34;&#34;checks whether output file is json or not&#34;&#34;&#34;
+    if filename:
+        if filename[-5:] == &#34;.json&#34;:
+            return filename
+        return filename + &#34;.json&#34;
+    return None
+
+@app.command()
+def test(
+    argorithm_id:str = typer.Argument(... , help=&#34;argorithmID of function to be called. If not passed then menu will be presented&#34;),
+    to_file:str = typer.Option(None,&#39;--to_file&#39;,&#39;-t&#39;,help=&#34;store returned states in a json file&#34;,show_default=False,callback=verify_json)
+    # user_input:bool = typer.Option(False,&#39;--user-input&#39;,&#39;-u&#39;,help=&#34;if present, parses input from user&#34;,show_default=False)
+    ):
+    &#34;&#34;&#34;test argorithms stored in server
+    &#34;&#34;&#34;
+    params = search(argorithm_id)
+    # if user_input:
+    #     pass
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    data = {
+        &#34;argorithmID&#34; : params[&#34;argorithmID&#34;],
+        &#34;parameters&#34; : params[&#34;example&#34;]
+    }
+    url = settings.get_endpoint()+&#34;/argorithms/run&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        if to_file:
+            with open(to_file,&#39;wb+&#39;) as output:
+                output.write(rq.content)
+            msg.good(&#34;Recieved states&#34;,f&#34;stored in {to_file}&#34;)
+        else:
+            msg.state(json.loads(rq.content))
+    elif rq.status_code == 401:
+        msg.warn(&#34;Authentication failed&#34;,json.loads(rq.content)[&#39;detail&#39;])
+    else:
+        msg.fail(&#34;application error&#34;)
+
+@app.command()
+def delete(
+    argorithm_id:str = typer.Argument(... , help=&#34;argorithmID of function to be called. If not passed then menu will be presented&#34;)
+    ):
+    &#34;&#34;&#34;Deletes argorithm from server
+    &#34;&#34;&#34;
+    params = search(argorithm_id)
+    flag = typer.confirm(&#34;Are you sure you want to delete it?&#34;)
+    if not flag:
+        typer.echo(&#34;Not deleting&#34;)
+        raise typer.Abort()
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    data = {
+        &#34;argorithmID&#34; : params[&#34;argorithmID&#34;],
+    }
+    url = settings.get_endpoint()+&#34;/argorithms/delete&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.info(&#34;Deleted successfully&#34;,)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;only author of argorithm or admin can delete it&#34;)
+    else:
+        msg.fail(&#34;application error&#34;)
+
+
+account_app = typer.Typer(help=&#34;Manages account&#34;)
+app.add_typer(account_app,name=&#34;account&#34;)
+
+@account_app.command()
+def login(
+        override:bool=typer.Option(False,&#39;--override&#39;,&#39;-o&#39;,show_default=False,help=&#34;Enter new credentials&#34;)
+    ):
+    &#34;&#34;&#34;Log in to ARgorithmServer. Only is AUTH is enabled on server.
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH disabled at server&#34;)
+        raise typer.Exit(0)
+    if override:
+        authmanager.login_prompt()
+    else:
+        authmanager.get_token()
+
+@account_app.command()
+def new():
+    &#34;&#34;&#34;Create new programmer and user account in ARgorithmServer. Only is AUTH is enabled on server.
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH disabled at server&#34;)
+        raise typer.Exit(0)
+    authmanager.register()
+
+admin_app = typer.Typer(help=&#34;Administrator level methods&#34;)
+app.add_typer(admin_app,name=&#34;admin&#34;)
+
+@admin_app.command()
+def grant(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;grants admin acess
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/grant&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;granted admin priveleges&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 406:
+        msg.warn(&#34;Blacklisted email&#34;,&#34;This email is blacklisted thus cannot be granted admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)
+
+@admin_app.command()
+def revoke(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;grants admin acess
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/revoke&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;revoked admin priveleges&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)
+
+@admin_app.command(&#34;delete&#34;)
+def account_delete(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;),
+        programmer:bool=typer.Option(False,&#39;-p&#39;,&#39;--programmer&#39;,help=&#34;If flag is present, it will delete the programmer account&#34;)
+    ):
+    &#34;&#34;&#34;Deletes account. Requires admin priveleges
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    if programmer:
+        url = settings.get_endpoint()+&#34;/admin/delete_programmer&#34;
+    else:
+        url = settings.get_endpoint()+&#34;/admin/delete_user&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;deleted account&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)
+
+@admin_app.command()
+def blacklist(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;blacklists account. Requires admin priveleges
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/black_list&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;blacklisted account&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)
+
+@admin_app.command()
+def whitelist(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;whitelist accounts. Requires admin priveleges
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/white_list&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;whitelisted account&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="ARgorithmToolkit.cli.account_delete"><code class="name flex">
+<span>def <span class="ident">account_delete</span></span>(<span>email: str = &lt;typer.models.ArgumentInfo object&gt;, programmer: bool = &lt;typer.models.OptionInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes account. Requires admin priveleges</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@admin_app.command(&#34;delete&#34;)
+def account_delete(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;),
+        programmer:bool=typer.Option(False,&#39;-p&#39;,&#39;--programmer&#39;,help=&#34;If flag is present, it will delete the programmer account&#34;)
+    ):
+    &#34;&#34;&#34;Deletes account. Requires admin priveleges
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    if programmer:
+        url = settings.get_endpoint()+&#34;/admin/delete_programmer&#34;
+    else:
+        url = settings.get_endpoint()+&#34;/admin/delete_user&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;deleted account&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.autocomplete"><code class="name flex">
+<span>def <span class="ident">autocomplete</span></span>(<span>incomplete: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>autocomplete function for finding argorithms</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def autocomplete(incomplete:str):
+    &#34;&#34;&#34;autocomplete function for finding argorithms&#34;&#34;&#34;
+    files = os.listdir(&#39;.&#39;)
+    res = []
+    l = len(incomplete)
+    for filename in files:
+        if filename[:l] == incomplete and filename[-3:] == &#39;.py&#39;:
+            res.append(filename[:-4])
+    return res</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.blacklist"><code class="name flex">
+<span>def <span class="ident">blacklist</span></span>(<span>email: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>blacklists account. Requires admin priveleges</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@admin_app.command()
+def blacklist(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;blacklists account. Requires admin priveleges
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/black_list&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;blacklisted account&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.configure"><code class="name flex">
+<span>def <span class="ident">configure</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Connect to your endpoint</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command()
+def configure():
+    &#34;&#34;&#34;
+    Connect to your endpoint
+    &#34;&#34;&#34;
+    endpoint = typer.prompt(&#34;Enter server endpoint&#34;,default=settings.get_endpoint())
+    settings.set_endpoint(endpoint)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>argorithm_id: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes argorithm from server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command()
+def delete(
+    argorithm_id:str = typer.Argument(... , help=&#34;argorithmID of function to be called. If not passed then menu will be presented&#34;)
+    ):
+    &#34;&#34;&#34;Deletes argorithm from server
+    &#34;&#34;&#34;
+    params = search(argorithm_id)
+    flag = typer.confirm(&#34;Are you sure you want to delete it?&#34;)
+    if not flag:
+        typer.echo(&#34;Not deleting&#34;)
+        raise typer.Abort()
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    data = {
+        &#34;argorithmID&#34; : params[&#34;argorithmID&#34;],
+    }
+    url = settings.get_endpoint()+&#34;/argorithms/delete&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.info(&#34;Deleted successfully&#34;,)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;only author of argorithm or admin can delete it&#34;)
+    else:
+        msg.fail(&#34;application error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.file_reader"><code class="name flex">
+<span>def <span class="ident">file_reader</span></span>(<span>filename)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>finds anf checks argorithm files</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def file_reader(filename):
+    &#34;&#34;&#34;finds anf checks argorithm files&#34;&#34;&#34;
+    directory = os.getcwd()
+    if os.path.isfile( os.path.join(directory,filename+&#34;.py&#34;)):
+        if os.path.isfile( os.path.join(directory , f&#34;{filename}.config.json&#34;) ):
+            pass
+        else:
+            msg.warn(f&#34;cant find {filename}.config.json&#34;)
+            raise typer.Exit(1)
+    else:
+        msg.warn(f&#34;{filename}.py not found&#34;)
+        raise typer.Exit(1)
+    msg.good(&#39;files found&#39;)
+
+    required_tags = {
+        &#34;argorithmID&#34; : filename,
+        &#34;file&#34; : filename+&#34;.py&#34;,
+        &#34;function&#34; : &#34;run&#34;,
+        &#34;parameters&#34; : {},
+        &#34;default&#34; : {},
+        &#34;description&#34; : &#34;&#34;
+    }
+
+    with open(os.path.join(directory , f&#34;{filename}.config.json&#34;) , &#39;r&#39;) as configfile:
+        data = json.load(configfile)
+        for key in required_tags:
+            if key not in data:
+                msg.warn(f&#34;please check {filename}.config.json {key} is missing&#34;)
+                raise typer.Exit(1)
+        for key in data:
+            if key not in required_tags:
+                msg.warn(f&#34;please check {filename}.config.json {key} is uneccessary&#34;)
+                raise typer.Exit(1)
+            if type(data[key]) != type(required_tags[key]):
+                msg.warn(f&#34;please check {key} in {filename}.config.json&#34;)
+                raise typer.Exit(1)
+
+    msg.good(&#34;Files Verified&#34;)
+    return data</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.grant"><code class="name flex">
+<span>def <span class="ident">grant</span></span>(<span>email: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>grants admin acess</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@admin_app.command()
+def grant(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;grants admin acess
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/grant&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;granted admin priveleges&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 406:
+        msg.warn(&#34;Blacklisted email&#34;,&#34;This email is blacklisted thus cannot be granted admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.init"><code class="name flex">
+<span>def <span class="ident">init</span></span>(<span>name: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create Blank code template and config template for ARgorithm</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command()
+def init(
+        name:str = typer.Argument(...,help=&#34;The name given to the argorithm [A-Za-z_]&#34;,callback=name_check)
+    ):
+    &#34;&#34;&#34;
+    Create Blank code template and config template for ARgorithm
+    &#34;&#34;&#34;
+    typer.echo(f&#34;Creating empty template for {name}&#34;)
+
+    filename = f&#34;{name}.py&#34;
+    with open(filename , &#34;w&#34;) as codefile:
+        code_starter = &#34;&#34;&#34;
+import ARgorithmToolkit
+
+def run(**kwargs):
+    algo = ARgorithmToolkit.StateSet()
+
+    #
+    # Your code
+    #
+
+    return algo
+
+        &#34;&#34;&#34;
+        codefile.write(code_starter)
+
+    config = {
+        &#34;argorithmID&#34; : name,
+        &#34;file&#34; : name+&#34;.py&#34;,
+        &#34;function&#34; : &#34;run&#34;,
+        &#34;parameters&#34; : {},
+        &#34;default&#34; : {},
+        &#34;description&#34; : &#34;&#34;
+    }
+    config_file=f&#34;{name}.config.json&#34;
+    with open(config_file, &#34;w&#34;) as configfile:
+        json.dump(config,configfile)
+
+    msg.good(&#34;Template generated&#34;,&#34;refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.list_argorithms"><code class="name flex">
+<span>def <span class="ident">list_argorithms</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get list of argorithms in server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command(&#34;list&#34;)
+def list_argorithms():
+    &#34;&#34;&#34;Get list of argorithms in server
+    &#34;&#34;&#34;
+    url = settings.get_endpoint()+&#34;/argorithms/list&#34;
+    try:
+        rq = requests.get(url)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        menu = json.loads(rq.content)
+        if len(menu) == 0:
+            msg.warn(&#34;No argorithms&#34;)
+            raise typer.Exit(1)
+        for item in menu:
+            msg.menuitem(item)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.login"><code class="name flex">
+<span>def <span class="ident">login</span></span>(<span>override: bool = &lt;typer.models.OptionInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Log in to ARgorithmServer. Only is AUTH is enabled on server.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@account_app.command()
+def login(
+        override:bool=typer.Option(False,&#39;--override&#39;,&#39;-o&#39;,show_default=False,help=&#34;Enter new credentials&#34;)
+    ):
+    &#34;&#34;&#34;Log in to ARgorithmServer. Only is AUTH is enabled on server.
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH disabled at server&#34;)
+        raise typer.Exit(0)
+    if override:
+        authmanager.login_prompt()
+    else:
+        authmanager.get_token()</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>local: bool = &lt;typer.models.OptionInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>callback that adds the local option to app</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.callback()
+def main(
+        local:bool = typer.Option(False,&#34;--local&#34;,&#39;-l&#39;,help=&#34;Connects to server running on localhost&#34;,show_default=False)
+    ):
+    &#34;&#34;&#34;callback that adds the local option to app
+    &#34;&#34;&#34;
+    settings.local = local</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.name_check"><code class="name flex">
+<span>def <span class="ident">name_check</span></span>(<span>value: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>checks validity of argorithmID</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def name_check(value:str):
+    &#34;&#34;&#34;checks validity of argorithmID
+    &#34;&#34;&#34;
+    rules = r&#34;^[A-Za-z_]+$&#34;
+    m = re.search(rules,value)
+    if m is None:
+        msg.fail(&#34;Invalid name&#34; , &#34;argorithm name should be [A-Za-z_]&#34;)
+        raise typer.Exit(code=1)
+    return value</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.new"><code class="name flex">
+<span>def <span class="ident">new</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create new programmer and user account in ARgorithmServer. Only is AUTH is enabled on server.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@account_app.command()
+def new():
+    &#34;&#34;&#34;Create new programmer and user account in ARgorithmServer. Only is AUTH is enabled on server.
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH disabled at server&#34;)
+        raise typer.Exit(0)
+    authmanager.register()</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.revoke"><code class="name flex">
+<span>def <span class="ident">revoke</span></span>(<span>email: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>grants admin acess</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@admin_app.command()
+def revoke(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;grants admin acess
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/revoke&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;revoked admin priveleges&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.search"><code class="name flex">
+<span>def <span class="ident">search</span></span>(<span>argid)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Searches argorithm on server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search(argid):
+    &#34;&#34;&#34;Searches argorithm on server
+    &#34;&#34;&#34;
+    url = settings.get_endpoint()+&#34;/argorithms/view/&#34;+argid
+    try:
+        rq = requests.get(url)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        typer.echo(&#34;Found argorithm&#34;)
+        data = json.loads(rq.content)
+        msg.menuitem(data)
+        return data
+    if rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,f&#34;{argid} not found in database&#34;)
+        raise typer.Exit(1)
+    msg.fail(&#34;Application error&#34;)
+    raise typer.Exit(1)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.submit"><code class="name flex">
+<span>def <span class="ident">submit</span></span>(<span>filename: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>submit argorithms to server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command()
+def submit(
+        filename:str=typer.Argument(... , help=&#34;name of argorithm&#34; , autocompletion=autocomplete)
+    ):
+    &#34;&#34;&#34;submit argorithms to server&#34;&#34;&#34;
+
+    filename = filename.split(&#39;.&#39;)[0]
+    data = file_reader(filename)
+
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    url = settings.get_endpoint()+&#34;/argorithms/insert&#34;
+    local_file = filename+&#34;.py&#34;
+    files = [
+        (&#39;file&#39;, (local_file, open(local_file, &#39;rb&#39;), &#39;application/octet&#39;)),
+        (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
+    ]
+    try:
+        rq = requests.post(url,files=files,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;Submitted&#34;)
+    elif rq.status_code == 409:
+        msg.warn(&#34;Already exists&#34;,&#34;An argorithm with this name already exists,try another argorithm name&#34;)
+    elif rq.status_code == 406:
+        msg.warn(&#34;File name was invalid&#34;,&#34;The name shoud be of type [A-Za-z_]&#34;)
+    elif rq.status_code == 400:
+        msg.warn(&#34;Incorrect file format&#34;,&#34;please refer documentation&#34;)
+    else:
+        msg.fail(&#34;Application error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.test"><code class="name flex">
+<span>def <span class="ident">test</span></span>(<span>argorithm_id: str = &lt;typer.models.ArgumentInfo object&gt;, to_file: str = &lt;typer.models.OptionInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>test argorithms stored in server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command()
+def test(
+    argorithm_id:str = typer.Argument(... , help=&#34;argorithmID of function to be called. If not passed then menu will be presented&#34;),
+    to_file:str = typer.Option(None,&#39;--to_file&#39;,&#39;-t&#39;,help=&#34;store returned states in a json file&#34;,show_default=False,callback=verify_json)
+    # user_input:bool = typer.Option(False,&#39;--user-input&#39;,&#39;-u&#39;,help=&#34;if present, parses input from user&#34;,show_default=False)
+    ):
+    &#34;&#34;&#34;test argorithms stored in server
+    &#34;&#34;&#34;
+    params = search(argorithm_id)
+    # if user_input:
+    #     pass
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    data = {
+        &#34;argorithmID&#34; : params[&#34;argorithmID&#34;],
+        &#34;parameters&#34; : params[&#34;example&#34;]
+    }
+    url = settings.get_endpoint()+&#34;/argorithms/run&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        if to_file:
+            with open(to_file,&#39;wb+&#39;) as output:
+                output.write(rq.content)
+            msg.good(&#34;Recieved states&#34;,f&#34;stored in {to_file}&#34;)
+        else:
+            msg.state(json.loads(rq.content))
+    elif rq.status_code == 401:
+        msg.warn(&#34;Authentication failed&#34;,json.loads(rq.content)[&#39;detail&#39;])
+    else:
+        msg.fail(&#34;application error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>filename: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>updates pre existing argorithms to server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.command()
+def update(
+        filename:str=typer.Argument(... , help=&#34;name of argorithm&#34; , autocompletion=autocomplete)
+    ):
+    &#34;&#34;&#34;updates pre existing argorithms to server&#34;&#34;&#34;
+
+    filename = filename.split(&#39;.&#39;)[0]
+    data = file_reader(filename)
+
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+
+    url = settings.get_endpoint()+&#34;/argorithms/update&#34;
+    local_file = filename+&#34;.py&#34;
+    files = [
+        (&#39;file&#39;, (local_file, open(local_file, &#39;rb&#39;), &#39;application/octet&#39;)),
+        (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
+    ]
+    try:
+        rq = requests.post(url,files=files,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;updated&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;Try submit command to add argorithm to server&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Unauthorized&#34;,&#34;Only author of argorithm or admin is allowed to alter argorithms&#34;)
+    else:
+        msg.fail(&#34;Application error&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.verify_json"><code class="name flex">
+<span>def <span class="ident">verify_json</span></span>(<span>filename: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>checks whether output file is json or not</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_json(filename:str):
+    &#34;&#34;&#34;checks whether output file is json or not&#34;&#34;&#34;
+    if filename:
+        if filename[-5:] == &#34;.json&#34;:
+            return filename
+        return filename + &#34;.json&#34;
+    return None</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.whitelist"><code class="name flex">
+<span>def <span class="ident">whitelist</span></span>(<span>email: str = &lt;typer.models.ArgumentInfo object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>whitelist accounts. Requires admin priveleges</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@admin_app.command()
+def whitelist(
+        email:str=typer.Argument( ... , help=&#34;The account email that would be granted admin access&#34;)
+    ):
+    &#34;&#34;&#34;whitelist accounts. Requires admin priveleges
+    &#34;&#34;&#34;
+    if not authmanager.auth_check():
+        msg.warn(&#34;AUTH is disabled at this endpoint&#34;)
+        raise typer.Exit(1)
+    data = {
+        &#34;email&#34; : email
+    }
+    token = authmanager.get_token()
+    header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
+    url = settings.get_endpoint()+&#34;/admin/white_list&#34;
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;whitelisted account&#34;)
+    elif rq.status_code == 401:
+        msg.warn(&#34;Not authorized&#34;,&#34;You need admin priveleges&#34;)
+    elif rq.status_code == 404:
+        msg.warn(&#34;Not found&#34;,&#34;No such email registered&#34;)
+    else:
+        msg.fail(&#34;Application Error&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ARgorithmToolkit.cli.AuthManager"><code class="flex name class">
+<span>class <span class="ident">AuthManager</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>AuthManager handles authentication tokens for AUTH enabled servers</p>
+<p>sets up credfile to store credentials</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthManager():
+    &#34;&#34;&#34;AuthManager handles authentication tokens for AUTH enabled servers
+    &#34;&#34;&#34;
+    def __init__(self):
+        &#34;&#34;&#34;sets up credfile to store credentials
+        &#34;&#34;&#34;
+        self.credfile = os.path.join(CACHE_DIR,&#34;.credentials&#34;)
+
+    def register(self):
+        &#34;&#34;&#34;registers account
+        &#34;&#34;&#34;
+        email = typer.prompt(&#34;Enter email address&#34;)
+        msg.info(&#34;Password criteria&#34;,&#39;- between 8 to 25 characters\n - contains atleast one number\n - contains atleast lower case alphabet\n - contains atleast uppercase alphabet&#39;)
+        rules = r&#34;^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$&#34;
+        password = typer.prompt(&#34;Enter password&#34;,confirmation_prompt=True,hide_input=True)
+        if not re.search(rules,password):
+            msg.warn(&#34;password unacceptable&#34;)
+            typer.Exit(1)
+            return
+        url = settings.get_endpoint()+&#39;/programmers/register&#39;
+        data = {
+            &#34;username&#34; : email,
+            &#34;password&#34; : password
+        }
+        try:
+            rq = requests.post(url,data)
+        except requests.RequestException as rqe:
+            msg.fail(&#34;Connection failed&#34;,str(rqe))
+            raise typer.Abort()
+        if rq.status_code == 200:
+            msg.good(&#34;Account created&#34;,&#34;These credentials will be used as both programmer and user credentials&#34;)
+            return
+        if rq.status_code == 409:
+            msg.warn(&#34;Invalid email&#34;,&#34;email is already in use. Try login&#34;)
+            typer.Exit(0)
+        msg.fail(&#34;Error&#34;,&#34;Contact developer&#34;)
+
+    def login_prompt(self):
+        &#34;&#34;&#34;login prompt to enter credentials
+        &#34;&#34;&#34;
+        email = typer.prompt(&#34;Enter email address&#34;)
+        password = typer.prompt(&#34;Enter password&#34;,hide_input=True)
+        url = f&#34;{settings.get_endpoint()}/programmers/login&#34;
+        data = {
+            &#34;username&#34; : email,
+            &#34;password&#34; : password
+        }
+        try:
+            rq = requests.post(url,data)
+        except requests.RequestException as rqe:
+            msg.fail(&#34;Connection failed&#34;,str(rqe))
+            raise typer.Abort()
+        
+        if rq.status_code == 404:
+            msg.warn(&#34;User not found&#34;,&#34;please enter valid email&#34;)
+            raise typer.Exit(1)
+        if rq.status_code == 500:
+            msg.fail(&#34;Server error&#34;,&#34;contact developer&#34;)
+            raise typer.Exit(2)
+        if rq.status_code == 401:
+            msg.warn(&#34;incorrect password&#34;)
+            raise typer.Exit(1)
+        if rq.status_code == 200:
+            msg.good(&#34;logged in successfully&#34;,&#34;credentials saved in cache&#34;)
+            token = json.loads(rq.content)[&#39;access_token&#39;]
+            with open(self.credfile,&#39;w+&#39;) as cred:
+                cred.write(token)
+            return token
+        raise typer.Exit(1)
+
+    def get_token(self):
+        &#34;&#34;&#34;returns valid authorization token
+        &#34;&#34;&#34;
+        url = settings.get_endpoint()
+        if os.path.isfile(self.credfile):
+            with open(self.credfile,&#39;r&#39;) as cred:
+                token = cred.read()
+            try:
+                rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
+            except requests.RequestException as rqe:
+                msg.fail(&#34;Connection failed&#34;,str(rqe))
+                raise typer.Abort()    
+            if rq.status_code == 200:
+                return token
+            msg.warn(&#34;Token expired&#34;,&#34;Please enter login credentials again&#34;)
+        token = self.login_prompt()
+        with open(self.credfile,&#39;w+&#39;) as cred:
+            cred.write(token)
+        return token
+
+    def auth_check(self):
+        &#34;&#34;&#34;checks if AUTH is enabled on server
+        &#34;&#34;&#34;
+        try:
+            url = settings.get_endpoint() + &#34;/auth&#34;
+            try:
+                rq = requests.get(url)
+            except requests.RequestException as rqe:
+                msg.fail(&#34;Connection failed&#34;,str(rqe))
+                raise typer.Abort()    
+            if rq.status_code == 200:
+                return True
+            return False
+        except Exception as ex:
+            msg.warn(&#34;authentication error&#34;,str(ex))</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.cli.AuthManager.auth_check"><code class="name flex">
+<span>def <span class="ident">auth_check</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>checks if AUTH is enabled on server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def auth_check(self):
+    &#34;&#34;&#34;checks if AUTH is enabled on server
+    &#34;&#34;&#34;
+    try:
+        url = settings.get_endpoint() + &#34;/auth&#34;
+        try:
+            rq = requests.get(url)
+        except requests.RequestException as rqe:
+            msg.fail(&#34;Connection failed&#34;,str(rqe))
+            raise typer.Abort()    
+        if rq.status_code == 200:
+            return True
+        return False
+    except Exception as ex:
+        msg.warn(&#34;authentication error&#34;,str(ex))</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.AuthManager.get_token"><code class="name flex">
+<span>def <span class="ident">get_token</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns valid authorization token</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_token(self):
+    &#34;&#34;&#34;returns valid authorization token
+    &#34;&#34;&#34;
+    url = settings.get_endpoint()
+    if os.path.isfile(self.credfile):
+        with open(self.credfile,&#39;r&#39;) as cred:
+            token = cred.read()
+        try:
+            rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
+        except requests.RequestException as rqe:
+            msg.fail(&#34;Connection failed&#34;,str(rqe))
+            raise typer.Abort()    
+        if rq.status_code == 200:
+            return token
+        msg.warn(&#34;Token expired&#34;,&#34;Please enter login credentials again&#34;)
+    token = self.login_prompt()
+    with open(self.credfile,&#39;w+&#39;) as cred:
+        cred.write(token)
+    return token</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.AuthManager.login_prompt"><code class="name flex">
+<span>def <span class="ident">login_prompt</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>login prompt to enter credentials</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def login_prompt(self):
+    &#34;&#34;&#34;login prompt to enter credentials
+    &#34;&#34;&#34;
+    email = typer.prompt(&#34;Enter email address&#34;)
+    password = typer.prompt(&#34;Enter password&#34;,hide_input=True)
+    url = f&#34;{settings.get_endpoint()}/programmers/login&#34;
+    data = {
+        &#34;username&#34; : email,
+        &#34;password&#34; : password
+    }
+    try:
+        rq = requests.post(url,data)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    
+    if rq.status_code == 404:
+        msg.warn(&#34;User not found&#34;,&#34;please enter valid email&#34;)
+        raise typer.Exit(1)
+    if rq.status_code == 500:
+        msg.fail(&#34;Server error&#34;,&#34;contact developer&#34;)
+        raise typer.Exit(2)
+    if rq.status_code == 401:
+        msg.warn(&#34;incorrect password&#34;)
+        raise typer.Exit(1)
+    if rq.status_code == 200:
+        msg.good(&#34;logged in successfully&#34;,&#34;credentials saved in cache&#34;)
+        token = json.loads(rq.content)[&#39;access_token&#39;]
+        with open(self.credfile,&#39;w+&#39;) as cred:
+            cred.write(token)
+        return token
+    raise typer.Exit(1)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.AuthManager.register"><code class="name flex">
+<span>def <span class="ident">register</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>registers account</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register(self):
+    &#34;&#34;&#34;registers account
+    &#34;&#34;&#34;
+    email = typer.prompt(&#34;Enter email address&#34;)
+    msg.info(&#34;Password criteria&#34;,&#39;- between 8 to 25 characters\n - contains atleast one number\n - contains atleast lower case alphabet\n - contains atleast uppercase alphabet&#39;)
+    rules = r&#34;^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$&#34;
+    password = typer.prompt(&#34;Enter password&#34;,confirmation_prompt=True,hide_input=True)
+    if not re.search(rules,password):
+        msg.warn(&#34;password unacceptable&#34;)
+        typer.Exit(1)
+        return
+    url = settings.get_endpoint()+&#39;/programmers/register&#39;
+    data = {
+        &#34;username&#34; : email,
+        &#34;password&#34; : password
+    }
+    try:
+        rq = requests.post(url,data)
+    except requests.RequestException as rqe:
+        msg.fail(&#34;Connection failed&#34;,str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good(&#34;Account created&#34;,&#34;These credentials will be used as both programmer and user credentials&#34;)
+        return
+    if rq.status_code == 409:
+        msg.warn(&#34;Invalid email&#34;,&#34;email is already in use. Try login&#34;)
+        typer.Exit(0)
+    msg.fail(&#34;Error&#34;,&#34;Contact developer&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager"><code class="flex name class">
+<span>class <span class="ident">Messager</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class for pretty printing messages using typer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Messager():
+    &#34;&#34;&#34;Class for pretty printing messages using typer
+    &#34;&#34;&#34;
+    def msg(self,tag:str,title:str,message:str,color:str):
+        &#34;&#34;&#34;Pretty messaging for standard log messages
+        &#34;&#34;&#34;
+        code = typer.style(f&#34;[{tag.upper()}]: {title.upper()}&#34; , fg=color , bold=True)
+        typer.echo(code)
+        if message:
+            typer.echo(message)
+
+    def info(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Information message
+        &#34;&#34;&#34;
+        self.msg(&#34;info&#34;,title,message,typer.colors.BLUE)
+
+    def warn(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Warning message
+        &#34;&#34;&#34;
+        self.msg(&#34;error&#34;,title,message,typer.colors.YELLOW)
+
+    def fail(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Error message
+        &#34;&#34;&#34;
+        self.msg(&#34;critical error&#34;,title,message,typer.colors.RED)
+
+    def good(self,title:str,message:str=&#34;&#34;):
+        &#34;&#34;&#34;Success message
+        &#34;&#34;&#34;
+        self.msg(&#34;success&#34;,title,message,typer.colors.GREEN)
+
+    def menuitem(self,argorithm):
+        &#34;&#34;&#34;pretty print argorithm details
+        &#34;&#34;&#34;
+        head = typer.style(f&#34;- {argorithm[&#39;argorithmID&#39;]}&#34;,fg=typer.colors.GREEN)
+        typer.echo(head)
+        typer.secho(f&#34;\tby {argorithm[&#39;maintainer&#39;]}&#34;,fg=typer.colors.CYAN)
+        typer.echo(&#34;\tParameters&#34;)
+        for key in argorithm[&#39;parameters&#39;]:
+            typer.echo(f&#34;\t\t{key} : {argorithm[&#39;parameters&#39;][key]}&#34;)
+
+    def state(self,states):
+        &#34;&#34;&#34;pretty print states
+        &#34;&#34;&#34;
+        states = states[&#39;data&#39;]
+        for state in states:
+            typer.echo(&#39;\n&#39;+&#39;-&#39;*50)
+            typer.secho(state[&#39;state_type&#39;],bold=True)
+            typer.secho(&#39;\t&#39;+state[&#39;comments&#39;],fg=typer.colors.CYAN)
+            if state[&#39;state_def&#39;]:
+                for key in state[&#39;state_def&#39;]:
+                    typer.echo(f&#34;\t{key} : {state[&#39;state_def&#39;][key]}&#34;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.cli.Messager.fail"><code class="name flex">
+<span>def <span class="ident">fail</span></span>(<span>self, title: str, message: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Error message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fail(self,title:str,message:str=&#34;&#34;):
+    &#34;&#34;&#34;Error message
+    &#34;&#34;&#34;
+    self.msg(&#34;critical error&#34;,title,message,typer.colors.RED)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager.good"><code class="name flex">
+<span>def <span class="ident">good</span></span>(<span>self, title: str, message: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Success message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def good(self,title:str,message:str=&#34;&#34;):
+    &#34;&#34;&#34;Success message
+    &#34;&#34;&#34;
+    self.msg(&#34;success&#34;,title,message,typer.colors.GREEN)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager.info"><code class="name flex">
+<span>def <span class="ident">info</span></span>(<span>self, title: str, message: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Information message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def info(self,title:str,message:str=&#34;&#34;):
+    &#34;&#34;&#34;Information message
+    &#34;&#34;&#34;
+    self.msg(&#34;info&#34;,title,message,typer.colors.BLUE)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager.menuitem"><code class="name flex">
+<span>def <span class="ident">menuitem</span></span>(<span>self, argorithm)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>pretty print argorithm details</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def menuitem(self,argorithm):
+    &#34;&#34;&#34;pretty print argorithm details
+    &#34;&#34;&#34;
+    head = typer.style(f&#34;- {argorithm[&#39;argorithmID&#39;]}&#34;,fg=typer.colors.GREEN)
+    typer.echo(head)
+    typer.secho(f&#34;\tby {argorithm[&#39;maintainer&#39;]}&#34;,fg=typer.colors.CYAN)
+    typer.echo(&#34;\tParameters&#34;)
+    for key in argorithm[&#39;parameters&#39;]:
+        typer.echo(f&#34;\t\t{key} : {argorithm[&#39;parameters&#39;][key]}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager.msg"><code class="name flex">
+<span>def <span class="ident">msg</span></span>(<span>self, tag: str, title: str, message: str, color: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pretty messaging for standard log messages</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msg(self,tag:str,title:str,message:str,color:str):
+    &#34;&#34;&#34;Pretty messaging for standard log messages
+    &#34;&#34;&#34;
+    code = typer.style(f&#34;[{tag.upper()}]: {title.upper()}&#34; , fg=color , bold=True)
+    typer.echo(code)
+    if message:
+        typer.echo(message)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager.state"><code class="name flex">
+<span>def <span class="ident">state</span></span>(<span>self, states)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>pretty print states</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def state(self,states):
+    &#34;&#34;&#34;pretty print states
+    &#34;&#34;&#34;
+    states = states[&#39;data&#39;]
+    for state in states:
+        typer.echo(&#39;\n&#39;+&#39;-&#39;*50)
+        typer.secho(state[&#39;state_type&#39;],bold=True)
+        typer.secho(&#39;\t&#39;+state[&#39;comments&#39;],fg=typer.colors.CYAN)
+        if state[&#39;state_def&#39;]:
+            for key in state[&#39;state_def&#39;]:
+                typer.echo(f&#34;\t{key} : {state[&#39;state_def&#39;][key]}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Messager.warn"><code class="name flex">
+<span>def <span class="ident">warn</span></span>(<span>self, title: str, message: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Warning message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def warn(self,title:str,message:str=&#34;&#34;):
+    &#34;&#34;&#34;Warning message
+    &#34;&#34;&#34;
+    self.msg(&#34;error&#34;,title,message,typer.colors.YELLOW)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.cli.Settings"><code class="flex name class">
+<span>class <span class="ident">Settings</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>handles endpoint settings</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Settings():
+    &#34;&#34;&#34;handles endpoint settings&#34;&#34;&#34;
+    local:bool = False
+    endpoint:str=CLOUD_URL
+
+    def get_endpoint(self):
+        &#34;&#34;&#34;returns required endpoint&#34;&#34;&#34;
+        if self.local:
+            return &#34;http://127.0.0.1&#34;
+        config_file = os.path.join(CACHE_DIR , &#34;config&#34;)
+        if os.path.isfile(config_file):
+            with open(config_file,&#34;r&#34;) as conf:
+                self.endpoint = conf.read()
+        return self.endpoint
+
+    def set_endpoint(self,url):
+        &#34;&#34;&#34;set up cloud endpoint&#34;&#34;&#34;
+        try:
+            rq = requests.get(url+&#34;/argorithms/list&#34;)
+            if rq.status_code == 200:
+                msg.good(&#34;Connected&#34;,f&#34;Cloud requests will now go to {url}&#34;)
+            else:
+                raise AttributeError(&#34;Not a server endpoint&#34;)
+        except ValueError as ve:
+            msg.warn(&#34;Please try again with proper URL&#34;)
+            raise typer.Exit(1) from ve
+        except AttributeError as ex:
+            msg.fail(str(ex))
+            raise typer.Exit(1) from ex
+        except Exception as ex:
+            msg.fail(&#34;Endpoint couldnt be found.&#34;)
+            raise typer.Exit(2) from ex
+        config_file = os.path.join(CACHE_DIR , &#34;config&#34;)
+        with open(config_file,&#39;w&#39;) as config:
+            config.write(url)</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="ARgorithmToolkit.cli.Settings.endpoint"><code class="name">var <span class="ident">endpoint</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ARgorithmToolkit.cli.Settings.local"><code class="name">var <span class="ident">local</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.cli.Settings.get_endpoint"><code class="name flex">
+<span>def <span class="ident">get_endpoint</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns required endpoint</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_endpoint(self):
+    &#34;&#34;&#34;returns required endpoint&#34;&#34;&#34;
+    if self.local:
+        return &#34;http://127.0.0.1&#34;
+    config_file = os.path.join(CACHE_DIR , &#34;config&#34;)
+    if os.path.isfile(config_file):
+        with open(config_file,&#34;r&#34;) as conf:
+            self.endpoint = conf.read()
+    return self.endpoint</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.cli.Settings.set_endpoint"><code class="name flex">
+<span>def <span class="ident">set_endpoint</span></span>(<span>self, url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>set up cloud endpoint</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_endpoint(self,url):
+    &#34;&#34;&#34;set up cloud endpoint&#34;&#34;&#34;
+    try:
+        rq = requests.get(url+&#34;/argorithms/list&#34;)
+        if rq.status_code == 200:
+            msg.good(&#34;Connected&#34;,f&#34;Cloud requests will now go to {url}&#34;)
+        else:
+            raise AttributeError(&#34;Not a server endpoint&#34;)
+    except ValueError as ve:
+        msg.warn(&#34;Please try again with proper URL&#34;)
+        raise typer.Exit(1) from ve
+    except AttributeError as ex:
+        msg.fail(str(ex))
+        raise typer.Exit(1) from ex
+    except Exception as ex:
+        msg.fail(&#34;Endpoint couldnt be found.&#34;)
+        raise typer.Exit(2) from ex
+    config_file = os.path.join(CACHE_DIR , &#34;config&#34;)
+    with open(config_file,&#39;w&#39;) as config:
+        config.write(url)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap');
+#back {
+box-sizing: border-box;
+padding: 5px;
+background-color: #dadada;
+color: black;
+border-radius: 5px;
+font-family: 'IBM Plex Sans', sans-serif;
+text-decoration: none;
+}
+</style>
+<a href='/' id="back">
+<i class="fa fa-home" aria-hidden="true"></i> Back
+</a>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ARgorithmToolkit" href="index.html">ARgorithmToolkit</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="ARgorithmToolkit.cli.account_delete" href="#ARgorithmToolkit.cli.account_delete">account_delete</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.autocomplete" href="#ARgorithmToolkit.cli.autocomplete">autocomplete</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.blacklist" href="#ARgorithmToolkit.cli.blacklist">blacklist</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.configure" href="#ARgorithmToolkit.cli.configure">configure</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.delete" href="#ARgorithmToolkit.cli.delete">delete</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.file_reader" href="#ARgorithmToolkit.cli.file_reader">file_reader</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.grant" href="#ARgorithmToolkit.cli.grant">grant</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.init" href="#ARgorithmToolkit.cli.init">init</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.list_argorithms" href="#ARgorithmToolkit.cli.list_argorithms">list_argorithms</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.login" href="#ARgorithmToolkit.cli.login">login</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.main" href="#ARgorithmToolkit.cli.main">main</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.name_check" href="#ARgorithmToolkit.cli.name_check">name_check</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.new" href="#ARgorithmToolkit.cli.new">new</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.revoke" href="#ARgorithmToolkit.cli.revoke">revoke</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.search" href="#ARgorithmToolkit.cli.search">search</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.submit" href="#ARgorithmToolkit.cli.submit">submit</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.test" href="#ARgorithmToolkit.cli.test">test</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.update" href="#ARgorithmToolkit.cli.update">update</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.verify_json" href="#ARgorithmToolkit.cli.verify_json">verify_json</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.whitelist" href="#ARgorithmToolkit.cli.whitelist">whitelist</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ARgorithmToolkit.cli.AuthManager" href="#ARgorithmToolkit.cli.AuthManager">AuthManager</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.cli.AuthManager.auth_check" href="#ARgorithmToolkit.cli.AuthManager.auth_check">auth_check</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.AuthManager.get_token" href="#ARgorithmToolkit.cli.AuthManager.get_token">get_token</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.AuthManager.login_prompt" href="#ARgorithmToolkit.cli.AuthManager.login_prompt">login_prompt</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.AuthManager.register" href="#ARgorithmToolkit.cli.AuthManager.register">register</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.cli.Messager" href="#ARgorithmToolkit.cli.Messager">Messager</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ARgorithmToolkit.cli.Messager.fail" href="#ARgorithmToolkit.cli.Messager.fail">fail</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Messager.good" href="#ARgorithmToolkit.cli.Messager.good">good</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Messager.info" href="#ARgorithmToolkit.cli.Messager.info">info</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Messager.menuitem" href="#ARgorithmToolkit.cli.Messager.menuitem">menuitem</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Messager.msg" href="#ARgorithmToolkit.cli.Messager.msg">msg</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Messager.state" href="#ARgorithmToolkit.cli.Messager.state">state</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Messager.warn" href="#ARgorithmToolkit.cli.Messager.warn">warn</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.cli.Settings" href="#ARgorithmToolkit.cli.Settings">Settings</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.cli.Settings.endpoint" href="#ARgorithmToolkit.cli.Settings.endpoint">endpoint</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Settings.get_endpoint" href="#ARgorithmToolkit.cli.Settings.get_endpoint">get_endpoint</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Settings.local" href="#ARgorithmToolkit.cli.Settings.local">local</a></code></li>
+<li><code><a title="ARgorithmToolkit.cli.Settings.set_endpoint" href="#ARgorithmToolkit.cli.Settings.set_endpoint">set_endpoint</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

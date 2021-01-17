@@ -1,227 +1,249 @@
-# pylint: disable=unused-variable
-# pylint: disable=singleton-comparison
-"""ARgorithmToolkit comes with a powerful CLI to interact with your ARgorithm
-server and to assist in the process of ARgorithm creation. It is installed and
-setup when you install the ARgorithmToolkit package. you can call it in the
-commandline::
-
-$ ARgorithm -h
+# pylint: disable=no-self-use
+"""CLI tool for ARgorithm made using typer
 """
-
-import argparse
-import getpass
-import json
-import re
 import os
+import re
+import json
 import requests
-from wasabi import msg , MarkdownRenderer , color , wrap
-from ARgorithmToolkit import ARgorithmError
+import typer
 
-HOME = os.path.expanduser("~")
-CLOUD_URL = "http://ec2-13-127-193-38.ap-south-1.compute.amazonaws.com"
+CLOUD_URL = "https://argorithm.io"
+CACHE_DIR = typer.get_app_dir("ARgorithm")
 
+if not os.path.isdir(CACHE_DIR):
+    os.mkdir(CACHE_DIR)
 
-def configure():
-    """This function sets the cloud server endpoint to connect to."""
-    CACHE_DIR = os.path.join(HOME,".argorithm")
-    if not os.path.isdir(CACHE_DIR):
-        os.mkdir(CACHE_DIR)
-    FILENAME = os.path.join(CACHE_DIR , "config")
-    url = input("Enter server endpoint or press ENTER to connect to ARgorithm common server : ")
-    if url == '':
-        url = CLOUD_URL
-        with open(FILENAME,'w') as config:
-            config.write(url)
-    else:
+class Messager():
+    """Class for pretty printing messages using typer
+    """
+    def msg(self,tag:str,title:str,message:str,color:str):
+        """Pretty messaging for standard log messages
+        """
+        code = typer.style(f"[{tag.upper()}]: {title.upper()}" , fg=color , bold=True)
+        typer.echo(code)
+        if message:
+            typer.echo(message)
+
+    def info(self,title:str,message:str=""):
+        """Information message
+        """
+        self.msg("info",title,message,typer.colors.BLUE)
+
+    def warn(self,title:str,message:str=""):
+        """Warning message
+        """
+        self.msg("error",title,message,typer.colors.YELLOW)
+
+    def fail(self,title:str,message:str=""):
+        """Error message
+        """
+        self.msg("critical error",title,message,typer.colors.RED)
+
+    def good(self,title:str,message:str=""):
+        """Success message
+        """
+        self.msg("success",title,message,typer.colors.GREEN)
+
+    def menuitem(self,argorithm):
+        """pretty print argorithm details
+        """
+        head = typer.style(f"- {argorithm['argorithmID']}",fg=typer.colors.GREEN)
+        typer.echo(head)
+        typer.secho(f"\tby {argorithm['maintainer']}",fg=typer.colors.CYAN)
+        typer.echo("\tParameters")
+        for key in argorithm['parameters']:
+            typer.echo(f"\t\t{key} : {argorithm['parameters'][key]}")
+
+    def state(self,states):
+        """pretty print states
+        """
+        states = states['data']
+        for state in states:
+            typer.echo('\n'+'-'*50)
+            typer.secho(state['state_type'],bold=True)
+            typer.secho('\t'+state['comments'],fg=typer.colors.CYAN)
+            if state['state_def']:
+                for key in state['state_def']:
+                    typer.echo(f"\t{key} : {state['state_def'][key]}")
+
+msg = Messager()
+
+class Settings():
+    """handles endpoint settings"""
+    local:bool = False
+    endpoint:str=CLOUD_URL
+
+    def get_endpoint(self):
+        """returns required endpoint"""
+        if self.local:
+            return "http://127.0.0.1"
+        config_file = os.path.join(CACHE_DIR , "config")
+        if os.path.isfile(config_file):
+            with open(config_file,"r") as conf:
+                self.endpoint = conf.read()
+        return self.endpoint
+
+    def set_endpoint(self,url):
+        """set up cloud endpoint"""
         try:
-            rq = requests.get(url+"/argorithms")
+            rq = requests.get(url+"/argorithms/list")
             if rq.status_code == 200:
-                with open(FILENAME,'w') as config:
-                    config.write(url)
-                msg.good(f"Cloud requests will now go to {url}")
+                msg.good("Connected",f"Cloud requests will now go to {url}")
             else:
-                raise ARgorithmError("Not a server endpoint")
-        except ValueError:
+                raise AttributeError("Not a server endpoint")
+        except ValueError as ve:
             msg.warn("Please try again with proper URL")
-        except ARgorithmError as ex:
+            raise typer.Exit(1) from ve
+        except AttributeError as ex:
             msg.fail(str(ex))
+            raise typer.Exit(1) from ex
         except Exception as ex:
             msg.fail("Endpoint couldnt be found.")
+            raise typer.Exit(2) from ex
+        config_file = os.path.join(CACHE_DIR , "config")
+        with open(config_file,'w') as config:
+            config.write(url)
 
-def get_url():
-    """This function returns the cloud endpoint url from the cache storage.
+settings = Settings()
 
-    Returns:
-        str: URL of endpoint
+class AuthManager():
+    """AuthManager handles authentication tokens for AUTH enabled servers
     """
-    CACHE_DIR = os.path.join(HOME,".argorithm")
-    if not os.path.isdir(CACHE_DIR):
-        os.mkdir(CACHE_DIR)
-    FILENAME = os.path.join(CACHE_DIR , "config")
-    if os.path.isfile(FILENAME):
-        with open(FILENAME,'r') as config:
-            return config.read()
-    return CLOUD_URL
+    def __init__(self):
+        """sets up credfile to store credentials
+        """
+        self.credfile = os.path.join(CACHE_DIR,".credentials")
 
-def auth_check(local=False):
-    """This function is used to check whether the server accessed by programmer
-    has authorization setup or not.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-
-    Returns:
-        bool: If true means server requires authentication flag
-    """
-
-    try:
-        if local:
-            url = "http://127.0.0.1/auth"
-        else:
-            url = get_url() + "/auth"
-        rq = requests.get(url).json()
-        return rq["status"] == True
-    except Exception as ex:
-        return False
-
-def login(local=False):
-    """Logs in programmer into the server where they would be submitting their
-    code.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-
-    Raises:
-        ARgorithmError: Raised when login fails due to some reason
-
-    Returns:
-        str: JWT token used for authorization headers
-    """
-    try:
-        print("You need to enter sign in credentials")
-        email = input("enter email : ")
-        password = getpass.getpass("enter password : ")
-        data = {
-            "email" : email,
-            "password" : password
-        }
-        if local:
-            url = "http://127.0.0.1/programmers/login"
-        else:
-            url = get_url()+"/programmers/login"
-        rq = requests.post(url,json=data)
-        return rq.json()['token']
-    except Exception as ex:
-        raise ARgorithmError("Failed Authentication") from ex
-
-def sign_up(local=False):
-    """Creates new account for programmer on specified server.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-
-    Raises:
-        ARgorithmError: Raised if account creation fails
-    """
-    try:
-        email = input("enter email : ")
-        rules = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-        m = re.match(rules,email)
-        if m is None:
-            msg.fail("invalid email")
-            raise ARgorithmError("Invalid email")
-
-        print("\n\tPASSWORD ACCEPTS A-Z,a-z,0-9\nMUST CONTAIN ATLEAST ONE LOWERCASE , ONE UPPERCASE AND ONE NUMBER\nLENGTH BETWEEN 8-25 CHARACTERS")
-        password = getpass.getpass("enter password : ")
+    def register(self):
+        """registers account
+        """
+        email = typer.prompt("Enter email address")
+        msg.info("Password criteria",'- between 8 to 25 characters\n - contains atleast one number\n - contains atleast lower case alphabet\n - contains atleast uppercase alphabet')
         rules = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$"
-        m = re.match(rules,password)
-        if m is None:
-            msg.fail("invalid password")
-            raise ARgorithmError("invalid password")
-
-        repassword = getpass.getpass("re-enter password : ")
-        if password != repassword:
-            msg.fail("passwords don't match")
-            raise ARgorithmError("password mismatch")
-
+        password = typer.prompt("Enter password",confirmation_prompt=True,hide_input=True)
+        if not re.search(rules,password):
+            msg.warn("password unacceptable")
+            typer.Exit(1)
+            return
+        url = settings.get_endpoint()+'/programmers/register'
         data = {
-            "email" : email,
+            "username" : email,
             "password" : password
         }
-        if local:
-            url = "http://127.0.0.1/programmers/register"
-        else:
-            url = get_url() + "/programmers/register"
-        rq = requests.post(url,json=data)
-        if rq.json()['status'] == "already exists":
-            msg.info("Account already registered",f"please login with {email}")
-            raise ARgorithmError("Account already registerd")
-    except Exception as ex:
-        raise ARgorithmError("Failed Registration") from ex
+        try:
+            rq = requests.post(url,data)
+        except requests.RequestException as rqe:
+            msg.fail("Connection failed",str(rqe))
+            raise typer.Abort()
+        if rq.status_code == 200:
+            msg.good("Account created","These credentials will be used as both programmer and user credentials")
+            return
+        if rq.status_code == 409:
+            msg.warn("Invalid email","email is already in use. Try login")
+            typer.Exit(0)
+        msg.fail("Error","Contact developer")
 
-def get_token(local=False,overwrite=False):
-    """Checks whether the programmer is logged in or not. If logged in , then
-    the JWT token is verified else login action is triggered.
+    def login_prompt(self):
+        """login prompt to enter credentials
+        """
+        email = typer.prompt("Enter email address")
+        password = typer.prompt("Enter password",hide_input=True)
+        url = f"{settings.get_endpoint()}/programmers/login"
+        data = {
+            "username" : email,
+            "password" : password
+        }
+        try:
+            rq = requests.post(url,data)
+        except requests.RequestException as rqe:
+            msg.fail("Connection failed",str(rqe))
+            raise typer.Abort()
+        if rq.status_code == 404:
+            msg.warn("User not found","please enter valid email")
+            raise typer.Exit(1)
+        if rq.status_code == 500:
+            msg.fail("Server error","contact developer")
+            raise typer.Exit(2)
+        if rq.status_code == 401:
+            msg.warn("incorrect password")
+            raise typer.Exit(1)
+        if rq.status_code == 200:
+            msg.good("logged in successfully","credentials saved in cache")
+            token = json.loads(rq.content)['access_token']
+            with open(self.credfile,'w+') as cred:
+                cred.write(token)
+            return token
+        raise typer.Exit(1)
 
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        overwrite (bool, optional): If true then existing login is ignored and a fresh login is triggered. Defaults to False.
-
-    Raises:
-        ARgorithmError: If token verification and login both fail
-
-    Returns:
-        str : JWT token used for authorization header
-    """
-    try:
-        storage = True
-        CACHE_DIR = os.path.join(HOME,".argorithm")
-        if not os.path.isdir(CACHE_DIR):
-            os.mkdir(CACHE_DIR)
-        FILENAME = os.path.join(CACHE_DIR , "creds.json")
-
-        if not overwrite:
-            if os.path.isfile(FILENAME):
-                with open(FILENAME,'r') as cred:
-                    token = json.load(cred)['token']
-                if local:
-                    url = "http://127.0.0.1/programmers/verify"
-                else:
-                    url = get_url()+"/programmers/verify"
-                rq = requests.get(url,headers={"x-access-token" : token})
-                if rq.json()['status'] == True:
-                    return token
-    except Exception as ex:
-        storage = False
-    try:
-        token = login(local=local)
-        if storage:
-            with open(FILENAME,'w') as cred:
-                json.dump({"token" : token},cred)
+    def get_token(self):
+        """returns valid authorization token
+        """
+        url = settings.get_endpoint()
+        if os.path.isfile(self.credfile):
+            with open(self.credfile,'r') as cred:
+                token = cred.read()
+            try:
+                rq = requests.post(f"{url}/programmers/verify" , headers = {"authorization" : "Bearer "+token})
+            except requests.RequestException as rqe:
+                msg.fail("Connection failed",str(rqe))
+                raise typer.Abort()
+            if rq.status_code == 200:
+                return token
+            msg.warn("Token expired","Please enter login credentials again")
+        token = self.login_prompt()
+        with open(self.credfile,'w+') as cred:
+            cred.write(token)
         return token
-    except Exception as ex:
-        raise ARgorithmError("Failed Authentication") from ex
 
-def valid_funcname(func_name):
-    """Checks whether ARgorithmID selected by programmer is acceptable or not.
+    def auth_check(self):
+        """checks if AUTH is enabled on server
+        """
+        try:
+            url = settings.get_endpoint() + "/auth"
+            try:
+                rq = requests.get(url)
+            except requests.RequestException as rqe:
+                msg.fail("Connection failed",str(rqe))
+                raise typer.Abort()    
+            if rq.status_code == 200:
+                return True
+            return False
+        except Exception as ex:
+            msg.warn("authentication error",str(ex))
 
-    Args:
-        x (str): ARgorithmID
+authmanager = AuthManager()
 
-    Returns:
-        bool: whether the selected ARgorithID is acceptable or not
+app = typer.Typer(help="ARgorithm CLI")
+
+@app.callback()
+def main(
+        local:bool = typer.Option(False,"--local",'-l',help="Connects to server running on localhost",show_default=False)
+    ):
+    """callback that adds the local option to app
     """
-    rules = r"[A-Za-z_]+"
-    m = re.match(rules,func_name)
-    return m is not None
+    settings.local = local
 
-def init():
-    """Creates empty template for the programmer to develop argorithm on."""
-    funcname = input('Enter name for ARgorithm File : ')
-    while not valid_funcname(funcname):
-        funcname = input('Please enter valid filename [A-Za-z_] : ')
+def name_check(value:str):
+    """checks validity of argorithmID
+    """
+    rules = r"^[A-Za-z_]+$"
+    m = re.search(rules,value)
+    if m is None:
+        msg.fail("Invalid name" , "argorithm name should be [A-Za-z_]")
+        raise typer.Exit(code=1)
+    return value
 
-    with open(f"{funcname}.py" , "w") as codefile:
+@app.command()
+def init(
+        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check)
+    ):
+    """
+    Create Blank code template and config template for ARgorithm
+    """
+    typer.echo(f"Creating empty template for {name}")
+
+    filename = f"{name}.py"
+    with open(filename , "w") as codefile:
         code_starter = """
 import ARgorithmToolkit
 
@@ -238,623 +260,440 @@ def run(**kwargs):
         codefile.write(code_starter)
 
     config = {
-        "argorithmID" : funcname,
-        "file" : funcname+".py",
+        "argorithmID" : name,
+        "file" : name+".py",
         "function" : "run",
         "parameters" : {},
         "default" : {},
         "description" : ""
     }
-
-    with open(f"{funcname}.config.json" , "w") as configfile:
+    config_file=f"{name}.config.json"
+    with open(config_file, "w") as configfile:
         json.dump(config,configfile)
 
-    msg.good('success')
-    msg.divider("Template files generated")
-    md=MarkdownRenderer()
-    md.add("Please ensure that the config is up to date with your code function that has to be called should have the format of\n")
-    md.add(wrap(color("def <function_name>(**kwargs)",fg="green",bold=True), indent=2) )
-    md.add("and it should return a object of ARgorithmToolkit StateSet as that is what is storing the states to be rendered.")
-    md.add(color("IT IS RECOMMENDED THAT YOU DON'T ALTER FILENAMES OF CODE FILE AND CONFIG FILE" , bold=True))
-    print(md.text)
-    msg.info('Run ARgorithm submit',"when ready to submit")
+    msg.good("Template generated","refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/Toolkit/tree/master/examples")
 
-def submit(local=False,name=None):
-    """Submits ARgorithm code file as well as ARgorithm config file to server.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
-
-    Raises:
-        ARgorithmError: Raised if submission fails
+@app.command()
+def configure():
     """
+    Connect to your endpoint
+    """
+    endpoint = typer.prompt("Enter server endpoint",default=settings.get_endpoint())
+    settings.set_endpoint(endpoint)
 
-    if name:
-        funcname = name
-    else:
-        funcname = input("enter name of file to be submitted : ")
+def autocomplete(incomplete:str):
+    """autocomplete function for finding argorithms"""
+    files = os.listdir('.')
+    res = []
+    l = len(incomplete)
+    for filename in files:
+        if filename[:l] == incomplete and filename[-3:] == '.py':
+            res.append(filename[:-4])
+    return res
 
-    funcname = funcname[:-3] if funcname[-3:] == ".py" else funcname
+def file_reader(filename):
+    """finds anf checks argorithm files"""
     directory = os.getcwd()
-
-    if os.path.isfile( os.path.join(directory,funcname+".py")):
-        if os.path.isfile( os.path.join(directory , f"{funcname}.config.json") ):
+    if os.path.isfile( os.path.join(directory,filename+".py")):
+        if os.path.isfile( os.path.join(directory , f"{filename}.config.json") ):
             pass
         else:
-            msg.fail(f"cant find {funcname}.config.json")
-            return
+            msg.warn(f"cant find {filename}.config.json")
+            raise typer.Exit(1)
     else:
-        msg.fail(f"{funcname}.py not found")
-        return
-
+        msg.warn(f"{filename}.py not found")
+        raise typer.Exit(1)
     msg.good('files found')
 
-    ## VERIFYING FILES
-
     required_tags = {
-        "argorithmID" : funcname,
-        "file" : funcname+".py",
+        "argorithmID" : filename,
+        "file" : filename+".py",
         "function" : "run",
         "parameters" : {},
         "default" : {},
         "description" : ""
     }
 
-    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:
+    with open(os.path.join(directory , f"{filename}.config.json") , 'r') as configfile:
         data = json.load(configfile)
         for key in required_tags:
             if key not in data:
-                msg.fail(f"please check {funcname}.config.json {key} is missing")
-                return
+                msg.warn(f"please check {filename}.config.json {key} is missing")
+                raise typer.Exit(1)
         for key in data:
             if key not in required_tags:
-                msg.fail(f"please check {funcname}.config.json {key} is uneccessary")
-                return
+                msg.warn(f"please check {filename}.config.json {key} is uneccessary")
+                raise typer.Exit(1)
             if type(data[key]) != type(required_tags[key]):
-                msg.fail(f"please check {key} in {funcname}.config.json")
-                return
+                msg.warn(f"please check {key} in {filename}.config.json")
+                raise typer.Exit(1)
 
-    #authorizing
+    msg.good("Files Verified")
+    return data
 
-    try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
-    #submitting
-    local_file = f"{funcname}.py"
+@app.command()
+def submit(
+        filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+    ):
+    """submit argorithms to server"""
 
-    if local:
-        url = "http://127.0.0.1/argorithms/insert"
-    else:
-        url = get_url+"/argorithms/insert"
+    filename = filename.split('.')[0]
+    data = file_reader(filename)
 
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={"authorization":"Bearer "+token}
+
+    url = settings.get_endpoint()+"/argorithms/insert"
+    local_file = filename+".py"
     files = [
-        ('document', (local_file, open(local_file, 'rb'), 'application/octet')),
+        ('file', (local_file, open(local_file, 'rb'), 'application/octet')),
         ('data', ('data', json.dumps(data), 'application/json')),
     ]
-
     try:
-        with msg.loading("sending..."):
-            if auth_flag:
-                rq = requests.post(url, files=files , headers={"x-access-token" : token})
-            else:
-                rq = requests.post(url, files=files)
-        if rq.json()['status'] == "successful":
-            msg.good('Submitted')
-        else:
-            if 'message' in rq.json():
-                print(rq.json()['message'])
-            raise ARgorithmError("submission failed")
-    except ARgorithmError as ex:
-        msg.fail("Sorry , File couldnt be accepted")
-    except Exception as ex:
-        msg.info("Sorry , server offline")
+        rq = requests.post(url,files=files,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("Submitted")
+    elif rq.status_code == 409:
+        msg.warn("Already exists","An argorithm with this name already exists,try another argorithm name")
+    elif rq.status_code == 406:
+        msg.warn("File name was invalid","The name shoud be of type [A-Za-z_]")
+    elif rq.status_code == 400:
+        msg.warn("Incorrect file format","please refer documentation")
+    else:
+        msg.fail("Application error")
 
-def update(local=False,name=None):
-    """Submits new ARgorithm code file as well as new ARgorithm config file for
-    already existing ARgorithm in server.
+@app.command()
+def update(
+        filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+    ):
+    """updates pre existing argorithms to server"""
 
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
+    filename = filename.split('.')[0]
+    data = file_reader(filename)
 
-    Raises:
-        ARgorithmError: Raised if updation fails
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={"authorization":"Bearer "+token}
+
+    url = settings.get_endpoint()+"/argorithms/update"
+    local_file = filename+".py"
+    files = [
+        ('file', (local_file, open(local_file, 'rb'), 'application/octet')),
+        ('data', ('data', json.dumps(data), 'application/json')),
+    ]
+    try:
+        rq = requests.post(url,files=files,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("updated")
+    elif rq.status_code == 404:
+        msg.warn("Not found","Try submit command to add argorithm to server")
+    elif rq.status_code == 401:
+        msg.warn("Unauthorized","Only author of argorithm or admin is allowed to alter argorithms")
+    else:
+        msg.fail("Application error")
+
+def search(argid):
+    """Searches argorithm on server
     """
+    url = settings.get_endpoint()+"/argorithms/view/"+argid
+    try:
+        rq = requests.get(url)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        typer.echo("Found argorithm")
+        data = json.loads(rq.content)
+        msg.menuitem(data)
+        return data
+    if rq.status_code == 404:
+        msg.warn("Not found",f"{argid} not found in database")
+        raise typer.Exit(1)
+    msg.fail("Application error")
+    raise typer.Exit(1)
 
-    if name:
-        funcname = name
-    else:
-        funcname = input("enter name of file to be sent : ")
+@app.command("list")
+def list_argorithms():
+    """Get list of argorithms in server
+    """
+    url = settings.get_endpoint()+"/argorithms/list"
+    try:
+        rq = requests.get(url)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        menu = json.loads(rq.content)
+        if len(menu) == 0:
+            msg.warn("No argorithms")
+            raise typer.Exit(1)
+        for item in menu:
+            msg.menuitem(item)
 
-    funcname = funcname[:-3] if funcname[-3:] == ".py" else funcname
-    directory = os.getcwd()
+def verify_json(filename:str):
+    """checks whether output file is json or not"""
+    if filename:
+        if filename[-5:] == ".json":
+            return filename
+        return filename + ".json"
+    return None
 
-    if os.path.isfile( os.path.join(directory,funcname+".py")):
-        if os.path.isfile( os.path.join(directory , f"{funcname}.config.json") ):
-            pass
-        else:
-            msg.fail(f"cant find {funcname}.config.json")
-            return
-    else:
-        msg.fail(f"{funcname}.py not found")
-        return
+@app.command()
+def test(
+    argorithm_id:str = typer.Argument(... , help="argorithmID of function to be called. If not passed then menu will be presented"),
+    to_file:str = typer.Option(None,'--to_file','-t',help="store returned states in a json file",show_default=False,callback=verify_json)
+    # user_input:bool = typer.Option(False,'--user-input','-u',help="if present, parses input from user",show_default=False)
+    ):
+    """test argorithms stored in server
+    """
+    params = search(argorithm_id)
+    # if user_input:
+    #     pass
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={"authorization":"Bearer "+token}
 
-    msg.good('files found')
-
-    ## VERIFYING FILES
-
-    required_tags = {
-        "argorithmID" : funcname,
-        "file" : funcname+".py",
-        "function" : "run",
-        "parameters" : {},
-        "default" : {},
-        "description" : ""
+    data = {
+        "argorithmID" : params["argorithmID"],
+        "parameters" : params["example"]
     }
-
-    with open(os.path.join(directory , f"{funcname}.config.json") , 'r') as configfile:
-        data = json.load(configfile)
-        for key in required_tags:
-            if key not in data:
-                msg.fail(f"please check {funcname}.config.json {key} is missing")
-                return
-        for key in data:
-            if key not in required_tags:
-                msg.fail(f"please check {funcname}.config.json {key} is uneccessary")
-                return
-            if type(data[key]) != type(required_tags[key]):
-                msg.fail(f"please check {key} in {funcname}.config.json")
-                return
-
-    #authorizing
-
+    url = settings.get_endpoint()+"/argorithms/run"
     try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
-    #submitting
-    local_file = f"{funcname}.py"
-
-    if local:
-        url = "http://127.0.0.1/argorithms/update"
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        if to_file:
+            with open(to_file,'wb+') as output:
+                output.write(rq.content)
+            msg.good("Recieved states",f"stored in {to_file}")
+        else:
+            msg.state(json.loads(rq.content))
+    elif rq.status_code == 401:
+        msg.warn("Authentication failed",json.loads(rq.content)['detail'])
     else:
-        url = get_url() + "/argorithms/update"
+        msg.fail("application error")
 
-    files = [
-        ('document', (local_file, open(local_file, 'rb'), 'application/octet')),
-        ('data', ('data', json.dumps(data), 'application/json')),
-    ]
-
-    try:
-        with msg.loading("sending..."):
-            if auth_flag:
-                rq = requests.post(url, files=files , headers={"x-access-token" : token})
-            else:
-                rq = requests.post(url, files=files)
-        if rq.json()['status'] == "successful":
-            msg.good('updated')
-        elif rq.json()['status'] == "not present":
-            msg.warn('ARgorithm not found')
-        else:
-            if 'message' in rq.json():
-                print(rq.json()['message'])
-            raise ARgorithmError("update failed")
-    except ARgorithmError:
-        msg.fail("Sorry , ARgorithm couldnt be updated")
-    except requests.RequestException as ex:
-        msg.info("Sorry , server offline")
-
-
-def render_menu(menu:dict):
-    """Shows list of available ARgorithms on server.
-
-    Args:
-        menu (dict): response from server
-
-    Raises:
-        ARgorithmError: If server does not contain any ARgorithm or programmer has provided invalid option
-
-    Returns:
-        str: ARgorithmID of selected ARgorithm
+@app.command()
+def delete(
+    argorithm_id:str = typer.Argument(... , help="argorithmID of function to be called. If not passed then menu will be presented")
+    ):
+    """Deletes argorithm from server
     """
-    md = MarkdownRenderer()
-    count = 0
-    msg.divider('Functions available')
-    for k in menu['list']:
-        count += 1
-        md.add(f"{count}."+color(f"{k['argorithmID']}" , fg="green")+f"\n\t{k['description']}")
-    print(md.text)
-    option = int(input("Enter option number : "))
+    params = search(argorithm_id)
+    flag = typer.confirm("Are you sure you want to delete it?")
+    if not flag:
+        typer.echo("Not deleting")
+        raise typer.Abort()
+    header=None
+    if authmanager.auth_check():
+        token = authmanager.get_token()
+        header={"authorization":"Bearer "+token}
+
+    data = {
+        "argorithmID" : params["argorithmID"],
+    }
+    url = settings.get_endpoint()+"/argorithms/delete"
     try:
-        assert option > 0 and option <= len(menu['list'])
-    except Exception as ex:
-        raise ARgorithmError("opt out of range") from ex
-    return menu['list'][option-1]['argorithmID']
-
-def delete(local=False):
-    """Deletes ARgorithm from server.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
-
-    Raises:
-        ARgorithmError: Raised if deletion fails
-    """
-    try:
-        if local:
-            url = "http://127.0.0.1/argorithms/"
-        else:
-            url = get_url() + "/argorithms/"
-        with msg.loading("reading data"):
-            rq = requests.get(url+"list")
-        msg.info('argorithm menu recieved')
-        assert len(rq.json()['list']) > 0
-        argorithmID = render_menu(rq.json())
-    except AssertionError:
-        msg.info("no function in server")
-        return
-    except ARgorithmError:
-        msg.fail("please enter valid option no.")
-        return
-    except Exception:
-        msg.info("Sorry , server offline")
-        return
-
-     #authorizing
-
-    try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-    except Exception:
-        msg.fail("Authentication failed")
-        return
-
-    try:
-        data = {
-            "argorithmID" : argorithmID
-        }
-        with msg.loading("deleting argorithm from server"):
-            if auth_flag:
-                rq = requests.post(f"{url}/delete", json=data , headers={"x-access-token" : token})
-            else:
-                rq = requests.post(f"{url}/delete", json=data)
-        if rq.json()['status'] == "successful":
-            msg.good("deleted")
-        else:
-            if 'message' in rq.json():
-                print(rq.json()['message'])
-            raise ARgorithmError("update failed")
-    except Exception as ex:
-        msg.fail('argorithm delete has failed')
-
-
-def test(local=False):
-    """Tests ARgorithm in server.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        name (str, optional): Checks whether the name of file is given in the command if not it will ask for name
-
-    Raises:
-        ARgorithmError: Raised if test fails
-    """
-    try:
-        if local:
-            url = "http://127.0.0.1/argorithms/"
-        else:
-            url = get_url() + "/argorithms/"
-        with msg.loading("reading data"):
-            rq = requests.get(url+"list")
-        assert len(rq.json()['list']) > 0
-        msg.info('argorithm menu recieved')
-        argorithmID = render_menu(rq.json())
-    except AssertionError:
-        msg.warn("no function in server")
-        return
-
-    try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
-
-    try:
-
-        data = {
-            "argorithmID" : argorithmID
-        }
-        with msg.loading("retrieving data from server"):
-            if auth_flag:
-                rq = requests.post(f"{url}/run", json=data, headers={"x-access-token" : token})
-            else:
-                rq = requests.post(f"{url}/run", json=data)
-        msg.good("Recieved states")
-        print(json.dumps(rq.json() , indent=2))
-    except Exception as ex:
-        msg.fail('Function call has failed')
-
-def grant(local=False):
-    """Grants an account admin priveleges.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-    """
-    try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-        else:
-            msg.info("Auth disabled on Server")
-            return
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
-
-    if local:
-        url = "http://127.0.0.1/admin/grant"
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.info("Deleted successfully",)
+    elif rq.status_code == 401:
+        msg.warn("Not authorized","only author of argorithm or admin can delete it")
     else:
-        url = get_url() + "/admin/grant"
-    email = input("enter email that you want to grant admin access to : ")
-    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
-    try:
-        if rq.json()['status'] == 'successful':
-            msg.good(f"{email} is now an admin")
-        elif rq.json()['status'] == 'access denied':
-            msg.warn("You dont have admin priveleges")
-        elif rq.json()['status'] == 'Not Found':
-            msg.warn(f"{email} cant be found")
-        elif rq.json()['status'] == 'blacklisted':
-            msg.info(f"{email} is blacklisted")
-        else:
-            msg.fail("server failure")
-    except Exception as ex:
-        msg.fail("server failure")
+        msg.fail("application error")
 
-def revoke(local=False):
-    """Revokes admin priveleges from specified account.
 
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
+account_app = typer.Typer(help="Manages account")
+app.add_typer(account_app,name="account")
+
+@account_app.command()
+def login(
+        override:bool=typer.Option(False,'--override','-o',show_default=False,help="Enter new credentials")
+    ):
+    """Log in to ARgorithmServer. Only is AUTH is enabled on server.
     """
-    try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-        else:
-            msg.info("Auth disabled on Server")
-            return
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
-
-    if local:
-        url = "http://127.0.0.1/admin/revoke"
+    if not authmanager.auth_check():
+        msg.warn("AUTH disabled at server")
+        raise typer.Exit(0)
+    if override:
+        authmanager.login_prompt()
     else:
-        url = get_url() + "/admin/revoke"
-    email = input("enter email that you want to revoke admin access from : ")
-    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
-    try:
-        if rq.json()['status'] == 'successful':
-            msg.warn(f"{email} is not an admin")
-        elif rq.json()['status'] == 'access denied':
-            msg.warn("You dont have admin priveleges")
-        elif rq.json()['status'] == 'Not Found':
-            msg.warn(f"{email} cant be found")
-        else:
-            msg.fail("server failure")
-    except Exception as ex:
-        msg.fail("server failure")
+        authmanager.get_token()
 
-def delete_account(local=False,programmer=False):
-    """Deletes user account. Can also delete programmer account if programmer
-    flag is set.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        programmer (bool, optional): If true will delete the programmer account associated to email. Defaults to False.
+@account_app.command()
+def new():
+    """Create new programmer and user account in ARgorithmServer. Only is AUTH is enabled on server.
     """
-    try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-        else:
-            msg.info("Auth disabled on Server")
-            return
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
+    if not authmanager.auth_check():
+        msg.warn("AUTH disabled at server")
+        raise typer.Exit(0)
+    authmanager.register()
 
-    if local:
-        url = "http://127.0.0.1/admin/"
+admin_app = typer.Typer(help="Administrator level methods")
+app.add_typer(admin_app,name="admin")
+
+@admin_app.command()
+def grant(
+        email:str=typer.Argument( ... , help="The account email that would be granted admin access")
+    ):
+    """grants admin acess
+    """
+    if not authmanager.auth_check():
+        msg.warn("AUTH is disabled at this endpoint")
+        raise typer.Exit(1)
+    data = {
+        "email" : email
+    }
+    token = authmanager.get_token()
+    header={"authorization":"Bearer "+token}
+    url = settings.get_endpoint()+"/admin/grant"
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("granted admin priveleges")
+    elif rq.status_code == 401:
+        msg.warn("Not authorized","You need admin priveleges")
+    elif rq.status_code == 406:
+        msg.warn("Blacklisted email","This email is blacklisted thus cannot be granted admin priveleges")
+    elif rq.status_code == 404:
+        msg.warn("Not found","No such email registered")
     else:
-        url = get_url() + "/admin/"
+        msg.fail("Application Error")
+
+@admin_app.command()
+def revoke(
+        email:str=typer.Argument( ... , help="The account email that would be granted admin access")
+    ):
+    """grants admin acess
+    """
+    if not authmanager.auth_check():
+        msg.warn("AUTH is disabled at this endpoint")
+        raise typer.Exit(1)
+    data = {
+        "email" : email
+    }
+    token = authmanager.get_token()
+    header={"authorization":"Bearer "+token}
+    url = settings.get_endpoint()+"/admin/revoke"
+    try:
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("revoked admin priveleges")
+    elif rq.status_code == 401:
+        msg.warn("Not authorized","You need admin priveleges")
+    elif rq.status_code == 404:
+        msg.warn("Not found","No such email registered")
+    else:
+        msg.fail("Application Error")
+
+@admin_app.command("delete")
+def account_delete(
+        email:str=typer.Argument( ... , help="The account email that would be granted admin access"),
+        programmer:bool=typer.Option(False,'-p','--programmer',help="If flag is present, it will delete the programmer account")
+    ):
+    """Deletes account. Requires admin priveleges
+    """
+    if not authmanager.auth_check():
+        msg.warn("AUTH is disabled at this endpoint")
+        raise typer.Exit(1)
+    data = {
+        "email" : email
+    }
+    token = authmanager.get_token()
+    header={"authorization":"Bearer "+token}
     if programmer:
-        url = url + "delete_programmer"
+        url = settings.get_endpoint()+"/admin/delete_programmer"
     else:
-        url = url + "delete_user"
-    email = input("enter email that you want delete : ")
-    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+        url = settings.get_endpoint()+"/admin/delete_user"
     try:
-        if rq.json()['status'] == 'successful':
-            msg.good(f"{email} is deleted")
-        elif rq.json()['status'] == 'access denied':
-            msg.warn("You dont have admin priveleges")
-        elif rq.json()['status'] == 'Not Found':
-            msg.warn(f"{email} cant be found")
-        else:
-            msg.fail("server failure")
-    except Exception as ex:
-        msg.fail("server failure")
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("deleted account")
+    elif rq.status_code == 401:
+        msg.warn("Not authorized","You need admin priveleges")
+    elif rq.status_code == 404:
+        msg.warn("Not found","No such email registered")
+    else:
+        msg.fail("Application Error")
 
-def blacklist(local=False,black=True):
-    """Used to blacklist/whitelist users and programmers depending on ``black``
-    flag.
-
-    Args:
-        local (bool, optional): If true checks for local server instance. Defaults to False.
-        black (bool, optional): If true , blacklists account else whitelists account. Defaults to True.
+@admin_app.command()
+def blacklist(
+        email:str=typer.Argument( ... , help="The account email that would be granted admin access")
+    ):
+    """blacklists account. Requires admin priveleges
     """
+    if not authmanager.auth_check():
+        msg.warn("AUTH is disabled at this endpoint")
+        raise typer.Exit(1)
+    data = {
+        "email" : email
+    }
+    token = authmanager.get_token()
+    header={"authorization":"Bearer "+token}
+    url = settings.get_endpoint()+"/admin/black_list"
     try:
-        auth_flag =  auth_check(local=local)
-        if auth_flag:
-            token = get_token(local=local)
-        else:
-            msg.info("Auth disabled on Server")
-            return
-    except Exception as ex:
-        msg.fail("Authentication failed")
-        return
-
-    if local:
-        url = "http://127.0.0.1/admin/"
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("blacklisted account")
+    elif rq.status_code == 401:
+        msg.warn("Not authorized","You need admin priveleges")
+    elif rq.status_code == 404:
+        msg.warn("Not found","No such email registered")
     else:
-        url = get_url() + "/admin/"
-    if black:
-        url = url + "black_list"
-        email = input("enter email that you want blacklist : ")
-    else:
-        url = url + "white_list"
-        email = input("enter email that you want whitelist : ")
+        msg.fail("Application Error")
 
-    rq = requests.post(url,json={"email" : email},headers={"x-access-token":token})
+@admin_app.command()
+def whitelist(
+        email:str=typer.Argument( ... , help="The account email that would be granted admin access")
+    ):
+    """whitelist accounts. Requires admin priveleges
+    """
+    if not authmanager.auth_check():
+        msg.warn("AUTH is disabled at this endpoint")
+        raise typer.Exit(1)
+    data = {
+        "email" : email
+    }
+    token = authmanager.get_token()
+    header={"authorization":"Bearer "+token}
+    url = settings.get_endpoint()+"/admin/white_list"
     try:
-        if rq.json()['status'] == 'successful':
-            if black:
-                msg.info(f"{email} is blacklisted")
-            else:
-                msg.good(f"{email} is whitelisted")
-        elif rq.json()['status'] == 'access denied':
-            msg.warn("You dont have admin priveleges")
-        elif rq.json()['status'] == 'Not Found':
-            msg.warn(f"{email} cant be found")
-        else:
-            msg.fail("server failure")
-    except Exception as ex:
-        msg.fail("server failure")
-
-
-def cmd():
-    """Generates Command Line Interface using powerful ``argparse`` library."""
-    parser = argparse.ArgumentParser(prog="ARgorithm",description="ARgorithm CLI",formatter_class=argparse.RawDescriptionHelpFormatter)
-    subparsers = parser.add_subparsers(title="command",dest="command",help='try command --help for more details',required=True)
-
-    init_parser = subparsers.add_parser(
-        'init',description="initialises files for argorithm", usage='init [-h,--help]')
-
-    configure_parser = subparsers.add_parser(
-        'configure',description="sets cloud server address", usage='configure [-h,--help]')
-
-    submit_parser = subparsers.add_parser(
-        'submit',description="submits files to argorithm-server")
-    submit_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be submitted optional")
-    submit_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-
-    update_parser = subparsers.add_parser(
-        'update',description="submits new code files for already existing argorithm in argorithm-server")
-    update_parser.add_argument('-n','--name',action="store",type=str,help="provide name of ARgorithm to be updated optional")
-    update_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-
-
-    test_parser = subparsers.add_parser(
-        'test' , description="tests argorithm stored in server")
-    test_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-
-    delete_parser = subparsers.add_parser(
-        'delete' , description="deletes argorithm stored in server")
-    delete_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-
-    account_parser = subparsers.add_parser(
-        'account' , description="account operations on server")
-    account_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-    account_subparsers = account_parser.add_subparsers(title="subcommand",dest="subcommand",help='you can login or create a new account',required=True)
-
-    login_parser = account_subparsers.add_parser(
-        'login' , description="sign in to server to authorise actions")
-    login_parser.add_argument('-o' , '--overwrite' , action="store_true" , help="overwrites any pre-existing login")
-    sign_parser = account_subparsers.add_parser(
-        'new' , description="create new account in server to authorise actions")
-
-    admin_parser = subparsers.add_parser(
-        'admin' , description="admin operations on server"
-    )
-    admin_parser.add_argument('-l','--local',action="store_true", help='connects to local server instead of cloud server')
-    admin_subparsers = admin_parser.add_subparsers(title="subcommand",dest="subcommand",help='you can blacklist/whitelists accounts , grant/revoke admin access',required=True)
-    grant_parser = admin_subparsers.add_parser(
-        'grant' , description="grant programmer admin priveleges"
-    )
-    revoke_parser = admin_subparsers.add_parser(
-        'revoke' , description="revoke programmer admin priveleges"
-    )
-    blacklist_parser = admin_subparsers.add_parser(
-        'blacklist' , description="blacklist programmer from using application"
-    )
-    whitelist_parser = admin_subparsers.add_parser(
-        'whitelist' , description="whitelist previously blacklisted programmer"
-    )
-    delete_account_parser = admin_subparsers.add_parser(
-        'delete' , description="delete account"
-    )
-    delete_account_parser.add_argument('-p' , '--programmer' , action="store_true" , help="deletes programmer account. if not given deletes user account")
-
-    args = parser.parse_args()
-    if args.command == "init":
-        init()
-    elif args.command == "configure":
-        configure()
-    elif args.command == "submit":
-        submit(local=args.local,name=args.name)
-    elif args.command == "update":
-        update(local=args.local,name=args.name)
-    elif args.command == "test":
-        test(local=args.local)
-    elif args.command == 'delete':
-        delete(local=args.local)
-    elif args.command == 'account':
-        if args.subcommand == 'login':
-            try:
-                auth_flag =  auth_check(local=args.local)
-                if auth_flag:
-                    token = get_token(local=args.local,overwrite=args.overwrite)
-                else:
-                    msg.warn("No Authentication Feature at endpoint")
-                    return
-            except Exception as ex:
-                msg.fail("Authentication failed")
-                return
-            msg.good("Successfully Authenticated")
-
-        if args.subcommand == 'new':
-            try:
-                auth_flag =  auth_check(local=args.local)
-                if auth_flag:
-                    sign_up(local=args.local)
-                else:
-                    msg.warn("No Authentication Feature at endpoint")
-                    return
-            except Exception as ex:
-                msg.fail("Registration failed")
-                return
-            msg.good("Successfully Registrated")
-    elif args.command == 'admin':
-        if args.subcommand == "grant":
-            grant(args.local)
-        elif args.subcommand == "revoke":
-            revoke(args.local)
-        elif args.subcommand == "blacklist":
-            blacklist(args.local)
-        elif args.subcommand == "whitelist":
-            blacklist(args.local,black=False)
-        elif args.subcommand == "delete":
-            delete_account(args.local,args.programmer)
+        rq = requests.post(url,json=data,headers=header)
+    except requests.RequestException as rqe:
+        msg.fail("Connection failed",str(rqe))
+        raise typer.Abort()
+    if rq.status_code == 200:
+        msg.good("whitelisted account")
+    elif rq.status_code == 401:
+        msg.warn("Not authorized","You need admin priveleges")
+    elif rq.status_code == 404:
+        msg.warn("Not found","No such email registered")
+    else:
+        msg.fail("Application Error")
