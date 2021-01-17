@@ -1,0 +1,60 @@
+site_name: ARgorithm
+site_description: AR visualizations of data structures
+theme:
+  name: material
+  palette:
+  - scheme: default
+    primary: black
+    accent: blue grey
+  features:
+  - search.suggest
+  - search.highlight
+  icon:
+    repo: fontawesome/brands/github-alt
+  logo: img/Logo_black.svg
+  favicon: img/favicon.ico
+  language: en
+repo_name: ARgorithm/Toolkit
+repo_url: https://github.com/ARgorithm/Toolkit
+edit_uri: ''
+plugins:
+- search
+- markdownextradata:
+    data: data
+nav:
+- Introduction: index.md
+- Getting Started: start.md
+- Server Setup: server.md
+- Command Line Interface: cli.md
+- API Documentation: api/index.html
+- Need help?: help.md
+# - contributing.md
+# - release-notes.md
+markdown_extensions:
+- toc:
+    permalink: true
+- markdown.extensions.codehilite:
+    guess_lang: false
+- markdown_include.include:
+    base_path: docs
+- admonition
+- codehilite
+- extra
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_div_format ''
+- pymdownx.tabbed
+extra:
+  social:
+  - icon: fontawesome/brands/github-alt
+    link: https://github.com/ARgorithm/Toolkit
+extra_css:
+- css/termynal.css
+- css/custom.css
+extra_javascript:
+- https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js
+- js/termynal.js
+- js/custom.js
+

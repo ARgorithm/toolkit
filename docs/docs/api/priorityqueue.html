@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ARgorithmToolkit.priorityqueue API documentation</title>
+<meta name="description" content="The priorityqueue module provides support for priority queues maintained
+using min heap tree. The main class in this module is the PriorityQueue …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<link rel="stylesheet" href="../css/font-awesome.css">
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ARgorithmToolkit.priorityqueue</code></h1>
+</header>
+<section id="section-intro">
+<p>The priorityqueue module provides support for priority queues maintained
+using min heap tree. The main class in this module is the PriorityQueue class.
+The PriorityQueueState acts as a support class to PriorityQueue class. For this
+reason the PriorityQueue class can directly be imported from the
+ARgorithmToolkit library without having to import from the priorityqueue
+module:</p>
+<pre><code>&gt;&gt;&gt; pq = ARgorithmToolkit.priorityqueue.PriorityQueue(name="pq",algo=algo)
+&gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The priorityqueue module provides support for priority queues maintained
+using min heap tree. The main class in this module is the PriorityQueue class.
+The PriorityQueueState acts as a support class to PriorityQueue class. For this
+reason the PriorityQueue class can directly be imported from the
+ARgorithmToolkit library without having to import from the priorityqueue
+module:
+
+    &gt;&gt;&gt; pq = ARgorithmToolkit.priorityqueue.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+    &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+&#34;&#34;&#34;
+import heapq
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+
+class PriorityQueueState():
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.priorityqueue.PriorityQueue`` object.
+
+    Attributes:
+
+        name (str) : Name of the variable for whom we are generating states
+    &#34;&#34;&#34;
+    def __init__(self,name):
+        self.name = name
+
+    def priorityqueue_declare(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_declare` state when an instance of
+        PriorityQueue is created.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_declare`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_declare&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : []
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def priorityqueue_offer(self,body,element,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is added to
+        priority queue.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            element: The element to be added
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_offer`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_offer&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : list(body),
+            &#34;element&#34; : element
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def priorityqueue_poll(self,body,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is popped from
+        priority queue.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_poll&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : list(body),
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def priorityqueue_peek(self,body,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_peek` when first element of priority
+        queue is accessed.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_peek`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_peek&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : list(body),
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+class PriorityQueue:
+    &#34;&#34;&#34;The PriorityQueue class offes a priority queue container that stores
+    states in its stateset which later are used to make dynamic Augmented
+    reality visualizations.
+
+    Attributes:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of PriorityQueue Class
+        comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+
+    Examples:
+        &gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+        &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+    &#34;&#34;&#34;
+
+    def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
+        try:
+            assert isinstance(name,str)
+            self.state_generator = PriorityQueueState(name)
+        except AssertionError as e:
+            raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
+        try:
+            assert isinstance(algo,StateSet)
+            self.algo = algo
+        except AssertionError as e:
+            raise ARgorithmError(&#34;Queue structure needs a reference of template to store states&#34;) from e
+        self.body = []
+        state = self.state_generator.priorityqueue_declare(comments)
+        self.algo.add_state(state)
+
+    def __len__(self):
+        &#34;&#34;&#34;returns length of PriorityQueue when processed by len() function.
+
+        Returns:
+            int: Size of PriorityQueue
+
+        Example:
+            &gt;&gt;&gt; len(pq)
+            0
+        &#34;&#34;&#34;
+        return len(self.body)
+
+    def empty(self):
+        &#34;&#34;&#34;Checks whether PriorityQueue is empty or not.
+
+        Returns:
+            bool: flag that is true if PriorityQueue is empty
+
+        Example:
+            &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+            &gt;&gt;&gt; pq.empty()
+            True
+            &gt;&gt;&gt; pq.offer(1)
+            &gt;&gt;&gt; pq.empty()
+            False
+        &#34;&#34;&#34;
+        return len(self)==0
+
+    def offer(self,element,comments=&#34;&#34;):
+        &#34;&#34;&#34;Add element to priority queue.
+
+        Args:
+            element : element to be added to priority queue
+            comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; pq.offer(4)
+            &gt;&gt;&gt; pq.offer(3)
+            &gt;&gt;&gt; pq.offer(5)
+            &gt;&gt;&gt; pq
+            PriorityQueue([3, 4, 5])
+        &#34;&#34;&#34;
+        heapq.heappush(self.body, element)
+        state = self.state_generator.priorityqueue_offer(self.body,element,comments)
+        self.algo.add_state(state)
+
+    def poll(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;pops first element from priority queue.
+
+        Args:
+            comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+        Raises:
+            ARgorithmError: If priority queue is empty
+
+        Returns:
+            element : first element of priority queue
+
+        Example:
+            &gt;&gt;&gt; pq.offer(2)
+            &gt;&gt;&gt; pq.offer(4)
+            &gt;&gt;&gt; pq.offer(3)
+            &gt;&gt;&gt; pq.poll()
+            2
+            &gt;&gt;&gt; pq.poll()
+            3
+            &gt;&gt;&gt; pq.poll()
+            4
+        &#34;&#34;&#34;
+        if self.empty():
+            raise ARgorithmError(&#39;queue is empty&#39;)
+        item = heapq.heappop(self.body)
+        state = self.state_generator.priorityqueue_poll(self.body,comments)
+        self.algo.add_state(state)
+        return item
+
+    def peek(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;peeks at first element of priority queue.
+
+        Args:
+            comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+        Raises:
+            ARgorithmError: If priority queue is empty
+
+        Returns:
+            element : first element of priority queue
+
+        Example:
+            &gt;&gt;&gt; pq.offer(4)
+            &gt;&gt;&gt; pq.offer(3)
+            &gt;&gt;&gt; pq.offer(5)
+            &gt;&gt;&gt; pq.peek()
+            3
+            &gt;&gt;&gt; pq.peek()
+            3
+        &#34;&#34;&#34;
+        if self.empty():
+            raise ARgorithmError(&#39;queue is empty&#39;)
+        item = self.body[0]
+        state = self.state_generator.priorityqueue_peek(self.body,comments)
+        self.algo.add_state(state)
+        return item
+
+    def __str__(self):
+        &#34;&#34;&#34;String conversion for Priority Queue.
+
+        Returns:
+            str: String describing Priority Queue
+        &#34;&#34;&#34;
+        return f&#34;PriorityQueue({self.body.__str__()})&#34;
+
+    def __repr__(self):
+        &#34;&#34;&#34;Return representation for shell outputs.
+
+        Returns:
+            str: shell representation for priority queue
+        &#34;&#34;&#34;
+        return f&#34;PriorityQueue({self.body.__repr__()})&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueue"><code class="flex name class">
+<span>class <span class="ident">PriorityQueue</span></span>
+<span>(</span><span>name: str, algo: <a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a>, comments: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The PriorityQueue class offes a priority queue container that stores
+states in its stateset which later are used to make dynamic Augmented
+reality visualizations.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation</dd>
+<dt><strong><code>algo</code></strong> :&ensp;<code><a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a></code></dt>
+<dd>The stateset that will store the states generated by the instance of PriorityQueue Class</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive format. Defaults to "".</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>raised if name is not given or Stateset if not provided</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+&gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&quot;pq&quot;,algo=algo)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PriorityQueue:
+    &#34;&#34;&#34;The PriorityQueue class offes a priority queue container that stores
+    states in its stateset which later are used to make dynamic Augmented
+    reality visualizations.
+
+    Attributes:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of PriorityQueue Class
+        comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+
+    Examples:
+        &gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+        &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+    &#34;&#34;&#34;
+
+    def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
+        try:
+            assert isinstance(name,str)
+            self.state_generator = PriorityQueueState(name)
+        except AssertionError as e:
+            raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
+        try:
+            assert isinstance(algo,StateSet)
+            self.algo = algo
+        except AssertionError as e:
+            raise ARgorithmError(&#34;Queue structure needs a reference of template to store states&#34;) from e
+        self.body = []
+        state = self.state_generator.priorityqueue_declare(comments)
+        self.algo.add_state(state)
+
+    def __len__(self):
+        &#34;&#34;&#34;returns length of PriorityQueue when processed by len() function.
+
+        Returns:
+            int: Size of PriorityQueue
+
+        Example:
+            &gt;&gt;&gt; len(pq)
+            0
+        &#34;&#34;&#34;
+        return len(self.body)
+
+    def empty(self):
+        &#34;&#34;&#34;Checks whether PriorityQueue is empty or not.
+
+        Returns:
+            bool: flag that is true if PriorityQueue is empty
+
+        Example:
+            &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+            &gt;&gt;&gt; pq.empty()
+            True
+            &gt;&gt;&gt; pq.offer(1)
+            &gt;&gt;&gt; pq.empty()
+            False
+        &#34;&#34;&#34;
+        return len(self)==0
+
+    def offer(self,element,comments=&#34;&#34;):
+        &#34;&#34;&#34;Add element to priority queue.
+
+        Args:
+            element : element to be added to priority queue
+            comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; pq.offer(4)
+            &gt;&gt;&gt; pq.offer(3)
+            &gt;&gt;&gt; pq.offer(5)
+            &gt;&gt;&gt; pq
+            PriorityQueue([3, 4, 5])
+        &#34;&#34;&#34;
+        heapq.heappush(self.body, element)
+        state = self.state_generator.priorityqueue_offer(self.body,element,comments)
+        self.algo.add_state(state)
+
+    def poll(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;pops first element from priority queue.
+
+        Args:
+            comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+        Raises:
+            ARgorithmError: If priority queue is empty
+
+        Returns:
+            element : first element of priority queue
+
+        Example:
+            &gt;&gt;&gt; pq.offer(2)
+            &gt;&gt;&gt; pq.offer(4)
+            &gt;&gt;&gt; pq.offer(3)
+            &gt;&gt;&gt; pq.poll()
+            2
+            &gt;&gt;&gt; pq.poll()
+            3
+            &gt;&gt;&gt; pq.poll()
+            4
+        &#34;&#34;&#34;
+        if self.empty():
+            raise ARgorithmError(&#39;queue is empty&#39;)
+        item = heapq.heappop(self.body)
+        state = self.state_generator.priorityqueue_poll(self.body,comments)
+        self.algo.add_state(state)
+        return item
+
+    def peek(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;peeks at first element of priority queue.
+
+        Args:
+            comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+        Raises:
+            ARgorithmError: If priority queue is empty
+
+        Returns:
+            element : first element of priority queue
+
+        Example:
+            &gt;&gt;&gt; pq.offer(4)
+            &gt;&gt;&gt; pq.offer(3)
+            &gt;&gt;&gt; pq.offer(5)
+            &gt;&gt;&gt; pq.peek()
+            3
+            &gt;&gt;&gt; pq.peek()
+            3
+        &#34;&#34;&#34;
+        if self.empty():
+            raise ARgorithmError(&#39;queue is empty&#39;)
+        item = self.body[0]
+        state = self.state_generator.priorityqueue_peek(self.body,comments)
+        self.algo.add_state(state)
+        return item
+
+    def __str__(self):
+        &#34;&#34;&#34;String conversion for Priority Queue.
+
+        Returns:
+            str: String describing Priority Queue
+        &#34;&#34;&#34;
+        return f&#34;PriorityQueue({self.body.__str__()})&#34;
+
+    def __repr__(self):
+        &#34;&#34;&#34;Return representation for shell outputs.
+
+        Returns:
+            str: shell representation for priority queue
+        &#34;&#34;&#34;
+        return f&#34;PriorityQueue({self.body.__repr__()})&#34;</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueue.empty"><code class="name flex">
+<span>def <span class="ident">empty</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks whether PriorityQueue is empty or not.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>flag that is true if PriorityQueue is empty</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&quot;pq&quot;,algo=algo)
+&gt;&gt;&gt; pq.empty()
+True
+&gt;&gt;&gt; pq.offer(1)
+&gt;&gt;&gt; pq.empty()
+False
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def empty(self):
+    &#34;&#34;&#34;Checks whether PriorityQueue is empty or not.
+
+    Returns:
+        bool: flag that is true if PriorityQueue is empty
+
+    Example:
+        &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
+        &gt;&gt;&gt; pq.empty()
+        True
+        &gt;&gt;&gt; pq.offer(1)
+        &gt;&gt;&gt; pq.empty()
+        False
+    &#34;&#34;&#34;
+    return len(self)==0</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueue.offer"><code class="name flex">
+<span>def <span class="ident">offer</span></span>(<span>self, element, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add element to priority queue.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>element : element to be added to priority queue</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive format. Defaults to "".</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pq.offer(4)
+&gt;&gt;&gt; pq.offer(3)
+&gt;&gt;&gt; pq.offer(5)
+&gt;&gt;&gt; pq
+PriorityQueue([3, 4, 5])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def offer(self,element,comments=&#34;&#34;):
+    &#34;&#34;&#34;Add element to priority queue.
+
+    Args:
+        element : element to be added to priority queue
+        comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+    Example:
+        &gt;&gt;&gt; pq.offer(4)
+        &gt;&gt;&gt; pq.offer(3)
+        &gt;&gt;&gt; pq.offer(5)
+        &gt;&gt;&gt; pq
+        PriorityQueue([3, 4, 5])
+    &#34;&#34;&#34;
+    heapq.heappush(self.body, element)
+    state = self.state_generator.priorityqueue_offer(self.body,element,comments)
+    self.algo.add_state(state)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueue.peek"><code class="name flex">
+<span>def <span class="ident">peek</span></span>(<span>self, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>peeks at first element of priority queue.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive format. Defaults to "".</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>If priority queue is empty</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>element </code></dt>
+<dd>first element of priority queue</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pq.offer(4)
+&gt;&gt;&gt; pq.offer(3)
+&gt;&gt;&gt; pq.offer(5)
+&gt;&gt;&gt; pq.peek()
+3
+&gt;&gt;&gt; pq.peek()
+3
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def peek(self,comments=&#34;&#34;):
+    &#34;&#34;&#34;peeks at first element of priority queue.
+
+    Args:
+        comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+    Raises:
+        ARgorithmError: If priority queue is empty
+
+    Returns:
+        element : first element of priority queue
+
+    Example:
+        &gt;&gt;&gt; pq.offer(4)
+        &gt;&gt;&gt; pq.offer(3)
+        &gt;&gt;&gt; pq.offer(5)
+        &gt;&gt;&gt; pq.peek()
+        3
+        &gt;&gt;&gt; pq.peek()
+        3
+    &#34;&#34;&#34;
+    if self.empty():
+        raise ARgorithmError(&#39;queue is empty&#39;)
+    item = self.body[0]
+    state = self.state_generator.priorityqueue_peek(self.body,comments)
+    self.algo.add_state(state)
+    return item</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueue.poll"><code class="name flex">
+<span>def <span class="ident">poll</span></span>(<span>self, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>pops first element from priority queue.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive format. Defaults to "".</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>If priority queue is empty</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>element </code></dt>
+<dd>first element of priority queue</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pq.offer(2)
+&gt;&gt;&gt; pq.offer(4)
+&gt;&gt;&gt; pq.offer(3)
+&gt;&gt;&gt; pq.poll()
+2
+&gt;&gt;&gt; pq.poll()
+3
+&gt;&gt;&gt; pq.poll()
+4
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def poll(self,comments=&#34;&#34;):
+    &#34;&#34;&#34;pops first element from priority queue.
+
+    Args:
+        comments (str, optional): Comments for descriptive format. Defaults to &#34;&#34;.
+
+    Raises:
+        ARgorithmError: If priority queue is empty
+
+    Returns:
+        element : first element of priority queue
+
+    Example:
+        &gt;&gt;&gt; pq.offer(2)
+        &gt;&gt;&gt; pq.offer(4)
+        &gt;&gt;&gt; pq.offer(3)
+        &gt;&gt;&gt; pq.poll()
+        2
+        &gt;&gt;&gt; pq.poll()
+        3
+        &gt;&gt;&gt; pq.poll()
+        4
+    &#34;&#34;&#34;
+    if self.empty():
+        raise ARgorithmError(&#39;queue is empty&#39;)
+    item = heapq.heappop(self.body)
+    state = self.state_generator.priorityqueue_poll(self.body,comments)
+    self.algo.add_state(state)
+    return item</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState"><code class="flex name class">
+<span>class <span class="ident">PriorityQueueState</span></span>
+<span>(</span><span>name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is used to generate states for various actions performed on
+the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorithmToolkit.priorityqueue.PriorityQueue">PriorityQueue</a></code> object.</p>
+<h2 id="attributes">Attributes</h2>
+<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PriorityQueueState():
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.priorityqueue.PriorityQueue`` object.
+
+    Attributes:
+
+        name (str) : Name of the variable for whom we are generating states
+    &#34;&#34;&#34;
+    def __init__(self,name):
+        self.name = name
+
+    def priorityqueue_declare(self,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_declare` state when an instance of
+        PriorityQueue is created.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_declare`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_declare&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : []
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def priorityqueue_offer(self,body,element,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is added to
+        priority queue.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            element: The element to be added
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_offer`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_offer&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : list(body),
+            &#34;element&#34; : element
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def priorityqueue_poll(self,body,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is popped from
+        priority queue.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_poll&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : list(body),
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def priorityqueue_peek(self,body,comments=&#34;&#34;):
+        &#34;&#34;&#34;Generates the `priorityqueue_peek` when first element of priority
+        queue is accessed.
+
+        Args:
+            body: The contents of the PriorityQueue that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``priorityqueue_peek`` state for the respective PriorityQueue mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;priorityqueue_peek&#34;
+        state_def = {
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : list(body),
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_declare"><code class="name flex">
+<span>def <span class="ident">priorityqueue_declare</span></span>(<span>self, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>priorityqueue_declare</code> state when an instance of
+PriorityQueue is created.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>body</code></strong></dt>
+<dd>The contents of the PriorityQueue that are to be sent along with the state</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>priorityqueue_declare</code> state for the respective PriorityQueue mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def priorityqueue_declare(self,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `priorityqueue_declare` state when an instance of
+    PriorityQueue is created.
+
+    Args:
+        body: The contents of the PriorityQueue that are to be sent along with the state
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``priorityqueue_declare`` state for the respective PriorityQueue mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;priorityqueue_declare&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : []
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_offer"><code class="name flex">
+<span>def <span class="ident">priorityqueue_offer</span></span>(<span>self, body, element, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>priorityqueue_offer</code> when an element is added to
+priority queue.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>body</code></strong></dt>
+<dd>The contents of the PriorityQueue that are to be sent along with the state</dd>
+<dt><strong><code>element</code></strong></dt>
+<dd>The element to be added</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>priorityqueue_offer</code> state for the respective PriorityQueue mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def priorityqueue_offer(self,body,element,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is added to
+    priority queue.
+
+    Args:
+        body: The contents of the PriorityQueue that are to be sent along with the state
+        element: The element to be added
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``priorityqueue_offer`` state for the respective PriorityQueue mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;priorityqueue_offer&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : list(body),
+        &#34;element&#34; : element
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_peek"><code class="name flex">
+<span>def <span class="ident">priorityqueue_peek</span></span>(<span>self, body, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>priorityqueue_peek</code> when first element of priority
+queue is accessed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>body</code></strong></dt>
+<dd>The contents of the PriorityQueue that are to be sent along with the state</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>priorityqueue_peek</code> state for the respective PriorityQueue mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def priorityqueue_peek(self,body,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `priorityqueue_peek` when first element of priority
+    queue is accessed.
+
+    Args:
+        body: The contents of the PriorityQueue that are to be sent along with the state
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``priorityqueue_peek`` state for the respective PriorityQueue mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;priorityqueue_peek&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : list(body),
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_poll"><code class="name flex">
+<span>def <span class="ident">priorityqueue_poll</span></span>(<span>self, body, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>priorityqueue_offer</code> when an element is popped from
+priority queue.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>body</code></strong></dt>
+<dd>The contents of the PriorityQueue that are to be sent along with the state</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>priorityqueue_poll</code> state for the respective PriorityQueue mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def priorityqueue_poll(self,body,comments=&#34;&#34;):
+    &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is popped from
+    priority queue.
+
+    Args:
+        body: The contents of the PriorityQueue that are to be sent along with the state
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;priorityqueue_poll&#34;
+    state_def = {
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : list(body),
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap');
+#back {
+box-sizing: border-box;
+padding: 5px;
+background-color: #dadada;
+color: black;
+border-radius: 5px;
+font-family: 'IBM Plex Sans', sans-serif;
+text-decoration: none;
+}
+</style>
+<a href='/' id="back">
+<i class="fa fa-home" aria-hidden="true"></i> Back
+</a>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ARgorithmToolkit" href="index.html">ARgorithmToolkit</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorithmToolkit.priorityqueue.PriorityQueue">PriorityQueue</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.empty" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.empty">empty</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.offer" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.offer">offer</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.peek" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.peek">peek</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.poll" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.poll">poll</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueueState" href="#ARgorithmToolkit.priorityqueue.PriorityQueueState">PriorityQueueState</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_declare" href="#ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_declare">priorityqueue_declare</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_offer" href="#ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_offer">priorityqueue_offer</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_peek" href="#ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_peek">priorityqueue_peek</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_poll" href="#ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_poll">priorityqueue_poll</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

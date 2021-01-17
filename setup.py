@@ -10,9 +10,7 @@ setuptools.setup(
     version=__version__,
     author="ARgorithm",
     author_email="alansandra2013@gmail.com",
-    description='''
-        A utility toolkit to help develop algorithms suitable for ARgorithm
-    ''',
+    description='A utility toolkit to help develop algorithms suitable for ARgorithm',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ARgorithm",
