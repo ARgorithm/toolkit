@@ -28,7 +28,7 @@ setuptools.setup(
     project_urls={  # Optional
         'Source': 'https://github.com/ARgorithm/toolkit',
         'Bug Reports' : "https://github.com/ARgorithm/toolkit/issues",
-        'Documentation' : 'https://argorithm.github.io/toolkit/en/latest'
+        'Documentation' : 'https://argorithm.github.io/toolkit'
     },
     entry_points = {
         'console_scripts': [

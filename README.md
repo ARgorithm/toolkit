@@ -24,6 +24,11 @@ $ make test
 Will run tests on code
 
 ```bash
+$ make lint
+```
+to lint code
+
+```bash
 $ make verify
 ```
 to verify designs
