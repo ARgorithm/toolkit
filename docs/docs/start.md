@@ -45,7 +45,7 @@ def run(**kwargs):
     return
 ```
 
-You can add whatever code you want to this file using all the tools and classes present in ARgorithmToolkit but be sure to
+You can add whatever code you want to this file using all the tools and classes present in ARgorithmToolkit but be sure that
 
 1. Your file should have one function which takes `**kwargs` input (refer [here](https://book.pythontips.com/en/latest/args_and_kwargs.html) to know more about kwargs) that will should perform whatever you desire and should return the stateset. You can check out later in the document on how to use this stateset
 2.  you can create classes and additional functions in your code. Support for importing external modules is not yet added so its advisable not to add those.
@@ -107,7 +107,7 @@ ARgorithmToolkit adds a few extra steps when it comes to initializing instances 
 
 As ARgorithm is tool for creating visual demonstration , you can add comments parameter to most functions. These comments get included in states and get featured as text when that state is rendered in AR.
 
-Make sure you make the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** this is important to identify arrays when rendering them
+Make sure you design the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** this is important to identify arrays when rendering them
 
 You can refer the docs and samples in the [repo](https://github.com/ARgorithm/toolkit) to understand more clearly.
 
@@ -116,9 +116,9 @@ You can refer the docs and samples in the [repo](https://github.com/ARgorithm/to
 ## StateSet
 
 The core class to all algorithm and data structures in ARgorithmToolkit
-You will always need to declare this and use this when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to ARgorithm App. So obviously all your ARgorithms are supposed to return this
+You will always need a object of this class when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to ARgorithm App. So obviously all your ARgorithms are supposed to return this
 
-You wont have it to interact with it much other than while initialising objects and returning results.
+You wont have to interact with it much other than while initialising objects and returning results.
 It has a `add_comment` method that allows you to create blank states carrying description in the form of comments that you might want to show to the client while the ARgorithm is being rendered. This will prove handy when creating good demonstrations
 
 ```python
