@@ -362,6 +362,19 @@
   </li>
 
         
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/fibonacci/" class="md-nav__link">
+      Fibonacci
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -539,13 +552,15 @@ for their class or organisation. The following steps are to be followed.</p>
 <li><code>DB_USERNAME=yourdbusername</code></li>
 <li><code>DB_PASSWORD=yourdbpassword</code></li>
 <li><code>DB_ENDPOINT=yourdbendpoint</code></li>
-<li>
-<p><code>DB_PORT=27017</code></p>
-</li>
-<li>
-<p>mongodb with auth</p>
-</li>
+<li><code>DB_PORT=27017</code></li>
 </ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If using a cloud mongo database like atlas which provides mongo+srv url as endpoint, you just need to paste that URL as your <code>DB_ENDPOINT</code>. You can ignore the <code>DB_USERNAME</code> and <code>DB_PASSWORD</code> env variables.</p>
+</div>
+<ol>
+<li>mongodb with auth</li>
+</ol>
 <p>Authorization on all basic routes. Data stored in mongodb database of your choice. This is an enhancement to the previous mode so along with the required envs previously.</p>
 <ul>
 <li><code>SECRET_KEY=yoursecretkey</code></li>
@@ -564,7 +579,7 @@ The repo comes with two docker compose configuration files</p>
         <span class="nt">ports</span><span class="p">:</span> 
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">80:80</span>
         <span class="nt">volumes</span><span class="p">:</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">local-uploads:/app/app/uploads</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">local-uploads:/tmp/argorithm</span>
 <span class="nt">volumes</span><span class="p">:</span>
     <span class="nt">local-uploads</span><span class="p">:</span>
         <span class="nt">driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
@@ -596,20 +611,18 @@ The repo comes with two docker compose configuration files</p>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_ENDPOINT=mongodb</span>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PORT=27017</span>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ADMIN_EMAIL=${ADMIN_EMAIL}</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ADMIN_PASSWORD=${PASSWORD}</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ADMIN_PASSWORD=${ADMIN_PASSWORD}</span>
         <span class="nt">volumes</span><span class="p">:</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">uploads:/app/app/uploads</span>
-        <span class="nt">depends_on</span><span class="p">:</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mongoexp</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">local-uploads:/tmp/argorithm</span>
 <span class="nt">volumes</span><span class="p">:</span>
     <span class="nt">mongo-data</span><span class="p">:</span>
         <span class="nt">driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
     <span class="nt">uploads</span><span class="p">:</span>
         <span class="nt">driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
 </code></pre></div>
+<p>The environment variables in above compose files are read from <code>.env</code> file.You can create strong secret keys using</p>
 </li>
 </ul>
-<p>The environment variables in above compose files are read from <code>.env</code> file.You can create strong secret keys using</p>
 <div class="termy">
 <div class="highlight"><pre><span></span><code><span class="gp">$</span> openssl rand -hex <span class="m">32</span>
 <span class="go">09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7</span>
@@ -757,6 +770,10 @@ The repo comes with two docker compose configuration files</p>
           }, typeof search !== "undefined" && search)
         })
       </script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="../js/mathjaxhelper.js"></script>
       
         <script src="https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js"></script>
       

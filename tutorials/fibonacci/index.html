@@ -65,6 +65,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#fibonacci" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -246,12 +251,14 @@
       
 
 
+  
+
 
   
-  <li class="md-nav__item md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       Tutorials
@@ -288,6 +295,64 @@
     <a href="../bubblesort/" class="md-nav__link">
       Bubblesort
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Fibonacci
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Fibonacci
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#writing-the-code" class="md-nav__link">
+    Writing the code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-config-file" class="md-nav__link">
+    Setting up the config file
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -342,15 +407,148 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#writing-the-code" class="md-nav__link">
+    Writing the code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-config-file" class="md-nav__link">
+    Setting up the config file
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
                 
-                  <h1>Fibonacci</h1>
-                
-                
+                <h1 id="fibonacci">Fibonacci<a class="headerlink" href="#fibonacci" title="Permanent link">&para;</a></h1>
+<p>This tutorial looks towards creating AR visualisation of creating fibonacci number using array using ARgorithm.  It is advised you go through the <a href="/toolkit/tutorials/bubblesort">previous tutorial</a> before this to understand this better.</p>
+<h2 id="writing-the-code">Writing the code<a class="headerlink" href="#writing-the-code" title="Permanent link">&para;</a></h2>
+<p>Fibonacci number is a very popular problem at the beginners level to explain concepts of recursion and later dynamic programming. In this example, we will be implementing iterative approach. The <code>ARgorithmToolkit</code> class that we'll be using in this example is <a href="/toolkit/api/utils.html#ARgorithmToolkit.utils.Variable"><code>Variable</code></a>. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;n has to be natural number, try again&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">algo</span>
+
+    <span class="n">var1</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;first&quot;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="s2">&quot;The first fibonacci number&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;1 is the first fibonacci number&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">algo</span>
+
+    <span class="n">var2</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;second&quot;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="s2">&quot;The second fibonacci number&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">temp1</span> <span class="o">=</span> <span class="n">var1</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">temp2</span> <span class="o">=</span> <span class="n">var2</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;adding </span><span class="si">{</span><span class="n">temp1</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">temp2</span><span class="si">}</span><span class="s2"> and we get next fibonacci number </span><span class="si">{</span><span class="n">temp1</span><span class="o">+</span><span class="n">temp2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">var1</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp2</span>
+        <span class="n">var2</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp1</span><span class="o">+</span><span class="n">temp2</span>
+    <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var2</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> is the </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">th fibonacci number&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span>
+</code></pre></div>
+<p>The <code>Variable</code> class is little different from the other classes and interfaces in ARgorithmToolkit. This class does not have any functionality other than remember the states of objects of datatypes like <code>int</code>,<code>float</code>,<code>string</code>,<code>bool</code>. It is advised to use this only when you need a particular variable rendered in augmented reality  that can prove helpful to understanding the code.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful when reading or writing the value of the <code>Variable</code> class.
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">var</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;var&quot;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">var</span>
+<span class="n">Variable</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">var</span>
+<span class="n">Variable</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="n">var</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">var</span>
+<span class="mi">3</span>
+</code></pre></div>
+Directly assigning values to the <code>Variable</code> object will overwrite the object and states will no longer be recorded for it.</p>
+</div>
+<p>In the fibonacci sequence, each number is the sum of its previous two fibonacci numbers. We'll be using two variables to store the previous fibonacci.</p>
+<p>
+<script type="math/tex; mode=display">
+F\mathbf(n) = F\mathbf(n-1) + F\mathbf(n-2)
+</script>
+</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;n has to be natural number, try again&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">algo</span>
+
+<span class="hll">    <span class="n">var1</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;first&quot;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="s2">&quot;The first fibonacci number&quot;</span><span class="p">)</span>
+</span>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;1 is the first fibonacci number&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">algo</span>
+
+<span class="hll">    <span class="n">var2</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;second&quot;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="s2">&quot;The second fibonacci number&quot;</span><span class="p">)</span>
+</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="hll">        <span class="n">temp1</span> <span class="o">=</span> <span class="n">var1</span><span class="o">.</span><span class="n">value</span>
+</span><span class="hll">        <span class="n">temp2</span> <span class="o">=</span> <span class="n">var2</span><span class="o">.</span><span class="n">value</span>
+</span>        <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;adding </span><span class="si">{</span><span class="n">temp1</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">temp2</span><span class="si">}</span><span class="s2"> and we get next fibonacci number </span><span class="si">{</span><span class="n">temp1</span><span class="o">+</span><span class="n">temp2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="hll">        <span class="n">var1</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp2</span>
+</span><span class="hll">        <span class="n">var2</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp1</span><span class="o">+</span><span class="n">temp2</span>
+</span>    <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var2</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> is the </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">th fibonacci number&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span>
+</code></pre></div>
+<h2 id="setting-up-the-config-file">Setting up the config file<a class="headerlink" href="#setting-up-the-config-file" title="Permanent link">&para;</a></h2>
+<p>For this code, we only need one parameter that is <code>n</code> which is the index of the number required in the sequence. We will provide the default value for <code>n</code> as 4.
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;fibonacci&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;fibonacci.py&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;n&quot;</span> <span class="p">:</span> <span class="s2">&quot;int&quot;</span>
+    <span class="p">},</span> 
+    <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;n&quot;</span> <span class="p">:</span> <span class="mi">4</span>
+    <span class="p">},</span> 
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Print the nth fibonacci number&quot;</span>
+</code></pre></div></p>
+<p>Now that we are done, we can submit the file to the server</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm submit fibonacci
+<span class="go">[SUCCESS]: FILES FOUND</span>
+<span class="go">[SUCCESS]: FILES VERIFIED</span>
+<span class="go">[SUCCESS]: SUBMITTED</span>
+</code></pre></div>
+</div>
                 
               
               
@@ -365,6 +563,41 @@
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../bubblesort/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Bubblesort
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../api/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                API Documentation
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -407,6 +640,10 @@
           }, typeof search !== "undefined" && search)
         })
       </script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="../../js/mathjaxhelper.js"></script>
       
         <script src="https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js"></script>
       

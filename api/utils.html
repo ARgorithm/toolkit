@@ -191,7 +191,10 @@ class Variable:
                 comments=&#34;&#34;
             ))
         elif key==&#39;value&#39;:
-            self.__flag = True</code></pre>
+            self.__flag = True
+
+    def __repr__(self):
+        return f&#34;Variable({repr(self.value)})&#34;</code></pre>
 </details>
 </section>
 <section>
@@ -500,7 +503,10 @@ class.</p>
                 comments=&#34;&#34;
             ))
         elif key==&#39;value&#39;:
-            self.__flag = True</code></pre>
+            self.__flag = True
+
+    def __repr__(self):
+        return f&#34;Variable({repr(self.value)})&#34;</code></pre>
 </details>
 </dd>
 </dl>
