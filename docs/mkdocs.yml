@@ -29,12 +29,13 @@ nav:
 - Tutorials:
   - Introduction: tutorials/index.md
   - Bubblesort: tutorials/bubblesort.md
-  # - Fibonacci: tutorials/fibonacci.md
+  - Fibonacci: tutorials/fibonacci.md
 - API Documentation: api/index.html
 - Releases: CHANGELOG.md
 - Need help?: help.md
 # - release-notes.md
 markdown_extensions:
+- mdx_math
 - toc:
     permalink: true
 - markdown.extensions.codehilite:
@@ -58,6 +59,8 @@ extra_css:
 - css/termynal.css
 - css/custom.css
 extra_javascript:
+- https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
+- js/mathjaxhelper.js
 - https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js
 - js/termynal.js
 - js/custom.js
