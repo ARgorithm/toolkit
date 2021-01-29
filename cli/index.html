@@ -407,6 +407,61 @@
 
 
 
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    
+    <label class="md-nav__link" for="nav-5">
+      Tutorials
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/bubblesort/" class="md-nav__link">
+      Bubblesort
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+
   <li class="md-nav__item">
     <a href="../api/" class="md-nav__link">
       API Documentation
@@ -676,7 +731,7 @@ server.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm init hello_world
 <span class="go">Creating empty template for hello_world</span>
 <span class="go">[SUCCESS]: TEMPLATE GENERATED</span>
-<span class="go">refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it</span>
+<span class="go">refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it</span>
 <span class="go">chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples</span>
 
 <span class="gp">$</span> ls
@@ -739,7 +794,7 @@ server.</p>
 </div>
 
 <h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
-<p>The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format in a file of your choice using the <code>--to-file</code> or <code>-t</code> option.</p>
+<p>The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the <code>--output</code> or <code>-o</code> option.</p>
 <div class="termy">
 <div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm <span class="nb">test</span> fibonacci
 <span class="go">Found argorithm</span>
@@ -856,13 +911,13 @@ and that is to delete argorithms
           </a>
         
         
-          <a href="../api/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tutorials/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                API Documentation
+                Introduction
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

@@ -16,7 +16,7 @@
     
     
       
-        <title>Getting Started - ARgorithm</title>
+        <title>Introduction - ARgorithm</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#using-argorithmtoolkit" class="md-skip">
+        <a href="#tutorials" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header-nav__topic">
           <span class="md-ellipsis">
             
-              Getting Started
+              Introduction
             
           </span>
         </div>
@@ -212,52 +212,11 @@
       
 
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Getting Started
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../start/" class="md-nav__link">
       Getting Started
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#using-argorithmtoolkit" class="md-nav__link">
-    Using ARgorithmToolkit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stateset" class="md-nav__link">
-    StateSet
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -292,12 +251,14 @@
       
 
 
+  
+
 
   
-  <li class="md-nav__item md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       Tutorials
@@ -316,11 +277,56 @@
           
 
 
+  
 
-  <li class="md-nav__item">
-    <a href="../tutorials/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Introduction
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Introduction
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-template" class="md-nav__link">
+    Creating the template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executing-the-code" class="md-nav__link">
+    Executing the code
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -331,7 +337,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorials/bubblesort/" class="md-nav__link">
+    <a href="bubblesort/" class="md-nav__link">
       Bubblesort
     </a>
   </li>
@@ -396,6 +402,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -404,15 +412,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-argorithmtoolkit" class="md-nav__link">
-    Using ARgorithmToolkit
+  <a href="#creating-the-template" class="md-nav__link">
+    Creating the template
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#stateset" class="md-nav__link">
-    StateSet
+  <a href="#executing-the-code" class="md-nav__link">
+    Executing the code
   </a>
   
 </li>
@@ -430,139 +438,47 @@
               
                 
                 
-                  <h1>Getting Started</h1>
-                
-                <p>You can install the ARgorithmToolkit using pip </p>
+                <h1 id="tutorials">Tutorials<a class="headerlink" href="#tutorials" title="Permanent link">&para;</a></h1>
+<p>This section demonstrates how argorithms are created to visualize data structures and algorithm in augmented reality. All the files used in this section can be found <a href="https://github.com/ARgorithm/toolkit/tree/master/examples">here</a>. Before we see and implement some examples, it is important to understand the functioning of <code>ARgorithmToolkit</code> and what all data does an <em>argorithm</em> require to create dynamic AR visualisations.</p>
+<h2 id="creating-the-template">Creating the template<a class="headerlink" href="#creating-the-template" title="Permanent link">&para;</a></h2>
+<p>The ARgorithmToolkit CLI comes with the <a href="/toolkit/cli#init"><code>init</code></a> command  to generate a blank template for your argorithm</p>
 <div class="termy">
-
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> pip install ARgorithmToolkit
-
-<span class="go">---&gt; 100%</span>
-<span class="go">Successfully installed ARgorithmToolkit</span>
+<div class="highlight"><pre><span></span><code>$ ARgorithm init hello_world
+Creating empty template for hello_world
+[SUCCESS]: TEMPLATE GENERATED
+refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it
+chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples
+$ ls
+hello_world.config.json  hello_world.py
 </code></pre></div>
 </div>
 
-<p>You can setup auto completion for your shell by using --install-completion option provided by <code>Typer</code>. After that you can get started with your own ARgorithm</p>
-<div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm init hello_world
-<span class="go">Creating empty template for hello_world</span>
-<span class="go">[SUCCESS]: TEMPLATE GENERATED</span>
-<span class="go">refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it</span>
-<span class="go">chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples</span>
-
-<span class="gp">$</span> ls
-<span class="go">hello_world.config.json  hello_world.py</span>
-</code></pre></div>
-</div>
-
-<p>This will generate your <code>.py</code> file and your <code>.config.json</code> file.</p>
-<ol>
-<li>The  <code>&lt;name&gt;.py</code> file will store your code that you will submit to the server hosting all ARgorithms</li>
-<li>The <code>&lt;name&gt;.config.json</code>  stores important details about your ARgorithm such as its purpose and parameters required</li>
-</ol>
-<p>The <code>&lt;name&gt;.py</code> file initially looks like this</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
-
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">stateset</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
-
-    <span class="c1">#</span>
-    <span class="c1">#   Your code</span>
-    <span class="c1">#</span>
-
-    <span class="k">return</span>
-</code></pre></div>
-<p>You can add whatever code you want to this file using all the tools and classes present in ARgorithmToolkit but be sure that</p>
-<ol>
-<li>Your file should have one function which takes <code>**kwargs</code> input (refer <a href="https://book.pythontips.com/en/latest/args_and_kwargs.html">here</a> to know more about kwargs) that will should perform whatever you desire and should return the stateset. You can check out later in the document on how to use this stateset</li>
-<li>you can create classes and additional functions in your code. Support for importing external modules is not yet added so its advisable not to add those.</li>
-</ol>
-<p>the <code>&lt;name&gt;.config.json</code> file is a JSON file storing all the metadata</p>
+<p>This creates the .config.json file and the .py file required to run the states. These files were covered in detail in the <a href="/toolkit/start">getting started page</a>. All the examples in this tutorials will be starting from this step onwards.</p>
+<h2 id="executing-the-code">Executing the code<a class="headerlink" href="#executing-the-code" title="Permanent link">&para;</a></h2>
+<p>One thing to be kept in mind while running an argorithm code file is that what you want to return is the output of the object but the stateset called. Thus, it becomes fundamentally important to be able to decipher stateset.</p>
+<p>The <a href="/toolkit/api//utils#ARgorithmToolkit.utils.StateSet"><code>Stateset</code></a> is an list of <a href="/toolkit/api//utils#ARgorithmToolkit.utils.State"><code>State</code></a> objects. Each state is an event that occurs during the execution of the program.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;argorithmID&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;name&gt;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;file&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;name&gt;.py&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;function&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;function to be called&gt;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;parameters&quot;</span> <span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;variable-name&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;data-type&gt;&quot;</span>
-    <span class="p">}</span> <span class="p">,</span> 
-    <span class="nt">&quot;default&quot;</span> <span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;variable-name&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;value&gt;&quot;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;description&quot;</span> <span class="p">:</span> <span class="s2">&quot;Tell us about your ARgorithm&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>argorithmID</td>
-<td>name of your ARgorithm , this is generally pre filled from when you run the init command. The name of your code file should be <em>name</em>.py and the config should be <em>name</em>.config.json. [will be fixed later]</td>
-</tr>
-<tr>
-<td>file</td>
-<td>The file containing your codefile</td>
-</tr>
-<tr>
-<td>function</td>
-<td>The function that is going to be called</td>
-</tr>
-<tr>
-<td>parameters</td>
-<td>the parameters that your ARgorithm would need, this helps in anyone using your ARgorithm to understand what is the input format</td>
-</tr>
-<tr>
-<td>default</td>
-<td>default parameters in case no parameters are passed</td>
-</tr>
-<tr>
-<td>description</td>
-<td>The description of ARgorithm. Helpful to people using your ARgorithm as well as other developers</td>
-</tr>
-</tbody>
-</table>
-<p>You can check out ARgorithm examples in our Github Repo.
-Check out the commandline interface for more details</p>
-<h2 id="using-argorithmtoolkit">Using ARgorithmToolkit<a class="headerlink" href="#using-argorithmtoolkit" title="Permanent link">&para;</a></h2>
-<p>ARgorithmToolkit adds a few extra steps when it comes to initializing instances whose states you want to record but thats because a lot of data has to be maintained in order for smooth transitions</p>
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
-</span><span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
-</span><span class="hll"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">algo</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="s1">&#39;Our first variable&#39;</span><span class="p">)</span>
-</span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span>
-<span class="mi">0</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">10</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span>
-<span class="mi">10</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+<span class="hll">    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;TYPE1&#39;</span><span class="p">,</span> 
+</span>    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;DEF1&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;COMMENTS1&#39;</span>
+<span class="p">},</span>
 <span class="p">{</span>
-    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable_declare&#39;</span><span class="p">,</span> 
-    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;variable_name&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-    <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;Our first variable&#39;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable_highlight&#39;</span><span class="p">,</span> 
-    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;variable_name&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+<span class="hll">    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;TYPE2&#39;</span><span class="p">,</span> 
+</span>    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;DEF2&#39;</span><span class="p">},</span>
     <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
 <span class="p">}</span>
+<span class="p">,{</span>
+<span class="hll">    <span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;TYPE3&#39;</span><span class="p">,</span> 
+</span>    <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;DEF3&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;COMMENTS3&#39;</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>As ARgorithm is tool for creating visual demonstration , you can add comments parameter to most functions. These comments get included in states and get featured as text when that state is rendered in AR.</p>
-<p>Make sure you design the objects you want to keep track of as part of the same stateset. Each object is instantiated with a <strong>name</strong> this is important to identify arrays when rendering them</p>
-<p>You can refer the docs and samples in the <a href="https://github.com/ARgorithm/toolkit">repo</a> to understand more clearly.</p>
-<h2 id="stateset">StateSet<a class="headerlink" href="#stateset" title="Permanent link">&para;</a></h2>
-<p>The core class to all algorithm and data structures in ARgorithmToolkit
-You will always need a object of this class when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to ARgorithm App. So obviously all your ARgorithms are supposed to return this</p>
-<p>You wont have to interact with it much other than while initialising objects and returning results.
-It has a <code>add_comment</code> method that allows you to create blank states carrying description in the form of comments that you might want to show to the client while the ARgorithm is being rendered. This will prove handy when creating good demonstrations</p>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">ARgorithmToolkit</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">ARgorithmToolkit</span><span class="o">.</span><span class="n">StateSet</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">algo</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
-<span class="p">{</span><span class="s1">&#39;state_type&#39;</span><span class="p">:</span> <span class="s1">&#39;comment&#39;</span><span class="p">,</span> <span class="s1">&#39;state_def&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello world&#39;</span><span class="p">}</span>
-</code></pre></div>
+<ul>
+<li>The <code>state_type</code> is a literal used by the AR application to classify what kind of event is this. The <code>state_type</code> by convention is of the form <code>&lt;structure&gt;_&lt;method&gt;</code> like <code>array_iter</code>,<code>stack_push</code> etc. </li>
+<li>The <code>state_def</code> gives data about the particular event. </li>
+<li>The <code>comments</code> are used to add descriptive text to the AR visualisation. </li>
+</ul>
+<p>You can refer all the state types and what they do in the <a href="https://github.com/ARgorithm/toolkit/tree/master/designs">designs folder</a></p>
                 
               
               
@@ -581,7 +497,7 @@ It has a <code>add_comment</code> method that allows you to create blank states 
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../cli/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -590,19 +506,19 @@ It has a <code>add_comment</code> method that allows you to create blank states 
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                Command Line Interface
               </div>
             </div>
           </a>
         
         
-          <a href="../server/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="bubblesort/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Server Setup
+                Bubblesort
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

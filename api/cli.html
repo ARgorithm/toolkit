@@ -36,8 +36,9 @@ import re
 import json
 import requests
 import typer
+from halo import Halo
 
-CLOUD_URL = &#34;https://argorithm.io&#34;
+CLOUD_URL = &#34;https://argorithm.el.r.appspot.com&#34;
 CACHE_DIR = typer.get_app_dir(&#34;ARgorithm&#34;)
 
 if not os.path.isdir(CACHE_DIR):
@@ -116,7 +117,8 @@ class Settings():
     def set_endpoint(self,url):
         &#34;&#34;&#34;set up cloud endpoint&#34;&#34;&#34;
         try:
-            rq = requests.get(url+&#34;/argorithms/list&#34;)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.get(url+&#34;/argorithms/list&#34;)
             if rq.status_code == 200:
                 msg.good(&#34;Connected&#34;,f&#34;Cloud requests will now go to {url}&#34;)
             else:
@@ -161,7 +163,8 @@ class AuthManager():
             &#34;password&#34; : password
         }
         try:
-            rq = requests.post(url,data)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.post(url,data)
         except requests.RequestException as rqe:
             msg.fail(&#34;Connection failed&#34;,str(rqe))
             raise typer.Abort()
@@ -184,7 +187,8 @@ class AuthManager():
             &#34;password&#34; : password
         }
         try:
-            rq = requests.post(url,data)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.post(url,data)
         except requests.RequestException as rqe:
             msg.fail(&#34;Connection failed&#34;,str(rqe))
             raise typer.Abort()
@@ -213,7 +217,8 @@ class AuthManager():
             with open(self.credfile,&#39;r&#39;) as cred:
                 token = cred.read()
             try:
-                rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
+                with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                    rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
             except requests.RequestException as rqe:
                 msg.fail(&#34;Connection failed&#34;,str(rqe))
                 raise typer.Abort()
@@ -231,7 +236,8 @@ class AuthManager():
         try:
             url = settings.get_endpoint() + &#34;/auth&#34;
             try:
-                rq = requests.get(url)
+                with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                    rq = requests.get(url)
             except requests.RequestException as rqe:
                 msg.fail(&#34;Connection failed&#34;,str(rqe))
                 raise typer.Abort()    
@@ -301,7 +307,7 @@ def run(**kwargs):
     with open(config_file, &#34;w&#34;) as configfile:
         json.dump(config,configfile)
 
-    msg.good(&#34;Template generated&#34;,&#34;refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples&#34;)
+    msg.good(&#34;Template generated&#34;,&#34;refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples&#34;)
 
 @app.command()
 def configure():
@@ -382,7 +388,8 @@ def submit(
         (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
     ]
     try:
-        rq = requests.post(url,files=files,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,files=files,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -418,7 +425,8 @@ def update(
         (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
     ]
     try:
-        rq = requests.post(url,files=files,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,files=files,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -431,19 +439,21 @@ def update(
     else:
         msg.fail(&#34;Application error&#34;)
 
-def search(argid):
+def search(argid,show=True):
     &#34;&#34;&#34;Searches argorithm on server
     &#34;&#34;&#34;
     url = settings.get_endpoint()+&#34;/argorithms/view/&#34;+argid
     try:
-        rq = requests.get(url)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.get(url)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
     if rq.status_code == 200:
-        typer.echo(&#34;Found argorithm&#34;)
         data = json.loads(rq.content)
-        msg.menuitem(data)
+        if show:
+            typer.echo(&#34;Found argorithm&#34;)
+            msg.menuitem(data)
         return data
     if rq.status_code == 404:
         msg.warn(&#34;Not found&#34;,f&#34;{argid} not found in database&#34;)
@@ -457,7 +467,8 @@ def list_argorithms():
     &#34;&#34;&#34;
     url = settings.get_endpoint()+&#34;/argorithms/list&#34;
     try:
-        rq = requests.get(url)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.get(url)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -469,23 +480,15 @@ def list_argorithms():
         for item in menu:
             msg.menuitem(item)
 
-def verify_json(filename:str):
-    &#34;&#34;&#34;checks whether output file is json or not&#34;&#34;&#34;
-    if filename:
-        if filename[-5:] == &#34;.json&#34;:
-            return filename
-        return filename + &#34;.json&#34;
-    return None
-
 @app.command()
 def test(
     argorithm_id:str = typer.Argument(... , help=&#34;argorithmID of function to be called. If not passed then menu will be presented&#34;),
-    to_file:str = typer.Option(None,&#39;--to_file&#39;,&#39;-t&#39;,help=&#34;store returned states in a json file&#34;,show_default=False,callback=verify_json)
+    output:bool = typer.Option(False,&#39;--output&#39;,&#39;-o&#39;,help=&#34;print results in json format&#34;,show_default=False)
     # user_input:bool = typer.Option(False,&#39;--user-input&#39;,&#39;-u&#39;,help=&#34;if present, parses input from user&#34;,show_default=False)
     ):
     &#34;&#34;&#34;test argorithms stored in server
     &#34;&#34;&#34;
-    params = search(argorithm_id)
+    params = search(argorithm_id,show=not output)
     # if user_input:
     #     pass
     header=None
@@ -499,15 +502,14 @@ def test(
     }
     url = settings.get_endpoint()+&#34;/argorithms/run&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
     if rq.status_code == 200:
-        if to_file:
-            with open(to_file,&#39;wb+&#39;) as output:
-                output.write(rq.content)
-            msg.good(&#34;Recieved states&#34;,f&#34;stored in {to_file}&#34;)
+        if output:
+            print(rq.text)
         else:
             msg.state(json.loads(rq.content))
     elif rq.status_code == 401:
@@ -536,7 +538,8 @@ def delete(
     }
     url = settings.get_endpoint()+&#34;/argorithms/delete&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -593,7 +596,8 @@ def grant(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/grant&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -624,7 +628,8 @@ def revoke(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/revoke&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -657,7 +662,8 @@ def account_delete(
     else:
         url = settings.get_endpoint()+&#34;/admin/delete_user&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -686,7 +692,8 @@ def blacklist(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/black_list&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -715,7 +722,8 @@ def whitelist(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/white_list&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -765,7 +773,8 @@ def account_delete(
     else:
         url = settings.get_endpoint()+&#34;/admin/delete_user&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -824,7 +833,8 @@ def blacklist(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/black_list&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -886,7 +896,8 @@ def delete(
     }
     url = settings.get_endpoint()+&#34;/argorithms/delete&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -973,7 +984,8 @@ def grant(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/grant&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1036,7 +1048,7 @@ def run(**kwargs):
     with open(config_file, &#34;w&#34;) as configfile:
         json.dump(config,configfile)
 
-    msg.good(&#34;Template generated&#34;,&#34;refer documentation at https://argorithmtoolkit.readthedocs.io/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples&#34;)</code></pre>
+    msg.good(&#34;Template generated&#34;,&#34;refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples&#34;)</code></pre>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.cli.list_argorithms"><code class="name flex">
@@ -1054,7 +1066,8 @@ def list_argorithms():
     &#34;&#34;&#34;
     url = settings.get_endpoint()+&#34;/argorithms/list&#34;
     try:
-        rq = requests.get(url)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.get(url)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1173,7 +1186,8 @@ def revoke(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/revoke&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1188,7 +1202,7 @@ def revoke(
 </details>
 </dd>
 <dt id="ARgorithmToolkit.cli.search"><code class="name flex">
-<span>def <span class="ident">search</span></span>(<span>argid)</span>
+<span>def <span class="ident">search</span></span>(<span>argid, show=True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Searches argorithm on server</p></div>
@@ -1196,19 +1210,21 @@ def revoke(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def search(argid):
+<pre><code class="python">def search(argid,show=True):
     &#34;&#34;&#34;Searches argorithm on server
     &#34;&#34;&#34;
     url = settings.get_endpoint()+&#34;/argorithms/view/&#34;+argid
     try:
-        rq = requests.get(url)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.get(url)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
     if rq.status_code == 200:
-        typer.echo(&#34;Found argorithm&#34;)
         data = json.loads(rq.content)
-        msg.menuitem(data)
+        if show:
+            typer.echo(&#34;Found argorithm&#34;)
+            msg.menuitem(data)
         return data
     if rq.status_code == 404:
         msg.warn(&#34;Not found&#34;,f&#34;{argid} not found in database&#34;)
@@ -1247,7 +1263,8 @@ def submit(
         (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
     ]
     try:
-        rq = requests.post(url,files=files,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,files=files,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1264,7 +1281,7 @@ def submit(
 </details>
 </dd>
 <dt id="ARgorithmToolkit.cli.test"><code class="name flex">
-<span>def <span class="ident">test</span></span>(<span>argorithm_id: str = &lt;typer.models.ArgumentInfo object&gt;, to_file: str = &lt;typer.models.OptionInfo object&gt;)</span>
+<span>def <span class="ident">test</span></span>(<span>argorithm_id: str = &lt;typer.models.ArgumentInfo object&gt;, output: bool = &lt;typer.models.OptionInfo object&gt;)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>test argorithms stored in server</p></div>
@@ -1275,12 +1292,12 @@ def submit(
 <pre><code class="python">@app.command()
 def test(
     argorithm_id:str = typer.Argument(... , help=&#34;argorithmID of function to be called. If not passed then menu will be presented&#34;),
-    to_file:str = typer.Option(None,&#39;--to_file&#39;,&#39;-t&#39;,help=&#34;store returned states in a json file&#34;,show_default=False,callback=verify_json)
+    output:bool = typer.Option(False,&#39;--output&#39;,&#39;-o&#39;,help=&#34;print results in json format&#34;,show_default=False)
     # user_input:bool = typer.Option(False,&#39;--user-input&#39;,&#39;-u&#39;,help=&#34;if present, parses input from user&#34;,show_default=False)
     ):
     &#34;&#34;&#34;test argorithms stored in server
     &#34;&#34;&#34;
-    params = search(argorithm_id)
+    params = search(argorithm_id,show=not output)
     # if user_input:
     #     pass
     header=None
@@ -1294,15 +1311,14 @@ def test(
     }
     url = settings.get_endpoint()+&#34;/argorithms/run&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
     if rq.status_code == 200:
-        if to_file:
-            with open(to_file,&#39;wb+&#39;) as output:
-                output.write(rq.content)
-            msg.good(&#34;Recieved states&#34;,f&#34;stored in {to_file}&#34;)
+        if output:
+            print(rq.text)
         else:
             msg.state(json.loads(rq.content))
     elif rq.status_code == 401:
@@ -1341,7 +1357,8 @@ def update(
         (&#39;data&#39;, (&#39;data&#39;, json.dumps(data), &#39;application/json&#39;)),
     ]
     try:
-        rq = requests.post(url,files=files,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,files=files,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1353,24 +1370,6 @@ def update(
         msg.warn(&#34;Unauthorized&#34;,&#34;Only author of argorithm or admin is allowed to alter argorithms&#34;)
     else:
         msg.fail(&#34;Application error&#34;)</code></pre>
-</details>
-</dd>
-<dt id="ARgorithmToolkit.cli.verify_json"><code class="name flex">
-<span>def <span class="ident">verify_json</span></span>(<span>filename: str)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>checks whether output file is json or not</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def verify_json(filename:str):
-    &#34;&#34;&#34;checks whether output file is json or not&#34;&#34;&#34;
-    if filename:
-        if filename[-5:] == &#34;.json&#34;:
-            return filename
-        return filename + &#34;.json&#34;
-    return None</code></pre>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.cli.whitelist"><code class="name flex">
@@ -1398,7 +1397,8 @@ def whitelist(
     header={&#34;authorization&#34;:&#34;Bearer &#34;+token}
     url = settings.get_endpoint()+&#34;/admin/white_list&#34;
     try:
-        rq = requests.post(url,json=data,headers=header)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1452,7 +1452,8 @@ def whitelist(
             &#34;password&#34; : password
         }
         try:
-            rq = requests.post(url,data)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.post(url,data)
         except requests.RequestException as rqe:
             msg.fail(&#34;Connection failed&#34;,str(rqe))
             raise typer.Abort()
@@ -1475,7 +1476,8 @@ def whitelist(
             &#34;password&#34; : password
         }
         try:
-            rq = requests.post(url,data)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.post(url,data)
         except requests.RequestException as rqe:
             msg.fail(&#34;Connection failed&#34;,str(rqe))
             raise typer.Abort()
@@ -1504,7 +1506,8 @@ def whitelist(
             with open(self.credfile,&#39;r&#39;) as cred:
                 token = cred.read()
             try:
-                rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
+                with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                    rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
             except requests.RequestException as rqe:
                 msg.fail(&#34;Connection failed&#34;,str(rqe))
                 raise typer.Abort()
@@ -1522,7 +1525,8 @@ def whitelist(
         try:
             url = settings.get_endpoint() + &#34;/auth&#34;
             try:
-                rq = requests.get(url)
+                with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                    rq = requests.get(url)
             except requests.RequestException as rqe:
                 msg.fail(&#34;Connection failed&#34;,str(rqe))
                 raise typer.Abort()    
@@ -1549,7 +1553,8 @@ def whitelist(
     try:
         url = settings.get_endpoint() + &#34;/auth&#34;
         try:
-            rq = requests.get(url)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.get(url)
         except requests.RequestException as rqe:
             msg.fail(&#34;Connection failed&#34;,str(rqe))
             raise typer.Abort()    
@@ -1577,7 +1582,8 @@ def whitelist(
         with open(self.credfile,&#39;r&#39;) as cred:
             token = cred.read()
         try:
-            rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.post(f&#34;{url}/programmers/verify&#34; , headers = {&#34;authorization&#34; : &#34;Bearer &#34;+token})
         except requests.RequestException as rqe:
             msg.fail(&#34;Connection failed&#34;,str(rqe))
             raise typer.Abort()
@@ -1610,7 +1616,8 @@ def whitelist(
         &#34;password&#34; : password
     }
     try:
-        rq = requests.post(url,data)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,data)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1658,7 +1665,8 @@ def whitelist(
         &#34;password&#34; : password
     }
     try:
-        rq = requests.post(url,data)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.post(url,data)
     except requests.RequestException as rqe:
         msg.fail(&#34;Connection failed&#34;,str(rqe))
         raise typer.Abort()
@@ -1886,7 +1894,8 @@ def whitelist(
     def set_endpoint(self,url):
         &#34;&#34;&#34;set up cloud endpoint&#34;&#34;&#34;
         try:
-            rq = requests.get(url+&#34;/argorithms/list&#34;)
+            with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+                rq = requests.get(url+&#34;/argorithms/list&#34;)
             if rq.status_code == 200:
                 msg.good(&#34;Connected&#34;,f&#34;Cloud requests will now go to {url}&#34;)
             else:
@@ -1949,7 +1958,8 @@ def whitelist(
 <pre><code class="python">def set_endpoint(self,url):
     &#34;&#34;&#34;set up cloud endpoint&#34;&#34;&#34;
     try:
-        rq = requests.get(url+&#34;/argorithms/list&#34;)
+        with Halo(text=&#39;Connecting&#39;, spinner=&#39;dots&#39;):
+            rq = requests.get(url+&#34;/argorithms/list&#34;)
         if rq.status_code == 200:
             msg.good(&#34;Connected&#34;,f&#34;Cloud requests will now go to {url}&#34;)
         else:
@@ -2019,7 +2029,6 @@ text-decoration: none;
 <li><code><a title="ARgorithmToolkit.cli.submit" href="#ARgorithmToolkit.cli.submit">submit</a></code></li>
 <li><code><a title="ARgorithmToolkit.cli.test" href="#ARgorithmToolkit.cli.test">test</a></code></li>
 <li><code><a title="ARgorithmToolkit.cli.update" href="#ARgorithmToolkit.cli.update">update</a></code></li>
-<li><code><a title="ARgorithmToolkit.cli.verify_json" href="#ARgorithmToolkit.cli.verify_json">verify_json</a></code></li>
 <li><code><a title="ARgorithmToolkit.cli.whitelist" href="#ARgorithmToolkit.cli.whitelist">whitelist</a></code></li>
 </ul>
 </li>
