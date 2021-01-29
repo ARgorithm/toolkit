@@ -1,3 +1,9 @@
+## 0.1.0
+
+- ARgorithm cloud is now online
+- Versioning fix
+- Tutorials for application
+
 ## 0.0.12
 
 - Linkedlist and DoublyLinkedList have been implemented
