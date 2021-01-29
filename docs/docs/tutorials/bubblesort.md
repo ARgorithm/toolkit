@@ -6,9 +6,7 @@ This tutorial looks towards creating AR visualisation of bubblesort using ARgori
 
 This is the argorithm code for bubblesort. As you can see other than some differences in object creation and methods. The core logic behind the algorithm remains unchanged and the lines of code are not very different from the normal implementation of bubblesort.
 
-```Python hl_lines="7 10-12"
-import ARgorithmToolkit
-
+```Python hl_lines="5 8-10"
 def check(a,b):
     return a>b
 
@@ -21,7 +19,7 @@ def run(**kwargs):
     return array
 ```
 
-```Python hl_lines="7-8 10 12-14"
+```Python hl_lines="1-2 7-8 10 12-14"
 {!../../examples/bubblesort.py!}
 ```
 ### The StateSet Object

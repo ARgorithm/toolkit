@@ -8,7 +8,7 @@ import requests
 import typer
 from halo import Halo
 
-CLOUD_URL = "https://argorithm.io"
+CLOUD_URL = "https://argorithm.el.r.appspot.com"
 CACHE_DIR = typer.get_app_dir("ARgorithm")
 
 if not os.path.isdir(CACHE_DIR):

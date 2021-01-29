@@ -169,7 +169,7 @@ $ ARgorithm update fibonacci
 
 ## Test
 
-The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format in a file of your choice using the `--to-file` or `-t` option.
+The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the `--output` or `-o` option.
 
 <div class="termy">
 ```console

@@ -11,6 +11,9 @@ for their class or organisation. The following steps are to be followed.
 The server is built using FastAPI. The requirements for running the application is given below
 
 - Python 3.6+
+  - fastapi
+  - uvicorn
+  - gunicorn (for production use)
   - jinja2
   - aiofiles
   - python-multipart
