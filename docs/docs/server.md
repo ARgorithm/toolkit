@@ -11,6 +11,9 @@ for their class or organisation. The following steps are to be followed.
 The server is built using FastAPI. The requirements for running the application is given below
 
 - Python 3.6+
+  - fastapi
+  - uvicorn
+  - gunicorn (for production use)
   - jinja2
   - aiofiles
   - python-multipart
@@ -68,6 +71,9 @@ The application can be run in different modes
    - `DB_ENDPOINT=yourdbendpoint`
    - `DB_PORT=27017`
 
+!!! info
+    If using a cloud mongo database like atlas which provides mongo+srv url as endpoint, you just need to paste that URL as your `DB_ENDPOINT`. You can ignore the `DB_USERNAME` and `DB_PASSWORD` env variables.
+
 3. mongodb with auth
 
    Authorization on all basic routes. Data stored in mongodb database of your choice. This is an enhancement to the previous mode so along with the required envs previously.
@@ -88,11 +94,11 @@ The repo comes with two docker compose configuration files
             ports: 
                 - 80:80
             volumes:
-                - local-uploads:/app/app/uploads
+                - local-uploads:/tmp/argorithm
     volumes:
         local-uploads:
             driver: local
-    
+
     ```
     
 - `docker-compose.prod.yml` : runs application with mongodb and auth and will setup mongodb database as well. will read env variables from `.env` file
@@ -122,11 +128,9 @@ The repo comes with two docker compose configuration files
                 - DB_ENDPOINT=mongodb
                 - DB_PORT=27017
                 - ADMIN_EMAIL=${ADMIN_EMAIL}
-                - ADMIN_PASSWORD=${PASSWORD}
+                - ADMIN_PASSWORD=${ADMIN_PASSWORD}
             volumes:
-                - uploads:/app/app/uploads
-            depends_on:
-                - mongoexp
+                - local-uploads:/tmp/argorithm
     volumes:
         mongo-data:
             driver: local
@@ -134,7 +138,8 @@ The repo comes with two docker compose configuration files
             driver: local
     ```
 
-The environment variables in above compose files are read from `.env` file.You can create strong secret keys using
+	The environment variables in above compose files are read from `.env` file.You can create strong secret keys using
+
 <div class="termy">
 ```console
 $ openssl rand -hex 32

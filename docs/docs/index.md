@@ -2,7 +2,7 @@
     <span class="hero-text"><span style="color:#F9413C;">AR</span>gorithm</span>
     <img src="img/made_with_python.svg">
 </div>
-ARgorithm is a project aimed to provide educators and enthusiasts a tool to create AR visualizations explaining the workings of data structures and algorithms with ease. In recent times , there has been a rise in interest in programming education and this tool is bring Augmented reality into the mix by making it easy to make dynamic complex visualization in augmented reality that are accessible to everyone free of cost.
+ARgorithm is a project aimed to provide educators and enthusiasts a tool to create AR visualizations explaining the workings of data structures and algorithms with ease. In recent times , there has been a rise in interest in programming education and this tool is designed to bring Augmented reality into the mix by making it easy to design dynamic and complex visualizations in augmented reality that are accessible to everyone free of cost.
 How does it work ?
 
 The project consists of three parts

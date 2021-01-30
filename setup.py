@@ -3,7 +3,7 @@ import setuptools
 with open("docs/README.md", "r") as fh:
     long_description = fh.read()
 
-__version__ = "0.0.12"
+__version__ = "0.1.0"
 
 setuptools.setup(
     name="ARgorithmToolkit",
@@ -23,7 +23,8 @@ setuptools.setup(
     install_requires=[
         'typer', # For CLI
         'requests' , #For CLI
-        'numpy'
+        'numpy',
+        'halo'
     ],
     project_urls={  # Optional
         'Source': 'https://github.com/ARgorithm/toolkit',

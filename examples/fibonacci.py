@@ -5,22 +5,21 @@ def run(**kwargs):
     n = kwargs["n"]
     algo = ARgorithmToolkit.StateSet()
     if n <= 0:
+        algo.add_comment("n has to be natural number, try again")
         return algo
 
-    body = [0]*n
-    body[0] = 0
+    var1 = ARgorithmToolkit.Variable("first",algo,1,comments="The first fibonacci number")
     if n == 1:
-        ARgorithmToolkit.Array("arr" , algo, data=body, comments="just on fibonacci number")
+        algo.add_comment("1 is the first fibonacci number")
         return algo
 
-    body[1] = 1
+    var2 = ARgorithmToolkit.Variable("second",algo,1,comments="The second fibonacci number")
 
-    arr = ARgorithmToolkit.Array("arr" , algo, data=body, comments="initializing vector with first two fibonacci numbers 0, 1")
-    for i in range(2, n):
-        temp1 = arr[i-2]
-        temp2 = arr[i-1]
-        algo.add_comment(f"adding {temp1} and {temp2} and putting sum {temp1+temp2} in index {i}")
-        arr[i] = temp1+temp2
+    for _ in range(2, n):
+        temp1 = var1.value
+        temp2 = var2.value
+        algo.add_comment(f"adding {temp1} and {temp2} and we get next fibonacci number {temp1+temp2}")
+        var1.value = temp2
+        var2.value = temp1+temp2
+    algo.add_comment(f"{var2.value} is the {n}th fibonacci number")
     return algo
-
-

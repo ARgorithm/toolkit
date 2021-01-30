@@ -155,3 +155,6 @@ class Variable:
             ))
         elif key=='value':
             self.__flag = True
+
+    def __repr__(self):
+        return f"Variable({repr(self.value)})"
