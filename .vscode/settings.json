@@ -2,5 +2,6 @@
     "restructuredtext.confPath": "${workspaceFolder}/docs/source",
     "yaml.schemas": {
         "./designs/design.json": ".design.yml"
-    }
+    },
+    "python.linting.pylintEnabled": true
 }

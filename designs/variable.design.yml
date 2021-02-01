@@ -10,10 +10,11 @@ states:
         value: value [required]
   
   - variable_highlight:
-      description : highlights the variable
+      description : highlights the variable and records the changes done to it.
       definition:
         variable_name: name of the variable [required] 
-        value: value [required]
+        prev_value: value [required]
+        curr_value: value [required]
 
 classes:
   - ARgorithmToolkit.utils.Variable:
