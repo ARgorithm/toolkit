@@ -52,7 +52,7 @@ class LinkedListNodeState:
             comments=comments
         )
 
-    def llnode_iter(self,value,_next,comments=""):
+    def llnode_iter(self,value,_next,prev_value=None,comments=""):
         """Generates the `llnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -70,6 +70,8 @@ class LinkedListNodeState:
             "value" : value,
             "next" : _next.name if _next else "none"
         }
+        if prev_value is not None:
+            state_def["prev_value"] = prev_value
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -171,6 +173,9 @@ class LinkedListNode:
         """
         if key == 'next' and value:
             assert isinstance(value,LinkedListNode) , ARgorithmError("next should be of type None or LinkedListNode")
+        prev_value = None
+        if key == 'value' and self._flag:
+            prev_value = self.value
         self.__dict__[key] = value
         if key == 'next' and self._flag:
             if value or self.next:
@@ -184,6 +189,7 @@ class LinkedListNode:
             state = self.state_generator.llnode_iter(
                 self.value,
                 self.next,
+                prev_value,
                 "value updated"
             )
             self.algo.add_state(state)

@@ -69,13 +69,15 @@ class ArrayState:
             comments=comments
         )
 
-    def array_iter(self,body,index,comments=""):
+    def array_iter(self,body,index,value=None,prev_value=None,comments=""):
         """Generates the `array_iter` state when a particular index of array
         has been accessed.
 
         Args:
             body: The contents of the array that are to be sent along with the state
             index : The index of array that has been accessed
+            value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
+            prev_value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
@@ -87,6 +89,9 @@ class ArrayState:
             "body" : body.tolist(),
             "index" : index
         }
+        if value is not None:
+            state_def["value"] = value
+            state_def["prev_value"] = prev_value
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -326,8 +331,9 @@ class Array:
             >>> arr
             Array([[1, 2, 3],[4, 5, 0]])
         """
+        prev_value = self.body[key]
         self.body[key] = value
-        state = self.state_generator.array_iter(self.body, key, comments=f'Writing {value} at index {key}')
+        state = self.state_generator.array_iter(self.body, key, value=value, prev_value=prev_value, comments=f'Writing {value} at index {key}')
         self.algo.add_state(state)
 
     def __iter__(self):

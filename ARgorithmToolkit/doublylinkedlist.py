@@ -54,7 +54,7 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_iter(self,value,next_node,prev_node,comments=""):
+    def dllnode_iter(self,value,next_node,prev_node,prev_value=None,comments=""):
         """Generates the `dllnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -62,6 +62,7 @@ class DoublyLinkedListNodeState:
             value : The value stored in the linked list node
             next_node (DoublyLinkedListNode): The next pointer
             prev_node (DoublyLinkedListNode): The prev pointer
+            prev_value (optional): stores the value in the linked list node before it was changed.
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Returns:
@@ -74,6 +75,8 @@ class DoublyLinkedListNodeState:
             "next" : next_node.name if next_node else "none",
             "prev" : prev_node.name if prev_node else "none",
         }
+        if prev_value is not None:
+            state_def["prev_value"] = prev_value
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -205,6 +208,9 @@ class DoublyLinkedListNode:
         """
         if key in ['next','prev'] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError("next should be of type None or DoublyLinkedListNode")
+        prev_value = None
+        if key == 'value' and self._flag:
+            prev_value = self.value
         self.__dict__[key] = value
         if key == 'prev' and self._flag:
             if value or self.prev:
@@ -229,6 +235,7 @@ class DoublyLinkedListNode:
                 self.value,
                 self.next,
                 self.prev,
+                prev_value,
                 "value updated"
             )
             self.algo.add_state(state)

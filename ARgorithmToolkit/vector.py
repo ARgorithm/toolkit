@@ -43,13 +43,15 @@ class VectorState:
             comments=comments
         )
 
-    def vector_iter(self,body,index,comments=""):
+    def vector_iter(self,body,index,value=None,prev_value=None,comments=""):
         """Generates the `vector_iter` state when a particular index of vector
         has been accessed.
 
         Args:
             body (list): The contents of the vector that are to be sent along with the state
             index (int): The index of vector that has been accessed
+            value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
+            prev_value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
             comments (str,optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
@@ -61,6 +63,9 @@ class VectorState:
             "body" : list(body),
             "index" : index
         }
+        if value is not None:
+            state_def["value"] = value
+            state_def["prev_value"] = prev_value
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -284,8 +289,9 @@ class Vector:
             >>> vec
             Vector([1, 5, 3])
         """
+        prev_value = self.body[key]
         self.body[key] = value
-        state = self.state_generator.vector_iter(self.body,key,comments=f'Writing {value} at index {key}')
+        state = self.state_generator.vector_iter(self.body,key,value,prev_value,comments=f'Writing {value} at index {key}')
         self.algo.add_state(state)
 
     def __iter__(self):
