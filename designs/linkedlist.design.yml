@@ -15,7 +15,7 @@ states:
         definition:
           variable_name: The id of the linkedlist Node
           value: The value in the node
-          prev_value : value of the data in the node before it was changed
+          last_value : value of the data in the node before it was changed
           next: The id of the next linkedlist node. Default "none"
 
   - llnode_next:

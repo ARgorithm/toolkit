@@ -54,7 +54,7 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_iter(self,value,next_node,prev_node,prev_value=None,comments=""):
+    def dllnode_iter(self,value,next_node,prev_node,last_value=None,comments=""):
         """Generates the `dllnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -62,7 +62,7 @@ class DoublyLinkedListNodeState:
             value : The value stored in the linked list node
             next_node (DoublyLinkedListNode): The next pointer
             prev_node (DoublyLinkedListNode): The prev pointer
-            prev_value (optional): stores the value in the linked list node before it was changed.
+            last_value (optional): stores the value in the linked list node before it was changed.
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
 
         Returns:
@@ -75,15 +75,15 @@ class DoublyLinkedListNodeState:
             "next" : next_node.name if next_node else "none",
             "prev" : prev_node.name if prev_node else "none",
         }
-        if prev_value is not None:
-            state_def["prev_value"] = prev_value
+        if last_value is not None:
+            state_def["last_value"] = last_value
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def dllnode_next(self,value,next_node,prev_node,comments=""):
+    def dllnode_next(self,value,next_node,prev_node,last_next,comments=""):
         """Generates the `dllnode_next` state when the next pointer changes.
 
         Args:
@@ -101,6 +101,7 @@ class DoublyLinkedListNodeState:
             "value" : value,
             "next" : next_node.name if next_node else "none",
             "prev" : prev_node.name if prev_node else "none",
+            "last_next" : last_next.name if last_next else "none",
         }
         return State(
             state_type=state_type,
@@ -108,7 +109,7 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_prev(self,value,next_node,prev_node,comments=""):
+    def dllnode_prev(self,value,next_node,prev_node,last_prev,comments=""):
         """Generates the `dllnode_prev` state when the prev pointer changes.
 
         Args:
@@ -126,6 +127,7 @@ class DoublyLinkedListNodeState:
             "value" : value,
             "next" : next_node.name if next_node else "none",
             "prev" : prev_node.name if prev_node else "none",
+            "last_prev" : last_prev.name if last_prev else "none",
         }
         return State(
             state_type=state_type,
@@ -208,35 +210,43 @@ class DoublyLinkedListNode:
         """
         if key in ['next','prev'] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError("next should be of type None or DoublyLinkedListNode")
-        prev_value = None
+        last_value = None
+        last_prev = None
+        last_next = None
         if key == 'value' and self._flag:
-            prev_value = self.value
+            last_value = self.value
+        elif key == 'prev' and self._flag:
+            last_prev = self.prev
+        elif key == 'next' and self._flag:
+            last_next = self.next
         self.__dict__[key] = value
         if key == 'prev' and self._flag:
             if value or self.prev:
                 state = self.state_generator.dllnode_prev(
-                    self.value,
-                    self.next,
-                    self.prev,
-                    "prev pointer updated"
+                    value=self.value,
+                    next_node=self.next,
+                    prev_node=self.prev,
+                    last_prev=last_prev,
+                    comments="prev pointer updated"
                 )
                 self.algo.add_state(state)
         elif key == 'next' and self._flag:
             if value or self.next:
                 state = self.state_generator.dllnode_next(
-                    self.value,
-                    self.next,
-                    self.prev,
-                    "next pointer updated"
+                    value=self.value,
+                    next_node=self.next,
+                    prev_node=self.prev,
+                    last_next=last_next,
+                    comments="next pointer updated"
                 )
                 self.algo.add_state(state)
         elif key == 'value' and self._flag:
             state = self.state_generator.dllnode_iter(
-                self.value,
-                self.next,
-                self.prev,
-                prev_value,
-                "value updated"
+                value=self.value,
+                next_node=self.next,
+                prev_node=self.prev,
+                last_value=last_value,
+                comments="value updated"
             )
             self.algo.add_state(state)
 

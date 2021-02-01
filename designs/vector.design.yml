@@ -30,7 +30,7 @@ states:
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
         index : index at which element has to be highlighted [required]
-        prev_value : value at the index before the element was accessed [required]
+        last_value : value at the index before the element was accessed [required]
         value : value at the index after the element was accessed [required]
 
   - vector_compare:

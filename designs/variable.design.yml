@@ -13,7 +13,7 @@ states:
       description : highlights the variable and records the changes done to it.
       definition:
         variable_name: name of the variable [required] 
-        prev_value: value [required]
+        last_value: value of the variable before it was changed [required]
         value: value [required]
 
 classes:
