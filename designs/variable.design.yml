@@ -14,7 +14,7 @@ states:
       definition:
         variable_name: name of the variable [required] 
         prev_value: value [required]
-        curr_value: value [required]
+        value: value [required]
 
 classes:
   - ARgorithmToolkit.utils.Variable:
@@ -33,9 +33,12 @@ functions:
       state: variable_declare
   
   - highlight:
-      description: highlights the variable
+      description: highlights the variable and records the changes done to it.
       function: 
         name: ARgorithmToolkit.utils.Variable.__setattr__
+        parameters:
+          required:
+            - value
       state: variable_highlight
 
 
