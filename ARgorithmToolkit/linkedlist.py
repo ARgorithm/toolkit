@@ -182,7 +182,7 @@ class LinkedListNode:
             last_next = self.next
         self.__dict__[key] = value
         if key == 'next' and self._flag:
-            if value or self.next:
+            if last_next or self.next:
                 state = self.state_generator.llnode_next(
                     value=self.value,
                     _next=self.next,

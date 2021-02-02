@@ -221,7 +221,7 @@ class DoublyLinkedListNode:
             last_next = self.next
         self.__dict__[key] = value
         if key == 'prev' and self._flag:
-            if value or self.prev:
+            if last_prev or self.prev:
                 state = self.state_generator.dllnode_prev(
                     value=self.value,
                     next_node=self.next,
@@ -231,7 +231,7 @@ class DoublyLinkedListNode:
                 )
                 self.algo.add_state(state)
         elif key == 'next' and self._flag:
-            if value or self.next:
+            if last_next or self.next:
                 state = self.state_generator.dllnode_next(
                     value=self.value,
                     next_node=self.next,
