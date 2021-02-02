@@ -178,13 +178,18 @@ class Variable:
             key ([type]): [description]
             value ([type]): [description]
         &#34;&#34;&#34;
+        last_value = None
+        if key==&#39;value&#39; and self.__flag:
+            last_value = self.value
         self.__dict__[key] = value
         if(key == &#39;value&#39; and self.__flag):
             state_type = &#34;variable_highlight&#34;
             state_def = {
                 &#34;variable_name&#34; : self.name,
-                &#34;value&#34; : self.value
+                &#34;value&#34; : self.value,
             }
+            if last_value is not None:
+                state_def[&#34;last_value&#34;] = last_value
             self.algo.add_state(State(
                 state_type=state_type,
                 state_def=state_def,
@@ -490,13 +495,18 @@ class.</p>
             key ([type]): [description]
             value ([type]): [description]
         &#34;&#34;&#34;
+        last_value = None
+        if key==&#39;value&#39; and self.__flag:
+            last_value = self.value
         self.__dict__[key] = value
         if(key == &#39;value&#39; and self.__flag):
             state_type = &#34;variable_highlight&#34;
             state_def = {
                 &#34;variable_name&#34; : self.name,
-                &#34;value&#34; : self.value
+                &#34;value&#34; : self.value,
             }
+            if last_value is not None:
+                state_def[&#34;last_value&#34;] = last_value
             self.algo.add_state(State(
                 state_type=state_type,
                 state_def=state_def,

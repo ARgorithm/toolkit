@@ -108,13 +108,15 @@ class ArrayState:
             comments=comments
         )
 
-    def array_iter(self,body,index,comments=&#34;&#34;):
+    def array_iter(self,body,index,value=None,last_value=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `array_iter` state when a particular index of array
         has been accessed.
 
         Args:
             body: The contents of the array that are to be sent along with the state
             index : The index of array that has been accessed
+            value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
+            last_value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
 
         Returns:
@@ -126,6 +128,9 @@ class ArrayState:
             &#34;body&#34; : body.tolist(),
             &#34;index&#34; : index
         }
+        if not (last_value is  None):
+            state_def[&#34;value&#34;] = value
+            state_def[&#34;last_value&#34;] = last_value
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -334,18 +339,18 @@ class Array:
                 return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
 
             if isinstance(key,int) and len(self.body.shape)==1:
-                state = self.state_generator.array_iter(self.body, key, comments)
+                state = self.state_generator.array_iter(body=self.body, index=key, comments=comments)
                 self.algo.add_state(state)
                 return self.body[key]
 
 
             if isinstance(key,int) or len(key) &lt; len(self.shape()):
                 name = f&#34;{self.state_generator.name}_sub&#34;
-                state = self.state_generator.array_iter(self.body, key, comments)
+                state = self.state_generator.array_iter(body=self.body, index=key, comments=comments)
                 self.algo.add_state(state)
                 return Array(name=name, algo=self.algo, data=self.body[key], comments=comments)
 
-            state = self.state_generator.array_iter(self.body, key, comments)
+            state = self.state_generator.array_iter(body=self.body, index=key, comments=comments)
             self.algo.add_state(state)
             return self.body[key]
         except Exception as ex:
@@ -365,8 +370,9 @@ class Array:
             &gt;&gt;&gt; arr
             Array([[1, 2, 3],[4, 5, 0]])
         &#34;&#34;&#34;
+        last_value = self.body[key]
         self.body[key] = value
-        state = self.state_generator.array_iter(self.body, key, comments=f&#39;Writing {value} at index {key}&#39;)
+        state = self.state_generator.array_iter(body=self.body, index=key, value=value, last_value=last_value, comments=f&#39;Writing {value} at index {key}&#39;)
         self.algo.add_state(state)
 
     def __iter__(self):
@@ -712,18 +718,18 @@ Array([7, 7, 7])
                 return Array(name=name , algo=self.algo , data=self.body[key] , comments=comments)
 
             if isinstance(key,int) and len(self.body.shape)==1:
-                state = self.state_generator.array_iter(self.body, key, comments)
+                state = self.state_generator.array_iter(body=self.body, index=key, comments=comments)
                 self.algo.add_state(state)
                 return self.body[key]
 
 
             if isinstance(key,int) or len(key) &lt; len(self.shape()):
                 name = f&#34;{self.state_generator.name}_sub&#34;
-                state = self.state_generator.array_iter(self.body, key, comments)
+                state = self.state_generator.array_iter(body=self.body, index=key, comments=comments)
                 self.algo.add_state(state)
                 return Array(name=name, algo=self.algo, data=self.body[key], comments=comments)
 
-            state = self.state_generator.array_iter(self.body, key, comments)
+            state = self.state_generator.array_iter(body=self.body, index=key, comments=comments)
             self.algo.add_state(state)
             return self.body[key]
         except Exception as ex:
@@ -743,8 +749,9 @@ Array([7, 7, 7])
             &gt;&gt;&gt; arr
             Array([[1, 2, 3],[4, 5, 0]])
         &#34;&#34;&#34;
+        last_value = self.body[key]
         self.body[key] = value
-        state = self.state_generator.array_iter(self.body, key, comments=f&#39;Writing {value} at index {key}&#39;)
+        state = self.state_generator.array_iter(body=self.body, index=key, value=value, last_value=last_value, comments=f&#39;Writing {value} at index {key}&#39;)
         self.algo.add_state(state)
 
     def __iter__(self):
@@ -1102,13 +1109,15 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
             comments=comments
         )
 
-    def array_iter(self,body,index,comments=&#34;&#34;):
+    def array_iter(self,body,index,value=None,last_value=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `array_iter` state when a particular index of array
         has been accessed.
 
         Args:
             body: The contents of the array that are to be sent along with the state
             index : The index of array that has been accessed
+            value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
+            last_value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
 
         Returns:
@@ -1120,6 +1129,9 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
             &#34;body&#34; : body.tolist(),
             &#34;index&#34; : index
         }
+        if not (last_value is  None):
+            state_def[&#34;value&#34;] = value
+            state_def[&#34;last_value&#34;] = last_value
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -1272,7 +1284,7 @@ is created.</p>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.array.ArrayState.array_iter"><code class="name flex">
-<span>def <span class="ident">array_iter</span></span>(<span>self, body, index, comments='')</span>
+<span>def <span class="ident">array_iter</span></span>(<span>self, body, index, value=None, last_value=None, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>array_iter</code> state when a particular index of array
@@ -1282,6 +1294,10 @@ has been accessed.</p>
 <dt><strong><code>body</code></strong></dt>
 <dd>The contents of the array that are to be sent along with the state</dd>
 <dt>index : The index of array that has been accessed</dt>
+<dt><strong><code>value</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The current value at array[index] if <strong>setitem</strong>(self, key, value) was called.</dd>
+<dt><strong><code>last_value</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The current value at array[index] if <strong>setitem</strong>(self, key, value) was called.</dd>
 <dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
 <dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
 </dl>
@@ -1294,13 +1310,15 @@ has been accessed.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def array_iter(self,body,index,comments=&#34;&#34;):
+<pre><code class="python">def array_iter(self,body,index,value=None,last_value=None,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `array_iter` state when a particular index of array
     has been accessed.
 
     Args:
         body: The contents of the array that are to be sent along with the state
         index : The index of array that has been accessed
+        value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
+        last_value (optional): The current value at array[index] if __setitem__(self, key, value) was called.
         comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
 
     Returns:
@@ -1312,6 +1330,9 @@ has been accessed.</p>
         &#34;body&#34; : body.tolist(),
         &#34;index&#34; : index
     }
+    if not (last_value is  None):
+        state_def[&#34;value&#34;] = value
+        state_def[&#34;last_value&#34;] = last_value
     return State(
         state_type=state_type,
         state_def=state_def,

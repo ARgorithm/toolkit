@@ -97,7 +97,7 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_iter(self,value,next_node,prev_node,comments=&#34;&#34;):
+    def dllnode_iter(self,value,next_node,prev_node,last_value=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -105,6 +105,7 @@ class DoublyLinkedListNodeState:
             value : The value stored in the linked list node
             next_node (DoublyLinkedListNode): The next pointer
             prev_node (DoublyLinkedListNode): The prev pointer
+            last_value (optional): stores the value in the linked list node before it was changed.
             comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
 
         Returns:
@@ -117,13 +118,15 @@ class DoublyLinkedListNodeState:
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
             &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
         }
+        if last_value is not None:
+            state_def[&#34;last_value&#34;] = last_value
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def dllnode_next(self,value,next_node,prev_node,comments=&#34;&#34;):
+    def dllnode_next(self,value,next_node,prev_node,last_next,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_next` state when the next pointer changes.
 
         Args:
@@ -141,6 +144,7 @@ class DoublyLinkedListNodeState:
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
             &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+            &#34;last_next&#34; : last_next.name if last_next else &#34;none&#34;,
         }
         return State(
             state_type=state_type,
@@ -148,7 +152,7 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-    def dllnode_prev(self,value,next_node,prev_node,comments=&#34;&#34;):
+    def dllnode_prev(self,value,next_node,prev_node,last_prev,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_prev` state when the prev pointer changes.
 
         Args:
@@ -166,6 +170,7 @@ class DoublyLinkedListNodeState:
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
             &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+            &#34;last_prev&#34; : last_prev.name if last_prev else &#34;none&#34;,
         }
         return State(
             state_type=state_type,
@@ -248,31 +253,43 @@ class DoublyLinkedListNode:
         &#34;&#34;&#34;
         if key in [&#39;next&#39;,&#39;prev&#39;] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        last_value = None
+        last_prev = None
+        last_next = None
+        if key == &#39;value&#39; and self._flag:
+            last_value = self.value
+        elif key == &#39;prev&#39; and self._flag:
+            last_prev = self.prev
+        elif key == &#39;next&#39; and self._flag:
+            last_next = self.next
         self.__dict__[key] = value
         if key == &#39;prev&#39; and self._flag:
-            if value or self.prev:
+            if last_prev or self.prev:
                 state = self.state_generator.dllnode_prev(
-                    self.value,
-                    self.next,
-                    self.prev,
-                    &#34;prev pointer updated&#34;
+                    value=self.value,
+                    next_node=self.next,
+                    prev_node=self.prev,
+                    last_prev=last_prev,
+                    comments=&#34;prev pointer updated&#34;
                 )
                 self.algo.add_state(state)
         elif key == &#39;next&#39; and self._flag:
-            if value or self.next:
+            if last_next or self.next:
                 state = self.state_generator.dllnode_next(
-                    self.value,
-                    self.next,
-                    self.prev,
-                    &#34;next pointer updated&#34;
+                    value=self.value,
+                    next_node=self.next,
+                    prev_node=self.prev,
+                    last_next=last_next,
+                    comments=&#34;next pointer updated&#34;
                 )
                 self.algo.add_state(state)
         elif key == &#39;value&#39; and self._flag:
             state = self.state_generator.dllnode_iter(
-                self.value,
-                self.next,
-                self.prev,
-                &#34;value updated&#34;
+                value=self.value,
+                next_node=self.next,
+                prev_node=self.prev,
+                last_value=last_value,
+                comments=&#34;value updated&#34;
             )
             self.algo.add_state(state)
 
@@ -984,31 +1001,43 @@ in the DoublyLinkedListNode Class.</p>
         &#34;&#34;&#34;
         if key in [&#39;next&#39;,&#39;prev&#39;] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        last_value = None
+        last_prev = None
+        last_next = None
+        if key == &#39;value&#39; and self._flag:
+            last_value = self.value
+        elif key == &#39;prev&#39; and self._flag:
+            last_prev = self.prev
+        elif key == &#39;next&#39; and self._flag:
+            last_next = self.next
         self.__dict__[key] = value
         if key == &#39;prev&#39; and self._flag:
-            if value or self.prev:
+            if last_prev or self.prev:
                 state = self.state_generator.dllnode_prev(
-                    self.value,
-                    self.next,
-                    self.prev,
-                    &#34;prev pointer updated&#34;
+                    value=self.value,
+                    next_node=self.next,
+                    prev_node=self.prev,
+                    last_prev=last_prev,
+                    comments=&#34;prev pointer updated&#34;
                 )
                 self.algo.add_state(state)
         elif key == &#39;next&#39; and self._flag:
-            if value or self.next:
+            if last_next or self.next:
                 state = self.state_generator.dllnode_next(
-                    self.value,
-                    self.next,
-                    self.prev,
-                    &#34;next pointer updated&#34;
+                    value=self.value,
+                    next_node=self.next,
+                    prev_node=self.prev,
+                    last_next=last_next,
+                    comments=&#34;next pointer updated&#34;
                 )
                 self.algo.add_state(state)
         elif key == &#39;value&#39; and self._flag:
             state = self.state_generator.dllnode_iter(
-                self.value,
-                self.next,
-                self.prev,
-                &#34;value updated&#34;
+                value=self.value,
+                next_node=self.next,
+                prev_node=self.prev,
+                last_value=last_value,
+                comments=&#34;value updated&#34;
             )
             self.algo.add_state(state)
 
@@ -1077,7 +1106,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
             comments=comments
         )
 
-    def dllnode_iter(self,value,next_node,prev_node,comments=&#34;&#34;):
+    def dllnode_iter(self,value,next_node,prev_node,last_value=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -1085,6 +1114,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
             value : The value stored in the linked list node
             next_node (DoublyLinkedListNode): The next pointer
             prev_node (DoublyLinkedListNode): The prev pointer
+            last_value (optional): stores the value in the linked list node before it was changed.
             comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
 
         Returns:
@@ -1097,13 +1127,15 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
             &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
         }
+        if last_value is not None:
+            state_def[&#34;last_value&#34;] = last_value
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def dllnode_next(self,value,next_node,prev_node,comments=&#34;&#34;):
+    def dllnode_next(self,value,next_node,prev_node,last_next,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_next` state when the next pointer changes.
 
         Args:
@@ -1121,6 +1153,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
             &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+            &#34;last_next&#34; : last_next.name if last_next else &#34;none&#34;,
         }
         return State(
             state_type=state_type,
@@ -1128,7 +1161,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
             comments=comments
         )
 
-    def dllnode_prev(self,value,next_node,prev_node,comments=&#34;&#34;):
+    def dllnode_prev(self,value,next_node,prev_node,last_prev,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_prev` state when the prev pointer changes.
 
         Args:
@@ -1146,6 +1179,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
             &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+            &#34;last_prev&#34; : last_prev.name if last_prev else &#34;none&#34;,
         }
         return State(
             state_type=state_type,
@@ -1265,7 +1299,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
 </details>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_iter"><code class="name flex">
-<span>def <span class="ident">dllnode_iter</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+<span>def <span class="ident">dllnode_iter</span></span>(<span>self, value, next_node, prev_node, last_value=None, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>dllnode_iter</code> state when a node is accessed or its
@@ -1277,6 +1311,8 @@ value is changed.</p>
 <dd>The next pointer</dd>
 <dt><strong><code>prev_node</code></strong> :&ensp;<code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></dt>
 <dd>The prev pointer</dd>
+<dt><strong><code>last_value</code></strong> :&ensp;<code>optional</code></dt>
+<dd>stores the value in the linked list node before it was changed.</dd>
 <dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>Comments for descriptive purpose. Defaults to "".</dd>
 </dl>
@@ -1289,7 +1325,7 @@ value is changed.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def dllnode_iter(self,value,next_node,prev_node,comments=&#34;&#34;):
+<pre><code class="python">def dllnode_iter(self,value,next_node,prev_node,last_value=None,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `dllnode_iter` state when a node is accessed or its
     value is changed.
 
@@ -1297,6 +1333,7 @@ value is changed.</p>
         value : The value stored in the linked list node
         next_node (DoublyLinkedListNode): The next pointer
         prev_node (DoublyLinkedListNode): The prev pointer
+        last_value (optional): stores the value in the linked list node before it was changed.
         comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
 
     Returns:
@@ -1309,6 +1346,8 @@ value is changed.</p>
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
         &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
     }
+    if last_value is not None:
+        state_def[&#34;last_value&#34;] = last_value
     return State(
         state_type=state_type,
         state_def=state_def,
@@ -1317,7 +1356,7 @@ value is changed.</p>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_next"><code class="name flex">
-<span>def <span class="ident">dllnode_next</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+<span>def <span class="ident">dllnode_next</span></span>(<span>self, value, next_node, prev_node, last_next, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>dllnode_next</code> state when the next pointer changes.</p>
@@ -1340,7 +1379,7 @@ value is changed.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def dllnode_next(self,value,next_node,prev_node,comments=&#34;&#34;):
+<pre><code class="python">def dllnode_next(self,value,next_node,prev_node,last_next,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `dllnode_next` state when the next pointer changes.
 
     Args:
@@ -1358,6 +1397,7 @@ value is changed.</p>
         &#34;value&#34; : value,
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
         &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        &#34;last_next&#34; : last_next.name if last_next else &#34;none&#34;,
     }
     return State(
         state_type=state_type,
@@ -1367,7 +1407,7 @@ value is changed.</p>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState.dllnode_prev"><code class="name flex">
-<span>def <span class="ident">dllnode_prev</span></span>(<span>self, value, next_node, prev_node, comments='')</span>
+<span>def <span class="ident">dllnode_prev</span></span>(<span>self, value, next_node, prev_node, last_prev, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>dllnode_prev</code> state when the prev pointer changes.</p>
@@ -1390,7 +1430,7 @@ value is changed.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def dllnode_prev(self,value,next_node,prev_node,comments=&#34;&#34;):
+<pre><code class="python">def dllnode_prev(self,value,next_node,prev_node,last_prev,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `dllnode_prev` state when the prev pointer changes.
 
     Args:
@@ -1408,6 +1448,7 @@ value is changed.</p>
         &#34;value&#34; : value,
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
         &#34;prev&#34; : prev_node.name if prev_node else &#34;none&#34;,
+        &#34;last_prev&#34; : last_prev.name if last_prev else &#34;none&#34;,
     }
     return State(
         state_type=state_type,
