@@ -141,13 +141,18 @@ class Variable:
             key ([type]): [description]
             value ([type]): [description]
         """
+        last_value = None
+        if key=='value' and self.__flag:
+            last_value = self.value
         self.__dict__[key] = value
         if(key == 'value' and self.__flag):
             state_type = "variable_highlight"
             state_def = {
                 "variable_name" : self.name,
-                "value" : self.value
+                "value" : self.value,
             }
+            if last_value is not None:
+                state_def["last_value"] = last_value
             self.algo.add_state(State(
                 state_type=state_type,
                 state_def=state_def,

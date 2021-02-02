@@ -16,6 +16,7 @@ states:
         definition:
           variable_name: The id of the doubly doubly linked list Node
           value: The value in the node
+          last_value : the value of the data in the node before it was changed
           next: The id of the next doubly doubly linked list node. Default "none"
           prev: The id of the prev doubly doubly linked list node. Default "none"
 

@@ -10,9 +10,10 @@ states:
         value: value [required]
   
   - variable_highlight:
-      description : highlights the variable
+      description : highlights the variable and records the changes done to it.
       definition:
         variable_name: name of the variable [required] 
+        last_value: value of the variable before it was changed [required]
         value: value [required]
 
 classes:
@@ -32,9 +33,12 @@ functions:
       state: variable_declare
   
   - highlight:
-      description: highlights the variable
+      description: highlights the variable and records the changes done to it.
       function: 
         name: ARgorithmToolkit.utils.Variable.__setattr__
+        parameters:
+          required:
+            - value
       state: variable_highlight
 
 

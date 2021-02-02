@@ -52,7 +52,7 @@ class LinkedListNodeState:
             comments=comments
         )
 
-    def llnode_iter(self,value,_next,comments=""):
+    def llnode_iter(self,value,_next,last_value=None,comments=""):
         """Generates the `llnode_iter` state when a node is accessed or its
         value is changed.
 
@@ -70,13 +70,15 @@ class LinkedListNodeState:
             "value" : value,
             "next" : _next.name if _next else "none"
         }
+        if not(last_value is None):
+            state_def["last_value"] = last_value
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def llnode_next(self,value,_next,comments=""):
+    def llnode_next(self,value,_next,last_next,comments=""):
         """Generates the `llnode_next` state when the next pointer changes.
 
         Args:
@@ -91,7 +93,8 @@ class LinkedListNodeState:
         state_def = {
             "variable_name" : self.name,
             "value" : value,
-            "next" : _next.name if _next else "none"
+            "next" : _next.name if _next else "none",
+            "last_next" : last_next.name if last_next else "none"
         }
         return State(
             state_type=state_type,
@@ -171,20 +174,28 @@ class LinkedListNode:
         """
         if key == 'next' and value:
             assert isinstance(value,LinkedListNode) , ARgorithmError("next should be of type None or LinkedListNode")
+        last_value = None
+        last_next = None
+        if key == 'value' and self._flag:
+            last_value = self.value
+        elif key == 'next' and self._flag:
+            last_next = self.next
         self.__dict__[key] = value
         if key == 'next' and self._flag:
-            if value or self.next:
+            if last_next or self.next:
                 state = self.state_generator.llnode_next(
-                    self.value,
-                    self.next,
-                    "next pointer updated"
+                    value=self.value,
+                    _next=self.next,
+                    last_next=last_next,
+                    comments="next pointer updated"
                 )
                 self.algo.add_state(state)
         elif key == 'value' and self._flag:
             state = self.state_generator.llnode_iter(
-                self.value,
-                self.next,
-                "value updated"
+                value=self.value,
+                _next=self.next,
+                last_value=last_value,
+                comments="value updated"
             )
             self.algo.add_state(state)
 

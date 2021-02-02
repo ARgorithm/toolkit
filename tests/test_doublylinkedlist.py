@@ -94,7 +94,7 @@ def test_list():
     assert k == 4
     assert dl.tolist() == [3]
     assert last_state(algo)['state_type'] == "dllnode_delete"
-    assert last_state(algo)['state_type'] == "dll_tail"
+    assert last_state(algo)['state_type'] == "dllnode_next"
 
     k = dl.pop_front()
     assert k == 3
@@ -110,6 +110,7 @@ def test_list():
     k = dl.pop_front()
     assert k == 3
     assert last_state(algo)['state_type'] == "dllnode_delete"
+    assert last_state(algo)['state_type'] == "dllnode_prev"
     assert last_state(algo)['state_type'] == "dll_head"
 
     k = dl.pop_back()
