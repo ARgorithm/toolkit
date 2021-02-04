@@ -10,6 +10,7 @@ to import from the array module Both work:
 
 import numpy as np
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize 
 
 def check_dimensions(data):
     """This function is an internal function that helps verify the dimensions
@@ -171,6 +172,7 @@ class ArrayIterator:
         self._index += 1
         return v
 
+@serialize
 class Array:
     """The Array class used to emulate multidimensional arrays that can be
     rendered in the ARgorithm Application as series of blocks.

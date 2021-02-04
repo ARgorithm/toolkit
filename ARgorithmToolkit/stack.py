@@ -8,6 +8,7 @@ library without having to import from the stack module:
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
 
 class StackState():
     """This class is used to generate states for various actions performed on
@@ -108,6 +109,7 @@ class StackState():
             comments=comments
         )
 
+@serialize
 class Stack:
     """The Stack class is a container interface for the stack, a linear
     container implementation of LIFO.

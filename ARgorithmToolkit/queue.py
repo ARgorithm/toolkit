@@ -7,8 +7,9 @@ library without having to import from the queue module:
     >>> q = ARgorithmToolkit.Queue(name="q",algo=algo)
 """
 
-
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
+
 class QueueState():
     """This class is used to generate states for various actions performed on
     the ``ARgorithmToolkit.queue.Queue`` object.
@@ -128,6 +129,7 @@ class QueueState():
             comments=comments
         )
 
+@serialize
 class Queue:
     """The Queue class is a container interface for the queue, a linear
     container implementation of FIFO.

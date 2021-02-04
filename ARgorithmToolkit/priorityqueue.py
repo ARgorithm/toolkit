@@ -10,6 +10,7 @@ module:
 """
 import heapq
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
 
 class PriorityQueueState():
     """This class is used to generate states for various actions performed on
@@ -112,6 +113,7 @@ class PriorityQueueState():
             comments=comments
         )
 
+@serialize
 class PriorityQueue:
     """The PriorityQueue class offes a priority queue container that stores
     states in its stateset which later are used to make dynamic Augmented

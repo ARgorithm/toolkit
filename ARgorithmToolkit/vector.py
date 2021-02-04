@@ -9,6 +9,8 @@ work:
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
+
 class VectorState:
     """This class is used to generate states for various actions performed on
     the ``ARgorithmToolkit.vector.Vector`` object.
@@ -195,6 +197,7 @@ class VectorIterator:
         self._index += 1
         return v
 
+@serialize
 class Vector:
     """The Vector class provides a wrapped around the python list class to
     emulate it as a vector.

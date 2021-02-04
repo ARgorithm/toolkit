@@ -16,6 +16,7 @@ These three classes can be directly imported from the toolkit:
 """
 
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
 
 class LinkedListNodeState:
     """This class is used to generate states for various actions performed on
@@ -121,6 +122,7 @@ class LinkedListNodeState:
             comments=comments
         )
 
+@serialize
 class LinkedListNode:
     """The LinkedListNode class is an implementation of a Linked list Node for
     which we store states. Unlike other data structure classes, in which we
@@ -266,6 +268,7 @@ class LinkedListState:
             comments=comments
         )
 
+@serialize
 class LinkedList:
     """The LinkedList class is used to just store the head of the linked list.
 
