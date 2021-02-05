@@ -22,7 +22,7 @@ Options:
 ```
 </div>
 
-## Configure
+## connect
 
 This command can be used to set your own server IP. All your requests will be sent to this IP. If you are running server locally you dont need to configure IP, instead you can use the `-l` or `--local` flag to connect to local servers.
 
@@ -34,7 +34,7 @@ This command can be used to set your own server IP. All your requests will be se
 
 <div class="termy">
 ```console
-$ ARgorithm configure
+$ ARgorithm connect
 # Enter server endpoint :$ http://myserverendpoint.com 
 [SUCCESS]: CONNECTED
 Cloud requests will now go to http://myserverendpoint.com

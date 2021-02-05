@@ -3,7 +3,11 @@
     "file": "bubblesort.py", 
     "function": "run", 
     "parameters": {
-        "array" : "list"
+        "array" : {
+            "description" : "Array to be sorted",
+            "type" : "ARRAY",
+            "item-type" : "INT"
+        }
     }, 
     "default": {
         "array" : [

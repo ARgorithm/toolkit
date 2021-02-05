@@ -280,7 +280,7 @@ def run(**kwargs):
     msg.good("Template generated","refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples")
 
 @app.command()
-def configure():
+def connect():
     """
     Connect to your endpoint
     """
@@ -294,7 +294,7 @@ def autocomplete(incomplete:str):
     l = len(incomplete)
     for filename in files:
         if filename[:l] == incomplete and filename[-3:] == '.py':
-            res.append(filename[:-4])
+            res.append(filename[:-3])
     return res
 
 def file_reader(filename):

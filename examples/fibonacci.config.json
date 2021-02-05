@@ -3,7 +3,11 @@
     "file": "fibonacci.py", 
     "function": "run", 
     "parameters": {
-        "n" : "int"
+        "n" : {
+            "description" : "Enter the position of number in fibonacci series",
+            "type" : "INT",
+            "start" : 1
+        }
     }, 
     "default": {
         "n" : 4
