@@ -17,6 +17,7 @@ class StackState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
 
     def __init__(self,name):

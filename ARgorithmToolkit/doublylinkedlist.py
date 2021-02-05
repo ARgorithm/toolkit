@@ -24,11 +24,13 @@ class DoublyLinkedListNodeState:
 
     Attributes:
 
-        name (str) : Name of the variable for whom we are generating states
+        name (str) : Name of the object for which states are generated
+        _id (str) : id of the object for which states are generated
     """
 
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def dllnode_declare(self,value,next_node,prev_node,comments=""):
         """Generates the `dllnode_declare` state when a new node is created.
@@ -44,6 +46,7 @@ class DoublyLinkedListNodeState:
         """
         state_type = "dllnode_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : next_node.name if next_node else "none",
@@ -71,6 +74,7 @@ class DoublyLinkedListNodeState:
         """
         state_type = "dllnode_iter"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : next_node.name if next_node else "none",
@@ -98,6 +102,7 @@ class DoublyLinkedListNodeState:
         """
         state_type = "dllnode_next"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : next_node.name if next_node else "none",
@@ -124,6 +129,7 @@ class DoublyLinkedListNodeState:
         """
         state_type = "dllnode_prev"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : next_node.name if next_node else "none",
@@ -148,6 +154,7 @@ class DoublyLinkedListNodeState:
         """
         state_type = "dllnode_delete"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
         }
         return State(
@@ -183,14 +190,15 @@ class DoublyLinkedListNode:
     """
 
     def __init__(self,algo:StateSet,value=None,comments=""):
-        self.name = id(self)
+        self.name = str(id(self))
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError("algo should be of type StateSet") from e
 
-        self.state_generator = DoublyLinkedListNodeState(self.name)
+        self.state_generator = DoublyLinkedListNodeState(self.name, self._id)
 
         self._flag = False
         self.value = value
@@ -273,9 +281,11 @@ class DoublyLinkedListState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def dll_declare(self,head,tail,comments=""):
         """Generates the `dll_declare` state when a new linked list is created.
@@ -290,6 +300,7 @@ class DoublyLinkedListState:
         """
         state_type = "dll_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "head" : head.name if head else "none",
             "tail" : tail.name if tail else "none"
@@ -300,7 +311,7 @@ class DoublyLinkedListState:
             comments=comments
         )
 
-    def dll_head(self,head,tail,comments=""):
+    def dll_head(self,head,tail,last_head=None,comments=""):
         """Generates the `dll_head` state when linked list head is changed.
 
         Args:
@@ -313,17 +324,20 @@ class DoublyLinkedListState:
         """
         state_type = "dll_head"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "head" : head.name if head else "none",
             "tail" : tail.name if tail else "none"
         }
+        if not (last_head is None):
+            state_def['last_head'] = last_head
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def dll_tail(self,head,tail,comments=""):
+    def dll_tail(self,head,tail,last_tail=None,comments=""):
         """Generates the `dll_tail` state when linked list tail is changed.
 
         Args:
@@ -336,10 +350,13 @@ class DoublyLinkedListState:
         """
         state_type = "dll_tail"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "head" : head.name if head else "none",
             "tail" : tail.name if tail else "none"
         }
+        if not(last_tail is None):
+            state_def['last_tail'] = last_tail
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -374,12 +391,13 @@ class DoublyLinkedList:
 
         assert isinstance(name,str) , ARgorithmError("Name should be of type string")
         self.name = name
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError("algo should be of type StateSet") from e
-        self.state_generator = DoublyLinkedListState(self.name)
+        self.state_generator = DoublyLinkedListState(self.name, self._id)
 
         if head:
             assert self.algo == head.algo, ARgorithmError("The head node belongs to a different StateSet")
@@ -401,12 +419,18 @@ class DoublyLinkedList:
         """
         if key in ['head','tail'] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError("next should be of type None or DoublyLinkedListNode")
+        last_head = None
+        last_tail = None
+        if key == 'head' and self._flag:
+            last_head = self.head._id if self.head else "none"
+        elif key == 'tail' and self._flag:
+            last_tail = self.tail._id if self.tail else "none"
         self.__dict__[key] = value
         if key == 'head' and self._flag:
-            state = self.state_generator.dll_head(self.head,self.tail,"head pointer shifts")
+            state = self.state_generator.dll_head(self.head,self.tail,last_head=last_head,comments="head pointer shifts")
             self.algo.add_state(state)
         if key == 'tail' and self._flag:
-            state = self.state_generator.dll_tail(self.head,self.tail,"tail pointer shifts")
+            state = self.state_generator.dll_tail(self.head,self.tail,last_tail=last_tail,comments="tail pointer shifts")
             self.algo.add_state(state)
 
     def __str__(self):

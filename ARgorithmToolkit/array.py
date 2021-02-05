@@ -42,11 +42,12 @@ class ArrayState:
 
     Attributes:
 
-        name (str) : Name of the variable for whom we are generating states
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
     """
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
-
+        self._id = _id
 
     def array_declare(self,body,comments=""):
         """Generates the `array_declare` state when an instance of Array class
@@ -61,6 +62,7 @@ class ArrayState:
         """
         state_type = "array_declare"
         state_def = {
+            "id": self._id,
             "variable_name" : self.name,
             "body" : body.tolist()
         }
@@ -86,6 +88,7 @@ class ArrayState:
         """
         state_type = "array_iter"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : body.tolist(),
             "index" : index
@@ -113,6 +116,7 @@ class ArrayState:
         """
         state_type = "array_swap"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : body.tolist(),
             "index1" : indexes[0],
@@ -138,6 +142,7 @@ class ArrayState:
         """
         state_type = "array_compare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : body.tolist(),
             "index1" : indexes[0],
@@ -230,7 +235,7 @@ class Array:
     def __init__(self, name:str, algo:StateSet, data=None, shape=None, fill=0, dtype=int, comments=""):
         try:
             assert isinstance(name,str)
-            self.state_generator = ArrayState(name)
+            self.state_generator = ArrayState(name, str(id(self)))
         except Exception as ex:
             raise ARgorithmError('Give valid name to data structure') from ex
         try:

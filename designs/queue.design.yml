@@ -6,18 +6,21 @@ states:
     - queue_declare:
         description: Creates a queue
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the queue [required]
             body : body if non-empty , default empty
     
     - queue_pop:
         description: Pop front item
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the queue [required]
             body: body after operation
 
     - queue_push:
         description: Push item to the back of the queue
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the queue [required]
             body : body after operation [required]
             element: element to be pushed [required]
@@ -25,12 +28,14 @@ states:
     - queue_front:
         description : highlight front item
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the queue [required]
             body: body of queue
 
     - queue_back:
         description : highlight back item
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the queue [required]
             body: body of queue
 

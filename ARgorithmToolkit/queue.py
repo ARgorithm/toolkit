@@ -17,9 +17,11 @@ class QueueState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def queue_declare(self,comments=""):
         """Generates the `queue_declare` state when an instance of queue is
@@ -33,6 +35,7 @@ class QueueState():
         """
         state_type = "queue_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : []
         }
@@ -55,6 +58,7 @@ class QueueState():
         """
         state_type = "queue_push"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "element" : element
@@ -78,6 +82,7 @@ class QueueState():
         """
         state_type = "queue_pop"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -99,6 +104,7 @@ class QueueState():
         """
         state_type = "queue_front"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -120,6 +126,7 @@ class QueueState():
         """
         state_type = "queue_back"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -150,7 +157,8 @@ class Queue:
     def __init__(self, name:str, algo:StateSet, comments:str = ""):
         try:
             assert isinstance(name,str)
-            self.state_generator = QueueState(name)
+            self._id = str(id(self))
+            self.state_generator = QueueState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError('Give valid name to data structure') from e
         try:

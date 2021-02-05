@@ -25,10 +25,12 @@ class LinkedListNodeState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
 
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def llnode_declare(self,value,_next,comments=""):
         """Generates the `llnode_declare` state when a new node is created.
@@ -43,6 +45,7 @@ class LinkedListNodeState:
         """
         state_type = "llnode_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : _next.name if _next else "none"
@@ -67,6 +70,7 @@ class LinkedListNodeState:
         """
         state_type = "llnode_iter"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : _next.name if _next else "none"
@@ -92,6 +96,7 @@ class LinkedListNodeState:
         """
         state_type = "llnode_next"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
             "next" : _next.name if _next else "none",
@@ -114,6 +119,7 @@ class LinkedListNodeState:
         """
         state_type = "llnode_delete"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
         }
         return State(
@@ -148,14 +154,15 @@ class LinkedListNode:
     """
 
     def __init__(self,algo:StateSet,value=None,comments=""):
-        self.name = id(self)
+        self.name = str(id(self))
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError("algo should be of type StateSet") from e
 
-        self.state_generator = LinkedListNodeState(self.name)
+        self.state_generator = LinkedListNodeState(self.name, self._id)
 
         self._flag = False
         self.value = value
@@ -222,9 +229,11 @@ class LinkedListState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def ll_declare(self,head,comments=""):
         """Generates the `ll_declare` state when a new linkedlist is created.
@@ -238,6 +247,7 @@ class LinkedListState:
         """
         state_type = "ll_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "head" : head.name if head else "none"
         }
@@ -247,7 +257,7 @@ class LinkedListState:
             comments=comments
         )
 
-    def ll_head(self,head,comments=""):
+    def ll_head(self,head,last_head=None,comments=""):
         """Generates the `ll_head` state when linkedlist head is changed.
 
         Args:
@@ -259,9 +269,12 @@ class LinkedListState:
         """
         state_type = "ll_head"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "head" : head.name if head else "none"
         }
+        if not (last_head is None):
+            state_def["last_head"] = last_head
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -295,12 +308,13 @@ class LinkedList:
 
         assert isinstance(name,str) , ARgorithmError("Name should be of type string")
         self.name = name
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError("algo should be of type StateSet") from e
-        self.state_generator = LinkedListState(self.name)
+        self.state_generator = LinkedListState(self.name, self._id)
 
         self._flag = False
         if head:
@@ -318,11 +332,14 @@ class LinkedList:
         Raises:
             ARgorithmError: Raised if head pointer is not type None or LinkedListNode
         """
+        last_head = None
         if key == 'head' and value:
             assert isinstance(value,LinkedListNode) , ARgorithmError("next should be of type None or LinkedListNode")
+        if key == 'head' and self._flag:
+            last_head = self.head._id if self.head else "none"
         self.__dict__[key] = value
         if key == 'head' and self._flag:
-            state = self.state_generator.ll_head(self.head,"head pointer shifts")
+            state = self.state_generator.ll_head(self.head,last_head=last_head, comments="head pointer shifts")
             self.algo.add_state(state)
 
     def __str__(self):
@@ -330,7 +347,7 @@ class LinkedList:
 
     def __repr__(self):
         return f"LinkedList(head at {self.head})"
-
+        
 class ForwardListIterator:
     """This class is a generator that is returned each time an ForwardList has
     to be iterated.

@@ -6,12 +6,14 @@ states:
     - stack_declare:
         description: Creates a stack
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the stack [required]
             body : body if non-empty , default empty
 
     - stack_push:
         description: Push item onto stack
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the stack [required]
             body : body after operation [required]
             element: element to be pushed [required]
@@ -19,12 +21,14 @@ states:
     - stack_pop:
         description: Pop topmost item
         definition:
+            id : id of the datastructure
             variable_name: Variable name of the stack [required]
             body: body after operation
             
     - stack_top:
         description : highlight top item
-        definition:
+        definition: 
+            id : id of the datastructure
             variable_name: Variable name of the stack [required]
             body: body of stack
   

@@ -17,10 +17,12 @@ class StringState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
 
-    def __init__(self, name):
+    def __init__(self, name, _id):
         self.name = name
+        self._id = _id
 
     def string_declare(self, body, comments=""):
         """Generates the `string_declare` state when an instance of string is
@@ -35,6 +37,7 @@ class StringState:
 
         state_type = "string_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : body
         }
@@ -58,6 +61,7 @@ class StringState:
         """
         state_type = "string_iter"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : body,
             "index" : index
@@ -82,6 +86,7 @@ class StringState:
         """
         state_type = "string_append"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : body,
             "element" : element,
@@ -139,7 +144,8 @@ class String():
     def __init__(self,name,algo,body='',comments=""):
         try:
             assert isinstance(name,str)
-            self.state_generator = StringState(name)
+            self._id = str(id(self))
+            self.state_generator = StringState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError('Give valid name to data structure') from e
         try:

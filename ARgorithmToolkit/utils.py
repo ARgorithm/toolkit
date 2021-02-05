@@ -123,8 +123,10 @@ class Variable:
         self.name = name
         self.__flag = False
         self.value = value
+        self._id = str(id(self))
         state_type = "variable_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : name ,
             "value" : value
         }
@@ -148,6 +150,7 @@ class Variable:
         if(key == 'value' and self.__flag):
             state_type = "variable_highlight"
             state_def = {
+                "id" : self._id,
                 "variable_name" : self.name,
                 "value" : self.value,
             }

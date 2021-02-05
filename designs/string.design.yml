@@ -6,12 +6,14 @@ states:
   - string_declare:
       description : creates new string
       definition:
+        id : id of the datastructure
         variable_name: The name of the string [required]
         body: contents of the string [required]
 
   - string_append:
       description : to insert element at the end of the string
       definition:
+        id : id of the datastructure
         variable_name: The name of the string [required]
         body: contents of the string after the operation [required]
         element : element to be added [required]
@@ -19,6 +21,7 @@ states:
   - string_iter:
       description : highlight element to indicate iteration
       definition:
+        id : id of the datastructure
         variable_name: The name of the string [required]
         body: contents of the string after the operation [required]
         index : index at which element has to be highlighted [reqiured]
