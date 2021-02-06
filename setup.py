@@ -24,7 +24,8 @@ setuptools.setup(
         'typer', # For CLI
         'requests' , #For CLI
         'numpy',
-        'halo'
+        'halo',
+        'jsonschema'
     ],
     project_urls={  # Optional
         'Source': 'https://github.com/ARgorithm/toolkit',

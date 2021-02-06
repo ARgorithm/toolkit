@@ -7,6 +7,7 @@ import json
 import requests
 import typer
 from halo import Halo
+from ARgorithmToolkit.parser import ARgorithmConfig,ValidationError,InputManager
 
 CLOUD_URL = "https://argorithm.el.r.appspot.com"
 CACHE_DIR = typer.get_app_dir("ARgorithm")
@@ -241,7 +242,8 @@ def name_check(value:str):
 
 @app.command()
 def init(
-        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check)
+        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check),
+        create_config:bool = typer.Option(False,'--config','-c',help="creates blank config file as well",show_default=False)
     ):
     """
     Create Blank code template and config template for ARgorithm
@@ -264,18 +266,18 @@ def run(**kwargs):
 
         """
         codefile.write(code_starter)
-
-    config = {
-        "argorithmID" : name,
-        "file" : name+".py",
-        "function" : "run",
-        "parameters" : {},
-        "default" : {},
-        "description" : ""
-    }
-    config_file=f"{name}.config.json"
-    with open(config_file, "w") as configfile:
-        json.dump(config,configfile)
+    if create_config:
+        config = {
+            "argorithmID" : name,
+            "file" : name+".py",
+            "function" : "run",
+            "parameters" : {},
+            "default" : {},
+            "description" : ""
+        }
+        config_file=f"{name}.config.json"
+        with open(config_file, "w") as configfile:
+            json.dump(config,configfile)
 
     msg.good("Template generated","refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples")
 
@@ -301,10 +303,13 @@ def file_reader(filename):
     """finds anf checks argorithm files"""
     directory = os.getcwd()
     if os.path.isfile( os.path.join(directory,filename+".py")):
-        if os.path.isfile( os.path.join(directory , f"{filename}.config.json") ):
-            pass
-        else:
-            msg.warn(f"cant find {filename}.config.json")
+        try:
+            ARgorithmConfig(f"{filename}.config.json")
+        except FileNotFoundError as fe:
+            msg.warn("config missing",f"you can use edit the {filename}.config.json \nor use CLI based config generator \nor try out ________ to create config")
+            raise typer.Exit()
+        except ValidationError as ve:
+            msg.warn("config file is not configured properly","try the configure command to fix it \ncheck out docs for more info")
             raise typer.Exit(1)
     else:
         msg.warn(f"{filename}.py not found")
@@ -336,6 +341,30 @@ def file_reader(filename):
 
     msg.good("Files Verified")
     return data
+
+@app.command()
+def configure(filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+    ):
+    """Starts CLI config generator"""
+    filepath = filename.split('.')[0] + ".config.json"
+    try:
+        existing_config = {
+            "argorithmID" : filename,
+            "file" : filename+".py",
+            "function" : "run",
+            "parameters" : {},
+            "default" : {},
+            "description" : ""
+        }
+        if os.path.isfile( os.path.join(os.getcwd() , f"{filepath}") ):
+            with open(os.path.join(os.getcwd(), f"{filepath}") , 'r') as configfile:
+                existing_config = json.load(configfile)
+            os.remove(os.path.join(os.getcwd() , f"{filepath}"))
+        config = ARgorithmConfig(filepath)
+    except Exception:
+        msg.fail("Some error occured, try again")
+        with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
+            json.dump(existing_config,configfile)
 
 @app.command()
 def submit(
@@ -453,14 +482,12 @@ def list_argorithms():
 @app.command()
 def test(
     argorithm_id:str = typer.Argument(... , help="argorithmID of function to be called. If not passed then menu will be presented"),
-    output:bool = typer.Option(False,'--output','-o',help="print results in json format",show_default=False)
-    # user_input:bool = typer.Option(False,'--user-input','-u',help="if present, parses input from user",show_default=False)
+    output:bool = typer.Option(False,'--output','-o',help="print results in json format",show_default=False),
+    user_input:bool = typer.Option(False,'--user-input','-u',help="if present, takes input from user",show_default=False)
     ):
     """test argorithms stored in server
     """
     params = search(argorithm_id,show=not output)
-    # if user_input:
-    #     pass
     header=None
     if authmanager.auth_check():
         token = authmanager.get_token()
@@ -470,6 +497,9 @@ def test(
         "argorithmID" : params["argorithmID"],
         "parameters" : params["example"]
     }
+    if user_input:
+        ip = InputManager()
+        data["parameters"] = ip.input_data(params["parameters"]) 
     url = settings.get_endpoint()+"/argorithms/run"
     try:
         with Halo(text='Connecting', spinner='dots'):

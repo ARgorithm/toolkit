@@ -9,7 +9,7 @@
             "start" : 1
         }
     }, 
-    "default": {
+    "example": {
         "n" : 4
     }, 
     "description": "Print the nth fibonacci number"
