@@ -1,0 +1,144 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ARgorithm config",
+    "description": "ARgorithm configuration file schema",
+    "type" : "object",
+    "properties" : {
+        "argorithmID" : {
+            "type" : "string"
+        },
+        "file" : {
+            "type" : "string"
+        },
+        "function" : {
+            "type" : "string"
+        },
+        "parameters" : {
+            "type" : "object",
+            "patternProperties" : {
+                "^[a-zA-Z].*$":{
+                    "type" : "object",
+                    "anyOf" : [
+                        {
+                            "properties" : {
+                                "type" : {
+                                    "const" : "INT"
+                                },
+                                "description" : {
+                                    "type" : "string"
+                                },
+                                "start" : {
+                                    "type" : "integer"
+                                },
+                                "end" : {
+                                    "type" : "integer"
+                                }
+                            },
+                            "required" : ["type","description"],
+                            "additionalProperties" : false
+                        },
+                        {
+                            "properties" : {
+                                "type" : {
+                                    "const" : "FLOAT"
+                                },
+                                "description" : {
+                                    "type" : "string"
+                                },
+                                "start" : {
+                                    "type" : "number"
+                                },
+                                "end" : {
+                                    "type" : "number"
+                                }
+                            },
+                            "required" : ["type","description"],
+                            "additionalProperties" : false
+                        },
+                        {
+                            "properties" : {
+                                "type" : {
+                                    "const" : "STRING"
+                                },
+                                "description" : {
+                                    "type" : "string"
+                                },
+                                "size" : {
+                                    "type" : ["integer","string"]
+                                }
+                            },
+                            "required" : ["type","description"],
+                            "additionalProperties" : false
+                        },
+                        {
+                            "properties" : {
+                                "type" : {
+                                    "const" : "ARRAY"
+                                },
+                                "description" : {
+                                    "type" : "string"
+                                },
+                                "size" : {
+                                    "type" : ["integer","string"]
+                                },
+                                "item-type" : {
+                                    "type" : "string",
+                                    "enum" : [
+                                        "INT",
+                                        "FLOAT",
+                                        "STRING"
+                                    ]
+                                }
+                            },
+                            "required" : ["type","description","item-type"],
+                            "additionalProperties" : false
+                        },
+                        {
+                            "properties" : {
+                                "type" : {
+                                    "const" : "ARRAY"
+                                },
+                                "description" : {
+                                    "type" : "string"
+                                },
+                                "row" : {
+                                    "type" : ["integer","string"]
+                                },
+                                "col" : {
+                                    "type" : ["integer","string"]
+                                },
+                                "item-type" : {
+                                    "type" : "string",
+                                    "enum" : [
+                                        "INT",
+                                        "FLOAT",
+                                        "STRING"
+                                    ]
+                                }
+                            },
+                            "required" : ["type","description","col","row","item-type"],
+                            "additionalProperties" : false
+                        }
+                    ]
+                }
+            },
+            "additionalProperties" : false
+        },
+        "description" : {
+            "type" : "string"
+        },
+        "example" : {
+            "type" : "object",
+            "additionalProperties" : true
+        }
+    },
+    "required" : [
+        "argorithmID" ,
+        "file" ,
+        "function" ,
+        "description",
+        "parameters",
+        "example"
+    ],
+    "additionalProperties" : false
+}

@@ -7,7 +7,8 @@ import json
 import requests
 import typer
 from halo import Halo
-from ARgorithmToolkit.parser import ARgorithmConfig,ValidationError,InputManager
+import ARgorithmToolkit
+from ARgorithmToolkit.parser import ARgorithmConfig,ValidationError,input_data
 
 CLOUD_URL = "https://argorithm.el.r.appspot.com"
 CACHE_DIR = typer.get_app_dir("ARgorithm")
@@ -54,7 +55,7 @@ class Messager():
         typer.secho(f"\tby {argorithm['maintainer']}",fg=typer.colors.CYAN)
         typer.echo("\tParameters")
         for key in argorithm['parameters']:
-            typer.echo(f"\t\t{key} : {argorithm['parameters'][key]}")
+            typer.echo(f"\t\t{key} : {argorithm['parameters'][key]['description']}")
 
     def state(self,states):
         """pretty print states
@@ -250,22 +251,13 @@ def init(
     """
     typer.echo(f"Creating empty template for {name}")
 
+    with open(os.path.join(ARgorithmToolkit.__path__[0],'data/template.py',),'rb') as template:
+        starter = template.read()
+
     filename = f"{name}.py"
-    with open(filename , "w") as codefile:
-        code_starter = """
-import ARgorithmToolkit
-
-def run(**kwargs):
-    algo = ARgorithmToolkit.StateSet()
-
-    #
-    # Your code
-    #
-
-    return algo
-
-        """
-        codefile.write(code_starter)
+    with open(filename , "wb") as codefile:
+        codefile.write(starter)
+    
     if create_config:
         config = {
             "argorithmID" : name,
@@ -304,9 +296,9 @@ def file_reader(filename):
     directory = os.getcwd()
     if os.path.isfile( os.path.join(directory,filename+".py")):
         try:
-            ARgorithmConfig(f"{filename}.config.json")
+            data = ARgorithmConfig(f"{filename}.config.json")
         except FileNotFoundError as fe:
-            msg.warn("config missing",f"you can use edit the {filename}.config.json \nor use CLI based config generator \nor try out ________ to create config")
+            msg.warn("config missing",f"you can use edit the {filename}.config.json \nor use CLI based config generator")
             raise typer.Exit()
         except ValidationError as ve:
             msg.warn("config file is not configured properly","try the configure command to fix it \ncheck out docs for more info")
@@ -314,33 +306,8 @@ def file_reader(filename):
     else:
         msg.warn(f"{filename}.py not found")
         raise typer.Exit(1)
-    msg.good('files found')
-
-    required_tags = {
-        "argorithmID" : filename,
-        "file" : filename+".py",
-        "function" : "run",
-        "parameters" : {},
-        "default" : {},
-        "description" : ""
-    }
-
-    with open(os.path.join(directory , f"{filename}.config.json") , 'r') as configfile:
-        data = json.load(configfile)
-        for key in required_tags:
-            if key not in data:
-                msg.warn(f"please check {filename}.config.json {key} is missing")
-                raise typer.Exit(1)
-        for key in data:
-            if key not in required_tags:
-                msg.warn(f"please check {filename}.config.json {key} is uneccessary")
-                raise typer.Exit(1)
-            if type(data[key]) != type(required_tags[key]):
-                msg.warn(f"please check {key} in {filename}.config.json")
-                raise typer.Exit(1)
-
     msg.good("Files Verified")
-    return data
+    return data.config
 
 @app.command()
 def configure(filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
@@ -361,7 +328,7 @@ def configure(filename:str=typer.Argument(... , help="name of argorithm" , autoc
                 existing_config = json.load(configfile)
             os.remove(os.path.join(os.getcwd() , f"{filepath}"))
         config = ARgorithmConfig(filepath)
-    except Exception:
+    except Exception as ex:
         msg.fail("Some error occured, try again")
         with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
             json.dump(existing_config,configfile)
@@ -498,8 +465,7 @@ def test(
         "parameters" : params["example"]
     }
     if user_input:
-        ip = InputManager()
-        data["parameters"] = ip.input_data(params["parameters"]) 
+        data["parameters"] = input_data(params["parameters"]) 
     url = settings.get_endpoint()+"/argorithms/run"
     try:
         with Halo(text='Connecting', spinner='dots'):
