@@ -53,22 +53,72 @@ The goal of ARgorithm is to create visualisations for educational purposes. Thus
 
 ## Setting up the config file
 
-Now that your argorithm is ready, it's time to configure the `bubblesort.config.json`.`argorithmID` and `file` is already filled and need not be altered. The `function` is set to `run` which is the function from the file we need to call. The `description` stored description of the agorithm. These are useful metadata for the CLI and server when it comes to parsing and execution. The most important keys are `parameters` and `default`.
+Now that your argorithm is ready, it's time to configure the `bubblesort.config.json`. We can use the configure command or create the file and set it up in code editor. Below we have demonstrated how to create the `bubblesort.config.json` using the `configure` command and how the file should look like. You can directly check out the final `bubblesort.config.json` below.
 
+<div class="termy">
 
+```console
+$ ARgorithm configure bubblesort 
+# Start CLI config generator?  [y/N]:$ y
 
-1. `parameters` : This key stores an object where each key is a key for the function `**kwargs` and its value is the type of value expected.
++-----------------------------+
+|  ARGORITHM CONFIG GENERATOR |
++-----------------------------+
 
-   
+ARgorithmID: bubblesort
+Codefile found: bubblesort.py
+# which function should be called [run]:$ run
+Enter ARgorithm Description
+Press ENTER on empty line to leave multiline input
+# :$ demonstrate bubble sort
+```
 
-2. `default` : This key stores an object that specifies the default value for function `**kwargs`. These values would be used to in case of any exception in executing parameters. 
+</div>
 
-!!! info
-	The keys inside the parameters and default objects must be the same
+We need to define `array` which would be our array that we will sort
 
+<div class="termy">
 
+```console
+Setting up parameters for your argorithm
+input keywords are used to map the input passed to your function as kwargs
 
-```JSON hl_lines="5-12"
+The following input keywords were found in code
+- array
+input keyword: array
+# Enter parameter type:$ ARRAY
+# Enter type of array element:$ INT
+# Do you want to set a size constraint to array [y/N]:$ N
+Enter parameter description
+Press ENTER on empty line to leave multiline input:
+# :$ Array to be sorted
+
+# Do you want to another input keyword [y/N]:$ n
+```
+
+</div>
+
+We now need to define the default array that will be used when `array` is not input by user
+
+<div class="termy">
+
+```console
+----------------------------------------
+ENTER INPUT FOR ARGORITHM
+----------------------------------------
+Based on argorithm parameters, input will be taken
+
+input keyword: array
+Description: Array to be sorted
+# Enter space separated series:$ 6 3 2 4 5 1
+
+```
+
+</div>
+
+This is how the `bubblesort.config.json` should look like.
+
+```JSON
 {!../../examples/bubblesort.config.json!}
 ```
 

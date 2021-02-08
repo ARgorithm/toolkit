@@ -38,7 +38,8 @@ def multiline():
     return buffer[:-1]
 
 def master_heading():
-    # typer.clear()
+    """Renders the ARgorithm config generator heading
+    """
     text = typer.style(config_cli_heading,fg=typer.colors.BLUE,bold=True)
     typer.echo(text)
 
@@ -57,30 +58,46 @@ def heading(title,message):
     typer.echo(message+"\n")
     return typer
 
-def input_prompt(message,default=None,type=str):
-    """[summary]
+def input_prompt(message,default=None,type=str,show_default=True):
+    """Uses typer to create a single input field in CLI
 
     Args:
-        message ([type]): [description]
-        type ([type], optional): [description]. Defaults to str.
+        message (str): The input field text
+        type (type, optional): The type of input
+        default (type, optional): The default value if user does not enter any value
+        show_default (bool, optional): By default, True. If True shows the default value to user 
+
+    Returns:
+        ip : The data entered by user
     """
     text = typer.style(message,fg=typer.colors.BLUE)
     if default:
-        ip = typer.prompt(text,default=default,type=type)
+        ip = typer.prompt(text,default=default,type=type,show_default=show_default)
     else:
         ip = typer.prompt(text,type=type)
     return ip
 
 def confirm_prompt(message):
+    """Uses typer to create a confirmation prompt
+
+    Args:
+        message (str): The text for confirmation
+
+    Returns:
+        flag: boolean value as entered by user  
+    """
     text = typer.style(message,fg=typer.colors.BLUE)
     flag = typer.confirm(text)
     return flag
 
 def multiline_input_prompt(message):
-    """[summary]
+    """Uses typer and ARgorithmToolkit.parser.multiline to create a multiline input prompt
 
     Args:
-        message ([type]): [description]
+        message (str): The text for prompt
+
+    Returns:
+        ip: data entered by user
     """
     text = typer.style(message + ':',fg=typer.colors.BLUE)
     helptext = typer.style("Press ENTER on empty line to leave multiline input",fg=typer.colors.CYAN)
@@ -90,20 +107,38 @@ def multiline_input_prompt(message):
     return ip
 
 def info(message,data):
+    """Display information using typer
+
+    Args:
+        message (str): Description of the information
+        data : The data to be displayed
+    """
     message = typer.style(message,fg=typer.colors.BLUE)
-    data = typer.style(data,fg=typer.colors.GREEN)
+    data = typer.style(str(data),fg=typer.colors.GREEN)
     typer.echo(message+": "+data)
 
 def warning(message):
-    """[summary]
+    """Generate warning message using typer
 
     Args:
-        message ([type]): [description]
+        message (str): warning text
     """
-    text = typer.style("⚠\t" + message , fg=typer.colors.YELLOW)
+    text = typer.style("⚠  " + message , fg=typer.colors.YELLOW)
     typer.echo(text)
 
 def find_parameters(filename,function):
+    """Finds the keyword arguments accessed in the file
+
+    find_parameters parses the code line by line and check which all keywords
+    were accessed in the function code within the code file
+
+    Args:
+        filename (str): filename of the codefile
+        function (str): function name where we need to check the kwargs
+
+    Returns:
+        params: list of keywords which need to be defined in config file
+    """
     function_regex = re.compile(f"^def.([A-Za-z0-9]+).?\(\*\*kwargs\)")
     kwarg_regex = r"kwargs\[[\'\"]([A-Za-z0-9]+)[\'\"]\]"
     with open(filename,'r') as codefile:
@@ -123,13 +158,13 @@ def find_parameters(filename,function):
         return list(parameters)
 
 def input_data(parameters):
-    """[summary]
+    """Generates a input form based on the parameters in config
 
     Args:
-        parameters ([type]): [description]
+        parameters (dict): The config parameters which will be used to generate the input fields
 
     Returns:
-        [type]: [description]
+        example: The values for each param (key in parameters)
     """
     example = {}
     types = {
@@ -137,12 +172,11 @@ def input_data(parameters):
         "FLOAT" : float,
         "STRING" : str,
     }
+    heading("Enter input for ARgorithm","Based on argorithm parameters, input will be taken")
     for key in parameters:
         param = parameters[key]
         # typer.clear()
-        heading("Enter input for ARgorithm","Based on argorithm parameters, input will be taken")
-        typer.echo(f"{key}\n{param['description']}")
-        info("input keyword",key)
+        info("\ninput keyword",key)
         info("Description",param['description'])
 
         def numeric_input(param,input_type):
@@ -279,25 +313,45 @@ class ARgorithmConfig:
         config["parameters"] = {}
 
         def define_parameter(config,parameter_name):
+            """Nested function that asks use information regarding parameter
+
+            Args:
+                config (dict): The config object where the parameter data has to be updated
+                parameter_name (str): The parameter whose metadata is being collected
+
+            Returns:
+                config: Returns updated config object
+            """
             parameter_types = ["INT","FLOAT","STRING","ARRAY","MATRIX"]
             parameter_type = input_prompt("Enter parameter type")
             while parameter_type not in parameter_types:
                 warning("Invalid parameter type. Accepted values: INT FLOAT ARRAY MATRIX STRING")
                 parameter_type = input_prompt("Enter parameter type")
-            
-            parameter_description = multiline_input_prompt("Enter parameter description")
-            config["parameters"][parameter_name]["description"] = parameter_description
             config["parameters"][parameter_name]["type"] = parameter_type
 
-            def range_input(parameter_name):
-                start = input_prompt("Enter lower limit",type=int,default=-math.inf)
-                if start:
+            def range_input(config,parameter_name):
+                """Update config with the range for `INT` and `FLOAT` parameters
+
+                Args:
+                    config (dict): The config object where the parameter data has to be updated
+                    parameter_name (str): The parameter whose metadata is being collected
+                """
+                start = input_prompt("Enter lower limit",type=int,default=-math.inf,show_default=False)
+                if start != -math.inf:
                     config["parameters"][parameter_name]["start"] = start
-                end = input_prompt("Enter upper limit",type=math.inf)
-                if end:
+                end = input_prompt("Enter upper limit",type=int,default=math.inf,show_default=False)
+                if end != math.inf:
                     config["parameters"][parameter_name]["end"] = end
 
             def size_ref(data_field):
+                """Inputs size constraint for `STRING`,`ARRAY` and `MATRIX` parameters
+
+                Args:
+                    data_field (str): What is the size constraint being used as
+
+                Returns:
+                    size: Returns size constraint
+                """
                 size = input_prompt(f"Enter integer {data_field} or name of pre-existing INT type parameter")
                 try:
                     size = int(size)
@@ -308,12 +362,12 @@ class ARgorithmConfig:
             if parameter_type == "INT":
                 range_confirm = confirm_prompt(f"Do you want to add range constraints to {parameter_name}")
                 if range_confirm:
-                    range_input(parameter_name)
+                    range_input(config,parameter_name)
             
             elif parameter_type == "FLOAT":
                 range_confirm = confirm_prompt(f"Do you want to add range constraints to {parameter_name}")
                 if range_confirm:
-                    range_input(parameter_name)
+                    range_input(config,parameter_name)
             
             elif parameter_type == "STRING":
                 range_confirm = confirm_prompt(f"Do you want to set a size constraint to {parameter_name}")
@@ -340,6 +394,10 @@ class ARgorithmConfig:
                 config["parameters"][parameter_name]["item-type"] = item_type
                 config["parameters"][parameter_name]["row"] = size_ref('row size')
                 config["parameters"][parameter_name]["col"] = size_ref('col_size')
+
+            parameter_description = multiline_input_prompt("Enter parameter description")
+            config["parameters"][parameter_name]["description"] = parameter_description
+            
             return config
 
         typer.echo("Setting up parameters for your argorithm")
@@ -351,10 +409,10 @@ class ARgorithmConfig:
             typer.echo(text)
         for param in existing_parameters:
             typer.echo(typer.style("- "+param,fg=typer.colors.GREEN))
+            config["parameters"][param] = {}
         
         for param in existing_parameters:
-            info("input keyword :",param)
-            config["parameters"][param] = {}
+            info("input keyword",param)
             config = define_parameter(config,param)
 
         confirm = confirm_prompt("Do you want to another input keyword")

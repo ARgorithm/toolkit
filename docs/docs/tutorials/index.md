@@ -14,11 +14,11 @@ Creating empty template for hello_world
 refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it
 chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples
 $ ls
-hello_world.config.json  hello_world.py
+hello_world.py
 ```
 </div>
 
-This creates the .config.json file and the .py file required to run the states. These files were covered in detail in the [getting started page](/toolkit/start). All the examples in this tutorials will be starting from this step onwards.
+This creates the template `.py` file  This file was covered once in the [getting started page](/toolkit/start). All the examples in this tutorials will be starting from this step onwards.
 
 ## Executing the code
 

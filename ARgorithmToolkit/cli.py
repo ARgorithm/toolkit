@@ -313,6 +313,10 @@ def file_reader(filename):
 def configure(filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
     ):
     """Starts CLI config generator"""
+    codefile = filename.split('.')[0] + ".py"
+    if not os.path.isfile(os.path.join(os.getcwd(),codefile)):
+        msg.warn("Python file not found",'use the init command first')
+        raise typer.Abort()
     filepath = filename.split('.')[0] + ".config.json"
     try:
         existing_config = {
@@ -328,6 +332,11 @@ def configure(filename:str=typer.Argument(... , help="name of argorithm" , autoc
                 existing_config = json.load(configfile)
             os.remove(os.path.join(os.getcwd() , f"{filepath}"))
         config = ARgorithmConfig(filepath)
+    except FileNotFoundError as fe:
+        msg.warn("Operation cancelled by user")
+        with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
+            json.dump(existing_config,configfile)
+        typer.Abort()
     except Exception as ex:
         msg.fail("Some error occured, try again")
         with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
