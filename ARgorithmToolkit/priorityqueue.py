@@ -9,7 +9,7 @@ module:
     >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
 """
 import heapq
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
 from ARgorithmToolkit.encoders import serialize
 
 class PriorityQueueState():
@@ -120,7 +120,7 @@ class PriorityQueueState():
         )
 
 @serialize
-class PriorityQueue:
+class PriorityQueue(ARgorithmStructure):
     """The PriorityQueue class offes a priority queue container that stores
     states in its stateset which later are used to make dynamic Augmented
     reality visualizations.

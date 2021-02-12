@@ -8,7 +8,7 @@ work:
     >>> vec = ARgorithmToolkit.vector.Vector(name='vec',algo=algo)
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
 from ARgorithmToolkit.encoders import serialize
 
 class VectorState:
@@ -205,7 +205,7 @@ class VectorIterator:
         return v
 
 @serialize
-class Vector:
+class Vector(ARgorithmStructure):
     """The Vector class provides a wrapped around the python list class to
     emulate it as a vector.
 

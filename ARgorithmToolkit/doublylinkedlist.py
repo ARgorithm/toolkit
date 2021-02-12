@@ -15,7 +15,7 @@ These three classes can be directly imported from the toolkit:
 
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
 from ARgorithmToolkit.encoders import serialize
 
 class DoublyLinkedListNodeState:
@@ -164,7 +164,7 @@ class DoublyLinkedListNodeState:
         )
 
 @serialize
-class DoublyLinkedListNode:
+class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
     """The DoublyLinkedListNode class is an implementation of a Linked list
     Node for which we store states. Unlike other data structure classes, in
     which we have to give a name to the instance, we dont have to provide name
@@ -364,7 +364,7 @@ class DoublyLinkedListState:
         )
 
 @serialize
-class DoublyLinkedList:
+class DoublyLinkedList(ARgorithmStructure, ARgorithmHashable):
     """The DoublyLinkedList class is used to just store the head of the linked
     list.
 

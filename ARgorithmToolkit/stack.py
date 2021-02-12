@@ -7,7 +7,7 @@ library without having to import from the stack module:
     >>> st = ARgorithmToolkit.Stack(name="st",algo=algo)
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
 from ARgorithmToolkit.encoders import serialize
 
 class StackState():
@@ -111,7 +111,7 @@ class StackState():
         )
 
 @serialize
-class Stack:
+class Stack(ARgorithmStructure):
     """The Stack class is a container interface for the stack, a linear
     container implementation of LIFO.
 

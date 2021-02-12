@@ -9,7 +9,7 @@ to import from the array module Both work:
 """
 
 import numpy as np
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
 from ARgorithmToolkit.encoders import serialize 
 
 def check_dimensions(data):
@@ -178,7 +178,7 @@ class ArrayIterator:
         return v
 
 @serialize
-class Array:
+class Array(ARgorithmStructure):
     """The Array class used to emulate multidimensional arrays that can be
     rendered in the ARgorithm Application as series of blocks.
 

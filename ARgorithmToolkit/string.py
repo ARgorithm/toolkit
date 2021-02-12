@@ -7,7 +7,7 @@ the ARgorithmToolkit library without having to import from the string module:
     >>> s = ARgorithmToolkit.String(name="s",algo=algo)
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import ARgorithmHashable, State, StateSet, ARgorithmError, ARgorithmStructure
 from ARgorithmToolkit.encoders import serialize
 
 class StringState:
@@ -122,7 +122,7 @@ class StringIterator:
         return v
 
 @serialize
-class String():
+class String(ARgorithmStructure, ARgorithmHashable):
     """The String class is a wrapper around the already existing string class
     in python adding the feature to store states.
 

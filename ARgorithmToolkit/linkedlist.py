@@ -15,7 +15,7 @@ These three classes can be directly imported from the toolkit:
 
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError, ARgorithmStructure
 from ARgorithmToolkit.encoders import serialize
 
 class LinkedListNodeState:
@@ -129,7 +129,7 @@ class LinkedListNodeState:
         )
 
 @serialize
-class LinkedListNode:
+class LinkedListNode(ARgorithmStructure, ARgorithmHashable):
     """The LinkedListNode class is an implementation of a Linked list Node for
     which we store states. Unlike other data structure classes, in which we
     have to give a name to the instance, we dont have to provide name in the
@@ -282,7 +282,7 @@ class LinkedListState:
         )
 
 @serialize
-class LinkedList:
+class LinkedList(ARgorithmStructure, ARgorithmHashable):
     """The LinkedList class is used to just store the head of the linked list.
 
     This class is useful when programmer want to program his own List class using
