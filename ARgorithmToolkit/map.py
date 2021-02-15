@@ -59,7 +59,7 @@ class MapState:
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
-            ARgorithmToolkit.utils.State: returns the ``map_set`` state for the respective map mentioned
+            ARgorithmToolkit.utils.State: returns the ``map_get`` state for the respective map mentioned
         """ 
         state_type = "map_get"
         state_def = {
@@ -145,14 +145,15 @@ class MapIterator:
         self.map = _map
         self.size = len(_map)
         self.index = 0
-        self.keys = self.map.keys()
+        self.keys = list(self.map.keys())
+        self.values = list(self.map.values())
 
     def __next__(self) -> tuple:
-        if self._index == self.size:
+        if self.index == self.size:
             raise StopIteration
-        k = self.keys[self._index]
-        v = self.map[k]
-        self._index += 1
+        k = self.keys[self.index]
+        v = self.values[self.index]
+        self.index += 1
         return k,v
 
 @serialize
@@ -276,13 +277,46 @@ class Map(ARgorithmStructure):
         """
         try:
             _value = self.__working_dict[key]
-            state = self.state_generator.map_get(body=self.body, key=key, value=_value, comments="")
+            state = self.state_generator.map_get(body=self.body, key=key, value=_value, comments=comments)
             self.algo.add_state(state)
             return _value
         except:
             state = self.state_generator.map_get(body=self.body, key=key, value=default if default else "none", comments=f"key not found. value efaulted to {default}")
             self.algo.add_state(state)
             return default
+
+    def set(self, key, value, comments=""):
+        """sets a value mapped to a given key in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict
+            value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to "".
+
+        Example:
+            >>> map
+            Map({"abc":2, "efg":3})
+            >>> map.set("xyz, 5) #__setitem__ usage
+            >>> map.get("xyz", -1)
+            5
+            >>> map["xyz"]
+            5
+        """
+        assert isinstance(key,(ARgorithmHashable, int, str, float, bool)), f"Invalid key : key cannot be any type other than (ARgorithmHashable, int, str, float, bool), {type(key).__name__} is not hashable."
+        assert isinstance(value,(ARgorithmStructure, int, str, float, bool)), "Invalid value : value cannot be set to any type other than (ARgorithmStructure, int, str, float, bool)"
+        last_value = self.body.get(key, "none")
+        self.__working_dict[key] = value
+        if isinstance(key, (str, int, float, bool)) and isinstance(value, (str, int, float, bool)):
+            self.body[key] = value
+        elif isinstance(key, (str, int, float, bool)):
+            self.body[key] = value.to_json()
+        elif isinstance(value, (str, int, float, bool)):
+            self.body[key.to_json()] = value
+        else:
+            self.body[key.to_json()] = value.to_json()
+
+        state = self.state_generator.map_set(body=self.body, key=key, value=value, last_value=last_value, comments=comments)
+        self.algo.add_state(state)
+
 
     def __setitem__(self, key, value, comments=""):
         """sets a value mapped to a given key in the Map
@@ -359,7 +393,7 @@ class Map(ARgorithmStructure):
         except Exception as e:
             raise ARgorithmError(f"Invalid Key Error : {str(e)}") from e
 
-    def remove(self, key):
+    def remove(self, key, comments=""):
         """deletes the entry associated with 'key' in the Map without raising an error
         Args:
             key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict
@@ -385,7 +419,7 @@ class Map(ARgorithmStructure):
                 del self.body[key]
             
             del self.__working_dict[key]
-            state = self.state_generator.map_remove(self.body, key, value, "")
+            state = self.state_generator.map_remove(self.body, key, value, comments)
             self.algo.add_state(state)
 
         except:
@@ -408,6 +442,25 @@ class Map(ARgorithmStructure):
             str: string conversion for Map
         """
         return f"Map({self.__working_dict.__str__()})"
+
+    def keys(self):
+        """Returns a list of key entries in the map
+
+        Returns:
+            list: list of keys
+        """
+
+        return self.__working_dict.keys()
+
+    def values(self):
+        """Returns a list of values in the map
+
+        Returns:
+            list: list of values
+        """
+
+        return self.__working_dict.values()
+
 
     
         
