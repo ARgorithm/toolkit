@@ -105,12 +105,10 @@ class ARgorithmHashable:
     """Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
     This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
     """
-    pass
 
 class ARgorithmStructure:
     """Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
     """
-    pass
 
 class Variable(ARgorithmStructure, ARgorithmHashable):
     """Some programs might need us to listen and store states of primitive

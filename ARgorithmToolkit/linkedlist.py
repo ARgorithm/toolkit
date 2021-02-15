@@ -15,7 +15,7 @@ These three classes can be directly imported from the toolkit:
 
 """
 
-from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
 from ARgorithmToolkit.encoders import serialize
 
 class LinkedListNodeState:

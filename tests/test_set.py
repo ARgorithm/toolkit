@@ -15,11 +15,12 @@ def test_init():
     myset = ARgorithmToolkit.Set('myset',algo)
     myset = ARgorithmToolkit.Set('myset',algo,l)
     myset = ARgorithmToolkit.Set('myset',algo,t)
-    myset = ARgorithmToolkit.Set('myset',algo,vec)
     myset = ARgorithmToolkit.Set('myset',algo,arr)
+    myset = ARgorithmToolkit.Set('myset',algo,vec)
 
     state = last_state(algo)
     assert state['state_type'] == "set_declare"
+    assert myset.body == set([1,2,3])
 
 def test_add_remove_find():
     """test internal set operations such as add,find,remove"""
