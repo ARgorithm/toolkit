@@ -347,7 +347,7 @@ class LinkedList(ARgorithmStructure, ARgorithmHashable):
 
     def __repr__(self):
         return f"LinkedList(head at {self.head})"
-        
+
 class ForwardListIterator:
     """This class is a generator that is returned each time an ForwardList has
     to be iterated.

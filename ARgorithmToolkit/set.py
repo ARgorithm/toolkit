@@ -11,8 +11,9 @@ to import from the set module :
 """
 
 from numpy.lib.function_base import iterable
+from numpy import generic
 from ARgorithmToolkit.utils import ARgorithmHashable, State, StateSet, ARgorithmError, ARgorithmStructure
-from ARgorithmToolkit.encoders import serialize 
+from ARgorithmToolkit.encoders import serialize
 
 class SetState:
     """This class is used to generate states for various actions performed on
@@ -59,8 +60,8 @@ class SetState:
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".
 
         Returns:
-            ARgorithmToolkit.utils.State: returns the ``set_remove`` state for the respective set mentioned
-        """  
+            ARgorithmToolkit.utils.State: returns the ``set_add`` state for the respective set mentioned
+        """
         state_type = "set_add"
         state_def = {
             "id": self._id,
@@ -85,7 +86,7 @@ class SetState:
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``set_remove`` state for the respective set mentioned
-        """  
+        """
         state_type = "set_remove"
         state_def = {
             "id" : self._id,
@@ -100,7 +101,7 @@ class SetState:
         )
 
     def set_find(self, body, key, found, comments="") -> State:
-        """Generates the `set_lookup` state when a particular key is searched for.
+        """Generates the `set_find` state when a particular key is searched for.
 
         Args:
             body : The contents of the set that are to be sent along with the state
@@ -110,8 +111,8 @@ class SetState:
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``set_find`` state for the respective set mentioned
-        """  
-        state_type = "set_add"
+        """
+        state_type = "set_find"
         state_def = {
             "id": self._id,
             "variable_name" : self.name,
@@ -124,7 +125,6 @@ class SetState:
             state_def=state_def,
             comments=comments
         )
-
 
 @serialize
 class Set(ARgorithmStructure):
@@ -183,18 +183,18 @@ class Set(ARgorithmStructure):
             raise ARgorithmError("Set structure needs a reference of template to store states") from ex
 
         self.body = set()
-        for x in data:
-            if isinstance(x, ARgorithmHashable):
-                self.body.add(x.to_json())
-            elif isinstance(x, (int,str,bool,float)):
-                self.body.add(x)
-            else:
-                raise "Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)"
+        if data:
+            for x in data:
+                if isinstance(x, ARgorithmHashable):
+                    self.body.add(x.to_json())
+                elif isinstance(x, (int,str,bool,float,generic)):
+                    self.body.add(x)
+                else:
+                    raise TypeError("Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)")
         self.__working_set = set(data) if data else set()
         state = self.state_generator.set_declare(self.body, comments=comments)
         self.algo.add_state(state)
 
-    
     def __len__(self) -> int:
         """returns size of Set when processed by len() function.
 
@@ -209,7 +209,8 @@ class Set(ARgorithmStructure):
         """
         return len(self.__working_set)
 
-    def add(self, key):
+
+    def add(self, key, comments=""):
         """Adds a unique key to the set.
         Args:
             key (ARgorithmStructure or (int, str, float, bool)) : key to add to the set
@@ -223,17 +224,20 @@ class Set(ARgorithmStructure):
         >>> set1
         Set({1,2,'abc'})
         """
-        assert isinstance(key,(ARgorithmHashable,int,bool,str,float)), "Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)"
+        try:
+            assert isinstance(key,(ARgorithmHashable,int,bool,str,float))
+        except AssertionError as ae:
+            raise TypeError("Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)") from ae
         if isinstance(key, ARgorithmHashable):
             self.body.add(key.to_json())
         else:
             self.body.add(key)
 
         self.__working_set.add(key)
-        state = self.state_generator.set_add(self.body, key)
+        state = self.state_generator.set_add(self.body, key,comments)
         self.algo.add_state(state)
 
-    
+
     def remove(self, key, comments=""):
         """removes the key from the set
         Args:
@@ -253,9 +257,8 @@ class Set(ARgorithmStructure):
             else:
                 self.body.remove(key)
             self.__working_set.remove(key)
-            state = self.state_generator.set_remove(self.body, key)
+            state = self.state_generator.set_remove(self.body, key,comments)
             self.algo.add_state(state)
-        
         except Exception as e:
             raise ARgorithmError(f"Invalid Key Error : {str(e)}") from e
 
@@ -276,7 +279,7 @@ class Set(ARgorithmStructure):
             False
         """
         found = key in self.__working_set
-        state = self.state_generator.set_find(self.body, key, found)
+        state = self.state_generator.set_find(self.body, key, found,comments)
         self.algo.add_state(state)
         return found
 
@@ -289,7 +292,7 @@ class Set(ARgorithmStructure):
 
         returns:
             Set : intersection of self and other
-        
+
         example:
             >>> set1
             Set({1,2})
@@ -298,9 +301,11 @@ class Set(ARgorithmStructure):
             >>> set1.intersection(set2)
             Set({2})
         """
-        intersect_data = self.__working_set.intersection(other.__working_set)
+        if not comments:
+            comments = f"Creating new set with intersection of {self.state_generator.name} and {other.state_generator.name}"
+        intersect_data = self.__working_set.intersection(other.__working_set) # pylint: disable=protected-access
         intersect_name = f"{self.state_generator.name}_intersection_{other.state_generator.name}"
-        intersect = Set(intersect_name, self.algo, intersect_data, comments=f"Creating new set with intersection of {self.state_generator.name} and {other.state_generator.name}")
+        intersect = Set(intersect_name, self.algo, intersect_data, comments=comments)
         return intersect
 
     def union(self, other, comments="") :
@@ -311,7 +316,7 @@ class Set(ARgorithmStructure):
 
         returns:
             Set : union of self and other
-        
+
         example:
             >>> set1
             Set({1,2})
@@ -320,9 +325,11 @@ class Set(ARgorithmStructure):
             >>> set1.union(set2)
             Set({1,2,3,4})
         """
-        union_data = self.__working_set.union(other.__working_set)
+        if not comments:
+            comments = f"Creating new set with union of {self.state_generator.name} and {other.state_generator.name}"
+        union_data = self.__working_set.union(other.__working_set) # pylint: disable=protected-access
         union_name = f"{self.state_generator.name}_union_{other.state_generator.name}"
-        _union = Set(union_name, self.algo, union_data, comments=f"Creating new set with union of {self.state_generator.name} and {other.state_generator.name}")
+        _union = Set(union_name, self.algo, union_data, comments=comments)
         return _union
 
     def difference(self, other, comments="") :
@@ -333,7 +340,7 @@ class Set(ARgorithmStructure):
 
         returns:
             Set : difference of self and other
-        
+
         example:
             >>> set1
             Set({1,2})
@@ -342,11 +349,13 @@ class Set(ARgorithmStructure):
             >>> set1.difference(set2)
             Set({1})
         """
-        diff_data = self.__working_set.difference(other.__working_set)
+        if not comments:
+            comments = f"Creating new set with difference of {self.state_generator.name} and {other.state_generator.name}"
+        diff_data = self.__working_set.difference(other.__working_set) # pylint: disable=protected-access
         diff_name = f"{self.state_generator.name}_difference_{other.state_generator.name}"
-        diff = Set(diff_name, self.algo, diff_data, comments=f"Creating new set with difference of {self.state_generator.name} and {other.state_generator.name}")
+        diff = Set(diff_name, self.algo, diff_data, comments=comments)
         return diff
-    
+
     def __repr__(self) -> str:
         """Return representation for shell outputs.
 
@@ -354,7 +363,7 @@ class Set(ARgorithmStructure):
             str: shell representation for Set
         """
         empty = "{}"
-        return f"Set({self.__working_set.__repr__() if len(self.__working_set) else empty})"
+        return f"Set({self.__working_set.__repr__() if len(self.__working_set) > 0 else empty})"
 
     def __str__(self) -> str:
         """Return string conversion for Set
@@ -363,10 +372,4 @@ class Set(ARgorithmStructure):
             str: string conversion for Set
         """
         empty = "{}"
-        return f"Set({self.__working_set.__str__() if len(self.__working_set) else empty})"
-
-    
-        
-
-
-    
+        return f"Set({self.__working_set.__str__() if len(self.__working_set) > 0 else empty})"

@@ -11,7 +11,7 @@ to import from the map module :
 """
 
 from ARgorithmToolkit.utils import ARgorithmHashable, State, StateSet, ARgorithmError, ARgorithmStructure
-from ARgorithmToolkit.encoders import serialize 
+from ARgorithmToolkit.encoders import serialize
 
 class MapState:
     """This class is used to generate states for various actions performed on
@@ -60,7 +60,7 @@ class MapState:
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``map_get`` state for the respective map mentioned
-        """ 
+        """
         state_type = "map_get"
         state_def = {
             "id" : self._id,
@@ -87,7 +87,7 @@ class MapState:
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``map_set`` state for the respective map mentioned
-        """  
+        """
         state_type = "map_set"
         state_def = {
             "id" : self._id,
@@ -115,7 +115,7 @@ class MapState:
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``map_remove`` state for the respective map mentioned
-        """  
+        """
         state_type = "map_remove"
         state_def = {
             "id" : self._id,
@@ -210,10 +210,10 @@ class Map(ARgorithmStructure):
 
         self.body = {}
         self.__working_dict = {}
-        state = self.state_generator.map_declare(self.body)
+        state = self.state_generator.map_declare(self.body,comments)
         self.algo.add_state(state)
 
-    
+
     def __len__(self) -> int:
         """returns size of Map when processed by len() function.
 
@@ -256,7 +256,7 @@ class Map(ARgorithmStructure):
         except Exception as e:
             raise ARgorithmError(f"Invalid Key Error : {str(e)}") from e
 
-    
+
     def get(self, key, default=None, comments="") -> any:
         """returns the value associated with 'key' in the Map without raising key error
         Args:
@@ -280,7 +280,7 @@ class Map(ARgorithmStructure):
             state = self.state_generator.map_get(body=self.body, key=key, value=_value, comments=comments)
             self.algo.add_state(state)
             return _value
-        except:
+        except KeyError:
             state = self.state_generator.map_get(body=self.body, key=key, value=default if default else "none", comments=f"key not found. value efaulted to {default}")
             self.algo.add_state(state)
             return default
@@ -385,11 +385,11 @@ class Map(ARgorithmStructure):
             else:
                 value = self.body[key]
                 del self.body[key]
-            
+
             del self.__working_dict[key]
             state = self.state_generator.map_remove(self.body, key, value, "")
             self.algo.add_state(state)
-        
+
         except Exception as e:
             raise ARgorithmError(f"Invalid Key Error : {str(e)}") from e
 
@@ -417,12 +417,12 @@ class Map(ARgorithmStructure):
             else:
                 value = self.body[key]
                 del self.body[key]
-            
+
             del self.__working_dict[key]
             state = self.state_generator.map_remove(self.body, key, value, comments)
             self.algo.add_state(state)
 
-        except:
+        except KeyError:
             state = self.state_generator.map_remove(self.body, key, "none", "key not found, nothing removed.")
             self.algo.add_state(state)
             return
@@ -460,10 +460,3 @@ class Map(ARgorithmStructure):
         """
 
         return self.__working_dict.values()
-
-
-    
-        
-
-
-    

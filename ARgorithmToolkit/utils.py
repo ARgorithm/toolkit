@@ -177,5 +177,3 @@ class Variable(ARgorithmStructure, ARgorithmHashable):
 
     def __repr__(self):
         return f"Variable({repr(self.value)})"
-
-

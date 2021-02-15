@@ -56,5 +56,3 @@ def test_size():
     """Test priorityqueue size
     """
     assert queue.empty() and len(queue)==0
-
-

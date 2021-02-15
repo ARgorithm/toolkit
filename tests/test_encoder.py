@@ -29,7 +29,7 @@ def test_encoder():
         modulename,classname_id = serialized.split('.')
         try:
             assert modulename == "$ARgorithmToolkit"
-            classname,obj_id = classname_id.split(':')    
+            classname,obj_id = classname_id.split(':')
             assert classname == actual.__class__.__name__
             assert int(obj_id) == id(actual)
         except AssertionError as ae:
@@ -41,4 +41,3 @@ def test_encoder():
             raise AssertionError("Should have raised type error")
         except TypeError:
             pass
-

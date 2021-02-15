@@ -42,5 +42,3 @@ def test_size():
     """Test size operations
     """
     assert stack.empty() and len(stack)==0
-
-

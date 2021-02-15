@@ -210,7 +210,7 @@ class AuthManager():
                     rq = requests.get(url)
             except requests.RequestException as rqe:
                 msg.fail("Connection failed",str(rqe))
-                raise typer.Abort()    
+                raise typer.Abort()
             if rq.status_code == 200:
                 return True
             return False

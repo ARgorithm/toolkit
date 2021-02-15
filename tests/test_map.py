@@ -1,3 +1,4 @@
+"""Test module for ARgorithmToolkit.Map"""
 import ARgorithmToolkit
 algo = ARgorithmToolkit.StateSet()
 str1 = ARgorithmToolkit.String("str1", algo, "xyz")
@@ -41,5 +42,3 @@ def test_iteration():
 
     assert res == [(str1, 456),('123',123)]
     assert algo.states[-1].content['state_type'] == "map_set"
-
-

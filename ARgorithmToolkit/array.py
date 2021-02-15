@@ -10,7 +10,7 @@ to import from the array module Both work:
 
 import numpy as np
 from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
-from ARgorithmToolkit.encoders import serialize 
+from ARgorithmToolkit.encoders import serialize
 
 def check_dimensions(data):
     """This function is an internal function that helps verify the dimensions
@@ -354,7 +354,7 @@ class Array(ARgorithmStructure):
             >>> [x for x in arr]
             [[1,2,3],[4,5,6]]
         """
-        return iter(self.body)
+        return ArrayIterator(self)
 
     def compare(self,index1,index2,func=None,comments=""):
         """compares elements at 2 indexes of array.
