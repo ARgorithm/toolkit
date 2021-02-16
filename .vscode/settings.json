@@ -3,5 +3,6 @@
     "yaml.schemas": {
         "./designs/design.json": ".design.yml"
     },
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": false,
+    "python.pythonPath": "/home/alan/anaconda3/bin/python"
 }

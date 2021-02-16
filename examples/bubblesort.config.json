@@ -9,7 +9,7 @@
             "item-type" : "INT"
         }
     }, 
-    "default": {
+    "example": {
         "array" : [
             6,3,2,4,5,1
         ]
