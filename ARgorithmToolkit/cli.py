@@ -1,4 +1,6 @@
 # pylint: disable=no-self-use
+# pylint: disable=too-many-statements
+# pylint: disable=raise-missing-from
 """CLI tool for ARgorithm made using typer
 """
 import os
@@ -9,6 +11,7 @@ import typer
 from halo import Halo
 import ARgorithmToolkit
 from ARgorithmToolkit.parser import ARgorithmConfig,ValidationError,input_data
+from ARgorithmToolkit.security import injection_check,execution_check
 
 CLOUD_URL = "https://argorithm.el.r.appspot.com"
 CACHE_DIR = typer.get_app_dir("ARgorithm")
@@ -166,14 +169,11 @@ class AuthManager():
             raise typer.Abort()
         if rq.status_code == 404:
             msg.warn("User not found","please enter valid email")
-            raise typer.Exit(1)
-        if rq.status_code == 500:
+        elif rq.status_code == 500:
             msg.fail("Server error","contact developer")
-            raise typer.Exit(2)
-        if rq.status_code == 401:
+        elif rq.status_code == 401:
             msg.warn("incorrect password")
-            raise typer.Exit(1)
-        if rq.status_code == 200:
+        elif rq.status_code == 200:
             msg.good("logged in successfully","credentials saved in cache")
             token = json.loads(rq.content)['access_token']
             with open(self.credfile,'w+') as cred:
@@ -212,12 +212,13 @@ class AuthManager():
                     rq = requests.get(url)
             except requests.RequestException as rqe:
                 msg.fail("Connection failed",str(rqe))
-                raise typer.Abort()    
+                raise typer.Abort()
             if rq.status_code == 200:
                 return True
             return False
         except Exception as ex:
             msg.warn("authentication error",str(ex))
+            raise typer.Abort()
 
 authmanager = AuthManager()
 
@@ -257,7 +258,7 @@ def init(
     filename = f"{name}.py"
     with open(filename , "wb") as codefile:
         codefile.write(starter)
-    
+
     if create_config:
         config = {
             "argorithmID" : name,
@@ -297,16 +298,29 @@ def file_reader(filename):
     if os.path.isfile( os.path.join(directory,filename+".py")):
         try:
             data = ARgorithmConfig(f"{filename}.config.json")
-        except FileNotFoundError as fe:
+            injection_check(os.path.join(directory,filename+".py"))
+        except FileNotFoundError:
             msg.warn("config missing",f"you can use edit the {filename}.config.json \nor use CLI based config generator")
             raise typer.Exit()
-        except ValidationError as ve:
+        except ValidationError:
             msg.warn("config file is not configured properly","try the configure command to fix it \ncheck out docs for more info")
+            raise typer.Exit(1)
+        except ARgorithmToolkit.ARgorithmError:
+            msg.warn("possible code injection","- remove imports other than ARgorithmToolkit\n- rename user-defined objects,classes and functions")
             raise typer.Exit(1)
     else:
         msg.warn(f"{filename}.py not found")
         raise typer.Exit(1)
     msg.good("Files Verified")
+    try:
+        execution_check(os.path.join(directory,filename+".py"),data.config)
+    except AssertionError:
+        msg.warn('Testing Failed','Function should return ARgorithmToolkit.StateSet object')
+        raise typer.Exit(1)
+    except Exception:
+        msg.warn('Testing Failed','ARgorithm execution with example kwargs failed')
+        raise typer.Exit(1)
+    msg.good("Files Tested")
     return data.config
 
 @app.command()
@@ -331,13 +345,13 @@ def configure(filename:str=typer.Argument(... , help="name of argorithm" , autoc
             with open(os.path.join(os.getcwd(), f"{filepath}") , 'r') as configfile:
                 existing_config = json.load(configfile)
             os.remove(os.path.join(os.getcwd() , f"{filepath}"))
-        config = ARgorithmConfig(filepath)
-    except FileNotFoundError as fe:
+        ARgorithmConfig(filepath)
+    except FileNotFoundError:
         msg.warn("Operation cancelled by user")
         with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
             json.dump(existing_config,configfile)
         typer.Abort()
-    except Exception as ex:
+    except Exception:
         msg.fail("Some error occured, try again")
         with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
             json.dump(existing_config,configfile)
@@ -474,7 +488,7 @@ def test(
         "parameters" : params["example"]
     }
     if user_input:
-        data["parameters"] = input_data(params["parameters"]) 
+        data["parameters"] = input_data(params["parameters"])
     url = settings.get_endpoint()+"/argorithms/run"
     try:
         with Halo(text='Connecting', spinner='dots'):

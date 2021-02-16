@@ -13,5 +13,3 @@ def run(**kwargs):
             if arr.compare(i,j,check,comments=f"comparing the {i}th and {j}th element"):
                 arr.swap(i,j,comments=f"as arr[{i}] > arr[{j}] , we swap them")
     return algo
-
-

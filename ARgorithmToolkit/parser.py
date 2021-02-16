@@ -32,7 +32,7 @@ def multiline():
             line = input()
         except EOFError:
             break
-        if not line: 
+        if not line:
             break
         buffer += line+"\n"
     return buffer[:-1]
@@ -47,8 +47,8 @@ def heading(title,message):
     """Create a heading text
 
     Args:
-        title (str): The title of the heading 
-        message (str): The message that 
+        title (str): The title of the heading
+        message (str): The message that
     """
     # typer.clear()
     text = typer.style(title.upper(),fg=typer.colors.BLUE,bold=True)
@@ -65,7 +65,7 @@ def input_prompt(message,default=None,type=str,show_default=True):
         message (str): The input field text
         type (type, optional): The type of input
         default (type, optional): The default value if user does not enter any value
-        show_default (bool, optional): By default, True. If True shows the default value to user 
+        show_default (bool, optional): By default, True. If True shows the default value to user
 
     Returns:
         ip : The data entered by user
@@ -84,7 +84,7 @@ def confirm_prompt(message):
         message (str): The text for confirmation
 
     Returns:
-        flag: boolean value as entered by user  
+        flag: boolean value as entered by user
     """
     text = typer.style(message,fg=typer.colors.BLUE)
     flag = typer.confirm(text)
@@ -209,7 +209,7 @@ def input_data(parameters):
 
         if param["type"] == "INT":
             value = numeric_input(param,int)
-                
+
         elif param["type"] == "FLOAT":
             value = numeric_input(param,float)
 
@@ -219,7 +219,7 @@ def input_data(parameters):
                 retry = False
                 value = input_prompt("Enter string value" , type=str)
                 retry = check_size(value,param,example)
-                
+
         elif param["type"] == "ARRAY":
             retry = True
             while retry:
@@ -295,7 +295,7 @@ class ARgorithmConfig:
         info("ARgorithmID", filepath.split(".")[0])
         config["argorithmID"] = filepath.split(".")[0]
         config["file"] = config["argorithmID"]+".py"
-        
+
         function_regex = re.compile("def.([A-Za-z]+).?\(\*\*kwargs\)")
         with open(config["file"],"r") as codefile:
             text = codefile.read()
@@ -308,7 +308,7 @@ class ARgorithmConfig:
             warning("function not found in code")
             function = input_prompt("enter valid function name",default=func_list[0])
         config["function"] = function
-        
+
         config["description"] = multiline_input_prompt('Enter ARgorithm Description')
         config["parameters"] = {}
 
@@ -363,17 +363,17 @@ class ARgorithmConfig:
                 range_confirm = confirm_prompt(f"Do you want to add range constraints to {parameter_name}")
                 if range_confirm:
                     range_input(config,parameter_name)
-            
+
             elif parameter_type == "FLOAT":
                 range_confirm = confirm_prompt(f"Do you want to add range constraints to {parameter_name}")
                 if range_confirm:
                     range_input(config,parameter_name)
-            
+
             elif parameter_type == "STRING":
                 range_confirm = confirm_prompt(f"Do you want to set a size constraint to {parameter_name}")
                 if range_confirm:
                     config["parameters"][parameter_name]["size"] = size_ref("size")
-            
+
             elif parameter_type == "ARRAY":
                 item_types = ["INT","FLOAT","STRING"]
                 item_type = input_prompt("Enter type of array element")
@@ -384,7 +384,7 @@ class ARgorithmConfig:
                 range_confirm = confirm_prompt(f"Do you want to set a size constraint to {parameter_name}")
                 if range_confirm:
                     config["parameters"][parameter_name]["size"] = size_ref("size")
-            
+
             elif parameter_type == "MATRIX":
                 item_types = ["INT","FLOAT","STRING"]
                 item_type = input_prompt("Enter type of array element")
@@ -397,7 +397,7 @@ class ARgorithmConfig:
 
             parameter_description = multiline_input_prompt("Enter parameter description")
             config["parameters"][parameter_name]["description"] = parameter_description
-            
+
             return config
 
         typer.echo("Setting up parameters for your argorithm")
@@ -410,7 +410,7 @@ class ARgorithmConfig:
         for param in existing_parameters:
             typer.echo(typer.style("- "+param,fg=typer.colors.GREEN))
             config["parameters"][param] = {}
-        
+
         for param in existing_parameters:
             info("input keyword",param)
             config = define_parameter(config,param)
@@ -425,7 +425,7 @@ class ARgorithmConfig:
                 parameter_name = input_prompt("re-enter parameter name")
             config["parameters"][parameter_name] = {}
             config = define_parameter(config,parameter_name)
-            
+
             confirm = confirm_prompt("Do you want to add parameter?")
         example = input_data(config["parameters"])
         config["example"] = example
