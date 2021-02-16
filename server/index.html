@@ -780,13 +780,15 @@ The repo comes with two docker compose configuration files</p>
     <span class="nt">uploads</span><span class="p">:</span>
         <span class="nt">driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
 </code></pre></div>
-<p>The environment variables in above compose files are read from <code>.env</code> file.You can create strong secret keys using</p>
 </li>
 </ul>
+<p>The environment variables in above compose files are read from <code>.env</code> file.You can create strong secret keys using</p>
 <div class="termy">
+
 <div class="highlight"><pre><span></span><code><span class="gp">$</span> openssl rand -hex <span class="m">32</span>
 <span class="go">09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7</span>
 </code></pre></div>
+
 </div>
 
 <h2 id="running-the-server">Running the server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h2>
@@ -804,20 +806,18 @@ The repo comes with two docker compose configuration files</p>
 
 <p>Running the application as a docker container</p>
 <div class="termy">
-​```console
-$ docker run --name -d server -p 80:80 --env-file=.env alanjohn/argorithm-server:latest
-server
-<div class="highlight"><pre><span></span><code>&lt;/div&gt;
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> docker run --name -d server -p <span class="m">80</span>:80 --env-file<span class="o">=</span>.env alanjohn/argorithm-server:latest
+<span class="go">server</span>
+</code></pre></div>
+</div>
 
-Running the application using `docker-compose`
-
-&lt;div class=&quot;termy&quot;&gt;
-```console
-$ docker-compose -f docker-compose.prod.yml up
-Creating network &quot;server_default&quot; with the default driver
-Creating server_mongodb_1 ... done
-Creating server_arserver_1 ... done
-Attaching to server_mongodb_1,server_arserver_1
+<p>Running the application using <code>docker-compose</code></p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> docker-compose -f docker-compose.prod.yml up
+<span class="go">Creating network &quot;server_default&quot; with the default driver</span>
+<span class="go">Creating server_mongodb_1 ... done</span>
+<span class="go">Creating server_arserver_1 ... done</span>
+<span class="go">Attaching to server_mongodb_1,server_arserver_1</span>
 </code></pre></div>
 </div>
 
