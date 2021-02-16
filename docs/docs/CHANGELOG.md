@@ -1,3 +1,9 @@
+### 0.1.2
+
+- Updated config file format
+- Added CLI client for generating config files
+- user input for testing argorithms hosted on servers
+
 ### 0.1.1
 
 - Fixed bug in Linkedlist and DoublyLinked list dealing with None references

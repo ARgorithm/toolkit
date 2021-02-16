@@ -39,7 +39,7 @@ $$
 
 ## Setting up the config file
 
-For this code, we only need one parameter that is `n` which is the index of the number required in the sequence. We will provide the default value for `n` as 4.
+For this code, we only need one parameter that is `n` which is the index of the number required in the sequence. We will provide the default value for `n` as 4. As shown in [previous tutorial](/toolkit/tutorials/bubblesort), you can create this using your code editor or the `configure` command [(how to use configure)](/toolkit/tutorials/config)
 ```json
 {!../../examples/fibonacci.config.json!}
 ```

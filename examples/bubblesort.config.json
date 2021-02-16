@@ -3,9 +3,13 @@
     "file": "bubblesort.py", 
     "function": "run", 
     "parameters": {
-        "array" : "list"
+        "array" : {
+            "description" : "Array to be sorted",
+            "type" : "ARRAY",
+            "item-type" : "INT"
+        }
     }, 
-    "default": {
+    "example": {
         "array" : [
             6,3,2,4,5,1
         ]

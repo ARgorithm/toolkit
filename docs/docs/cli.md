@@ -22,7 +22,7 @@ Options:
 ```
 </div>
 
-## Configure
+## Connect
 
 This command can be used to set your own server IP. All your requests will be sent to this IP. If you are running server locally you dont need to configure IP, instead you can use the `-l` or `--local` flag to connect to local servers.
 
@@ -34,7 +34,7 @@ This command can be used to set your own server IP. All your requests will be se
 
 <div class="termy">
 ```console
-$ ARgorithm configure
+$ ARgorithm connect
 # Enter server endpoint :$ http://myserverendpoint.com 
 [SUCCESS]: CONNECTED
 Cloud requests will now go to http://myserverendpoint.com
@@ -97,7 +97,7 @@ refer documentation at https://argorithm.github.io/toolkit/ to learn how to use 
 chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples
 
 $ ls
-hello_world.config.json	hello_world.py
+hello_world.py
 ```
 </div>
 
@@ -115,6 +115,9 @@ The files generated are shown below
 
         return algo
 ```
+
+If you use the `--config` flag it will generate a `<name>.config.json` file. You can also try the [`configure`](#configure) command
+
 **hello_world.config.json**
 ```json
 {
@@ -126,6 +129,53 @@ The files generated are shown below
 	"description": ""
 }
 ```
+
+## Configure
+
+The configure command can be used to start the CLI based Config Generator. This allows users to easily create config files step by step
+
+<div class="termy">
+```console
+$ ARgorithm configure hello_world
+# Start CLI config generator?  [y/N]:$ y
+
+    +-----------------------------+
+    |  ARGORITHM CONFIG GENERATOR |
+    +-----------------------------+
+
+ARgorithmID: hello_world
+Codefile found: hello_world.py
+# which function should be called [run]:$ 
+# Enter ARgorithm Description:$ hello world application
+
+Setting up parameters for your argorithm
+input keywords are used to map the input passed to your function as kwargs
+
+# Do you want to another input keyword [y/N]:$ y
+
+add details for parameter
+# Enter parameter name:$ name
+# Enter parameter type:$ STRING
+# Enter parameter description:$ name of user
+
+# Do you want to set a size constraint to name [y/N]:$ n
+# Do you want to add parameter? [y/N]:$ n
+
+
+ENTER INPUT FOR ARGORITHM
+Based on argorithm parameters, input will be taken
+
+input keyword: name
+Description: name of user
+# Enter string value:$ Alan
+
+```
+</div>
+
+The `configure` should be used only after you are done programming. You can check out the config schema [here](/toolkit/tutorials/config)
+
+!!!warning
+	The simulation here might be different according to your function code.
 
 ## Submit
 
@@ -169,7 +219,7 @@ $ ARgorithm update fibonacci
 
 ## Test
 
-The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the `--output` or `-o` option.
+The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the `--output` or `-o` option. By default, the data given in the configuration example is taken as input. By using the `--user-input` flag you can enter your own input to the argorithm. 
 
 <div class="termy">
 ```console
