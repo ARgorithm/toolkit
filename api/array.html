@@ -48,7 +48,8 @@ to import from the array module Both work:
 &#34;&#34;&#34;
 
 import numpy as np
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
 def check_dimensions(data):
     &#34;&#34;&#34;This function is an internal function that helps verify the dimensions
@@ -80,11 +81,12 @@ class ArrayState:
 
     Attributes:
 
-        name (str) : Name of the variable for whom we are generating states
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
-
+        self._id = _id
 
     def array_declare(self,body,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `array_declare` state when an instance of Array class
@@ -99,6 +101,7 @@ class ArrayState:
         &#34;&#34;&#34;
         state_type = &#34;array_declare&#34;
         state_def = {
+            &#34;id&#34;: self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist()
         }
@@ -124,6 +127,7 @@ class ArrayState:
         &#34;&#34;&#34;
         state_type = &#34;array_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist(),
             &#34;index&#34; : index
@@ -151,6 +155,7 @@ class ArrayState:
         &#34;&#34;&#34;
         state_type = &#34;array_swap&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist(),
             &#34;index1&#34; : indexes[0],
@@ -176,6 +181,7 @@ class ArrayState:
         &#34;&#34;&#34;
         state_type = &#34;array_compare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist(),
             &#34;index1&#34; : indexes[0],
@@ -210,7 +216,8 @@ class ArrayIterator:
         self._index += 1
         return v
 
-class Array:
+@serialize
+class Array(ARgorithmStructure):
     &#34;&#34;&#34;The Array class used to emulate multidimensional arrays that can be
     rendered in the ARgorithm Application as series of blocks.
 
@@ -267,7 +274,7 @@ class Array:
     def __init__(self, name:str, algo:StateSet, data=None, shape=None, fill=0, dtype=int, comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = ArrayState(name)
+            self.state_generator = ArrayState(name, str(id(self)))
         except Exception as ex:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from ex
         try:
@@ -386,7 +393,7 @@ class Array:
             &gt;&gt;&gt; [x for x in arr]
             [[1,2,3],[4,5,6]]
         &#34;&#34;&#34;
-        return iter(self.body)
+        return ArrayIterator(self)
 
     def compare(self,index1,index2,func=None,comments=&#34;&#34;):
         &#34;&#34;&#34;compares elements at 2 indexes of array.
@@ -589,7 +596,7 @@ Array([7, 7, 7])
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Array:
+<pre><code class="python">class Array(ARgorithmStructure):
     &#34;&#34;&#34;The Array class used to emulate multidimensional arrays that can be
     rendered in the ARgorithm Application as series of blocks.
 
@@ -646,7 +653,7 @@ Array([7, 7, 7])
     def __init__(self, name:str, algo:StateSet, data=None, shape=None, fill=0, dtype=int, comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = ArrayState(name)
+            self.state_generator = ArrayState(name, str(id(self)))
         except Exception as ex:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from ex
         try:
@@ -765,7 +772,7 @@ Array([7, 7, 7])
             &gt;&gt;&gt; [x for x in arr]
             [[1,2,3],[4,5,6]]
         &#34;&#34;&#34;
-        return iter(self.body)
+        return ArrayIterator(self)
 
     def compare(self,index1,index2,func=None,comments=&#34;&#34;):
         &#34;&#34;&#34;compares elements at 2 indexes of array.
@@ -846,6 +853,10 @@ Array([7, 7, 7])
         &#34;&#34;&#34;
         return f&#34;Array({self.tolist().__repr__()})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="ARgorithmToolkit.array.Array.compare"><code class="name flex">
@@ -982,6 +993,23 @@ Array([[1, 2, 6],[4, 5, 3]])
     self.algo.add_state(state)</code></pre>
 </details>
 </dd>
+<dt id="ARgorithmToolkit.array.Array.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
 <dt id="ARgorithmToolkit.array.Array.tolist"><code class="name flex">
 <span>def <span class="ident">tolist</span></span>(<span>self)</span>
 </code></dt>
@@ -1064,13 +1092,14 @@ iterated.</p>
 </dd>
 <dt id="ARgorithmToolkit.array.ArrayState"><code class="flex name class">
 <span>class <span class="ident">ArrayState</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, _id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.Array">Array</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the object for which the states are generated
+_id (str) : id of the object for which the states are generated</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1081,11 +1110,12 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
 
     Attributes:
 
-        name (str) : Name of the variable for whom we are generating states
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
-
+        self._id = _id
 
     def array_declare(self,body,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `array_declare` state when an instance of Array class
@@ -1100,6 +1130,7 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
         &#34;&#34;&#34;
         state_type = &#34;array_declare&#34;
         state_def = {
+            &#34;id&#34;: self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist()
         }
@@ -1125,6 +1156,7 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
         &#34;&#34;&#34;
         state_type = &#34;array_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist(),
             &#34;index&#34; : index
@@ -1152,6 +1184,7 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
         &#34;&#34;&#34;
         state_type = &#34;array_swap&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist(),
             &#34;index1&#34; : indexes[0],
@@ -1177,6 +1210,7 @@ the <code><a title="ARgorithmToolkit.array.Array" href="#ARgorithmToolkit.array.
         &#34;&#34;&#34;
         state_type = &#34;array_compare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body.tolist(),
             &#34;index1&#34; : indexes[0],
@@ -1226,6 +1260,7 @@ comments (optional):The comments that are supposed to rendered with the state fo
     &#34;&#34;&#34;
     state_type = &#34;array_compare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body.tolist(),
         &#34;index1&#34; : indexes[0],
@@ -1273,6 +1308,7 @@ is created.</p>
     &#34;&#34;&#34;
     state_type = &#34;array_declare&#34;
     state_def = {
+        &#34;id&#34;: self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body.tolist()
     }
@@ -1326,6 +1362,7 @@ has been accessed.</p>
     &#34;&#34;&#34;
     state_type = &#34;array_iter&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body.tolist(),
         &#34;index&#34; : index
@@ -1376,6 +1413,7 @@ comments (optional):The comments that are supposed to rendered with the state fo
     &#34;&#34;&#34;
     state_type = &#34;array_swap&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body.tolist(),
         &#34;index1&#34; : indexes[0],
@@ -1432,6 +1470,7 @@ text-decoration: none;
 <li><code><a title="ARgorithmToolkit.array.Array.compare" href="#ARgorithmToolkit.array.Array.compare">compare</a></code></li>
 <li><code><a title="ARgorithmToolkit.array.Array.shape" href="#ARgorithmToolkit.array.Array.shape">shape</a></code></li>
 <li><code><a title="ARgorithmToolkit.array.Array.swap" href="#ARgorithmToolkit.array.Array.swap">swap</a></code></li>
+<li><code><a title="ARgorithmToolkit.array.Array.to_json" href="#ARgorithmToolkit.array.Array.to_json">to_json</a></code></li>
 <li><code><a title="ARgorithmToolkit.array.Array.tolist" href="#ARgorithmToolkit.array.Array.tolist">tolist</a></code></li>
 </ul>
 </li>

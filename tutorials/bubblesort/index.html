@@ -290,6 +290,19 @@
           
 
 
+
+  <li class="md-nav__item">
+    <a href="../config/" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
   
 
 
@@ -603,32 +616,80 @@
 </span>    <span class="k">return</span> <span class="n">algo</span>
 </code></pre></div>
 <h2 id="setting-up-the-config-file">Setting up the config file<a class="headerlink" href="#setting-up-the-config-file" title="Permanent link">&para;</a></h2>
-<p>Now that your argorithm is ready, it's time to configure the <code>bubblesort.config.json</code>.<code>argorithmID</code> and <code>file</code> is already filled and need not be altered. The <code>function</code> is set to <code>run</code> which is the function from the file we need to call. The <code>description</code> stored description of the agorithm. These are useful metadata for the CLI and server when it comes to parsing and execution. The most important keys are <code>parameters</code> and <code>default</code>.</p>
-<ol>
-<li>
-<p><code>parameters</code> : This key stores an object where each key is a key for the function <code>**kwargs</code> and its value is the type of value expected.</p>
-</li>
-<li>
-<p><code>default</code> : This key stores an object that specifies the default value for function <code>**kwargs</code>. These values would be used to in case of any exception in executing parameters. </p>
-</li>
-</ol>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>The keys inside the parameters and default objects must be the same</p>
+<p>Now that your argorithm is ready, it's time to configure the <code>bubblesort.config.json</code>. We can use the configure command or create the file and set it up in code editor. Below we have demonstrated how to create the <code>bubblesort.config.json</code> using the <code>configure</code> command and how the file should look like. You can directly check out the final <code>bubblesort.config.json</code> below.</p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm configure bubblesort 
+<span class="gp">#</span> Start CLI config generator?  <span class="o">[</span>y/N<span class="o">]</span>:$ y
+
+<span class="go">+-----------------------------+</span>
+<span class="go">|  ARGORITHM CONFIG GENERATOR |</span>
+<span class="go">+-----------------------------+</span>
+
+<span class="go">ARgorithmID: bubblesort</span>
+<span class="go">Codefile found: bubblesort.py</span>
+<span class="gp">#</span> which <span class="k">function</span> should be called <span class="o">[</span>run<span class="o">]</span>:$ run
+<span class="go">Enter ARgorithm Description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ demonstrate bubble sort
+</code></pre></div>
+
 </div>
+
+<p>We need to define <code>array</code> which would be our array that we will sort</p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="go">Setting up parameters for your argorithm</span>
+<span class="go">input keywords are used to map the input passed to your function as kwargs</span>
+
+<span class="go">The following input keywords were found in code</span>
+<span class="go">- array</span>
+<span class="go">input keyword: array</span>
+<span class="gp">#</span> Enter parameter type:$ ARRAY
+<span class="gp">#</span> Enter <span class="nb">type</span> of array element:$ INT
+<span class="gp">#</span> Do you want to <span class="nb">set</span> a size constraint to array <span class="o">[</span>y/N<span class="o">]</span>:$ N
+<span class="go">Enter parameter description</span>
+<span class="go">Press ENTER on empty line to leave multiline input:</span>
+<span class="gp">#</span> :$ Array to be sorted
+
+<span class="gp">#</span> Do you want to another input keyword <span class="o">[</span>y/N<span class="o">]</span>:$ n
+</code></pre></div>
+
+</div>
+
+<p>We now need to define the default array that will be used when <code>array</code> is not input by user</p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="go">----------------------------------------</span>
+<span class="go">ENTER INPUT FOR ARGORITHM</span>
+<span class="go">----------------------------------------</span>
+<span class="go">Based on argorithm parameters, input will be taken</span>
+
+<span class="go">input keyword: array</span>
+<span class="go">Description: Array to be sorted</span>
+<span class="gp">#</span> Enter space separated series:$ <span class="m">6</span> <span class="m">3</span> <span class="m">2</span> <span class="m">4</span> <span class="m">5</span> <span class="m">1</span>
+</code></pre></div>
+
+</div>
+
+<p>This is how the <code>bubblesort.config.json</code> should look like.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;bubblesort&quot;</span><span class="p">,</span> 
     <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;bubblesort.py&quot;</span><span class="p">,</span> 
     <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> 
-<span class="hll">    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class="hll">        <span class="nt">&quot;array&quot;</span> <span class="p">:</span> <span class="s2">&quot;list&quot;</span>
-</span><span class="hll">    <span class="p">},</span> 
-</span><span class="hll">    <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class="hll">        <span class="nt">&quot;array&quot;</span> <span class="p">:</span> <span class="p">[</span>
-</span><span class="hll">            <span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span>
-</span><span class="hll">        <span class="p">]</span>
-</span><span class="hll">    <span class="p">},</span> 
-</span>    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;demonstrate bubble sort&quot;</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;array&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;description&quot;</span> <span class="p">:</span> <span class="s2">&quot;Array to be sorted&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;item-type&quot;</span> <span class="p">:</span> <span class="s2">&quot;INT&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span> 
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;array&quot;</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span>
+        <span class="p">]</span>
+    <span class="p">},</span> 
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;demonstrate bubble sort&quot;</span>
 </code></pre></div>
 <p>Now that we are done, we can submit the file to the server</p>
 <div class="termy">
@@ -656,7 +717,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../config/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -665,7 +726,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Introduction
+                Configuration
               </div>
             </div>
           </a>

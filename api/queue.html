@@ -44,8 +44,9 @@ library without having to import from the queue module:
     &gt;&gt;&gt; q = ARgorithmToolkit.Queue(name=&#34;q&#34;,algo=algo)
 &#34;&#34;&#34;
 
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
 class QueueState():
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
     the ``ARgorithmToolkit.queue.Queue`` object.
@@ -53,9 +54,11 @@ class QueueState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def queue_declare(self,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `queue_declare` state when an instance of queue is
@@ -69,6 +72,7 @@ class QueueState():
         &#34;&#34;&#34;
         state_type = &#34;queue_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : []
         }
@@ -91,6 +95,7 @@ class QueueState():
         &#34;&#34;&#34;
         state_type = &#34;queue_push&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element
@@ -114,6 +119,7 @@ class QueueState():
         &#34;&#34;&#34;
         state_type = &#34;queue_pop&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -135,6 +141,7 @@ class QueueState():
         &#34;&#34;&#34;
         state_type = &#34;queue_front&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -156,6 +163,7 @@ class QueueState():
         &#34;&#34;&#34;
         state_type = &#34;queue_back&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -165,7 +173,8 @@ class QueueState():
             comments=comments
         )
 
-class Queue:
+@serialize
+class Queue(ARgorithmStructure):
     &#34;&#34;&#34;The Queue class is a container interface for the queue, a linear
     container implementation of FIFO.
 
@@ -185,7 +194,8 @@ class Queue:
     def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = QueueState(name)
+            self._id = str(id(self))
+            self.state_generator = QueueState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -378,7 +388,7 @@ container implementation of FIFO.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Queue:
+<pre><code class="python">class Queue(ARgorithmStructure):
     &#34;&#34;&#34;The Queue class is a container interface for the queue, a linear
     container implementation of FIFO.
 
@@ -398,7 +408,8 @@ container implementation of FIFO.</p>
     def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = QueueState(name)
+            self._id = str(id(self))
+            self.state_generator = QueueState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -552,6 +563,10 @@ container implementation of FIFO.</p>
         &#34;&#34;&#34;
         return f&#34;Queue({self.body.__repr__()})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="ARgorithmToolkit.queue.Queue.back"><code class="name flex">
@@ -811,17 +826,35 @@ Queue([3, 5, 4])
     self.algo.add_state(state)</code></pre>
 </details>
 </dd>
+<dt id="ARgorithmToolkit.queue.Queue.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 <dt id="ARgorithmToolkit.queue.QueueState"><code class="flex name class">
 <span>class <span class="ident">QueueState</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, _id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.Queue">Queue</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -833,9 +866,11 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def queue_declare(self,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `queue_declare` state when an instance of queue is
@@ -849,6 +884,7 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
         &#34;&#34;&#34;
         state_type = &#34;queue_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : []
         }
@@ -871,6 +907,7 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
         &#34;&#34;&#34;
         state_type = &#34;queue_push&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element
@@ -894,6 +931,7 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
         &#34;&#34;&#34;
         state_type = &#34;queue_pop&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -915,6 +953,7 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
         &#34;&#34;&#34;
         state_type = &#34;queue_front&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -936,6 +975,7 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
         &#34;&#34;&#34;
         state_type = &#34;queue_back&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -980,6 +1020,7 @@ the <code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.
     &#34;&#34;&#34;
     state_type = &#34;queue_back&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
     }
@@ -1022,6 +1063,7 @@ created.</p>
     &#34;&#34;&#34;
     state_type = &#34;queue_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : []
     }
@@ -1065,6 +1107,7 @@ created.</p>
     &#34;&#34;&#34;
     state_type = &#34;queue_front&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
     }
@@ -1110,6 +1153,7 @@ queue.</p>
     &#34;&#34;&#34;
     state_type = &#34;queue_pop&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
     }
@@ -1156,6 +1200,7 @@ queue.</p>
     &#34;&#34;&#34;
     state_type = &#34;queue_push&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;element&#34; : element
@@ -1202,12 +1247,13 @@ text-decoration: none;
 <ul>
 <li>
 <h4><code><a title="ARgorithmToolkit.queue.Queue" href="#ARgorithmToolkit.queue.Queue">Queue</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="ARgorithmToolkit.queue.Queue.back" href="#ARgorithmToolkit.queue.Queue.back">back</a></code></li>
 <li><code><a title="ARgorithmToolkit.queue.Queue.empty" href="#ARgorithmToolkit.queue.Queue.empty">empty</a></code></li>
 <li><code><a title="ARgorithmToolkit.queue.Queue.front" href="#ARgorithmToolkit.queue.Queue.front">front</a></code></li>
 <li><code><a title="ARgorithmToolkit.queue.Queue.pop" href="#ARgorithmToolkit.queue.Queue.pop">pop</a></code></li>
 <li><code><a title="ARgorithmToolkit.queue.Queue.push" href="#ARgorithmToolkit.queue.Queue.push">push</a></code></li>
+<li><code><a title="ARgorithmToolkit.queue.Queue.to_json" href="#ARgorithmToolkit.queue.Queue.to_json">to_json</a></code></li>
 </ul>
 </li>
 <li>

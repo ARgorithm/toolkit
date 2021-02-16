@@ -1,0 +1,1426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ARgorithmToolkit.set API documentation</title>
+<meta name="description" content="The set module provides support for set data structure for the Toolkit.
+It stores keys and avoid duplication.
+Provides O(1) average case and O(n) …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<link rel="stylesheet" href="../css/font-awesome.css">
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ARgorithmToolkit.set</code></h1>
+</header>
+<section id="section-intro">
+<p>The set module provides support for set data structure for the Toolkit.
+It stores keys and avoid duplication.
+Provides O(1) average case and O(n) amortized worst case complexity for element lookup.
+The main class in this module is the Set class. The
+other classes act as support class to Set class. For this reason the Set
+class can directly be imported from the ARgorithmToolkit library without having
+to import from the set module :</p>
+<pre><code>&gt;&gt;&gt; set1 = ARgorithmToolkit.Set(name='set1',algo=algo,data=data)
+&gt;&gt;&gt; set1 = ARgorithmToolkit.set.Set(name='set1',algo=algo,data=data)
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The set module provides support for set data structure for the Toolkit.
+It stores keys and avoid duplication.
+Provides O(1) average case and O(n) amortized worst case complexity for element lookup.
+The main class in this module is the Set class. The
+other classes act as support class to Set class. For this reason the Set
+class can directly be imported from the ARgorithmToolkit library without having
+to import from the set module :
+
+    &gt;&gt;&gt; set1 = ARgorithmToolkit.Set(name=&#39;set1&#39;,algo=algo,data=data)
+    &gt;&gt;&gt; set1 = ARgorithmToolkit.set.Set(name=&#39;set1&#39;,algo=algo,data=data)
+&#34;&#34;&#34;
+
+from numpy.lib.function_base import iterable
+from numpy import generic
+from ARgorithmToolkit.utils import ARgorithmHashable, State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
+
+class SetState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.set.Set`` object.
+
+    Attributes:
+
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
+    &#34;&#34;&#34;
+    def __init__(self,name,_id):
+        self.name = name
+        self._id = _id
+
+    def set_declare(self, body, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_declare` state when an instance of Set class
+        is created.
+
+        Args:
+            body: The contents of the set that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_declare`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_declare&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def set_add(self, body, key, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_add` state when a particular key is add.
+
+        Args:
+            body : The contents of the set that are to be sent along with the state
+            key : The key that has been added
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_add`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_add&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;key&#34; : key,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+
+    def set_remove(self,body,key,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_remove` state when a particular key is deleted.
+
+        Args:
+            body : The contents of the set that are to be sent along with the state
+            key : The key that has been deleted
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_remove`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_remove&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def set_find(self, body, key, found, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_find` state when a particular key is searched for.
+
+        Args:
+            body : The contents of the set that are to be sent along with the state
+            key : The key that has been searched
+            found : true if found false if not found
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_find`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_find&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;key&#34; : key,
+            &#34;found&#34;: found,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+@serialize
+class Set(ARgorithmStructure):
+    &#34;&#34;&#34;The Set class used to emulate set datastructure that can be
+    rendered in the ARgorithm Application as series of unique keys.
+
+    Attributes:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of Set Class
+        data (Vector, Array) : to generate set from an existent list
+        comments (str,optional): Description of instance of set and its applications that will be rendered during the ``set_declare`` state.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+
+    Examples:
+        This is an example of set being declared
+
+        &gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+        &gt;&gt;&gt; set1 = ARgorithmToolkit.Set(name=&#39;set1&#39;,algo=algo,data=[1,2,3,4,4,2,1])
+        &gt;&gt;&gt; set1
+        Set({1,2,3,4})
+
+        The set generated supports all the functionality of default set
+
+        &gt;&gt;&gt; len(set1)
+        4
+        &gt;&gt;&gt; set1.find(2)
+        True
+        &gt;&gt;&gt; set1.add(&#34;s&#34;)
+        &gt;&gt;&gt; set1
+        Set({1, 2, 3, 4, &#34;s&#34;})
+        &gt;&gt;&gt; for key in set1:
+        ...    print(key)
+        1
+        2
+        3
+        4
+        5
+        &#34;s&#34;
+        &gt;&gt;&gt; set1.remove(&#34;s&#34;)
+        &gt;&gt;&gt; set1
+        Set({1, 2, 3, 4})
+    &#34;&#34;&#34;
+
+    def __init__(self, name:str, algo:StateSet, data:iterable=None, comments= &#34;&#34;):
+        try:
+            assert isinstance(name, str)
+            self.state_generator = SetState(name, str(id(self)))
+        except Exception as ex:
+            raise ARgorithmError(&#39;Give valid name to data structure&#39;) from ex
+        try:
+            assert isinstance(algo, StateSet)
+            self.algo = algo
+        except Exception as ex:
+            raise ARgorithmError(&#34;Set structure needs a reference of template to store states&#34;) from ex
+
+        self.body = set()
+        if data:
+            for x in data:
+                if isinstance(x, ARgorithmHashable):
+                    self.body.add(x.to_json())
+                elif isinstance(x, (int,str,bool,float,generic)):
+                    self.body.add(x)
+                else:
+                    raise TypeError(&#34;Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)&#34;)
+        self.__working_set = set(data) if data else set()
+        state = self.state_generator.set_declare(self.body, comments=comments)
+        self.algo.add_state(state)
+
+    def __len__(self) -&gt; int:
+        &#34;&#34;&#34;returns size of Set when processed by len() function.
+
+        Returns:
+            int: size of the set
+
+        Example:
+            &gt;&gt;&gt; set1
+            Set({1,2,3})
+            &gt;&gt;&gt; len(set1)
+            3
+        &#34;&#34;&#34;
+        return len(self.__working_set)
+
+
+    def add(self, key, comments=&#34;&#34;):
+        &#34;&#34;&#34;Adds a unique key to the set.
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to add to the set
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+        Example:
+        &gt;&gt;&gt; set1
+        Set({1,2})
+        &gt;&gt;&gt; set1.add(&#39;abc&#39;)
+        Set({1,2,&#39;abc&#39;})
+        &gt;&gt;&gt; set1.add(1)
+        &gt;&gt;&gt; set1
+        Set({1,2,&#39;abc&#39;})
+        &#34;&#34;&#34;
+        try:
+            assert isinstance(key,(ARgorithmHashable,int,bool,str,float))
+        except AssertionError as ae:
+            raise TypeError(&#34;Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)&#34;) from ae
+        if isinstance(key, ARgorithmHashable):
+            self.body.add(key.to_json())
+        else:
+            self.body.add(key)
+
+        self.__working_set.add(key)
+        state = self.state_generator.set_add(self.body, key,comments)
+        self.algo.add_state(state)
+
+
+    def remove(self, key, comments=&#34;&#34;):
+        &#34;&#34;&#34;removes the key from the set
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to remove from the set
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; set1
+            Set({1,2,3})
+            &gt;&gt;&gt; set1.remove(1)
+            &gt;&gt;&gt; set1
+            Set({2,3})
+        &#34;&#34;&#34;
+        try:
+            if isinstance(key, ARgorithmHashable):
+                self.body.remove(key.to_json())
+            else:
+                self.body.remove(key)
+            self.__working_set.remove(key)
+            state = self.state_generator.set_remove(self.body, key,comments)
+            self.algo.add_state(state)
+        except Exception as e:
+            raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e
+
+    def find(self, key, comments=&#34;&#34;) -&gt; bool:
+        &#34;&#34;&#34;finds if a key is present in the set
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to find in the set
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+        Returns:
+            bool : true if key found else false
+
+        Example:
+            &gt;&gt;&gt; set1
+            Set({1,2,&#34;abc&#34;})
+            &gt;&gt;&gt; set1.find(&#34;abc&#34;)
+            True
+            &gt;&gt;&gt; set1.find(&#34;abcd&#34;)
+            False
+        &#34;&#34;&#34;
+        found = key in self.__working_set
+        state = self.state_generator.set_find(self.body, key, found,comments)
+        self.algo.add_state(state)
+        return found
+
+
+    def intersection(self, other, comments=&#34;&#34;) :
+        &#34;&#34;&#34;Creates a new set with the intersection of the calling set with the set in the arguments provided
+        Args:
+            other (Set) : set to find the intersection with
+            comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        returns:
+            Set : intersection of self and other
+
+        example:
+            &gt;&gt;&gt; set1
+            Set({1,2})
+            &gt;&gt;&gt; set2
+            Set({2,3,4})
+            &gt;&gt;&gt; set1.intersection(set2)
+            Set({2})
+        &#34;&#34;&#34;
+        if not comments:
+            comments = f&#34;Creating new set with intersection of {self.state_generator.name} and {other.state_generator.name}&#34;
+        intersect_data = self.__working_set.intersection(other.__working_set) # pylint: disable=protected-access
+        intersect_name = f&#34;{self.state_generator.name}_intersection_{other.state_generator.name}&#34;
+        intersect = Set(intersect_name, self.algo, intersect_data, comments=comments)
+        return intersect
+
+    def union(self, other, comments=&#34;&#34;) :
+        &#34;&#34;&#34;Creates a new set with the union of the calling set with the set in the arguments provided
+        Args:
+            other (Set) : set to find the union with
+            comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        returns:
+            Set : union of self and other
+
+        example:
+            &gt;&gt;&gt; set1
+            Set({1,2})
+            &gt;&gt;&gt; set2
+            Set({2,3,4})
+            &gt;&gt;&gt; set1.union(set2)
+            Set({1,2,3,4})
+        &#34;&#34;&#34;
+        if not comments:
+            comments = f&#34;Creating new set with union of {self.state_generator.name} and {other.state_generator.name}&#34;
+        union_data = self.__working_set.union(other.__working_set) # pylint: disable=protected-access
+        union_name = f&#34;{self.state_generator.name}_union_{other.state_generator.name}&#34;
+        _union = Set(union_name, self.algo, union_data, comments=comments)
+        return _union
+
+    def difference(self, other, comments=&#34;&#34;) :
+        &#34;&#34;&#34;Creates a new set with the difference of the calling set with the set in the arguments provided
+        Args:
+            other (Set) : set to find the difference with
+            comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        returns:
+            Set : difference of self and other
+
+        example:
+            &gt;&gt;&gt; set1
+            Set({1,2})
+            &gt;&gt;&gt; set2
+            Set({2,3,4})
+            &gt;&gt;&gt; set1.difference(set2)
+            Set({1})
+        &#34;&#34;&#34;
+        if not comments:
+            comments = f&#34;Creating new set with difference of {self.state_generator.name} and {other.state_generator.name}&#34;
+        diff_data = self.__working_set.difference(other.__working_set) # pylint: disable=protected-access
+        diff_name = f&#34;{self.state_generator.name}_difference_{other.state_generator.name}&#34;
+        diff = Set(diff_name, self.algo, diff_data, comments=comments)
+        return diff
+
+    def __repr__(self) -&gt; str:
+        &#34;&#34;&#34;Return representation for shell outputs.
+
+        Returns:
+            str: shell representation for Set
+        &#34;&#34;&#34;
+        empty = &#34;{}&#34;
+        return f&#34;Set({self.__working_set.__repr__() if len(self.__working_set) &gt; 0 else empty})&#34;
+
+    def __str__(self) -&gt; str:
+        &#34;&#34;&#34;Return string conversion for Set
+
+        Returns:
+            str: string conversion for Set
+        &#34;&#34;&#34;
+        empty = &#34;{}&#34;
+        return f&#34;Set({self.__working_set.__str__() if len(self.__working_set) &gt; 0 else empty})&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ARgorithmToolkit.set.Set"><code class="flex name class">
+<span>class <span class="ident">Set</span></span>
+<span>(</span><span>name: str, algo: <a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a>, data: <function iterable at 0x7f702f3a9170> = None, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The Set class used to emulate set datastructure that can be
+rendered in the ARgorithm Application as series of unique keys.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation</dd>
+<dt><strong><code>algo</code></strong> :&ensp;<code><a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a></code></dt>
+<dd>The stateset that will store the states generated by the instance of Set Class</dd>
+<dt>data (Vector, Array) : to generate set from an existent list</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>,optional</dt>
+<dd>Description of instance of set and its applications that will be rendered during the <code>set_declare</code> state.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>raised if name is not given or Stateset if not provided</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>This is an example of set being declared</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+&gt;&gt;&gt; set1 = ARgorithmToolkit.Set(name='set1',algo=algo,data=[1,2,3,4,4,2,1])
+&gt;&gt;&gt; set1
+Set({1,2,3,4})
+</code></pre>
+<p>The set generated supports all the functionality of default set</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; len(set1)
+4
+&gt;&gt;&gt; set1.find(2)
+True
+&gt;&gt;&gt; set1.add(&quot;s&quot;)
+&gt;&gt;&gt; set1
+Set({1, 2, 3, 4, &quot;s&quot;})
+&gt;&gt;&gt; for key in set1:
+...    print(key)
+1
+2
+3
+4
+5
+&quot;s&quot;
+&gt;&gt;&gt; set1.remove(&quot;s&quot;)
+&gt;&gt;&gt; set1
+Set({1, 2, 3, 4})
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Set(ARgorithmStructure):
+    &#34;&#34;&#34;The Set class used to emulate set datastructure that can be
+    rendered in the ARgorithm Application as series of unique keys.
+
+    Attributes:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of Set Class
+        data (Vector, Array) : to generate set from an existent list
+        comments (str,optional): Description of instance of set and its applications that will be rendered during the ``set_declare`` state.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+
+    Examples:
+        This is an example of set being declared
+
+        &gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+        &gt;&gt;&gt; set1 = ARgorithmToolkit.Set(name=&#39;set1&#39;,algo=algo,data=[1,2,3,4,4,2,1])
+        &gt;&gt;&gt; set1
+        Set({1,2,3,4})
+
+        The set generated supports all the functionality of default set
+
+        &gt;&gt;&gt; len(set1)
+        4
+        &gt;&gt;&gt; set1.find(2)
+        True
+        &gt;&gt;&gt; set1.add(&#34;s&#34;)
+        &gt;&gt;&gt; set1
+        Set({1, 2, 3, 4, &#34;s&#34;})
+        &gt;&gt;&gt; for key in set1:
+        ...    print(key)
+        1
+        2
+        3
+        4
+        5
+        &#34;s&#34;
+        &gt;&gt;&gt; set1.remove(&#34;s&#34;)
+        &gt;&gt;&gt; set1
+        Set({1, 2, 3, 4})
+    &#34;&#34;&#34;
+
+    def __init__(self, name:str, algo:StateSet, data:iterable=None, comments= &#34;&#34;):
+        try:
+            assert isinstance(name, str)
+            self.state_generator = SetState(name, str(id(self)))
+        except Exception as ex:
+            raise ARgorithmError(&#39;Give valid name to data structure&#39;) from ex
+        try:
+            assert isinstance(algo, StateSet)
+            self.algo = algo
+        except Exception as ex:
+            raise ARgorithmError(&#34;Set structure needs a reference of template to store states&#34;) from ex
+
+        self.body = set()
+        if data:
+            for x in data:
+                if isinstance(x, ARgorithmHashable):
+                    self.body.add(x.to_json())
+                elif isinstance(x, (int,str,bool,float,generic)):
+                    self.body.add(x)
+                else:
+                    raise TypeError(&#34;Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)&#34;)
+        self.__working_set = set(data) if data else set()
+        state = self.state_generator.set_declare(self.body, comments=comments)
+        self.algo.add_state(state)
+
+    def __len__(self) -&gt; int:
+        &#34;&#34;&#34;returns size of Set when processed by len() function.
+
+        Returns:
+            int: size of the set
+
+        Example:
+            &gt;&gt;&gt; set1
+            Set({1,2,3})
+            &gt;&gt;&gt; len(set1)
+            3
+        &#34;&#34;&#34;
+        return len(self.__working_set)
+
+
+    def add(self, key, comments=&#34;&#34;):
+        &#34;&#34;&#34;Adds a unique key to the set.
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to add to the set
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+        Example:
+        &gt;&gt;&gt; set1
+        Set({1,2})
+        &gt;&gt;&gt; set1.add(&#39;abc&#39;)
+        Set({1,2,&#39;abc&#39;})
+        &gt;&gt;&gt; set1.add(1)
+        &gt;&gt;&gt; set1
+        Set({1,2,&#39;abc&#39;})
+        &#34;&#34;&#34;
+        try:
+            assert isinstance(key,(ARgorithmHashable,int,bool,str,float))
+        except AssertionError as ae:
+            raise TypeError(&#34;Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)&#34;) from ae
+        if isinstance(key, ARgorithmHashable):
+            self.body.add(key.to_json())
+        else:
+            self.body.add(key)
+
+        self.__working_set.add(key)
+        state = self.state_generator.set_add(self.body, key,comments)
+        self.algo.add_state(state)
+
+
+    def remove(self, key, comments=&#34;&#34;):
+        &#34;&#34;&#34;removes the key from the set
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to remove from the set
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; set1
+            Set({1,2,3})
+            &gt;&gt;&gt; set1.remove(1)
+            &gt;&gt;&gt; set1
+            Set({2,3})
+        &#34;&#34;&#34;
+        try:
+            if isinstance(key, ARgorithmHashable):
+                self.body.remove(key.to_json())
+            else:
+                self.body.remove(key)
+            self.__working_set.remove(key)
+            state = self.state_generator.set_remove(self.body, key,comments)
+            self.algo.add_state(state)
+        except Exception as e:
+            raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e
+
+    def find(self, key, comments=&#34;&#34;) -&gt; bool:
+        &#34;&#34;&#34;finds if a key is present in the set
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to find in the set
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+        Returns:
+            bool : true if key found else false
+
+        Example:
+            &gt;&gt;&gt; set1
+            Set({1,2,&#34;abc&#34;})
+            &gt;&gt;&gt; set1.find(&#34;abc&#34;)
+            True
+            &gt;&gt;&gt; set1.find(&#34;abcd&#34;)
+            False
+        &#34;&#34;&#34;
+        found = key in self.__working_set
+        state = self.state_generator.set_find(self.body, key, found,comments)
+        self.algo.add_state(state)
+        return found
+
+
+    def intersection(self, other, comments=&#34;&#34;) :
+        &#34;&#34;&#34;Creates a new set with the intersection of the calling set with the set in the arguments provided
+        Args:
+            other (Set) : set to find the intersection with
+            comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        returns:
+            Set : intersection of self and other
+
+        example:
+            &gt;&gt;&gt; set1
+            Set({1,2})
+            &gt;&gt;&gt; set2
+            Set({2,3,4})
+            &gt;&gt;&gt; set1.intersection(set2)
+            Set({2})
+        &#34;&#34;&#34;
+        if not comments:
+            comments = f&#34;Creating new set with intersection of {self.state_generator.name} and {other.state_generator.name}&#34;
+        intersect_data = self.__working_set.intersection(other.__working_set) # pylint: disable=protected-access
+        intersect_name = f&#34;{self.state_generator.name}_intersection_{other.state_generator.name}&#34;
+        intersect = Set(intersect_name, self.algo, intersect_data, comments=comments)
+        return intersect
+
+    def union(self, other, comments=&#34;&#34;) :
+        &#34;&#34;&#34;Creates a new set with the union of the calling set with the set in the arguments provided
+        Args:
+            other (Set) : set to find the union with
+            comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        returns:
+            Set : union of self and other
+
+        example:
+            &gt;&gt;&gt; set1
+            Set({1,2})
+            &gt;&gt;&gt; set2
+            Set({2,3,4})
+            &gt;&gt;&gt; set1.union(set2)
+            Set({1,2,3,4})
+        &#34;&#34;&#34;
+        if not comments:
+            comments = f&#34;Creating new set with union of {self.state_generator.name} and {other.state_generator.name}&#34;
+        union_data = self.__working_set.union(other.__working_set) # pylint: disable=protected-access
+        union_name = f&#34;{self.state_generator.name}_union_{other.state_generator.name}&#34;
+        _union = Set(union_name, self.algo, union_data, comments=comments)
+        return _union
+
+    def difference(self, other, comments=&#34;&#34;) :
+        &#34;&#34;&#34;Creates a new set with the difference of the calling set with the set in the arguments provided
+        Args:
+            other (Set) : set to find the difference with
+            comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        returns:
+            Set : difference of self and other
+
+        example:
+            &gt;&gt;&gt; set1
+            Set({1,2})
+            &gt;&gt;&gt; set2
+            Set({2,3,4})
+            &gt;&gt;&gt; set1.difference(set2)
+            Set({1})
+        &#34;&#34;&#34;
+        if not comments:
+            comments = f&#34;Creating new set with difference of {self.state_generator.name} and {other.state_generator.name}&#34;
+        diff_data = self.__working_set.difference(other.__working_set) # pylint: disable=protected-access
+        diff_name = f&#34;{self.state_generator.name}_difference_{other.state_generator.name}&#34;
+        diff = Set(diff_name, self.algo, diff_data, comments=comments)
+        return diff
+
+    def __repr__(self) -&gt; str:
+        &#34;&#34;&#34;Return representation for shell outputs.
+
+        Returns:
+            str: shell representation for Set
+        &#34;&#34;&#34;
+        empty = &#34;{}&#34;
+        return f&#34;Set({self.__working_set.__repr__() if len(self.__working_set) &gt; 0 else empty})&#34;
+
+    def __str__(self) -&gt; str:
+        &#34;&#34;&#34;Return string conversion for Set
+
+        Returns:
+            str: string conversion for Set
+        &#34;&#34;&#34;
+        empty = &#34;{}&#34;
+        return f&#34;Set({self.__working_set.__str__() if len(self.__working_set) &gt; 0 else empty})&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.set.Set.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, key, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a unique key to the set.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>key (ARgorithmStructure or (int, str, float, bool)) : key to add to the set</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; set1
+Set({1,2})
+&gt;&gt;&gt; set1.add('abc')
+Set({1,2,'abc'})
+&gt;&gt;&gt; set1.add(1)
+&gt;&gt;&gt; set1
+Set({1,2,'abc'})
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, key, comments=&#34;&#34;):
+    &#34;&#34;&#34;Adds a unique key to the set.
+    Args:
+        key (ARgorithmStructure or (int, str, float, bool)) : key to add to the set
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+    Example:
+    &gt;&gt;&gt; set1
+    Set({1,2})
+    &gt;&gt;&gt; set1.add(&#39;abc&#39;)
+    Set({1,2,&#39;abc&#39;})
+    &gt;&gt;&gt; set1.add(1)
+    &gt;&gt;&gt; set1
+    Set({1,2,&#39;abc&#39;})
+    &#34;&#34;&#34;
+    try:
+        assert isinstance(key,(ARgorithmHashable,int,bool,str,float))
+    except AssertionError as ae:
+        raise TypeError(&#34;Invalid key error : Please provide data with ARgorithmHashable type or (int, float, bool, str)&#34;) from ae
+    if isinstance(key, ARgorithmHashable):
+        self.body.add(key.to_json())
+    else:
+        self.body.add(key)
+
+    self.__working_set.add(key)
+    state = self.state_generator.set_add(self.body, key,comments)
+    self.algo.add_state(state)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.Set.difference"><code class="name flex">
+<span>def <span class="ident">difference</span></span>(<span>self, other, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new set with the difference of the calling set with the set in the arguments provided</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>other (Set) : set to find the difference with</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<p>returns:
+Set : difference of self and other</p>
+<p>example:
+&gt;&gt;&gt; set1
+Set({1,2})
+&gt;&gt;&gt; set2
+Set({2,3,4})
+&gt;&gt;&gt; set1.difference(set2)
+Set({1})</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def difference(self, other, comments=&#34;&#34;) :
+    &#34;&#34;&#34;Creates a new set with the difference of the calling set with the set in the arguments provided
+    Args:
+        other (Set) : set to find the difference with
+        comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    returns:
+        Set : difference of self and other
+
+    example:
+        &gt;&gt;&gt; set1
+        Set({1,2})
+        &gt;&gt;&gt; set2
+        Set({2,3,4})
+        &gt;&gt;&gt; set1.difference(set2)
+        Set({1})
+    &#34;&#34;&#34;
+    if not comments:
+        comments = f&#34;Creating new set with difference of {self.state_generator.name} and {other.state_generator.name}&#34;
+    diff_data = self.__working_set.difference(other.__working_set) # pylint: disable=protected-access
+    diff_name = f&#34;{self.state_generator.name}_difference_{other.state_generator.name}&#34;
+    diff = Set(diff_name, self.algo, diff_data, comments=comments)
+    return diff</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.Set.find"><code class="name flex">
+<span>def <span class="ident">find</span></span>(<span>self, key, comments='') ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>finds if a key is present in the set</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>key (ARgorithmStructure or (int, str, float, bool)) : key to find in the set</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool </code></dt>
+<dd>true if key found else false</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; set1
+Set({1,2,&quot;abc&quot;})
+&gt;&gt;&gt; set1.find(&quot;abc&quot;)
+True
+&gt;&gt;&gt; set1.find(&quot;abcd&quot;)
+False
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find(self, key, comments=&#34;&#34;) -&gt; bool:
+    &#34;&#34;&#34;finds if a key is present in the set
+    Args:
+        key (ARgorithmStructure or (int, str, float, bool)) : key to find in the set
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+    Returns:
+        bool : true if key found else false
+
+    Example:
+        &gt;&gt;&gt; set1
+        Set({1,2,&#34;abc&#34;})
+        &gt;&gt;&gt; set1.find(&#34;abc&#34;)
+        True
+        &gt;&gt;&gt; set1.find(&#34;abcd&#34;)
+        False
+    &#34;&#34;&#34;
+    found = key in self.__working_set
+    state = self.state_generator.set_find(self.body, key, found,comments)
+    self.algo.add_state(state)
+    return found</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.Set.intersection"><code class="name flex">
+<span>def <span class="ident">intersection</span></span>(<span>self, other, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new set with the intersection of the calling set with the set in the arguments provided</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>other (Set) : set to find the intersection with</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<p>returns:
+Set : intersection of self and other</p>
+<p>example:
+&gt;&gt;&gt; set1
+Set({1,2})
+&gt;&gt;&gt; set2
+Set({2,3,4})
+&gt;&gt;&gt; set1.intersection(set2)
+Set({2})</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def intersection(self, other, comments=&#34;&#34;) :
+    &#34;&#34;&#34;Creates a new set with the intersection of the calling set with the set in the arguments provided
+    Args:
+        other (Set) : set to find the intersection with
+        comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    returns:
+        Set : intersection of self and other
+
+    example:
+        &gt;&gt;&gt; set1
+        Set({1,2})
+        &gt;&gt;&gt; set2
+        Set({2,3,4})
+        &gt;&gt;&gt; set1.intersection(set2)
+        Set({2})
+    &#34;&#34;&#34;
+    if not comments:
+        comments = f&#34;Creating new set with intersection of {self.state_generator.name} and {other.state_generator.name}&#34;
+    intersect_data = self.__working_set.intersection(other.__working_set) # pylint: disable=protected-access
+    intersect_name = f&#34;{self.state_generator.name}_intersection_{other.state_generator.name}&#34;
+    intersect = Set(intersect_name, self.algo, intersect_data, comments=comments)
+    return intersect</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.Set.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self, key, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>removes the key from the set</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>key (ARgorithmStructure or (int, str, float, bool)) : key to remove from the set</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; set1
+Set({1,2,3})
+&gt;&gt;&gt; set1.remove(1)
+&gt;&gt;&gt; set1
+Set({2,3})
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self, key, comments=&#34;&#34;):
+    &#34;&#34;&#34;removes the key from the set
+    Args:
+        key (ARgorithmStructure or (int, str, float, bool)) : key to remove from the set
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Example:
+        &gt;&gt;&gt; set1
+        Set({1,2,3})
+        &gt;&gt;&gt; set1.remove(1)
+        &gt;&gt;&gt; set1
+        Set({2,3})
+    &#34;&#34;&#34;
+    try:
+        if isinstance(key, ARgorithmHashable):
+            self.body.remove(key.to_json())
+        else:
+            self.body.remove(key)
+        self.__working_set.remove(key)
+        state = self.state_generator.set_remove(self.body, key,comments)
+        self.algo.add_state(state)
+    except Exception as e:
+        raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.Set.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.Set.union"><code class="name flex">
+<span>def <span class="ident">union</span></span>(<span>self, other, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new set with the union of the calling set with the set in the arguments provided</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>other (Set) : set to find the union with</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<p>returns:
+Set : union of self and other</p>
+<p>example:
+&gt;&gt;&gt; set1
+Set({1,2})
+&gt;&gt;&gt; set2
+Set({2,3,4})
+&gt;&gt;&gt; set1.union(set2)
+Set({1,2,3,4})</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def union(self, other, comments=&#34;&#34;) :
+    &#34;&#34;&#34;Creates a new set with the union of the calling set with the set in the arguments provided
+    Args:
+        other (Set) : set to find the union with
+        comments (str, optional): comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    returns:
+        Set : union of self and other
+
+    example:
+        &gt;&gt;&gt; set1
+        Set({1,2})
+        &gt;&gt;&gt; set2
+        Set({2,3,4})
+        &gt;&gt;&gt; set1.union(set2)
+        Set({1,2,3,4})
+    &#34;&#34;&#34;
+    if not comments:
+        comments = f&#34;Creating new set with union of {self.state_generator.name} and {other.state_generator.name}&#34;
+    union_data = self.__working_set.union(other.__working_set) # pylint: disable=protected-access
+    union_name = f&#34;{self.state_generator.name}_union_{other.state_generator.name}&#34;
+    _union = Set(union_name, self.algo, union_data, comments=comments)
+    return _union</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.set.SetState"><code class="flex name class">
+<span>class <span class="ident">SetState</span></span>
+<span>(</span><span>name, _id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is used to generate states for various actions performed on
+the <code><a title="ARgorithmToolkit.set.Set" href="#ARgorithmToolkit.set.Set">Set</a></code> object.</p>
+<h2 id="attributes">Attributes</h2>
+<p>name (str) : Name of the object for which the states are generated
+_id (str) : id of the object for which the states are generated</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SetState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.set.Set`` object.
+
+    Attributes:
+
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
+    &#34;&#34;&#34;
+    def __init__(self,name,_id):
+        self.name = name
+        self._id = _id
+
+    def set_declare(self, body, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_declare` state when an instance of Set class
+        is created.
+
+        Args:
+            body: The contents of the set that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_declare`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_declare&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def set_add(self, body, key, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_add` state when a particular key is add.
+
+        Args:
+            body : The contents of the set that are to be sent along with the state
+            key : The key that has been added
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_add`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_add&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;key&#34; : key,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+
+    def set_remove(self,body,key,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_remove` state when a particular key is deleted.
+
+        Args:
+            body : The contents of the set that are to be sent along with the state
+            key : The key that has been deleted
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_remove`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_remove&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def set_find(self, body, key, found, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `set_find` state when a particular key is searched for.
+
+        Args:
+            body : The contents of the set that are to be sent along with the state
+            key : The key that has been searched
+            found : true if found false if not found
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``set_find`` state for the respective set mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;set_find&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;key&#34; : key,
+            &#34;found&#34;: found,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.set.SetState.set_add"><code class="name flex">
+<span>def <span class="ident">set_add</span></span>(<span>self, body, key, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>set_add</code> state when a particular key is add.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>body : The contents of the set that are to be sent along with the state</dt>
+<dt>key : The key that has been added</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>set_add</code> state for the respective set mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_add(self, body, key, comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `set_add` state when a particular key is add.
+
+    Args:
+        body : The contents of the set that are to be sent along with the state
+        key : The key that has been added
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``set_add`` state for the respective set mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;set_add&#34;
+    state_def = {
+        &#34;id&#34;: self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;key&#34; : key,
+        &#34;body&#34; : body.copy()
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.SetState.set_declare"><code class="name flex">
+<span>def <span class="ident">set_declare</span></span>(<span>self, body, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>set_declare</code> state when an instance of Set class
+is created.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>body</code></strong></dt>
+<dd>The contents of the set that are to be sent along with the state</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>set_declare</code> state for the respective set mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_declare(self, body, comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `set_declare` state when an instance of Set class
+    is created.
+
+    Args:
+        body: The contents of the set that are to be sent along with the state
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``set_declare`` state for the respective set mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;set_declare&#34;
+    state_def = {
+        &#34;id&#34;: self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : body.copy()
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.SetState.set_find"><code class="name flex">
+<span>def <span class="ident">set_find</span></span>(<span>self, body, key, found, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>set_find</code> state when a particular key is searched for.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>body : The contents of the set that are to be sent along with the state</dt>
+<dt>key : The key that has been searched</dt>
+<dt>found : true if found false if not found</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>set_find</code> state for the respective set mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_find(self, body, key, found, comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `set_find` state when a particular key is searched for.
+
+    Args:
+        body : The contents of the set that are to be sent along with the state
+        key : The key that has been searched
+        found : true if found false if not found
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``set_find`` state for the respective set mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;set_find&#34;
+    state_def = {
+        &#34;id&#34;: self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;key&#34; : key,
+        &#34;found&#34;: found,
+        &#34;body&#34; : body.copy()
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.set.SetState.set_remove"><code class="name flex">
+<span>def <span class="ident">set_remove</span></span>(<span>self, body, key, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>set_remove</code> state when a particular key is deleted.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>body : The contents of the set that are to be sent along with the state</dt>
+<dt>key : The key that has been deleted</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>set_remove</code> state for the respective set mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_remove(self,body,key,comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `set_remove` state when a particular key is deleted.
+
+    Args:
+        body : The contents of the set that are to be sent along with the state
+        key : The key that has been deleted
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``set_remove`` state for the respective set mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;set_remove&#34;
+    state_def = {
+        &#34;id&#34; : self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : body.copy(),
+        &#34;key&#34; : key,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap');
+#back {
+box-sizing: border-box;
+padding: 5px;
+background-color: #dadada;
+color: black;
+border-radius: 5px;
+font-family: 'IBM Plex Sans', sans-serif;
+text-decoration: none;
+}
+</style>
+<a href='/toolkit' id="back">
+<i class="fa fa-home" aria-hidden="true"></i> Back
+</a>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ARgorithmToolkit" href="index.html">ARgorithmToolkit</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ARgorithmToolkit.set.Set" href="#ARgorithmToolkit.set.Set">Set</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ARgorithmToolkit.set.Set.add" href="#ARgorithmToolkit.set.Set.add">add</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.Set.difference" href="#ARgorithmToolkit.set.Set.difference">difference</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.Set.find" href="#ARgorithmToolkit.set.Set.find">find</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.Set.intersection" href="#ARgorithmToolkit.set.Set.intersection">intersection</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.Set.remove" href="#ARgorithmToolkit.set.Set.remove">remove</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.Set.to_json" href="#ARgorithmToolkit.set.Set.to_json">to_json</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.Set.union" href="#ARgorithmToolkit.set.Set.union">union</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.set.SetState" href="#ARgorithmToolkit.set.SetState">SetState</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.set.SetState.set_add" href="#ARgorithmToolkit.set.SetState.set_add">set_add</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.SetState.set_declare" href="#ARgorithmToolkit.set.SetState.set_declare">set_declare</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.SetState.set_find" href="#ARgorithmToolkit.set.SetState.set_find">set_find</a></code></li>
+<li><code><a title="ARgorithmToolkit.set.SetState.set_remove" href="#ARgorithmToolkit.set.SetState.set_remove">set_remove</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

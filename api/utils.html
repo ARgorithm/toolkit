@@ -138,7 +138,16 @@ class StateSet:
         )
         self.add_state(comment_state)
 
-class Variable:
+class ARgorithmHashable:
+    &#34;&#34;&#34;Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
+    This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
+    &#34;&#34;&#34;
+
+class ARgorithmStructure:
+    &#34;&#34;&#34;Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
+    &#34;&#34;&#34;
+
+class Variable(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;Some programs might need us to listen and store states of primitive
     datatypes like int, str , bool etc. For tha purpose, we have the Variable
     class.
@@ -160,8 +169,10 @@ class Variable:
         self.name = name
         self.__flag = False
         self.value = value
+        self._id = str(id(self))
         state_type = &#34;variable_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : name ,
             &#34;value&#34; : value
         }
@@ -185,6 +196,7 @@ class Variable:
         if(key == &#39;value&#39; and self.__flag):
             state_type = &#34;variable_highlight&#34;
             state_def = {
+                &#34;id&#34; : self._id,
                 &#34;variable_name&#34; : self.name,
                 &#34;value&#34; : self.value,
             }
@@ -245,6 +257,61 @@ workings of ARgorithmToolkit</p></div>
 <ul class="hlist">
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="ARgorithmToolkit.utils.ARgorithmHashable"><code class="flex name class">
+<span>class <span class="ident">ARgorithmHashable</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
+This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ARgorithmHashable:
+    &#34;&#34;&#34;Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
+    This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
+    &#34;&#34;&#34;</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="doublylinkedlist.html#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></li>
+<li><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="doublylinkedlist.html#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></li>
+<li><a title="ARgorithmToolkit.linkedlist.LinkedList" href="linkedlist.html#ARgorithmToolkit.linkedlist.LinkedList">LinkedList</a></li>
+<li><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="linkedlist.html#ARgorithmToolkit.linkedlist.LinkedListNode">LinkedListNode</a></li>
+<li><a title="ARgorithmToolkit.string.String" href="string.html#ARgorithmToolkit.string.String">String</a></li>
+<li><a title="ARgorithmToolkit.utils.Variable" href="#ARgorithmToolkit.utils.Variable">Variable</a></li>
+</ul>
+</dd>
+<dt id="ARgorithmToolkit.utils.ARgorithmStructure"><code class="flex name class">
+<span>class <span class="ident">ARgorithmStructure</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ARgorithmStructure:
+    &#34;&#34;&#34;Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
+    &#34;&#34;&#34;</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.array.Array" href="array.html#ARgorithmToolkit.array.Array">Array</a></li>
+<li><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="doublylinkedlist.html#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></li>
+<li><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="doublylinkedlist.html#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></li>
+<li><a title="ARgorithmToolkit.linkedlist.LinkedList" href="linkedlist.html#ARgorithmToolkit.linkedlist.LinkedList">LinkedList</a></li>
+<li><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="linkedlist.html#ARgorithmToolkit.linkedlist.LinkedListNode">LinkedListNode</a></li>
+<li><a title="ARgorithmToolkit.map.Map" href="map.html#ARgorithmToolkit.map.Map">Map</a></li>
+<li><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="priorityqueue.html#ARgorithmToolkit.priorityqueue.PriorityQueue">PriorityQueue</a></li>
+<li><a title="ARgorithmToolkit.queue.Queue" href="queue.html#ARgorithmToolkit.queue.Queue">Queue</a></li>
+<li><a title="ARgorithmToolkit.set.Set" href="set.html#ARgorithmToolkit.set.Set">Set</a></li>
+<li><a title="ARgorithmToolkit.stack.Stack" href="stack.html#ARgorithmToolkit.stack.Stack">Stack</a></li>
+<li><a title="ARgorithmToolkit.string.String" href="string.html#ARgorithmToolkit.string.String">String</a></li>
+<li><a title="ARgorithmToolkit.utils.Variable" href="#ARgorithmToolkit.utils.Variable">Variable</a></li>
+<li><a title="ARgorithmToolkit.vector.Vector" href="vector.html#ARgorithmToolkit.vector.Vector">Vector</a></li>
 </ul>
 </dd>
 <dt id="ARgorithmToolkit.utils.State"><code class="flex name class">
@@ -455,7 +522,7 @@ class.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Variable:
+<pre><code class="python">class Variable(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;Some programs might need us to listen and store states of primitive
     datatypes like int, str , bool etc. For tha purpose, we have the Variable
     class.
@@ -477,8 +544,10 @@ class.</p>
         self.name = name
         self.__flag = False
         self.value = value
+        self._id = str(id(self))
         state_type = &#34;variable_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : name ,
             &#34;value&#34; : value
         }
@@ -502,6 +571,7 @@ class.</p>
         if(key == &#39;value&#39; and self.__flag):
             state_type = &#34;variable_highlight&#34;
             state_def = {
+                &#34;id&#34; : self._id,
                 &#34;variable_name&#34; : self.name,
                 &#34;value&#34; : self.value,
             }
@@ -518,6 +588,11 @@ class.</p>
     def __repr__(self):
         return f&#34;Variable({repr(self.value)})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
+</ul>
 </dd>
 </dl>
 </section>
@@ -552,6 +627,12 @@ text-decoration: none;
 <ul>
 <li>
 <h4><code><a title="ARgorithmToolkit.utils.ARgorithmError" href="#ARgorithmToolkit.utils.ARgorithmError">ARgorithmError</a></code></h4>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></code></h4>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></code></h4>
 </li>
 <li>
 <h4><code><a title="ARgorithmToolkit.utils.State" href="#ARgorithmToolkit.utils.State">State</a></code></h4>

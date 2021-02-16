@@ -271,8 +271,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configure" class="md-nav__link">
-    Configure
+  <a href="#connect" class="md-nav__link">
+    Connect
   </a>
   
 </li>
@@ -307,6 +307,13 @@
         <li class="md-nav__item">
   <a href="#init" class="md-nav__link">
     Init
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    Configure
   </a>
   
 </li>
@@ -445,6 +452,19 @@
 
 
   <li class="md-nav__item">
+    <a href="../tutorials/config/" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
     <a href="../tutorials/bubblesort/" class="md-nav__link">
       Bubblesort
     </a>
@@ -533,8 +553,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configure" class="md-nav__link">
-    Configure
+  <a href="#connect" class="md-nav__link">
+    Connect
   </a>
   
 </li>
@@ -569,6 +589,13 @@
         <li class="md-nav__item">
   <a href="#init" class="md-nav__link">
     Init
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    Configure
   </a>
   
 </li>
@@ -689,7 +716,7 @@ server.</p>
 </code></pre></div>
 </div>
 
-<h2 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h2>
+<h2 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">&para;</a></h2>
 <p>This command can be used to set your own server IP. All your requests will be sent to this IP. If you are running server locally you dont need to configure IP, instead you can use the <code>-l</code> or <code>--local</code> flag to connect to local servers.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -698,7 +725,7 @@ server.</p>
 </code></pre></div></p>
 </div>
 <div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm configure
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm connect
 <span class="gp">#</span> Enter server endpoint :$ http://myserverendpoint.com 
 <span class="go">[SUCCESS]: CONNECTED</span>
 <span class="go">Cloud requests will now go to http://myserverendpoint.com</span>
@@ -748,7 +775,7 @@ server.</p>
 <span class="go">chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples</span>
 
 <span class="gp">$</span> ls
-<span class="go">hello_world.config.json hello_world.py</span>
+<span class="go">hello_world.py</span>
 </code></pre></div>
 </div>
 
@@ -764,8 +791,9 @@ server.</p>
         <span class="c1">#</span>
 
         <span class="k">return</span> <span class="n">algo</span>
-</code></pre></div>
-<strong>hello_world.config.json</strong>
+</code></pre></div></p>
+<p>If you use the <code>--config</code> flag it will generate a <code>&lt;name&gt;.config.json</code> file. You can also try the <a href="#configure"><code>configure</code></a> command</p>
+<p><strong>hello_world.config.json</strong>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;hello_world&quot;</span><span class="p">,</span> 
     <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;hello_world.py&quot;</span><span class="p">,</span> 
@@ -775,6 +803,49 @@ server.</p>
     <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
 <span class="p">}</span>
 </code></pre></div></p>
+<h2 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h2>
+<p>The configure command can be used to start the CLI based Config Generator. This allows users to easily create config files step by step</p>
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm configure hello_world
+<span class="gp">#</span> Start CLI config generator?  <span class="o">[</span>y/N<span class="o">]</span>:$ y
+
+<span class="go">    +-----------------------------+</span>
+<span class="go">    |  ARGORITHM CONFIG GENERATOR |</span>
+<span class="go">    +-----------------------------+</span>
+
+<span class="go">ARgorithmID: hello_world</span>
+<span class="go">Codefile found: hello_world.py</span>
+<span class="gp">#</span> which <span class="k">function</span> should be called <span class="o">[</span>run<span class="o">]</span>:$ 
+<span class="gp">#</span> Enter ARgorithm Description:$ hello world application
+
+<span class="go">Setting up parameters for your argorithm</span>
+<span class="go">input keywords are used to map the input passed to your function as kwargs</span>
+
+<span class="gp">#</span> Do you want to another input keyword <span class="o">[</span>y/N<span class="o">]</span>:$ y
+
+<span class="go">add details for parameter</span>
+<span class="gp">#</span> Enter parameter name:$ name
+<span class="gp">#</span> Enter parameter type:$ STRING
+<span class="gp">#</span> Enter parameter description:$ name of user
+
+<span class="gp">#</span> Do you want to <span class="nb">set</span> a size constraint to name <span class="o">[</span>y/N<span class="o">]</span>:$ n
+<span class="gp">#</span> Do you want to add parameter? <span class="o">[</span>y/N<span class="o">]</span>:$ n
+
+
+<span class="go">ENTER INPUT FOR ARGORITHM</span>
+<span class="go">Based on argorithm parameters, input will be taken</span>
+
+<span class="go">input keyword: name</span>
+<span class="go">Description: name of user</span>
+<span class="gp">#</span> Enter string value:$ Alan
+</code></pre></div>
+</div>
+
+<p>The <code>configure</code> should be used only after you are done programming. You can check out the config schema <a href="/toolkit/tutorials/config">here</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The simulation here might be different according to your function code.</p>
+</div>
 <h2 id="submit">Submit<a class="headerlink" href="#submit" title="Permanent link">&para;</a></h2>
 <p>The submit command is used to submit new ARgorithm to server. This comand takes the name of the argorithm for eg: <code>fibonacci</code>. In this case , it will search for <code>fibonacci.py</code> and <code>fibonacci.config.json</code> and after verification send them to server.</p>
 <div class="termy">
@@ -807,7 +878,7 @@ server.</p>
 </div>
 
 <h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
-<p>The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the <code>--output</code> or <code>-o</code> option.</p>
+<p>The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the <code>--output</code> or <code>-o</code> option. By default, the data given in the configuration example is taken as input. By using the <code>--user-input</code> flag you can enter your own input to the argorithm. </p>
 <div class="termy">
 <div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm <span class="nb">test</span> fibonacci
 <span class="go">Found argorithm</span>

@@ -276,6 +276,54 @@
     Configuring the Server
   </a>
   
+    <nav class="md-nav" aria-label="Configuring the Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-app-database" class="md-nav__link">
+    In-app database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mongodb-database" class="md-nav__link">
+    mongodb database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mongodb-with-auth" class="md-nav__link">
+    mongodb with auth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caching" class="md-nav__link">
+    caching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    monitoring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose-examples" class="md-nav__link">
+    Docker-compose examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -345,6 +393,19 @@
   <li class="md-nav__item">
     <a href="../tutorials/" class="md-nav__link">
       Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/config/" class="md-nav__link">
+      Configuration
     </a>
   </li>
 
@@ -462,6 +523,54 @@
     Configuring the Server
   </a>
   
+    <nav class="md-nav" aria-label="Configuring the Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-app-database" class="md-nav__link">
+    In-app database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mongodb-database" class="md-nav__link">
+    mongodb database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mongodb-with-auth" class="md-nav__link">
+    mongodb with auth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caching" class="md-nav__link">
+    caching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    monitoring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose-examples" class="md-nav__link">
+    Docker-compose examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -502,8 +611,8 @@ for their class or organisation. The following steps are to be followed.</p>
 <ul>
 <li>Python 3.6+</li>
 <li>fastapi</li>
-<li>uvicorn</li>
-<li>gunicorn (for production use)</li>
+<li>uvicorn[standard]</li>
+<li>gunicorn</li>
 <li>jinja2</li>
 <li>aiofiles</li>
 <li>python-multipart</li>
@@ -511,8 +620,13 @@ for their class or organisation. The following steps are to be followed.</p>
 <li>python-jose</li>
 <li>passlib[bcrypt]</li>
 <li>motor</li>
+<li>tornado</li>
+<li>dnspython</li>
+<li>pytest</li>
 <li>ARgorithmToolkit</li>
 <li>PyJWT</li>
+<li>aioredis</li>
+<li>prometheus-client</li>
 </ul>
 <p>To run it in production, use gunicorn to run as a production server. Docker-ce will be required if server image is being used</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
@@ -539,13 +653,9 @@ for their class or organisation. The following steps are to be followed.</p>
 </div>
 <h2 id="configuring-the-server">Configuring the Server<a class="headerlink" href="#configuring-the-server" title="Permanent link">&para;</a></h2>
 <p>The application can be run in different modes</p>
-<ol>
-<li>In-app database</li>
-</ol>
+<h4 id="in-app-database">In-app database<a class="headerlink" href="#in-app-database" title="Permanent link">&para;</a></h4>
 <p>No authentication or authorization services. Data stored using sqlite database. By default, it runs in this mode</p>
-<ol>
-<li>mongodb database</li>
-</ol>
+<h4 id="mongodb-database">mongodb database<a class="headerlink" href="#mongodb-database" title="Permanent link">&para;</a></h4>
 <p>No authentication or authorization services. Data stored in mongodb database of your choice. For this you will need to set some environment variables:</p>
 <ul>
 <li><code>DATABASE=mongodb</code></li>
@@ -558,15 +668,28 @@ for their class or organisation. The following steps are to be followed.</p>
 <p class="admonition-title">Info</p>
 <p>If using a cloud mongo database like atlas which provides mongo+srv url as endpoint, you just need to paste that URL as your <code>DB_ENDPOINT</code>. You can ignore the <code>DB_USERNAME</code> and <code>DB_PASSWORD</code> env variables.</p>
 </div>
-<ol>
-<li>mongodb with auth</li>
-</ol>
+<h4 id="mongodb-with-auth">mongodb with auth<a class="headerlink" href="#mongodb-with-auth" title="Permanent link">&para;</a></h4>
 <p>Authorization on all basic routes. Data stored in mongodb database of your choice. This is an enhancement to the previous mode so along with the required envs previously.</p>
 <ul>
 <li><code>SECRET_KEY=yoursecretkey</code></li>
 <li><code>ADMIN_EMAIL=sample@email.com</code></li>
 <li><code>ADMIN_PASSWORD=test123</code></li>
 </ul>
+<h4 id="caching">caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h4>
+<p>Caching on state generation when execution request comes on <code>/argorithms/run</code>. Uses <a href="https://redis.io">redis</a> for implementing LRU cache. The following environment variables have to be set</p>
+<ul>
+<li><code>CACHING=ENABLED</code></li>
+<li><code>REDIS_HOST=redis</code></li>
+<li><code>REDIS_PORT=6379</code></li>
+<li><code>REDIS_PASSWORD=notmypassword</code></li>
+</ul>
+<h4 id="monitoring">monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h4>
+<p>By default, <a href="https://prometheus.io">prometheus</a> metrics have been implemented and can be accessed at <code>/metrics</code> route. Programmer can secure the route by using the <code>METRICS_TOKEN</code> environment variable to add authorization bearer token. If not given then by default, there is no authorization required</p>
+<ul>
+<li><code>METRICS_TOKEN=yourmetricstoken</code></li>
+</ul>
+<p>You can check out the grafana folder in the code repository for a ARgorithm specific dashboard</p>
+<h3 id="docker-compose-examples">Docker-compose examples<a class="headerlink" href="#docker-compose-examples" title="Permanent link">&para;</a></h3>
 <p>Check the <code>Dockerfile</code> for the default values of these environment variables.
 The repo comes with two docker compose configuration files</p>
 <ul>
@@ -586,8 +709,11 @@ The repo comes with two docker compose configuration files</p>
 </code></pre></div></p>
 </li>
 <li>
-<p><code>docker-compose.prod.yml</code> : runs application with mongodb and auth and will setup mongodb database as well. will read env variables from <code>.env</code> file</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3&quot;</span>
+<p><code>docker-compose.prod.yml</code> : runs application with mongodb and auth and will setup mongodb database. A redis server is launched to handle caching and prometheus and grafana nodes are created for monitoring It will read environment variables from <code>.env</code> file</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Sets up multiple services to demonstrate how a server cluster would run with cloud storage, authorization, caching and monitoring</span>
+<span class="c1"># This file requires the existense of .env with neccessary variable</span>
+<span class="c1"># The docker-compose file is added for emulation of how the application can be setup with full functionality</span>
+<span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3&quot;</span>
 <span class="nt">services</span><span class="p">:</span>
     <span class="nt">mongodb</span><span class="p">:</span>
         <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mongo</span>
@@ -598,6 +724,13 @@ The repo comes with two docker compose configuration files</p>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}</span>
         <span class="nt">volumes</span><span class="p">:</span>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mongo-data:/data/db</span>
+    <span class="nt">redis</span><span class="p">:</span>
+        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">redis</span>
+        <span class="nt">ports</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">6379:6379</span>
+        <span class="nt">volumes</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./redis.conf:/usr/local/etc/redis/redis.conf</span>
+        <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">redis-server /usr/local/etc/redis/redis.conf</span>
     <span class="nt">arserver</span><span class="p">:</span>
         <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">alanjohn/argorithm-server:latest</span>
         <span class="nt">ports</span><span class="p">:</span> 
@@ -610,10 +743,37 @@ The repo comes with two docker compose configuration files</p>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PASSWORD=${DB_PASSWORD}</span>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_ENDPOINT=mongodb</span>
             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PORT=27017</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ADMIN_EMAIL=${ADMIN_EMAIL}</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ADMIN_PASSWORD=${ADMIN_PASSWORD}</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ADMIN_EMAIL=${ADMIN_EMAIL}</span>
+            <span class="l l-Scalar l-Scalar-Plain">- ADMIN_PASSWORD=${ADMIN_PASSWORD}</span>
+            <span class="l l-Scalar l-Scalar-Plain">- CACHING=ENABLED</span>
+            <span class="l l-Scalar l-Scalar-Plain">- REDIS_HOST=redis</span>
+            <span class="l l-Scalar l-Scalar-Plain">- REDIS_PORT=6379</span>
+            <span class="l l-Scalar l-Scalar-Plain">- REDIS_PASSWORD=notmypassword</span>
         <span class="nt">volumes</span><span class="p">:</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">local-uploads:/tmp/argorithm</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">uploads:/tmp/argorithm</span>
+        <span class="nt">depends_on</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mongodb</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">redis</span>
+    <span class="nt">prometheus</span><span class="p">:</span>
+        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prom/prometheus</span>
+        <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">9090:9090</span>
+        <span class="nt">command</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--config.file=/etc/prometheus/prometheus.yml</span>
+        <span class="nt">volumes</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./prometheus.yml:/etc/prometheus/prometheus.yml:ro</span>
+        <span class="nt">depends_on</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arserver</span>
+    <span class="nt">grafana</span><span class="p">:</span>
+        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grafana/grafana</span>
+        <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">3000:3000</span>
+        <span class="nt">volumes</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./grafana/datasource.yml:/etc/grafana/provisioning/datasource.yml</span>
+        <span class="nt">env_file</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./grafana/config.monitoring</span>
+        <span class="nt">depends_on</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
 <span class="nt">volumes</span><span class="p">:</span>
     <span class="nt">mongo-data</span><span class="p">:</span>
         <span class="nt">driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
@@ -644,18 +804,20 @@ The repo comes with two docker compose configuration files</p>
 
 <p>Running the application as a docker container</p>
 <div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> docker run --name -d server -p <span class="m">80</span>:80 --env-file<span class="o">=</span>.env alanjohn/argorithm-server:latest
-<span class="go">server</span>
-</code></pre></div>
-</div>
+​```console
+$ docker run --name -d server -p 80:80 --env-file=.env alanjohn/argorithm-server:latest
+server
+<div class="highlight"><pre><span></span><code>&lt;/div&gt;
 
-<p>Running the application using <code>docker-compose</code></p>
-<div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> docker-compose -f docker-compose.prod.yml up
-<span class="go">Creating network &quot;server_default&quot; with the default driver</span>
-<span class="go">Creating server_mongodb_1 ... done</span>
-<span class="go">Creating server_arserver_1 ... done</span>
-<span class="go">Attaching to server_mongodb_1,server_arserver_1</span>
+Running the application using `docker-compose`
+
+&lt;div class=&quot;termy&quot;&gt;
+```console
+$ docker-compose -f docker-compose.prod.yml up
+Creating network &quot;server_default&quot; with the default driver
+Creating server_mongodb_1 ... done
+Creating server_arserver_1 ... done
+Attaching to server_mongodb_1,server_arserver_1
 </code></pre></div>
 </div>
 
@@ -673,10 +835,13 @@ The repo comes with two docker compose configuration files</p>
 </ul>
 </li>
 <li>
-<p>The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI <a href="\cli#new">account new</a> command, it create both a progammer and a user account for that email. The mobile application can only create user accounts.</p>
+<p>The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI <a href="/toolkit/cli#new">account new</a> command, it create both a progammer and a user account for that email. The mobile application can only create user accounts.</p>
 </li>
 <li>
-<p>logs are generated in server.log file which you will find in <code>\uploads</code>. The <code>server.log</code> file contains request based logs for every path. The <code>process.log</code> has logs regarding state generation for argorithm.</p>
+<p>logs are generated in server.log file which you will find in <code>/tmp/argorithm</code>. The <code>server.log</code> file contains request based logs for every path.</p>
+</li>
+<li>
+<p>Application metrics are available at <code>/metrics</code></p>
 </li>
 </ol>
                 

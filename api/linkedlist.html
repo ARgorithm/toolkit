@@ -57,7 +57,8 @@ These three classes can be directly imported from the toolkit:
 
 &#34;&#34;&#34;
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
 
 class LinkedListNodeState:
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
@@ -66,10 +67,12 @@ class LinkedListNodeState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def llnode_declare(self,value,_next,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `llnode_declare` state when a new node is created.
@@ -84,6 +87,7 @@ class LinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;llnode_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : _next.name if _next else &#34;none&#34;
@@ -108,6 +112,7 @@ class LinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;llnode_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : _next.name if _next else &#34;none&#34;
@@ -133,6 +138,7 @@ class LinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;llnode_next&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : _next.name if _next else &#34;none&#34;,
@@ -155,6 +161,7 @@ class LinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;llnode_delete&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
         }
         return State(
@@ -163,7 +170,8 @@ class LinkedListNodeState:
             comments=comments
         )
 
-class LinkedListNode:
+@serialize
+class LinkedListNode(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The LinkedListNode class is an implementation of a Linked list Node for
     which we store states. Unlike other data structure classes, in which we
     have to give a name to the instance, we dont have to provide name in the
@@ -188,14 +196,15 @@ class LinkedListNode:
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
-        self.name = id(self)
+        self.name = str(id(self))
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
 
-        self.state_generator = LinkedListNodeState(self.name)
+        self.state_generator = LinkedListNodeState(self.name, self._id)
 
         self._flag = False
         self.value = value
@@ -262,9 +271,11 @@ class LinkedListState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def ll_declare(self,head,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `ll_declare` state when a new linkedlist is created.
@@ -278,6 +289,7 @@ class LinkedListState:
         &#34;&#34;&#34;
         state_type = &#34;ll_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;
         }
@@ -287,7 +299,7 @@ class LinkedListState:
             comments=comments
         )
 
-    def ll_head(self,head,comments=&#34;&#34;):
+    def ll_head(self,head,last_head=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `ll_head` state when linkedlist head is changed.
 
         Args:
@@ -299,16 +311,20 @@ class LinkedListState:
         &#34;&#34;&#34;
         state_type = &#34;ll_head&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;
         }
+        if not (last_head is None):
+            state_def[&#34;last_head&#34;] = last_head
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-class LinkedList:
+@serialize
+class LinkedList(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The LinkedList class is used to just store the head of the linked list.
 
     This class is useful when programmer want to program his own List class using
@@ -334,12 +350,13 @@ class LinkedList:
 
         assert isinstance(name,str) , ARgorithmError(&#34;Name should be of type string&#34;)
         self.name = name
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
-        self.state_generator = LinkedListState(self.name)
+        self.state_generator = LinkedListState(self.name, self._id)
 
         self._flag = False
         if head:
@@ -357,11 +374,14 @@ class LinkedList:
         Raises:
             ARgorithmError: Raised if head pointer is not type None or LinkedListNode
         &#34;&#34;&#34;
+        last_head = None
         if key == &#39;head&#39; and value:
             assert isinstance(value,LinkedListNode) , ARgorithmError(&#34;next should be of type None or LinkedListNode&#34;)
+        if key == &#39;head&#39; and self._flag:
+            last_head = self.head._id if self.head else &#34;none&#34;
         self.__dict__[key] = value
         if key == &#39;head&#39; and self._flag:
-            state = self.state_generator.ll_head(self.head,&#34;head pointer shifts&#34;)
+            state = self.state_generator.ll_head(self.head,last_head=last_head, comments=&#34;head pointer shifts&#34;)
             self.algo.add_state(state)
 
     def __str__(self):
@@ -898,6 +918,8 @@ programmer will have to make their own methods.</p>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmToolkit.linkedlist.LinkedList">LinkedList</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
@@ -1212,6 +1234,14 @@ ForwardList([3, 1])
 </details>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmToolkit.linkedlist.LinkedList">LinkedList</a></b></code>:
+<ul class="hlist">
+<li><code><a title="ARgorithmToolkit.linkedlist.LinkedList.to_json" href="#ARgorithmToolkit.linkedlist.LinkedList.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 <dt id="ARgorithmToolkit.linkedlist.ForwardListIterator"><code class="flex name class">
 <span>class <span class="ident">ForwardListIterator</span></span>
@@ -1284,7 +1314,7 @@ the nodes. Only contains head attribute and no methods</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class LinkedList:
+<pre><code class="python">class LinkedList(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The LinkedList class is used to just store the head of the linked list.
 
     This class is useful when programmer want to program his own List class using
@@ -1310,12 +1340,13 @@ the nodes. Only contains head attribute and no methods</p>
 
         assert isinstance(name,str) , ARgorithmError(&#34;Name should be of type string&#34;)
         self.name = name
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
-        self.state_generator = LinkedListState(self.name)
+        self.state_generator = LinkedListState(self.name, self._id)
 
         self._flag = False
         if head:
@@ -1333,11 +1364,14 @@ the nodes. Only contains head attribute and no methods</p>
         Raises:
             ARgorithmError: Raised if head pointer is not type None or LinkedListNode
         &#34;&#34;&#34;
+        last_head = None
         if key == &#39;head&#39; and value:
             assert isinstance(value,LinkedListNode) , ARgorithmError(&#34;next should be of type None or LinkedListNode&#34;)
+        if key == &#39;head&#39; and self._flag:
+            last_head = self.head._id if self.head else &#34;none&#34;
         self.__dict__[key] = value
         if key == &#39;head&#39; and self._flag:
-            state = self.state_generator.ll_head(self.head,&#34;head pointer shifts&#34;)
+            state = self.state_generator.ll_head(self.head,last_head=last_head, comments=&#34;head pointer shifts&#34;)
             self.algo.add_state(state)
 
     def __str__(self):
@@ -1346,10 +1380,35 @@ the nodes. Only contains head attribute and no methods</p>
     def __repr__(self):
         return f&#34;LinkedList(head at {self.head})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="ARgorithmToolkit.linkedlist.ForwardList" href="#ARgorithmToolkit.linkedlist.ForwardList">ForwardList</a></li>
 </ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.linkedlist.LinkedList.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 <dt id="ARgorithmToolkit.linkedlist.LinkedListNode"><code class="flex name class">
 <span>class <span class="ident">LinkedListNode</span></span>
@@ -1385,7 +1444,7 @@ LinkedListNode Class.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class LinkedListNode:
+<pre><code class="python">class LinkedListNode(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The LinkedListNode class is an implementation of a Linked list Node for
     which we store states. Unlike other data structure classes, in which we
     have to give a name to the instance, we dont have to provide name in the
@@ -1410,14 +1469,15 @@ LinkedListNode Class.</p>
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
-        self.name = id(self)
+        self.name = str(id(self))
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
 
-        self.state_generator = LinkedListNodeState(self.name)
+        self.state_generator = LinkedListNodeState(self.name, self._id)
 
         self._flag = False
         self.value = value
@@ -1477,16 +1537,42 @@ LinkedListNode Class.</p>
     def __repr__(self):
         return f&#34;LinkedListNode({self.value}) at {self.name}&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.linkedlist.LinkedListNode.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 <dt id="ARgorithmToolkit.linkedlist.LinkedListNodeState"><code class="flex name class">
 <span>class <span class="ident">LinkedListNodeState</span></span>
-<span>(</span><span>name: str)</span>
+<span>(</span><span>name: str, _id: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithmToolkit.linkedlist.LinkedListNode">LinkedListNode</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1498,10 +1584,12 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def llnode_declare(self,value,_next,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `llnode_declare` state when a new node is created.
@@ -1516,6 +1604,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
         &#34;&#34;&#34;
         state_type = &#34;llnode_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : _next.name if _next else &#34;none&#34;
@@ -1540,6 +1629,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
         &#34;&#34;&#34;
         state_type = &#34;llnode_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : _next.name if _next else &#34;none&#34;
@@ -1565,6 +1655,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
         &#34;&#34;&#34;
         state_type = &#34;llnode_next&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : _next.name if _next else &#34;none&#34;,
@@ -1587,6 +1678,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
         &#34;&#34;&#34;
         state_type = &#34;llnode_delete&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
         }
         return State(
@@ -1632,6 +1724,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
     &#34;&#34;&#34;
     state_type = &#34;llnode_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : _next.name if _next else &#34;none&#34;
@@ -1673,6 +1766,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithm
     &#34;&#34;&#34;
     state_type = &#34;llnode_delete&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
     }
     return State(
@@ -1719,6 +1813,7 @@ value is changed.</p>
     &#34;&#34;&#34;
     state_type = &#34;llnode_iter&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : _next.name if _next else &#34;none&#34;
@@ -1767,6 +1862,7 @@ value is changed.</p>
     &#34;&#34;&#34;
     state_type = &#34;llnode_next&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : _next.name if _next else &#34;none&#34;,
@@ -1783,13 +1879,14 @@ value is changed.</p>
 </dd>
 <dt id="ARgorithmToolkit.linkedlist.LinkedListState"><code class="flex name class">
 <span>class <span class="ident">LinkedListState</span></span>
-<span>(</span><span>name: str)</span>
+<span>(</span><span>name: str, _id: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmToolkit.linkedlist.LinkedList">LinkedList</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1801,9 +1898,11 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def ll_declare(self,head,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `ll_declare` state when a new linkedlist is created.
@@ -1817,6 +1916,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
         &#34;&#34;&#34;
         state_type = &#34;ll_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;
         }
@@ -1826,7 +1926,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
             comments=comments
         )
 
-    def ll_head(self,head,comments=&#34;&#34;):
+    def ll_head(self,head,last_head=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `ll_head` state when linkedlist head is changed.
 
         Args:
@@ -1838,9 +1938,12 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
         &#34;&#34;&#34;
         state_type = &#34;ll_head&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;
         }
+        if not (last_head is None):
+            state_def[&#34;last_head&#34;] = last_head
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -1882,6 +1985,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
     &#34;&#34;&#34;
     state_type = &#34;ll_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;head&#34; : head.name if head else &#34;none&#34;
     }
@@ -1893,7 +1997,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
 </details>
 </dd>
 <dt id="ARgorithmToolkit.linkedlist.LinkedListState.ll_head"><code class="name flex">
-<span>def <span class="ident">ll_head</span></span>(<span>self, head, comments='')</span>
+<span>def <span class="ident">ll_head</span></span>(<span>self, head, last_head=None, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>ll_head</code> state when linkedlist head is changed.</p>
@@ -1913,7 +2017,7 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def ll_head(self,head,comments=&#34;&#34;):
+<pre><code class="python">def ll_head(self,head,last_head=None,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `ll_head` state when linkedlist head is changed.
 
     Args:
@@ -1925,9 +2029,12 @@ the <code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmTool
     &#34;&#34;&#34;
     state_type = &#34;ll_head&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;head&#34; : head.name if head else &#34;none&#34;
     }
+    if not (last_head is None):
+        state_def[&#34;last_head&#34;] = last_head
     return State(
         state_type=state_type,
         state_def=state_def,
@@ -1984,9 +2091,15 @@ text-decoration: none;
 </li>
 <li>
 <h4><code><a title="ARgorithmToolkit.linkedlist.LinkedList" href="#ARgorithmToolkit.linkedlist.LinkedList">LinkedList</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.linkedlist.LinkedList.to_json" href="#ARgorithmToolkit.linkedlist.LinkedList.to_json">to_json</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="ARgorithmToolkit.linkedlist.LinkedListNode" href="#ARgorithmToolkit.linkedlist.LinkedListNode">LinkedListNode</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.linkedlist.LinkedListNode.to_json" href="#ARgorithmToolkit.linkedlist.LinkedListNode.to_json">to_json</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="ARgorithmToolkit.linkedlist.LinkedListNodeState" href="#ARgorithmToolkit.linkedlist.LinkedListNodeState">LinkedListNodeState</a></code></h4>

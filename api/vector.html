@@ -47,7 +47,9 @@ work:
     &gt;&gt;&gt; vec = ARgorithmToolkit.vector.Vector(name=&#39;vec&#39;,algo=algo)
 &#34;&#34;&#34;
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
+
 class VectorState:
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
     the ``ARgorithmToolkit.vector.Vector`` object.
@@ -56,8 +58,9 @@ class VectorState:
 
         name (str) : Name of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
 
     def vector_declare(self,body,comments=&#34;&#34;):
@@ -73,6 +76,7 @@ class VectorState:
         &#34;&#34;&#34;
         state_type = &#34;vector_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body)
         }
@@ -98,6 +102,7 @@ class VectorState:
         &#34;&#34;&#34;
         state_type = &#34;vector_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index&#34; : index
@@ -125,6 +130,7 @@ class VectorState:
         &#34;&#34;&#34;
         state_type = &#34;vector_remove&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index&#34; : index
@@ -150,6 +156,7 @@ class VectorState:
         &#34;&#34;&#34;
         state_type = &#34;vector_insert&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element,
@@ -175,6 +182,7 @@ class VectorState:
         &#34;&#34;&#34;
         state_type = &#34;vector_swap&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index1&#34; : indexes[0],
@@ -200,6 +208,7 @@ class VectorState:
         &#34;&#34;&#34;
         state_type = &#34;vector_compare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index1&#34; : indexes[0],
@@ -234,7 +243,8 @@ class VectorIterator:
         self._index += 1
         return v
 
-class Vector:
+@serialize
+class Vector(ARgorithmStructure):
     &#34;&#34;&#34;The Vector class provides a wrapped around the python list class to
     emulate it as a vector.
 
@@ -256,7 +266,8 @@ class Vector:
     def __init__(self,name,algo,data=None,comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = VectorState(name)
+            self._id = str(id(self))
+            self.state_generator = VectorState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -531,7 +542,7 @@ emulate it as a vector.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Vector:
+<pre><code class="python">class Vector(ARgorithmStructure):
     &#34;&#34;&#34;The Vector class provides a wrapped around the python list class to
     emulate it as a vector.
 
@@ -553,7 +564,8 @@ emulate it as a vector.</p>
     def __init__(self,name,algo,data=None,comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = VectorState(name)
+            self._id = str(id(self))
+            self.state_generator = VectorState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -785,6 +797,10 @@ emulate it as a vector.</p>
         &#34;&#34;&#34;
         return f&#34;Vector({self.body.__repr__()})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="ARgorithmToolkit.vector.Vector.compare"><code class="name flex">
@@ -1042,6 +1058,23 @@ Vector([3, 2, 1])
     self.algo.add_state(state)</code></pre>
 </details>
 </dd>
+<dt id="ARgorithmToolkit.vector.Vector.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 <dt id="ARgorithmToolkit.vector.VectorIterator"><code class="flex name class">
@@ -1088,7 +1121,7 @@ iterated.</p>
 </dd>
 <dt id="ARgorithmToolkit.vector.VectorState"><code class="flex name class">
 <span>class <span class="ident">VectorState</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, _id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
@@ -1107,8 +1140,9 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
 
         name (str) : Name of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
 
     def vector_declare(self,body,comments=&#34;&#34;):
@@ -1124,6 +1158,7 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
         &#34;&#34;&#34;
         state_type = &#34;vector_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body)
         }
@@ -1149,6 +1184,7 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
         &#34;&#34;&#34;
         state_type = &#34;vector_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index&#34; : index
@@ -1176,6 +1212,7 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
         &#34;&#34;&#34;
         state_type = &#34;vector_remove&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index&#34; : index
@@ -1201,6 +1238,7 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
         &#34;&#34;&#34;
         state_type = &#34;vector_insert&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element,
@@ -1226,6 +1264,7 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
         &#34;&#34;&#34;
         state_type = &#34;vector_swap&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index1&#34; : indexes[0],
@@ -1251,6 +1290,7 @@ the <code><a title="ARgorithmToolkit.vector.Vector" href="#ARgorithmToolkit.vect
         &#34;&#34;&#34;
         state_type = &#34;vector_compare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;index1&#34; : indexes[0],
@@ -1301,6 +1341,7 @@ vector are being compared.</p>
     &#34;&#34;&#34;
     state_type = &#34;vector_compare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;index1&#34; : indexes[0],
@@ -1348,6 +1389,7 @@ class is created.</p>
     &#34;&#34;&#34;
     state_type = &#34;vector_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body)
     }
@@ -1398,6 +1440,7 @@ at particular index of vector.</p>
     &#34;&#34;&#34;
     state_type = &#34;vector_insert&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;element&#34; : element,
@@ -1454,6 +1497,7 @@ has been accessed.</p>
     &#34;&#34;&#34;
     state_type = &#34;vector_iter&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;index&#34; : index
@@ -1506,6 +1550,7 @@ index of vector is removed.</p>
     &#34;&#34;&#34;
     state_type = &#34;vector_remove&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;index&#34; : index
@@ -1554,6 +1599,7 @@ vector are being swapped.</p>
     &#34;&#34;&#34;
     state_type = &#34;vector_swap&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;index1&#34; : indexes[0],
@@ -1606,6 +1652,7 @@ text-decoration: none;
 <li><code><a title="ARgorithmToolkit.vector.Vector.insert" href="#ARgorithmToolkit.vector.Vector.insert">insert</a></code></li>
 <li><code><a title="ARgorithmToolkit.vector.Vector.remove" href="#ARgorithmToolkit.vector.Vector.remove">remove</a></code></li>
 <li><code><a title="ARgorithmToolkit.vector.Vector.swap" href="#ARgorithmToolkit.vector.Vector.swap">swap</a></code></li>
+<li><code><a title="ARgorithmToolkit.vector.Vector.to_json" href="#ARgorithmToolkit.vector.Vector.to_json">to_json</a></code></li>
 </ul>
 </li>
 <li>

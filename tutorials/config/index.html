@@ -1,0 +1,1250 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AR visualizations of data structures">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
+    
+    
+      
+        <title>Configuration - ARgorithm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.15aa0b43.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.75751829.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/termynal.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue-grey">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creating-your-configuration-file" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="ARgorithm" class="md-header-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../../img/Logo_black.svg" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            ARgorithm
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ARgorithm/toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/toolkit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ARgorithm" class="md-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../../img/Logo_black.svg" alt="logo">
+
+    </a>
+    ARgorithm
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ARgorithm/toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/toolkit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../start/" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../server/" class="md-nav__link">
+      Server Setup
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../cli/" class="md-nav__link">
+      Command Line Interface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  
+
+
+  
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Tutorials
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Configuration
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Configuration
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#argorithm-details" class="md-nav__link">
+    ARgorithm details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-parameters" class="md-nav__link">
+    Input parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Input parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int" class="md-nav__link">
+    INT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float" class="md-nav__link">
+    FLOAT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    STRING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    ARRAY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    MATRIX
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-default-values" class="md-nav__link">
+    Adding default values
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-methods" class="md-nav__link">
+    Alternative methods
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../bubblesort/" class="md-nav__link">
+      Bubblesort
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../fibonacci/" class="md-nav__link">
+      Fibonacci
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../api/" class="md-nav__link">
+      API Documentation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../CHANGELOG/" class="md-nav__link">
+      Releases
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../help/" class="md-nav__link">
+      Need help?
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#argorithm-details" class="md-nav__link">
+    ARgorithm details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-parameters" class="md-nav__link">
+    Input parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Input parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int" class="md-nav__link">
+    INT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float" class="md-nav__link">
+    FLOAT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    STRING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    ARRAY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    MATRIX
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-default-values" class="md-nav__link">
+    Adding default values
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-methods" class="md-nav__link">
+    Alternative methods
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="creating-your-configuration-file">Creating your configuration file<a class="headerlink" href="#creating-your-configuration-file" title="Permanent link">&para;</a></h1>
+<p>The <code>.config.json</code> plays an important role in creating argorithms. It stores metadata and useful information that can be used to manage, run and customise input to argorithm. In this tutorial, we will be covering the .config.json step by step created using <code>configure</code> command. So lets get started. We'll be creating a <code>sample.config.json</code> for <code>sample.py</code></p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> ARgorithm init sample
+<span class="go">Creating empty template for sample</span>
+<span class="go">[SUCCESS]: TEMPLATE GENERATED</span>
+
+<span class="gp">$</span> ARgorithm configure sample
+<span class="gp">#</span> Start CLI config generator?  <span class="o">[</span>y/N<span class="o">]</span>:$ y
+
+<span class="go">+-----------------------------+</span>
+<span class="go">|  ARGORITHM CONFIG GENERATOR |</span>
+<span class="go">+-----------------------------+</span>
+</code></pre></div>
+</div>
+
+<h2 id="argorithm-details">ARgorithm details<a class="headerlink" href="#argorithm-details" title="Permanent link">&para;</a></h2>
+<p>as seen in the <a href="/toolkit/start">Getting started</a>, the configuration has the following properties</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>argorithmID</td>
+<td>name of your ARgorithm , this is generally pre filled from when you run the init command. The name of your code file should be <em>name</em>.py and the config should be <em>name</em>.config.json. [will be fixed later]</td>
+</tr>
+<tr>
+<td>file</td>
+<td>The file containing your codefile</td>
+</tr>
+<tr>
+<td>function</td>
+<td>The function that is going to be called</td>
+</tr>
+<tr>
+<td>parameters</td>
+<td>the parameters that your ARgorithm would need, this helps in anyone using your ARgorithm to understand what is the input format</td>
+</tr>
+<tr>
+<td>example</td>
+<td>default parameters in case no parameters are passed</td>
+</tr>
+<tr>
+<td>description</td>
+<td>The description of ARgorithm. Helpful to people using your ARgorithm as well as other developers</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>argorithmID</code> and <code>file</code> are read from the filename. The <code>sample.py</code> file is parsed by the CLI to list out eligible functions. an eligible function is one that can be called by ARgorithm. Your ARgorithm code file must have a function of the form <code>def foo(**kwargs)</code>. The input will be passed as keyword arguments according to metadata in config file. If you have more than one eligible function, you can decide which one to call.</p>
+<p>The <code>description</code> describe what the argorithm does so users know what the argorithm does and renders.</p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="go">ARgorithmID: sample</span>
+<span class="go">Codefile found: sample.py</span>
+<span class="gp">#</span> which <span class="k">function</span> should be called <span class="o">[</span>run<span class="o">]</span>:$ run
+<span class="go">Enter ARgorithm Description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ sample config file to demonstrate config generator
+</code></pre></div>
+
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="hll">    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+</span>    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<h2 id="input-parameters">Input parameters<a class="headerlink" href="#input-parameters" title="Permanent link">&para;</a></h2>
+<p>The <code>parameters</code> property is what defines the input to your argorithm. The properties defined inside <code>parameters</code> as passed in keyword arguments to your function. Inside the <code>parameters</code>, we define the type and input constraints and in <code>example</code>, we give a default value that can be used as input on that keyword.</p>
+<p>The CLI reads your code and shows you what iinput keywords your code looks for so that you can define its properties. you can add more parameters if you want but you will have to update your function to read that keyword argument.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Our current sample.py does not have any function code utilising keyword arguments. If your code does utilise some keyword arguments than you'll be asked to describe those particular input keywords.</p>
+</div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="go">Setting up parameters for your argorithm</span>
+<span class="go">input keywords are used to map the input passed to your function as kwargs</span>
+
+<span class="go">The following input keywords were found in code</span>
+<span class="go">- array</span>
+</code></pre></div>
+
+</div>
+
+<p>Each parameter has two neccessary fields: <code>type</code> and <code>description</code>.</p>
+<ul>
+<li><code>type</code>  : Decides the kind of input that is required to be taken from user. It can be of 5 types: <code>INT</code>,<code>FLOAT</code>,<code>STRING</code>,<code>ARRAY</code>,<code>MATRIX</code>. We'll cover creating parameters of each type below in detail.</li>
+<li><code>description</code> : Tells the user what this input parameter is for. This is useful in telling the user about the importance of this input and how it will be processed.</li>
+</ul>
+<h3 id="int">INT<a class="headerlink" href="#int" title="Permanent link">&para;</a></h3>
+<p>Parameters with <code>INT</code> type expect an integer input. You can add constraint to the range in which the integer input should be by using the <code>start</code> and <code>end</code> properties. Below is the schema of a parameter with type <code>INT</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;properties&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;const&quot;</span> <span class="p">:</span> <span class="s2">&quot;INT&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;description&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;start&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;end&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+<span class="nt">&quot;required&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">#</span> Enter parameter name:$ n
+<span class="gp">#</span> Enter parameter type:$ INT
+<span class="gp">#</span> Do you want to add range constraints to n <span class="o">[</span>y/N<span class="o">]</span>:$ y
+<span class="gp">#</span> Enter lower limit:$ <span class="m">0</span>
+<span class="gp">#</span> Enter upper limit: $ 
+<span class="go">Enter parameter description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ integer input
+</code></pre></div>
+
+</div>
+
+<p>In this example, we have created a input keyword <code>n</code> which requires a integer input larger than 0. Please note that the range specified by <code>start</code> and <code>end</code> is inclusive of the values</p>
+<p>
+<script type="math/tex; mode=display">
+n\in [start,end]
+</script>
+</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="hll">      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+</span>      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<h3 id="float">FLOAT<a class="headerlink" href="#float" title="Permanent link">&para;</a></h3>
+<p>Parameters with <code>FLOAT</code> type expect an numerical input which include both integers and floating point numbers. You can add constraint to the range in which the numerical input should be by using the <code>start</code> and <code>end</code> properties. Below is the schema of a parameter with type <code>FLOAT</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;properties&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;const&quot;</span> <span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;description&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;start&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;number&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;end&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;number&quot;</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+<span class="nt">&quot;required&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="s2">&quot;description&quot;</span><span class="p">],</span>
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">#</span> Enter parameter name:$ f
+<span class="gp">#</span> Enter parameter type:$ FLOAT
+<span class="gp">#</span> Do you want to add range constraints to f <span class="o">[</span>y/N<span class="o">]</span>:$ n
+<span class="go">Enter parameter description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ floating point input
+</code></pre></div>
+
+</div>
+
+<p>In this example, we have defined input keyword <code>f</code> as a <code>float</code> which has no range constraints. Ranges in <code>FLOAT</code> works similar to <code>INT</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+<span class="hll">      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+</span>      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<h3 id="string">STRING<a class="headerlink" href="#string" title="Permanent link">&para;</a></h3>
+<p>Parameters with type <code>STRING</code> take a single line string input from the user. This length of this string can be defined using the <code>size</code> property. <code>size</code> can store a integer value defining the size or can store the name of an <code>INT</code> type parameter so that size is input at runtime. <code>size</code> is an optional property, in case it is absent the user can enter a string of any length. Below is the schema of <code>STRING</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;const&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+  <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">]</span>
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">#</span> Enter parameter name:$ s
+<span class="gp">#</span> Enter parameter type:$ STRING
+<span class="gp">#</span> Do you want to <span class="nb">set</span> a size constraint to s <span class="o">[</span>y/N<span class="o">]</span>:$ y
+<span class="gp">#</span> Enter integer size or name of pre-existing INT <span class="nb">type</span> parameter:$ n
+<span class="go">Enter parameter description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ string input
+</code></pre></div>
+
+</div>
+
+<p>Here we have defined <code>s</code> which is on type <code>string</code> and the length of string must be value stored in <code>n</code>.</p>
+<p>
+<script type="math/tex; mode=display">
+len(s) = n
+</script>
+</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+<span class="hll">      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+</span>      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The input to <code>STRING</code> can be multiline but the input manager within CLI does not support that yet.</p>
+</div>
+<h3 id="array">ARRAY<a class="headerlink" href="#array" title="Permanent link">&para;</a></h3>
+<p>Parameters with type <code>ARRAY</code> will expect a 1-dimensional series of items. The number of items in the series is controlled similarly to length of string i.e. using the <code>size</code> property. If <code>size</code> is not defined then the series can be of any size &gt; 0. When using <code>ARRAY</code>, you need to define the <code>item-type</code> property as well. <code>item-type</code> can be <code>INT</code>,<code>FLOAT</code> or <code>STRING</code>. Below is the schema for <code>ARRAY</code> type parameters.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;const&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="s2">&quot;STRING&quot;</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+<span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;item-type&quot;</span><span class="p">]</span>
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">#</span> Enter parameter name:$ arr
+<span class="gp">#</span> Enter parameter type:$ ARRAY
+<span class="gp">#</span> Enter <span class="nb">type</span> of array element:$ INT
+<span class="gp">#</span> Do you want to <span class="nb">set</span> a size constraint to arr <span class="o">[</span>y/N<span class="o">]</span>:$ n
+<span class="go">Enter parameter description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ array input
+</code></pre></div>
+
+Here we have defined `arr` of type `ARRAY` where each element has to be of type `INT`. The `size` of `arr` has not been defined so it can be of any size. 
+
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+<span class="hll">      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hll">        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+</span><span class="hll">      <span class="p">},</span>
+</span>      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<h3 id="matrix">MATRIX<a class="headerlink" href="#matrix" title="Permanent link">&para;</a></h3>
+<p>Parameters with type <code>MATRIX</code> will expect a1-dimensional series of items. The dimensions are controlled by <code>row</code> and <code>column</code> which is parsed similar to the <code>size</code> property. Unlike <code>size</code>, <code>row</code> and <code>col</code> are neccessary properties.. When using <code>MATRIX</code>, you need to define the <code>item-type</code> property as well. <code>item-type</code> can be <code>INT</code>,<code>FLOAT</code> or <code>STRING</code>. Below is the schema for <code>MATRIX</code> type parameters.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;const&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="s2">&quot;STRING&quot;</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+  <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;col&quot;</span><span class="p">,</span> <span class="s2">&quot;row&quot;</span><span class="p">,</span> <span class="s2">&quot;item-type&quot;</span><span class="p">],</span>
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="gp">#</span> Enter parameter name:$ mat 
+<span class="gp">#</span> Enter parameter type:$ MATRIX
+<span class="gp">#</span> Enter <span class="nb">type</span> of array element:$ INT
+<span class="gp">#</span> Enter integer row size or name of pre-existing INT <span class="nb">type</span> parameter:$ <span class="m">4</span>
+<span class="gp">#</span> Enter integer col_size or name of pre-existing INT <span class="nb">type</span> parameter:$ <span class="m">3</span>
+<span class="go">Enter parameter description</span>
+<span class="go">Press ENTER on empty line to leave multiline input</span>
+<span class="gp">#</span> :$ 2d input
+</code></pre></div>
+
+</div>
+
+<p>Here we have defined <code>mat</code> as a 4x3 matrix in which elements are type of <code>INT</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+      <span class="p">},</span>
+<span class="hll">      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hll">        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class="hll">        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+</span><span class="hll">      <span class="p">}</span>
+</span>    <span class="p">},</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<h2 id="adding-default-values">Adding default values<a class="headerlink" href="#adding-default-values" title="Permanent link">&para;</a></h2>
+<p>Now that we have defined our input parameters, we need to provide some default values to these in the <code>example</code> property.</p>
+<ol>
+<li>These values are used in case the user doesnt want to give custom input or gives faulty input to keywords</li>
+<li>These values are used for testing purposes as well</li>
+</ol>
+<p>The CLI generates input fields according to the parameters in which you can enter you details.</p>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><span class="go">----------------------------------------</span>
+<span class="go">ENTER INPUT FOR ARGORITHM</span>
+<span class="go">----------------------------------------</span>
+<span class="go">Based on argorithm parameters, input will be taken</span>
+
+<span class="go">input keyword: n</span>
+<span class="go">Description: integer input</span>
+<span class="gp">#</span> Enter integer value:$ <span class="m">6</span>
+
+<span class="go">input keyword: f</span>
+<span class="go">Description: floating point input</span>
+<span class="gp">#</span> Enter integer value:$ <span class="m">3</span>.4
+
+<span class="go">input keyword: s</span>
+<span class="go">Description: string input</span>
+<span class="gp">#</span> Enter string value:$ sample
+
+<span class="go">input keyword: arr</span>
+<span class="go">Description: array input</span>
+<span class="gp">#</span> Enter space separated series:$ <span class="m">3</span> <span class="m">4</span> <span class="m">1</span> <span class="m">2</span>
+
+<span class="go">input keyword: mat</span>
+<span class="go">Description: 2d input</span>
+<span class="go">Enter matrix input, elements in each row must be space separated</span>
+<span class="go">no. of rows: 4</span>
+<span class="go">no. of elements per row: 3</span>
+<span class="gp">#</span> :$ <span class="m">1</span> <span class="m">4</span> <span class="m">2</span>
+<span class="gp">#</span> :$ <span class="m">5</span> <span class="m">4</span> <span class="m">2</span>
+<span class="gp">#</span> :$ <span class="m">5</span> <span class="m">6</span> <span class="m">4</span>
+<span class="gp">#</span> :$ <span class="m">8</span> <span class="m">1</span> <span class="m">9</span>
+</code></pre></div>
+
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;sample.py&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sample config to demonstrate config generation&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;integer input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;floating point input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;STRING&quot;</span><span class="p">,</span> <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;string input&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ARRAY&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;array input&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MATRIX&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;item-type&quot;</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;row&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;col&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;2d input&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+<span class="hll">    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hll">      <span class="nt">&quot;n&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;f&quot;</span><span class="p">:</span> <span class="mf">3.4</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;s&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span><span class="hll">      <span class="nt">&quot;mat&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class="hll">        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span><span class="hll">        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span><span class="hll">        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+</span><span class="hll">        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</span><span class="hll">      <span class="p">]</span>
+</span>    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<h2 id="alternative-methods">Alternative methods<a class="headerlink" href="#alternative-methods" title="Permanent link">&para;</a></h2>
+<p>You can generate a blank <code>sample.config.json</code> by using the <code>--config</code> option in the <code>init</code> command. You can then edit this file in your code editor.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>We are working on GUI interface which should make the config generation process even more simpler</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Introduction
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../bubblesort/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Bubblesort
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ARgorithm/toolkit" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['search.suggest', 'search.highlight'],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="../../js/mathjaxhelper.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js"></script>
+      
+        <script src="../../js/termynal.js"></script>
+      
+        <script src="../../js/custom.js"></script>
+      
+    
+  </body>
+</html>

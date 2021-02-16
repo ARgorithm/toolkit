@@ -58,7 +58,8 @@ These three classes can be directly imported from the toolkit:
 
 &#34;&#34;&#34;
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
+from ARgorithmToolkit.encoders import serialize
 
 class DoublyLinkedListNodeState:
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
@@ -66,11 +67,13 @@ class DoublyLinkedListNodeState:
 
     Attributes:
 
-        name (str) : Name of the variable for whom we are generating states
+        name (str) : Name of the object for which states are generated
+        _id (str) : id of the object for which states are generated
     &#34;&#34;&#34;
 
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def dllnode_declare(self,value,next_node,prev_node,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_declare` state when a new node is created.
@@ -86,6 +89,7 @@ class DoublyLinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;dllnode_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -113,6 +117,7 @@ class DoublyLinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;dllnode_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -140,6 +145,7 @@ class DoublyLinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;dllnode_next&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -166,6 +172,7 @@ class DoublyLinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;dllnode_prev&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -190,6 +197,7 @@ class DoublyLinkedListNodeState:
         &#34;&#34;&#34;
         state_type = &#34;dllnode_delete&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
         }
         return State(
@@ -198,7 +206,8 @@ class DoublyLinkedListNodeState:
             comments=comments
         )
 
-class DoublyLinkedListNode:
+@serialize
+class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The DoublyLinkedListNode class is an implementation of a Linked list
     Node for which we store states. Unlike other data structure classes, in
     which we have to give a name to the instance, we dont have to provide name
@@ -224,14 +233,15 @@ class DoublyLinkedListNode:
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
-        self.name = id(self)
+        self.name = str(id(self))
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
 
-        self.state_generator = DoublyLinkedListNodeState(self.name)
+        self.state_generator = DoublyLinkedListNodeState(self.name, self._id)
 
         self._flag = False
         self.value = value
@@ -314,9 +324,11 @@ class DoublyLinkedListState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def dll_declare(self,head,tail,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dll_declare` state when a new linked list is created.
@@ -331,6 +343,7 @@ class DoublyLinkedListState:
         &#34;&#34;&#34;
         state_type = &#34;dll_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;,
             &#34;tail&#34; : tail.name if tail else &#34;none&#34;
@@ -341,7 +354,7 @@ class DoublyLinkedListState:
             comments=comments
         )
 
-    def dll_head(self,head,tail,comments=&#34;&#34;):
+    def dll_head(self,head,tail,last_head=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dll_head` state when linked list head is changed.
 
         Args:
@@ -354,17 +367,20 @@ class DoublyLinkedListState:
         &#34;&#34;&#34;
         state_type = &#34;dll_head&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;,
             &#34;tail&#34; : tail.name if tail else &#34;none&#34;
         }
+        if not (last_head is None):
+            state_def[&#39;last_head&#39;] = last_head
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def dll_tail(self,head,tail,comments=&#34;&#34;):
+    def dll_tail(self,head,tail,last_tail=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dll_tail` state when linked list tail is changed.
 
         Args:
@@ -377,17 +393,21 @@ class DoublyLinkedListState:
         &#34;&#34;&#34;
         state_type = &#34;dll_tail&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;,
             &#34;tail&#34; : tail.name if tail else &#34;none&#34;
         }
+        if not(last_tail is None):
+            state_def[&#39;last_tail&#39;] = last_tail
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-class DoublyLinkedList:
+@serialize
+class DoublyLinkedList(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The DoublyLinkedList class is used to just store the head of the linked
     list.
 
@@ -414,12 +434,13 @@ class DoublyLinkedList:
 
         assert isinstance(name,str) , ARgorithmError(&#34;Name should be of type string&#34;)
         self.name = name
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
-        self.state_generator = DoublyLinkedListState(self.name)
+        self.state_generator = DoublyLinkedListState(self.name, self._id)
 
         if head:
             assert self.algo == head.algo, ARgorithmError(&#34;The head node belongs to a different StateSet&#34;)
@@ -441,12 +462,18 @@ class DoublyLinkedList:
         &#34;&#34;&#34;
         if key in [&#39;head&#39;,&#39;tail&#39;] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        last_head = None
+        last_tail = None
+        if key == &#39;head&#39; and self._flag:
+            last_head = self.head._id if self.head else &#34;none&#34;
+        elif key == &#39;tail&#39; and self._flag:
+            last_tail = self.tail._id if self.tail else &#34;none&#34;
         self.__dict__[key] = value
         if key == &#39;head&#39; and self._flag:
-            state = self.state_generator.dll_head(self.head,self.tail,&#34;head pointer shifts&#34;)
+            state = self.state_generator.dll_head(self.head,self.tail,last_head=last_head,comments=&#34;head pointer shifts&#34;)
             self.algo.add_state(state)
         if key == &#39;tail&#39; and self._flag:
-            state = self.state_generator.dll_tail(self.head,self.tail,&#34;tail pointer shifts&#34;)
+            state = self.state_generator.dll_tail(self.head,self.tail,last_tail=last_tail,comments=&#34;tail pointer shifts&#34;)
             self.algo.add_state(state)
 
     def __str__(self):
@@ -837,7 +864,7 @@ the nodes. Only contains head attribute and no methods</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class DoublyLinkedList:
+<pre><code class="python">class DoublyLinkedList(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The DoublyLinkedList class is used to just store the head of the linked
     list.
 
@@ -864,12 +891,13 @@ the nodes. Only contains head attribute and no methods</p>
 
         assert isinstance(name,str) , ARgorithmError(&#34;Name should be of type string&#34;)
         self.name = name
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
-        self.state_generator = DoublyLinkedListState(self.name)
+        self.state_generator = DoublyLinkedListState(self.name, self._id)
 
         if head:
             assert self.algo == head.algo, ARgorithmError(&#34;The head node belongs to a different StateSet&#34;)
@@ -891,12 +919,18 @@ the nodes. Only contains head attribute and no methods</p>
         &#34;&#34;&#34;
         if key in [&#39;head&#39;,&#39;tail&#39;] and value:
             assert isinstance(value,DoublyLinkedListNode) , ARgorithmError(&#34;next should be of type None or DoublyLinkedListNode&#34;)
+        last_head = None
+        last_tail = None
+        if key == &#39;head&#39; and self._flag:
+            last_head = self.head._id if self.head else &#34;none&#34;
+        elif key == &#39;tail&#39; and self._flag:
+            last_tail = self.tail._id if self.tail else &#34;none&#34;
         self.__dict__[key] = value
         if key == &#39;head&#39; and self._flag:
-            state = self.state_generator.dll_head(self.head,self.tail,&#34;head pointer shifts&#34;)
+            state = self.state_generator.dll_head(self.head,self.tail,last_head=last_head,comments=&#34;head pointer shifts&#34;)
             self.algo.add_state(state)
         if key == &#39;tail&#39; and self._flag:
-            state = self.state_generator.dll_tail(self.head,self.tail,&#34;tail pointer shifts&#34;)
+            state = self.state_generator.dll_tail(self.head,self.tail,last_tail=last_tail,comments=&#34;tail pointer shifts&#34;)
             self.algo.add_state(state)
 
     def __str__(self):
@@ -905,10 +939,35 @@ the nodes. Only contains head attribute and no methods</p>
     def __repr__(self):
         return f&#34;DoublyLinkedList(head at {self.head})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="ARgorithmToolkit.doublylinkedlist.List" href="#ARgorithmToolkit.doublylinkedlist.List">List</a></li>
 </ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode"><code class="flex name class">
 <span>class <span class="ident">DoublyLinkedListNode</span></span>
@@ -946,7 +1005,7 @@ in the DoublyLinkedListNode Class.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class DoublyLinkedListNode:
+<pre><code class="python">class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The DoublyLinkedListNode class is an implementation of a Linked list
     Node for which we store states. Unlike other data structure classes, in
     which we have to give a name to the instance, we dont have to provide name
@@ -972,14 +1031,15 @@ in the DoublyLinkedListNode Class.</p>
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
-        self.name = id(self)
+        self.name = str(id(self))
+        self._id = str(id(self))
         try:
             assert isinstance(algo,StateSet)
             self.algo = algo
         except AssertionError as e:
             raise ARgorithmError(&#34;algo should be of type StateSet&#34;) from e
 
-        self.state_generator = DoublyLinkedListNodeState(self.name)
+        self.state_generator = DoublyLinkedListNodeState(self.name, self._id)
 
         self._flag = False
         self.value = value
@@ -1055,16 +1115,42 @@ in the DoublyLinkedListNode Class.</p>
     def __repr__(self):
         return f&#34;DoublyLinkedListNode({self.value}) at {self.name}&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState"><code class="flex name class">
 <span>class <span class="ident">DoublyLinkedListNodeState</span></span>
-<span>(</span><span>name: str)</span>
+<span>(</span><span>name: str, _id: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the object for which states are generated
+_id (str) : id of the object for which states are generated</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1075,11 +1161,13 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
 
     Attributes:
 
-        name (str) : Name of the variable for whom we are generating states
+        name (str) : Name of the object for which states are generated
+        _id (str) : id of the object for which states are generated
     &#34;&#34;&#34;
 
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def dllnode_declare(self,value,next_node,prev_node,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dllnode_declare` state when a new node is created.
@@ -1095,6 +1183,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
         &#34;&#34;&#34;
         state_type = &#34;dllnode_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1122,6 +1211,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
         &#34;&#34;&#34;
         state_type = &#34;dllnode_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1149,6 +1239,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
         &#34;&#34;&#34;
         state_type = &#34;dllnode_next&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1175,6 +1266,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
         &#34;&#34;&#34;
         state_type = &#34;dllnode_prev&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;value&#34; : value,
             &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1199,6 +1291,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
         &#34;&#34;&#34;
         state_type = &#34;dllnode_delete&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
         }
         return State(
@@ -1247,6 +1340,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
     &#34;&#34;&#34;
     state_type = &#34;dllnode_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1289,6 +1383,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href
     &#34;&#34;&#34;
     state_type = &#34;dllnode_delete&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
     }
     return State(
@@ -1341,6 +1436,7 @@ value is changed.</p>
     &#34;&#34;&#34;
     state_type = &#34;dllnode_iter&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1393,6 +1489,7 @@ value is changed.</p>
     &#34;&#34;&#34;
     state_type = &#34;dllnode_next&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1444,6 +1541,7 @@ value is changed.</p>
     &#34;&#34;&#34;
     state_type = &#34;dllnode_prev&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;value&#34; : value,
         &#34;next&#34; : next_node.name if next_node else &#34;none&#34;,
@@ -1461,13 +1559,14 @@ value is changed.</p>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState"><code class="flex name class">
 <span>class <span class="ident">DoublyLinkedListState</span></span>
-<span>(</span><span>name: str)</span>
+<span>(</span><span>name: str, _id: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1479,9 +1578,11 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name:str):
+    def __init__(self,name:str,_id:str):
         self.name = name
+        self._id = _id
 
     def dll_declare(self,head,tail,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dll_declare` state when a new linked list is created.
@@ -1496,6 +1597,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
         &#34;&#34;&#34;
         state_type = &#34;dll_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;,
             &#34;tail&#34; : tail.name if tail else &#34;none&#34;
@@ -1506,7 +1608,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
             comments=comments
         )
 
-    def dll_head(self,head,tail,comments=&#34;&#34;):
+    def dll_head(self,head,tail,last_head=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dll_head` state when linked list head is changed.
 
         Args:
@@ -1519,17 +1621,20 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
         &#34;&#34;&#34;
         state_type = &#34;dll_head&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;,
             &#34;tail&#34; : tail.name if tail else &#34;none&#34;
         }
+        if not (last_head is None):
+            state_def[&#39;last_head&#39;] = last_head
         return State(
             state_type=state_type,
             state_def=state_def,
             comments=comments
         )
 
-    def dll_tail(self,head,tail,comments=&#34;&#34;):
+    def dll_tail(self,head,tail,last_tail=None,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `dll_tail` state when linked list tail is changed.
 
         Args:
@@ -1542,10 +1647,13 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
         &#34;&#34;&#34;
         state_type = &#34;dll_tail&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;head&#34; : head.name if head else &#34;none&#34;,
             &#34;tail&#34; : tail.name if tail else &#34;none&#34;
         }
+        if not(last_tail is None):
+            state_def[&#39;last_tail&#39;] = last_tail
         return State(
             state_type=state_type,
             state_def=state_def,
@@ -1590,6 +1698,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
     &#34;&#34;&#34;
     state_type = &#34;dll_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;head&#34; : head.name if head else &#34;none&#34;,
         &#34;tail&#34; : tail.name if tail else &#34;none&#34;
@@ -1602,7 +1711,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
 </details>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_head"><code class="name flex">
-<span>def <span class="ident">dll_head</span></span>(<span>self, head, tail, comments='')</span>
+<span>def <span class="ident">dll_head</span></span>(<span>self, head, tail, last_head=None, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>dll_head</code> state when linked list head is changed.</p>
@@ -1624,7 +1733,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def dll_head(self,head,tail,comments=&#34;&#34;):
+<pre><code class="python">def dll_head(self,head,tail,last_head=None,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `dll_head` state when linked list head is changed.
 
     Args:
@@ -1637,10 +1746,13 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
     &#34;&#34;&#34;
     state_type = &#34;dll_head&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;head&#34; : head.name if head else &#34;none&#34;,
         &#34;tail&#34; : tail.name if tail else &#34;none&#34;
     }
+    if not (last_head is None):
+        state_def[&#39;last_head&#39;] = last_head
     return State(
         state_type=state_type,
         state_def=state_def,
@@ -1649,7 +1761,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
 </details>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListState.dll_tail"><code class="name flex">
-<span>def <span class="ident">dll_tail</span></span>(<span>self, head, tail, comments='')</span>
+<span>def <span class="ident">dll_tail</span></span>(<span>self, head, tail, last_tail=None, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>dll_tail</code> state when linked list tail is changed.</p>
@@ -1671,7 +1783,7 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def dll_tail(self,head,tail,comments=&#34;&#34;):
+<pre><code class="python">def dll_tail(self,head,tail,last_tail=None,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `dll_tail` state when linked list tail is changed.
 
     Args:
@@ -1684,10 +1796,13 @@ the <code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#A
     &#34;&#34;&#34;
     state_type = &#34;dll_tail&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;head&#34; : head.name if head else &#34;none&#34;,
         &#34;tail&#34; : tail.name if tail else &#34;none&#34;
     }
+    if not(last_tail is None):
+        state_def[&#39;last_tail&#39;] = last_tail
     return State(
         state_type=state_type,
         state_def=state_def,
@@ -2054,6 +2169,8 @@ List([])
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
@@ -2532,6 +2649,14 @@ List([2, 5, 4, 4])
 </details>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></b></code>:
+<ul class="hlist">
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList.to_json" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 <dt id="ARgorithmToolkit.doublylinkedlist.ListIterator"><code class="flex name class">
 <span>class <span class="ident">ListIterator</span></span>
@@ -2606,9 +2731,15 @@ text-decoration: none;
 <ul>
 <li>
 <h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList">DoublyLinkedList</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedList.to_json" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedList.to_json">to_json</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode">DoublyLinkedListNode</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.to_json" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNode.to_json">to_json</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState" href="#ARgorithmToolkit.doublylinkedlist.DoublyLinkedListNodeState">DoublyLinkedListNodeState</a></code></h4>

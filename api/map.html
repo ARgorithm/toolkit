@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ARgorithmToolkit.map API documentation</title>
+<meta name="description" content="The map module provides support for hash-map or dictionary data structure for the Toolkit.
+It maps key to a value provided.
+Provides O(1) average case …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<link rel="stylesheet" href="../css/font-awesome.css">
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ARgorithmToolkit.map</code></h1>
+</header>
+<section id="section-intro">
+<p>The map module provides support for hash-map or dictionary data structure for the Toolkit.
+It maps key to a value provided.
+Provides O(1) average case and O(n) amortized worst case complexity for element lookup.
+The main class in this module is the Map class. The
+other classes act as support class to Map class. For this reason the Map
+class can directly be imported from the ARgorithmToolkit library without having
+to import from the map module :</p>
+<pre><code>&gt;&gt;&gt; map = ARgorithmToolkit.Map(name='map',algo=algo)
+&gt;&gt;&gt; map = ARgorithmToolkit.map.Map(name='map',algo=algo)
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The map module provides support for hash-map or dictionary data structure for the Toolkit.
+It maps key to a value provided.
+Provides O(1) average case and O(n) amortized worst case complexity for element lookup.
+The main class in this module is the Map class. The
+other classes act as support class to Map class. For this reason the Map
+class can directly be imported from the ARgorithmToolkit library without having
+to import from the map module :
+
+    &gt;&gt;&gt; map = ARgorithmToolkit.Map(name=&#39;map&#39;,algo=algo)
+    &gt;&gt;&gt; map = ARgorithmToolkit.map.Map(name=&#39;map&#39;,algo=algo)
+&#34;&#34;&#34;
+
+from ARgorithmToolkit.utils import ARgorithmHashable, State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
+
+class MapState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.map.Map`` object.
+
+    Attributes:
+
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
+    &#34;&#34;&#34;
+    def __init__(self,name,_id):
+        self.name = name
+        self._id = _id
+
+    def map_declare(self, body, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_declare` state when an instance of Map class
+        is created.
+
+        Args:
+            body: The contents of the map that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_declare`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_declare&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def map_get(self,body,key,value,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_get` state when a particular key is looked up.
+
+        Args:
+            body : The contents of the map that are to be sent along with the state
+            key : The key that has been accessed
+            value : The current value associated with key
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_get`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_get&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+            &#34;value&#34; : value
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def map_set(self,body,key,value,last_value=None,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_set` state when a particular key is set for a new value.
+
+        Args:
+            body : The contents of the map that are to be sent along with the state
+            key : The key that has been accessed
+            value : The current value being associated with key
+            last_value (optional): the last value that the key was associated to.
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_set`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_set&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+            &#34;value&#34; : value,
+            &#34;last_value&#34; : last_value
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+
+    def map_remove(self,body,key,value,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_remove` state when a particular key is deleted.
+
+        Args:
+            body : The contents of the map that are to be sent along with the state
+            key : The key that has been deleted
+            value : The value associated with key
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_remove`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_remove&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+            &#34;value&#34; : value,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+class MapIterator:
+    &#34;&#34;&#34;This class is a generator that is returned each time an map has to be
+    iterated.
+
+    Yields:
+        Tuple(key,value) of Map
+
+    Raises:
+        AssertionError: If not declared with an instance of ARgorithmToolkit.map.Map
+    &#34;&#34;&#34;
+    def __init__(self,_map):
+        assert isinstance(_map,Map)
+        self.map = _map
+        self.size = len(_map)
+        self.index = 0
+        self.keys = list(self.map.keys())
+        self.values = list(self.map.values())
+
+    def __next__(self) -&gt; tuple:
+        if self.index == self.size:
+            raise StopIteration
+        k = self.keys[self.index]
+        v = self.values[self.index]
+        self.index += 1
+        return k,v
+
+@serialize
+class Map(ARgorithmStructure):
+    &#34;&#34;&#34;The Map class used to emulate hash-maps/dictionaries that can be
+    rendered in the ARgorithm Application as series of key/value pairs.
+
+    Attributes:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of Map Class
+        comments (str,optional): Description of instance of map and its applications that will be rendered during the ``map_declare`` state.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+
+    Examples:
+        This is an example of map being declared
+
+        &gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+        &gt;&gt;&gt; map = ARgorithmToolkit.Map(name=&#39;map&#39;,algo=algo)
+        &gt;&gt;&gt; map
+        Map({})
+
+        The map generated supports all the functionality of regular dictionary
+
+        &gt;&gt;&gt; len(map)
+        0
+        &gt;&gt;&gt; map[&#34;hello&#34;] = 2
+        &gt;&gt;&gt; map[&#34;hello&#34;]
+        2
+        &gt;&gt;&gt; map[3] = &#34;s&#34;
+        &gt;&gt;&gt; map
+        Map({&#34;hello&#34;:2, 3:&#34;s&#34;})
+        &gt;&gt;&gt; for key,value in map:
+        ...     print(key, value)
+        hello 2
+        3 s
+        &gt;&gt;&gt; del map[3]
+        &gt;&gt;&gt; map
+        Map({&#34;hello&#34;:2})
+    &#34;&#34;&#34;
+
+    def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
+        try:
+            assert isinstance(name, str)
+            self.state_generator = MapState(name, str(id(self)))
+        except Exception as ex:
+            raise ARgorithmError(&#39;Give valid name to data structure&#39;) from ex
+        try:
+            assert isinstance(algo, StateSet)
+            self.algo = algo
+        except Exception as ex:
+            raise ARgorithmError(&#34;Map structure needs a reference of template to store states&#34;) from ex
+
+        self.body = {}
+        self.__working_dict = {}
+        state = self.state_generator.map_declare(self.body,comments)
+        self.algo.add_state(state)
+
+
+    def __len__(self) -&gt; int:
+        &#34;&#34;&#34;returns size of Map when processed by len() function.
+
+        Returns:
+            int: size of the map
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; len(map)
+            2
+        &#34;&#34;&#34;
+        return len(self.__working_dict)
+
+    def __getitem__(self, key) -&gt; any:
+        &#34;&#34;&#34;returns the value associated with &#39;key&#39; in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)): key to lookup in dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            obj: value associated with the key provided
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map[&#34;abc&#34;]
+            2
+        &#34;&#34;&#34;
+        try:
+            _value = self.__working_dict[key]
+            value = None
+            if isinstance(key, ARgorithmHashable):
+                value = self.body[key.to_json()]
+            else:
+                value = self.body[key]
+            state = self.state_generator.map_get(body=self.body, key=key, value=value, comments=&#34;&#34;)
+            self.algo.add_state(state)
+            return _value
+        except Exception as e:
+            raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e
+
+
+    def get(self, key, default=None, comments=&#34;&#34;) -&gt; any:
+        &#34;&#34;&#34;returns the value associated with &#39;key&#39; in the Map without raising key error
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to lookup in dict
+            default : return a default value for non-existent key instead of raising an error
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            obj: value associated with the key provided
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1) #get usage
+            -1
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;) is None
+            True
+        &#34;&#34;&#34;
+        try:
+            _value = self.__working_dict[key]
+            state = self.state_generator.map_get(body=self.body, key=key, value=_value, comments=comments)
+            self.algo.add_state(state)
+            return _value
+        except KeyError:
+            state = self.state_generator.map_get(body=self.body, key=key, value=default if default else &#34;none&#34;, comments=f&#34;key not found. value efaulted to {default}&#34;)
+            self.algo.add_state(state)
+            return default
+
+    def set(self, key, value, comments=&#34;&#34;):
+        &#34;&#34;&#34;sets a value mapped to a given key in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict
+            value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map.set(&#34;xyz, 5) #__setitem__ usage
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1)
+            5
+            &gt;&gt;&gt; map[&#34;xyz&#34;]
+            5
+        &#34;&#34;&#34;
+        assert isinstance(key,(ARgorithmHashable, int, str, float, bool)), f&#34;Invalid key : key cannot be any type other than (ARgorithmHashable, int, str, float, bool), {type(key).__name__} is not hashable.&#34;
+        assert isinstance(value,(ARgorithmStructure, int, str, float, bool)), &#34;Invalid value : value cannot be set to any type other than (ARgorithmStructure, int, str, float, bool)&#34;
+        last_value = self.body.get(key, &#34;none&#34;)
+        self.__working_dict[key] = value
+        if isinstance(key, (str, int, float, bool)) and isinstance(value, (str, int, float, bool)):
+            self.body[key] = value
+        elif isinstance(key, (str, int, float, bool)):
+            self.body[key] = value.to_json()
+        elif isinstance(value, (str, int, float, bool)):
+            self.body[key.to_json()] = value
+        else:
+            self.body[key.to_json()] = value.to_json()
+
+        state = self.state_generator.map_set(body=self.body, key=key, value=value, last_value=last_value, comments=comments)
+        self.algo.add_state(state)
+
+
+    def __setitem__(self, key, value, comments=&#34;&#34;):
+        &#34;&#34;&#34;sets a value mapped to a given key in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict
+            value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map[&#34;xyz&#34;] = 5 #__setitem__ usage
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1)
+            5
+            &gt;&gt;&gt; map[&#34;xyz&#34;]
+            5
+        &#34;&#34;&#34;
+        assert isinstance(key,(ARgorithmHashable, int, str, float, bool)), f&#34;Invalid key : key cannot be any type other than (ARgorithmHashable, int, str, float, bool), {type(key).__name__} is not hashable.&#34;
+        assert isinstance(value,(ARgorithmStructure, int, str, float, bool)), &#34;Invalid value : value cannot be set to any type other than (ARgorithmStructure, int, str, float, bool)&#34;
+        last_value = self.body.get(key, &#34;none&#34;)
+        self.__working_dict[key] = value
+        if isinstance(key, (str, int, float, bool)) and isinstance(value, (str, int, float, bool)):
+            self.body[key] = value
+        elif isinstance(key, (str, int, float, bool)):
+            self.body[key] = value.to_json()
+        elif isinstance(value, (str, int, float, bool)):
+            self.body[key.to_json()] = value
+        else:
+            self.body[key.to_json()] = value.to_json()
+
+        state = self.state_generator.map_set(body=self.body, key=key, value=value, last_value=last_value, comments=&#34;&#34;)
+        self.algo.add_state(state)
+
+    def __iter__(self):
+        &#34;&#34;&#34;Generates a iterator object to iterate the map key/value pairs
+
+        Returns:
+            MapIterator: Iterator object
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:3, &#34;efg&#34;:4})
+            &gt;&gt;&gt; [x for x in map]
+            [(&#34;abc&#34;,3),(&#34;efg&#34;,4)]
+        &#34;&#34;&#34;
+        return MapIterator(self)
+
+    def __delitem__(self, key):
+        &#34;&#34;&#34;deletes the entry associated with &#39;key&#39; in the Map
+        Args:
+            key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; del map[&#34;abc&#34;] # __delitem__ usage
+            &gt;&gt;&gt; map
+            Map({&#34;efg&#34;:3})
+        &#34;&#34;&#34;
+        try:
+            value = None
+            if isinstance(key, ARgorithmHashable):
+                value = self.body[key.to_json()]
+                del self.body[key.to_json()]
+            else:
+                value = self.body[key]
+                del self.body[key]
+
+            del self.__working_dict[key]
+            state = self.state_generator.map_remove(self.body, key, value, &#34;&#34;)
+            self.algo.add_state(state)
+
+        except Exception as e:
+            raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e
+
+    def remove(self, key, comments=&#34;&#34;):
+        &#34;&#34;&#34;deletes the entry associated with &#39;key&#39; in the Map without raising an error
+        Args:
+            key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map.remove(&#34;abc&#34;)
+            &gt;&gt;&gt; map
+            Map({&#34;efg&#34;:3})
+            &gt;&gt;&gt; map.remove(&#34;abc&#34;)
+            &gt;&gt;&gt; map
+            Map({&#34;efg&#34;:3})
+        &#34;&#34;&#34;
+        try:
+            value = None
+            if isinstance(key, ARgorithmHashable):
+                value = self.body[key.to_json()]
+                del self.body[key.to_json()]
+            else:
+                value = self.body[key]
+                del self.body[key]
+
+            del self.__working_dict[key]
+            state = self.state_generator.map_remove(self.body, key, value, comments)
+            self.algo.add_state(state)
+
+        except KeyError:
+            state = self.state_generator.map_remove(self.body, key, &#34;none&#34;, &#34;key not found, nothing removed.&#34;)
+            self.algo.add_state(state)
+            return
+
+    def __repr__(self) -&gt; str:
+        &#34;&#34;&#34;Return representation for shell outputs.
+
+        Returns:
+            str: shell representation for Map
+        &#34;&#34;&#34;
+        return f&#34;Map({self.__working_dict.__repr__()})&#34;
+
+    def __str__(self) -&gt; str:
+        &#34;&#34;&#34;Return string conversion for map
+
+        Returns:
+            str: string conversion for Map
+        &#34;&#34;&#34;
+        return f&#34;Map({self.__working_dict.__str__()})&#34;
+
+    def keys(self):
+        &#34;&#34;&#34;Returns a list of key entries in the map
+
+        Returns:
+            list: list of keys
+        &#34;&#34;&#34;
+
+        return self.__working_dict.keys()
+
+    def values(self):
+        &#34;&#34;&#34;Returns a list of values in the map
+
+        Returns:
+            list: list of values
+        &#34;&#34;&#34;
+
+        return self.__working_dict.values()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ARgorithmToolkit.map.Map"><code class="flex name class">
+<span>class <span class="ident">Map</span></span>
+<span>(</span><span>name: str, algo: <a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a>, comments: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The Map class used to emulate hash-maps/dictionaries that can be
+rendered in the ARgorithm Application as series of key/value pairs.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation</dd>
+<dt><strong><code>algo</code></strong> :&ensp;<code><a title="ARgorithmToolkit.utils.StateSet" href="utils.html#ARgorithmToolkit.utils.StateSet">StateSet</a></code></dt>
+<dd>The stateset that will store the states generated by the instance of Map Class</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>,optional</dt>
+<dd>Description of instance of map and its applications that will be rendered during the <code>map_declare</code> state.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ARgorithmError</code></dt>
+<dd>raised if name is not given or Stateset if not provided</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>This is an example of map being declared</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+&gt;&gt;&gt; map = ARgorithmToolkit.Map(name='map',algo=algo)
+&gt;&gt;&gt; map
+Map({})
+</code></pre>
+<p>The map generated supports all the functionality of regular dictionary</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; len(map)
+0
+&gt;&gt;&gt; map[&quot;hello&quot;] = 2
+&gt;&gt;&gt; map[&quot;hello&quot;]
+2
+&gt;&gt;&gt; map[3] = &quot;s&quot;
+&gt;&gt;&gt; map
+Map({&quot;hello&quot;:2, 3:&quot;s&quot;})
+&gt;&gt;&gt; for key,value in map:
+...     print(key, value)
+hello 2
+3 s
+&gt;&gt;&gt; del map[3]
+&gt;&gt;&gt; map
+Map({&quot;hello&quot;:2})
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Map(ARgorithmStructure):
+    &#34;&#34;&#34;The Map class used to emulate hash-maps/dictionaries that can be
+    rendered in the ARgorithm Application as series of key/value pairs.
+
+    Attributes:
+        name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of Map Class
+        comments (str,optional): Description of instance of map and its applications that will be rendered during the ``map_declare`` state.
+
+    Raises:
+        ARgorithmError: raised if name is not given or Stateset if not provided
+
+    Examples:
+        This is an example of map being declared
+
+        &gt;&gt;&gt; algo = ARgorithmToolkit.StateSet()
+        &gt;&gt;&gt; map = ARgorithmToolkit.Map(name=&#39;map&#39;,algo=algo)
+        &gt;&gt;&gt; map
+        Map({})
+
+        The map generated supports all the functionality of regular dictionary
+
+        &gt;&gt;&gt; len(map)
+        0
+        &gt;&gt;&gt; map[&#34;hello&#34;] = 2
+        &gt;&gt;&gt; map[&#34;hello&#34;]
+        2
+        &gt;&gt;&gt; map[3] = &#34;s&#34;
+        &gt;&gt;&gt; map
+        Map({&#34;hello&#34;:2, 3:&#34;s&#34;})
+        &gt;&gt;&gt; for key,value in map:
+        ...     print(key, value)
+        hello 2
+        3 s
+        &gt;&gt;&gt; del map[3]
+        &gt;&gt;&gt; map
+        Map({&#34;hello&#34;:2})
+    &#34;&#34;&#34;
+
+    def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
+        try:
+            assert isinstance(name, str)
+            self.state_generator = MapState(name, str(id(self)))
+        except Exception as ex:
+            raise ARgorithmError(&#39;Give valid name to data structure&#39;) from ex
+        try:
+            assert isinstance(algo, StateSet)
+            self.algo = algo
+        except Exception as ex:
+            raise ARgorithmError(&#34;Map structure needs a reference of template to store states&#34;) from ex
+
+        self.body = {}
+        self.__working_dict = {}
+        state = self.state_generator.map_declare(self.body,comments)
+        self.algo.add_state(state)
+
+
+    def __len__(self) -&gt; int:
+        &#34;&#34;&#34;returns size of Map when processed by len() function.
+
+        Returns:
+            int: size of the map
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; len(map)
+            2
+        &#34;&#34;&#34;
+        return len(self.__working_dict)
+
+    def __getitem__(self, key) -&gt; any:
+        &#34;&#34;&#34;returns the value associated with &#39;key&#39; in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)): key to lookup in dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            obj: value associated with the key provided
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map[&#34;abc&#34;]
+            2
+        &#34;&#34;&#34;
+        try:
+            _value = self.__working_dict[key]
+            value = None
+            if isinstance(key, ARgorithmHashable):
+                value = self.body[key.to_json()]
+            else:
+                value = self.body[key]
+            state = self.state_generator.map_get(body=self.body, key=key, value=value, comments=&#34;&#34;)
+            self.algo.add_state(state)
+            return _value
+        except Exception as e:
+            raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e
+
+
+    def get(self, key, default=None, comments=&#34;&#34;) -&gt; any:
+        &#34;&#34;&#34;returns the value associated with &#39;key&#39; in the Map without raising key error
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to lookup in dict
+            default : return a default value for non-existent key instead of raising an error
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            obj: value associated with the key provided
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1) #get usage
+            -1
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;) is None
+            True
+        &#34;&#34;&#34;
+        try:
+            _value = self.__working_dict[key]
+            state = self.state_generator.map_get(body=self.body, key=key, value=_value, comments=comments)
+            self.algo.add_state(state)
+            return _value
+        except KeyError:
+            state = self.state_generator.map_get(body=self.body, key=key, value=default if default else &#34;none&#34;, comments=f&#34;key not found. value efaulted to {default}&#34;)
+            self.algo.add_state(state)
+            return default
+
+    def set(self, key, value, comments=&#34;&#34;):
+        &#34;&#34;&#34;sets a value mapped to a given key in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict
+            value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map.set(&#34;xyz, 5) #__setitem__ usage
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1)
+            5
+            &gt;&gt;&gt; map[&#34;xyz&#34;]
+            5
+        &#34;&#34;&#34;
+        assert isinstance(key,(ARgorithmHashable, int, str, float, bool)), f&#34;Invalid key : key cannot be any type other than (ARgorithmHashable, int, str, float, bool), {type(key).__name__} is not hashable.&#34;
+        assert isinstance(value,(ARgorithmStructure, int, str, float, bool)), &#34;Invalid value : value cannot be set to any type other than (ARgorithmStructure, int, str, float, bool)&#34;
+        last_value = self.body.get(key, &#34;none&#34;)
+        self.__working_dict[key] = value
+        if isinstance(key, (str, int, float, bool)) and isinstance(value, (str, int, float, bool)):
+            self.body[key] = value
+        elif isinstance(key, (str, int, float, bool)):
+            self.body[key] = value.to_json()
+        elif isinstance(value, (str, int, float, bool)):
+            self.body[key.to_json()] = value
+        else:
+            self.body[key.to_json()] = value.to_json()
+
+        state = self.state_generator.map_set(body=self.body, key=key, value=value, last_value=last_value, comments=comments)
+        self.algo.add_state(state)
+
+
+    def __setitem__(self, key, value, comments=&#34;&#34;):
+        &#34;&#34;&#34;sets a value mapped to a given key in the Map
+        Args:
+            key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict
+            value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map[&#34;xyz&#34;] = 5 #__setitem__ usage
+            &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1)
+            5
+            &gt;&gt;&gt; map[&#34;xyz&#34;]
+            5
+        &#34;&#34;&#34;
+        assert isinstance(key,(ARgorithmHashable, int, str, float, bool)), f&#34;Invalid key : key cannot be any type other than (ARgorithmHashable, int, str, float, bool), {type(key).__name__} is not hashable.&#34;
+        assert isinstance(value,(ARgorithmStructure, int, str, float, bool)), &#34;Invalid value : value cannot be set to any type other than (ARgorithmStructure, int, str, float, bool)&#34;
+        last_value = self.body.get(key, &#34;none&#34;)
+        self.__working_dict[key] = value
+        if isinstance(key, (str, int, float, bool)) and isinstance(value, (str, int, float, bool)):
+            self.body[key] = value
+        elif isinstance(key, (str, int, float, bool)):
+            self.body[key] = value.to_json()
+        elif isinstance(value, (str, int, float, bool)):
+            self.body[key.to_json()] = value
+        else:
+            self.body[key.to_json()] = value.to_json()
+
+        state = self.state_generator.map_set(body=self.body, key=key, value=value, last_value=last_value, comments=&#34;&#34;)
+        self.algo.add_state(state)
+
+    def __iter__(self):
+        &#34;&#34;&#34;Generates a iterator object to iterate the map key/value pairs
+
+        Returns:
+            MapIterator: Iterator object
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:3, &#34;efg&#34;:4})
+            &gt;&gt;&gt; [x for x in map]
+            [(&#34;abc&#34;,3),(&#34;efg&#34;,4)]
+        &#34;&#34;&#34;
+        return MapIterator(self)
+
+    def __delitem__(self, key):
+        &#34;&#34;&#34;deletes the entry associated with &#39;key&#39; in the Map
+        Args:
+            key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; del map[&#34;abc&#34;] # __delitem__ usage
+            &gt;&gt;&gt; map
+            Map({&#34;efg&#34;:3})
+        &#34;&#34;&#34;
+        try:
+            value = None
+            if isinstance(key, ARgorithmHashable):
+                value = self.body[key.to_json()]
+                del self.body[key.to_json()]
+            else:
+                value = self.body[key]
+                del self.body[key]
+
+            del self.__working_dict[key]
+            state = self.state_generator.map_remove(self.body, key, value, &#34;&#34;)
+            self.algo.add_state(state)
+
+        except Exception as e:
+            raise ARgorithmError(f&#34;Invalid Key Error : {str(e)}&#34;) from e
+
+    def remove(self, key, comments=&#34;&#34;):
+        &#34;&#34;&#34;deletes the entry associated with &#39;key&#39; in the Map without raising an error
+        Args:
+            key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict
+            comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+        Example:
+            &gt;&gt;&gt; map
+            Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+            &gt;&gt;&gt; map.remove(&#34;abc&#34;)
+            &gt;&gt;&gt; map
+            Map({&#34;efg&#34;:3})
+            &gt;&gt;&gt; map.remove(&#34;abc&#34;)
+            &gt;&gt;&gt; map
+            Map({&#34;efg&#34;:3})
+        &#34;&#34;&#34;
+        try:
+            value = None
+            if isinstance(key, ARgorithmHashable):
+                value = self.body[key.to_json()]
+                del self.body[key.to_json()]
+            else:
+                value = self.body[key]
+                del self.body[key]
+
+            del self.__working_dict[key]
+            state = self.state_generator.map_remove(self.body, key, value, comments)
+            self.algo.add_state(state)
+
+        except KeyError:
+            state = self.state_generator.map_remove(self.body, key, &#34;none&#34;, &#34;key not found, nothing removed.&#34;)
+            self.algo.add_state(state)
+            return
+
+    def __repr__(self) -&gt; str:
+        &#34;&#34;&#34;Return representation for shell outputs.
+
+        Returns:
+            str: shell representation for Map
+        &#34;&#34;&#34;
+        return f&#34;Map({self.__working_dict.__repr__()})&#34;
+
+    def __str__(self) -&gt; str:
+        &#34;&#34;&#34;Return string conversion for map
+
+        Returns:
+            str: string conversion for Map
+        &#34;&#34;&#34;
+        return f&#34;Map({self.__working_dict.__str__()})&#34;
+
+    def keys(self):
+        &#34;&#34;&#34;Returns a list of key entries in the map
+
+        Returns:
+            list: list of keys
+        &#34;&#34;&#34;
+
+        return self.__working_dict.keys()
+
+    def values(self):
+        &#34;&#34;&#34;Returns a list of values in the map
+
+        Returns:
+            list: list of values
+        &#34;&#34;&#34;
+
+        return self.__working_dict.values()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.map.Map.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, key, default=None, comments='') ‑> <built-in function any></span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns the value associated with 'key' in the Map without raising key error</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>key (ARgorithmStructure or (int, str, float, bool)) : key to lookup in dict</dt>
+<dt>default : return a default value for non-existent key instead of raising an error</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>obj</code></dt>
+<dd>value associated with the key provided</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; map
+Map({&quot;abc&quot;:2, &quot;efg&quot;:3})
+&gt;&gt;&gt; map.get(&quot;xyz&quot;, -1) #get usage
+-1
+&gt;&gt;&gt; map.get(&quot;xyz&quot;) is None
+True
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, key, default=None, comments=&#34;&#34;) -&gt; any:
+    &#34;&#34;&#34;returns the value associated with &#39;key&#39; in the Map without raising key error
+    Args:
+        key (ARgorithmStructure or (int, str, float, bool)) : key to lookup in dict
+        default : return a default value for non-existent key instead of raising an error
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        obj: value associated with the key provided
+
+    Example:
+        &gt;&gt;&gt; map
+        Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+        &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1) #get usage
+        -1
+        &gt;&gt;&gt; map.get(&#34;xyz&#34;) is None
+        True
+    &#34;&#34;&#34;
+    try:
+        _value = self.__working_dict[key]
+        state = self.state_generator.map_get(body=self.body, key=key, value=_value, comments=comments)
+        self.algo.add_state(state)
+        return _value
+    except KeyError:
+        state = self.state_generator.map_get(body=self.body, key=key, value=default if default else &#34;none&#34;, comments=f&#34;key not found. value efaulted to {default}&#34;)
+        self.algo.add_state(state)
+        return default</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.Map.keys"><code class="name flex">
+<span>def <span class="ident">keys</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a list of key entries in the map</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>list of keys</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keys(self):
+    &#34;&#34;&#34;Returns a list of key entries in the map
+
+    Returns:
+        list: list of keys
+    &#34;&#34;&#34;
+
+    return self.__working_dict.keys()</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.Map.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self, key, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>deletes the entry associated with 'key' in the Map without raising an error</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; map
+Map({&quot;abc&quot;:2, &quot;efg&quot;:3})
+&gt;&gt;&gt; map.remove(&quot;abc&quot;)
+&gt;&gt;&gt; map
+Map({&quot;efg&quot;:3})
+&gt;&gt;&gt; map.remove(&quot;abc&quot;)
+&gt;&gt;&gt; map
+Map({&quot;efg&quot;:3})
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self, key, comments=&#34;&#34;):
+    &#34;&#34;&#34;deletes the entry associated with &#39;key&#39; in the Map without raising an error
+    Args:
+        key (ARgorithmHashable or (int, str, float, bool)) : key to lookup in dict
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Example:
+        &gt;&gt;&gt; map
+        Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+        &gt;&gt;&gt; map.remove(&#34;abc&#34;)
+        &gt;&gt;&gt; map
+        Map({&#34;efg&#34;:3})
+        &gt;&gt;&gt; map.remove(&#34;abc&#34;)
+        &gt;&gt;&gt; map
+        Map({&#34;efg&#34;:3})
+    &#34;&#34;&#34;
+    try:
+        value = None
+        if isinstance(key, ARgorithmHashable):
+            value = self.body[key.to_json()]
+            del self.body[key.to_json()]
+        else:
+            value = self.body[key]
+            del self.body[key]
+
+        del self.__working_dict[key]
+        state = self.state_generator.map_remove(self.body, key, value, comments)
+        self.algo.add_state(state)
+
+    except KeyError:
+        state = self.state_generator.map_remove(self.body, key, &#34;none&#34;, &#34;key not found, nothing removed.&#34;)
+        self.algo.add_state(state)
+        return</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.Map.set"><code class="name flex">
+<span>def <span class="ident">set</span></span>(<span>self, key, value, comments='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>sets a value mapped to a given key in the Map</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict</dt>
+<dt>value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Comments for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code class="language-python-repl">&gt;&gt;&gt; map
+Map({&quot;abc&quot;:2, &quot;efg&quot;:3})
+&gt;&gt;&gt; map.set(&quot;xyz, 5) #__setitem__ usage
+&gt;&gt;&gt; map.get(&quot;xyz&quot;, -1)
+5
+&gt;&gt;&gt; map[&quot;xyz&quot;]
+5
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set(self, key, value, comments=&#34;&#34;):
+    &#34;&#34;&#34;sets a value mapped to a given key in the Map
+    Args:
+        key (ARgorithmStructure or (int, str, float, bool)) : key to set in the dict
+        value (ARgorithmStructure of (int, str, float, bool)) : value to set in the dict
+        comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+
+    Example:
+        &gt;&gt;&gt; map
+        Map({&#34;abc&#34;:2, &#34;efg&#34;:3})
+        &gt;&gt;&gt; map.set(&#34;xyz, 5) #__setitem__ usage
+        &gt;&gt;&gt; map.get(&#34;xyz&#34;, -1)
+        5
+        &gt;&gt;&gt; map[&#34;xyz&#34;]
+        5
+    &#34;&#34;&#34;
+    assert isinstance(key,(ARgorithmHashable, int, str, float, bool)), f&#34;Invalid key : key cannot be any type other than (ARgorithmHashable, int, str, float, bool), {type(key).__name__} is not hashable.&#34;
+    assert isinstance(value,(ARgorithmStructure, int, str, float, bool)), &#34;Invalid value : value cannot be set to any type other than (ARgorithmStructure, int, str, float, bool)&#34;
+    last_value = self.body.get(key, &#34;none&#34;)
+    self.__working_dict[key] = value
+    if isinstance(key, (str, int, float, bool)) and isinstance(value, (str, int, float, bool)):
+        self.body[key] = value
+    elif isinstance(key, (str, int, float, bool)):
+        self.body[key] = value.to_json()
+    elif isinstance(value, (str, int, float, bool)):
+        self.body[key.to_json()] = value
+    else:
+        self.body[key.to_json()] = value.to_json()
+
+    state = self.state_generator.map_set(body=self.body, key=key, value=value, last_value=last_value, comments=comments)
+    self.algo.add_state(state)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.Map.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.Map.values"><code class="name flex">
+<span>def <span class="ident">values</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a list of values in the map</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>list of values</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def values(self):
+    &#34;&#34;&#34;Returns a list of values in the map
+
+    Returns:
+        list: list of values
+    &#34;&#34;&#34;
+
+    return self.__working_dict.values()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ARgorithmToolkit.map.MapIterator"><code class="flex name class">
+<span>class <span class="ident">MapIterator</span></span>
+<span>(</span><span>_map)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is a generator that is returned each time an map has to be
+iterated.</p>
+<h2 id="yields">Yields</h2>
+<p>Tuple(key,value) of Map</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>AssertionError</code></dt>
+<dd>If not declared with an instance of ARgorithmToolkit.map.Map</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MapIterator:
+    &#34;&#34;&#34;This class is a generator that is returned each time an map has to be
+    iterated.
+
+    Yields:
+        Tuple(key,value) of Map
+
+    Raises:
+        AssertionError: If not declared with an instance of ARgorithmToolkit.map.Map
+    &#34;&#34;&#34;
+    def __init__(self,_map):
+        assert isinstance(_map,Map)
+        self.map = _map
+        self.size = len(_map)
+        self.index = 0
+        self.keys = list(self.map.keys())
+        self.values = list(self.map.values())
+
+    def __next__(self) -&gt; tuple:
+        if self.index == self.size:
+            raise StopIteration
+        k = self.keys[self.index]
+        v = self.values[self.index]
+        self.index += 1
+        return k,v</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.MapState"><code class="flex name class">
+<span>class <span class="ident">MapState</span></span>
+<span>(</span><span>name, _id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is used to generate states for various actions performed on
+the <code><a title="ARgorithmToolkit.map.Map" href="#ARgorithmToolkit.map.Map">Map</a></code> object.</p>
+<h2 id="attributes">Attributes</h2>
+<p>name (str) : Name of the object for which the states are generated
+_id (str) : id of the object for which the states are generated</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MapState:
+    &#34;&#34;&#34;This class is used to generate states for various actions performed on
+    the ``ARgorithmToolkit.map.Map`` object.
+
+    Attributes:
+
+        name (str) : Name of the object for which the states are generated
+        _id (str) : id of the object for which the states are generated
+    &#34;&#34;&#34;
+    def __init__(self,name,_id):
+        self.name = name
+        self._id = _id
+
+    def map_declare(self, body, comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_declare` state when an instance of Map class
+        is created.
+
+        Args:
+            body: The contents of the map that are to be sent along with the state
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_declare`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_declare&#34;
+        state_def = {
+            &#34;id&#34;: self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy()
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def map_get(self,body,key,value,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_get` state when a particular key is looked up.
+
+        Args:
+            body : The contents of the map that are to be sent along with the state
+            key : The key that has been accessed
+            value : The current value associated with key
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_get`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_get&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+            &#34;value&#34; : value
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+    def map_set(self,body,key,value,last_value=None,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_set` state when a particular key is set for a new value.
+
+        Args:
+            body : The contents of the map that are to be sent along with the state
+            key : The key that has been accessed
+            value : The current value being associated with key
+            last_value (optional): the last value that the key was associated to.
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_set`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_set&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+            &#34;value&#34; : value,
+            &#34;last_value&#34; : last_value
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )
+
+
+    def map_remove(self,body,key,value,comments=&#34;&#34;) -&gt; State:
+        &#34;&#34;&#34;Generates the `map_remove` state when a particular key is deleted.
+
+        Args:
+            body : The contents of the map that are to be sent along with the state
+            key : The key that has been deleted
+            value : The value associated with key
+            comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+        Returns:
+            ARgorithmToolkit.utils.State: returns the ``map_remove`` state for the respective map mentioned
+        &#34;&#34;&#34;
+        state_type = &#34;map_remove&#34;
+        state_def = {
+            &#34;id&#34; : self._id,
+            &#34;variable_name&#34; : self.name,
+            &#34;body&#34; : body.copy(),
+            &#34;key&#34; : key,
+            &#34;value&#34; : value,
+        }
+        return State(
+            state_type=state_type,
+            state_def=state_def,
+            comments=comments
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ARgorithmToolkit.map.MapState.map_declare"><code class="name flex">
+<span>def <span class="ident">map_declare</span></span>(<span>self, body, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>map_declare</code> state when an instance of Map class
+is created.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>body</code></strong></dt>
+<dd>The contents of the map that are to be sent along with the state</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>map_declare</code> state for the respective map mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_declare(self, body, comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `map_declare` state when an instance of Map class
+    is created.
+
+    Args:
+        body: The contents of the map that are to be sent along with the state
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``map_declare`` state for the respective map mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;map_declare&#34;
+    state_def = {
+        &#34;id&#34;: self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : body.copy()
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.MapState.map_get"><code class="name flex">
+<span>def <span class="ident">map_get</span></span>(<span>self, body, key, value, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>map_get</code> state when a particular key is looked up.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>body : The contents of the map that are to be sent along with the state</dt>
+<dt>key : The key that has been accessed</dt>
+<dt>value : The current value associated with key</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>map_get</code> state for the respective map mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_get(self,body,key,value,comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `map_get` state when a particular key is looked up.
+
+    Args:
+        body : The contents of the map that are to be sent along with the state
+        key : The key that has been accessed
+        value : The current value associated with key
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``map_get`` state for the respective map mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;map_get&#34;
+    state_def = {
+        &#34;id&#34; : self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : body.copy(),
+        &#34;key&#34; : key,
+        &#34;value&#34; : value
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.MapState.map_remove"><code class="name flex">
+<span>def <span class="ident">map_remove</span></span>(<span>self, body, key, value, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>map_remove</code> state when a particular key is deleted.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>body : The contents of the map that are to be sent along with the state</dt>
+<dt>key : The key that has been deleted</dt>
+<dt>value : The value associated with key</dt>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>map_remove</code> state for the respective map mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_remove(self,body,key,value,comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `map_remove` state when a particular key is deleted.
+
+    Args:
+        body : The contents of the map that are to be sent along with the state
+        key : The key that has been deleted
+        value : The value associated with key
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``map_remove`` state for the respective map mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;map_remove&#34;
+    state_def = {
+        &#34;id&#34; : self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : body.copy(),
+        &#34;key&#34; : key,
+        &#34;value&#34; : value,
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.map.MapState.map_set"><code class="name flex">
+<span>def <span class="ident">map_set</span></span>(<span>self, body, key, value, last_value=None, comments='') ‑> <a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates the <code>map_set</code> state when a particular key is set for a new value.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>body : The contents of the map that are to be sent along with the state</dt>
+<dt>key : The key that has been accessed</dt>
+<dt>value : The current value being associated with key</dt>
+<dt><strong><code>last_value</code></strong> :&ensp;<code>optional</code></dt>
+<dd>the last value that the key was associated to.</dd>
+<dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
+<dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
+<dd>returns the <code>map_set</code> state for the respective map mentioned</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_set(self,body,key,value,last_value=None,comments=&#34;&#34;) -&gt; State:
+    &#34;&#34;&#34;Generates the `map_set` state when a particular key is set for a new value.
+
+    Args:
+        body : The contents of the map that are to be sent along with the state
+        key : The key that has been accessed
+        value : The current value being associated with key
+        last_value (optional): the last value that the key was associated to.
+        comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+
+    Returns:
+        ARgorithmToolkit.utils.State: returns the ``map_set`` state for the respective map mentioned
+    &#34;&#34;&#34;
+    state_type = &#34;map_set&#34;
+    state_def = {
+        &#34;id&#34; : self._id,
+        &#34;variable_name&#34; : self.name,
+        &#34;body&#34; : body.copy(),
+        &#34;key&#34; : key,
+        &#34;value&#34; : value,
+        &#34;last_value&#34; : last_value
+    }
+    return State(
+        state_type=state_type,
+        state_def=state_def,
+        comments=comments
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap');
+#back {
+box-sizing: border-box;
+padding: 5px;
+background-color: #dadada;
+color: black;
+border-radius: 5px;
+font-family: 'IBM Plex Sans', sans-serif;
+text-decoration: none;
+}
+</style>
+<a href='/toolkit' id="back">
+<i class="fa fa-home" aria-hidden="true"></i> Back
+</a>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ARgorithmToolkit" href="index.html">ARgorithmToolkit</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ARgorithmToolkit.map.Map" href="#ARgorithmToolkit.map.Map">Map</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ARgorithmToolkit.map.Map.get" href="#ARgorithmToolkit.map.Map.get">get</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.Map.keys" href="#ARgorithmToolkit.map.Map.keys">keys</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.Map.remove" href="#ARgorithmToolkit.map.Map.remove">remove</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.Map.set" href="#ARgorithmToolkit.map.Map.set">set</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.Map.to_json" href="#ARgorithmToolkit.map.Map.to_json">to_json</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.Map.values" href="#ARgorithmToolkit.map.Map.values">values</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.map.MapIterator" href="#ARgorithmToolkit.map.MapIterator">MapIterator</a></code></h4>
+</li>
+<li>
+<h4><code><a title="ARgorithmToolkit.map.MapState" href="#ARgorithmToolkit.map.MapState">MapState</a></code></h4>
+<ul class="">
+<li><code><a title="ARgorithmToolkit.map.MapState.map_declare" href="#ARgorithmToolkit.map.MapState.map_declare">map_declare</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.MapState.map_get" href="#ARgorithmToolkit.map.MapState.map_get">map_get</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.MapState.map_remove" href="#ARgorithmToolkit.map.MapState.map_remove">map_remove</a></code></li>
+<li><code><a title="ARgorithmToolkit.map.MapState.map_set" href="#ARgorithmToolkit.map.MapState.map_set">map_set</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

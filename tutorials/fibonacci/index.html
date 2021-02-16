@@ -292,6 +292,19 @@
 
 
   <li class="md-nav__item">
+    <a href="../config/" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
     <a href="../bubblesort/" class="md-nav__link">
       Bubblesort
     </a>
@@ -528,15 +541,19 @@ F\mathbf(n) = F\mathbf(n-1) + F\mathbf(n-2)
     <span class="k">return</span> <span class="n">algo</span>
 </code></pre></div>
 <h2 id="setting-up-the-config-file">Setting up the config file<a class="headerlink" href="#setting-up-the-config-file" title="Permanent link">&para;</a></h2>
-<p>For this code, we only need one parameter that is <code>n</code> which is the index of the number required in the sequence. We will provide the default value for <code>n</code> as 4.
+<p>For this code, we only need one parameter that is <code>n</code> which is the index of the number required in the sequence. We will provide the default value for <code>n</code> as 4. As shown in <a href="/toolkit/tutorials/bubblesort">previous tutorial</a>, you can create this using your code editor or the <code>configure</code> command <a href="/toolkit/tutorials/config">(how to use configure)</a>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;argorithmID&quot;</span><span class="p">:</span> <span class="s2">&quot;fibonacci&quot;</span><span class="p">,</span> 
     <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;fibonacci.py&quot;</span><span class="p">,</span> 
     <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> 
     <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;n&quot;</span> <span class="p">:</span> <span class="s2">&quot;int&quot;</span>
+        <span class="nt">&quot;n&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;description&quot;</span> <span class="p">:</span> <span class="s2">&quot;Enter the position of number in fibonacci series&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;start&quot;</span> <span class="p">:</span> <span class="mi">1</span>
+        <span class="p">}</span>
     <span class="p">},</span> 
-    <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;n&quot;</span> <span class="p">:</span> <span class="mi">4</span>
     <span class="p">},</span> 
     <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Print the nth fibonacci number&quot;</span>

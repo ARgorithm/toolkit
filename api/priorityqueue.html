@@ -48,7 +48,8 @@ module:
     &gt;&gt;&gt; pq = ARgorithmToolkit.PriorityQueue(name=&#34;pq&#34;,algo=algo)
 &#34;&#34;&#34;
 import heapq
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
 class PriorityQueueState():
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
@@ -57,9 +58,11 @@ class PriorityQueueState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def priorityqueue_declare(self,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `priorityqueue_declare` state when an instance of
@@ -74,6 +77,7 @@ class PriorityQueueState():
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : []
         }
@@ -97,6 +101,7 @@ class PriorityQueueState():
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_offer&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element
@@ -120,6 +125,7 @@ class PriorityQueueState():
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_poll&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -142,6 +148,7 @@ class PriorityQueueState():
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_peek&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -151,7 +158,8 @@ class PriorityQueueState():
             comments=comments
         )
 
-class PriorityQueue:
+@serialize
+class PriorityQueue(ARgorithmStructure):
     &#34;&#34;&#34;The PriorityQueue class offes a priority queue container that stores
     states in its stateset which later are used to make dynamic Augmented
     reality visualizations.
@@ -172,7 +180,8 @@ class PriorityQueue:
     def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = PriorityQueueState(name)
+            self._id = str(id(self))
+            self.state_generator = PriorityQueueState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -344,7 +353,7 @@ reality visualizations.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class PriorityQueue:
+<pre><code class="python">class PriorityQueue(ARgorithmStructure):
     &#34;&#34;&#34;The PriorityQueue class offes a priority queue container that stores
     states in its stateset which later are used to make dynamic Augmented
     reality visualizations.
@@ -365,7 +374,8 @@ reality visualizations.</p>
     def __init__(self, name:str, algo:StateSet, comments:str = &#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = PriorityQueueState(name)
+            self._id = str(id(self))
+            self.state_generator = PriorityQueueState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -497,6 +507,10 @@ reality visualizations.</p>
         &#34;&#34;&#34;
         return f&#34;PriorityQueue({self.body.__repr__()})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="ARgorithmToolkit.priorityqueue.PriorityQueue.empty"><code class="name flex">
@@ -707,17 +721,35 @@ PriorityQueue([3, 4, 5])
     return item</code></pre>
 </details>
 </dd>
+<dt id="ARgorithmToolkit.priorityqueue.PriorityQueue.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 <dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState"><code class="flex name class">
 <span>class <span class="ident">PriorityQueueState</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, _id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorithmToolkit.priorityqueue.PriorityQueue">PriorityQueue</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -729,9 +761,11 @@ the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorit
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def priorityqueue_declare(self,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `priorityqueue_declare` state when an instance of
@@ -746,6 +780,7 @@ the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorit
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : []
         }
@@ -769,6 +804,7 @@ the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorit
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_offer&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element
@@ -792,6 +828,7 @@ the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorit
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_poll&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -814,6 +851,7 @@ the <code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue" href="#ARgorit
         &#34;&#34;&#34;
         state_type = &#34;priorityqueue_peek&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -860,6 +898,7 @@ PriorityQueue is created.</p>
     &#34;&#34;&#34;
     state_type = &#34;priorityqueue_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : []
     }
@@ -908,6 +947,7 @@ priority queue.</p>
     &#34;&#34;&#34;
     state_type = &#34;priorityqueue_offer&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;element&#34; : element
@@ -954,6 +994,7 @@ queue is accessed.</p>
     &#34;&#34;&#34;
     state_type = &#34;priorityqueue_peek&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
     }
@@ -999,6 +1040,7 @@ priority queue.</p>
     &#34;&#34;&#34;
     state_type = &#34;priorityqueue_poll&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
     }
@@ -1049,6 +1091,7 @@ text-decoration: none;
 <li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.offer" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.offer">offer</a></code></li>
 <li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.peek" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.peek">peek</a></code></li>
 <li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.poll" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.poll">poll</a></code></li>
+<li><code><a title="ARgorithmToolkit.priorityqueue.PriorityQueue.to_json" href="#ARgorithmToolkit.priorityqueue.PriorityQueue.to_json">to_json</a></code></li>
 </ul>
 </li>
 <li>

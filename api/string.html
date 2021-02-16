@@ -44,8 +44,8 @@ the ARgorithmToolkit library without having to import from the string module:
     &gt;&gt;&gt; s = ARgorithmToolkit.String(name=&#34;s&#34;,algo=algo)
 &#34;&#34;&#34;
 
-
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import ARgorithmHashable, State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
 class StringState:
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
@@ -54,10 +54,12 @@ class StringState:
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
-    def __init__(self, name):
+    def __init__(self, name, _id):
         self.name = name
+        self._id = _id
 
     def string_declare(self, body, comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `string_declare` state when an instance of string is
@@ -72,6 +74,7 @@ class StringState:
 
         state_type = &#34;string_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body
         }
@@ -95,6 +98,7 @@ class StringState:
         &#34;&#34;&#34;
         state_type = &#34;string_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body,
             &#34;index&#34; : index
@@ -119,6 +123,7 @@ class StringState:
         &#34;&#34;&#34;
         state_type = &#34;string_append&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body,
             &#34;element&#34; : element,
@@ -153,7 +158,8 @@ class StringIterator:
         self._index += 1
         return v
 
-class String():
+@serialize
+class String(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The String class is a wrapper around the already existing string class
     in python adding the feature to store states.
 
@@ -175,7 +181,8 @@ class String():
     def __init__(self,name,algo,body=&#39;&#39;,comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = StringState(name)
+            self._id = str(id(self))
+            self.state_generator = StringState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -344,7 +351,7 @@ String('Hello world! 1234')
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class String():
+<pre><code class="python">class String(ARgorithmStructure, ARgorithmHashable):
     &#34;&#34;&#34;The String class is a wrapper around the already existing string class
     in python adding the feature to store states.
 
@@ -366,7 +373,8 @@ String('Hello world! 1234')
     def __init__(self,name,algo,body=&#39;&#39;,comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = StringState(name)
+            self._id = str(id(self))
+            self.state_generator = StringState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -493,6 +501,11 @@ String('Hello world! 1234')
         new.append(value)
         return new</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+<li><a title="ARgorithmToolkit.utils.ARgorithmHashable" href="utils.html#ARgorithmToolkit.utils.ARgorithmHashable">ARgorithmHashable</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="ARgorithmToolkit.string.String.append"><code class="name flex">
@@ -537,6 +550,23 @@ String('Hello world! 1234hahaha')
     self.body += value
     state = self.state_generator.string_append(self.body , value, comments)
     self.algo.add_state(state)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.string.String.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
 </details>
 </dd>
 </dl>
@@ -586,13 +616,14 @@ iterated.</p>
 </dd>
 <dt id="ARgorithmToolkit.string.StringState"><code class="flex name class">
 <span>class <span class="ident">StringState</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, _id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.string.String" href="#ARgorithmToolkit.string.String">String</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -604,10 +635,12 @@ the <code><a title="ARgorithmToolkit.string.String" href="#ARgorithmToolkit.stri
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
-    def __init__(self, name):
+    def __init__(self, name, _id):
         self.name = name
+        self._id = _id
 
     def string_declare(self, body, comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `string_declare` state when an instance of string is
@@ -622,6 +655,7 @@ the <code><a title="ARgorithmToolkit.string.String" href="#ARgorithmToolkit.stri
 
         state_type = &#34;string_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body
         }
@@ -645,6 +679,7 @@ the <code><a title="ARgorithmToolkit.string.String" href="#ARgorithmToolkit.stri
         &#34;&#34;&#34;
         state_type = &#34;string_iter&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body,
             &#34;index&#34; : index
@@ -669,6 +704,7 @@ the <code><a title="ARgorithmToolkit.string.String" href="#ARgorithmToolkit.stri
         &#34;&#34;&#34;
         state_type = &#34;string_append&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : body,
             &#34;element&#34; : element,
@@ -719,6 +755,7 @@ appended to this string.</p>
     &#34;&#34;&#34;
     state_type = &#34;string_append&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body,
         &#34;element&#34; : element,
@@ -763,6 +800,7 @@ created.</p>
 
     state_type = &#34;string_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body
     }
@@ -811,6 +849,7 @@ been accessed.</p>
     &#34;&#34;&#34;
     state_type = &#34;string_iter&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : body,
         &#34;index&#34; : index
@@ -859,6 +898,7 @@ text-decoration: none;
 <h4><code><a title="ARgorithmToolkit.string.String" href="#ARgorithmToolkit.string.String">String</a></code></h4>
 <ul class="">
 <li><code><a title="ARgorithmToolkit.string.String.append" href="#ARgorithmToolkit.string.String.append">append</a></code></li>
+<li><code><a title="ARgorithmToolkit.string.String.to_json" href="#ARgorithmToolkit.string.String.to_json">to_json</a></code></li>
 </ul>
 </li>
 <li>

@@ -44,7 +44,8 @@ library without having to import from the stack module:
     &gt;&gt;&gt; st = ARgorithmToolkit.Stack(name=&#34;st&#34;,algo=algo)
 &#34;&#34;&#34;
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
 class StackState():
     &#34;&#34;&#34;This class is used to generate states for various actions performed on
@@ -53,6 +54,7 @@ class StackState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
     def __init__(self,name):
@@ -145,7 +147,8 @@ class StackState():
             comments=comments
         )
 
-class Stack:
+@serialize
+class Stack(ARgorithmStructure):
     &#34;&#34;&#34;The Stack class is a container interface for the stack, a linear
     container implementation of LIFO.
 
@@ -325,7 +328,7 @@ container implementation of LIFO.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Stack:
+<pre><code class="python">class Stack(ARgorithmStructure):
     &#34;&#34;&#34;The Stack class is a container interface for the stack, a linear
     container implementation of LIFO.
 
@@ -466,6 +469,10 @@ container implementation of LIFO.</p>
         &#34;&#34;&#34;
         return f&#34;Stack({self.body.__repr__()})&#34;</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ARgorithmToolkit.utils.ARgorithmStructure" href="utils.html#ARgorithmToolkit.utils.ARgorithmStructure">ARgorithmStructure</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="ARgorithmToolkit.stack.Stack.empty"><code class="name flex">
@@ -598,6 +605,23 @@ False
     self.algo.add_state(state)</code></pre>
 </details>
 </dd>
+<dt id="ARgorithmToolkit.stack.Stack.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
+    &#34;&#34;&#34;
+    class_name = type(self).__name__
+    obj_id = id(self)
+    return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
+</details>
+</dd>
 <dt id="ARgorithmToolkit.stack.Stack.top"><code class="name flex">
 <span>def <span class="ident">top</span></span>(<span>self, comments='')</span>
 </code></dt>
@@ -666,7 +690,8 @@ False
 <div class="desc"><p>This class is used to generate states for various actions performed on
 the <code><a title="ARgorithmToolkit.stack.Stack" href="#ARgorithmToolkit.stack.Stack">Stack</a></code> object.</p>
 <h2 id="attributes">Attributes</h2>
-<p>name (str) : Name of the variable for whom we are generating states</p></div>
+<p>name (str) : Name of the variable for whom we are generating states
+_id (str) : id of the variable for whom we are generating states</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -678,6 +703,7 @@ the <code><a title="ARgorithmToolkit.stack.Stack" href="#ARgorithmToolkit.stack.
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
     def __init__(self,name):
@@ -987,6 +1013,7 @@ text-decoration: none;
 <li><code><a title="ARgorithmToolkit.stack.Stack.empty" href="#ARgorithmToolkit.stack.Stack.empty">empty</a></code></li>
 <li><code><a title="ARgorithmToolkit.stack.Stack.pop" href="#ARgorithmToolkit.stack.Stack.pop">pop</a></code></li>
 <li><code><a title="ARgorithmToolkit.stack.Stack.push" href="#ARgorithmToolkit.stack.Stack.push">push</a></code></li>
+<li><code><a title="ARgorithmToolkit.stack.Stack.to_json" href="#ARgorithmToolkit.stack.Stack.to_json">to_json</a></code></li>
 <li><code><a title="ARgorithmToolkit.stack.Stack.top" href="#ARgorithmToolkit.stack.Stack.top">top</a></code></li>
 </ul>
 </li>
