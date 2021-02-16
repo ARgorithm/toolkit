@@ -48,5 +48,3 @@ def test_size():
     """Test queue size
     """
     assert queue.empty() and len(queue)==0
-
-

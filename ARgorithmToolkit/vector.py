@@ -8,7 +8,9 @@ work:
     >>> vec = ARgorithmToolkit.vector.Vector(name='vec',algo=algo)
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
+
 class VectorState:
     """This class is used to generate states for various actions performed on
     the ``ARgorithmToolkit.vector.Vector`` object.
@@ -17,8 +19,9 @@ class VectorState:
 
         name (str) : Name of the variable for whom we are generating states
     """
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
 
     def vector_declare(self,body,comments=""):
@@ -34,6 +37,7 @@ class VectorState:
         """
         state_type = "vector_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body)
         }
@@ -59,6 +63,7 @@ class VectorState:
         """
         state_type = "vector_iter"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "index" : index
@@ -86,6 +91,7 @@ class VectorState:
         """
         state_type = "vector_remove"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "index" : index
@@ -111,6 +117,7 @@ class VectorState:
         """
         state_type = "vector_insert"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "element" : element,
@@ -136,6 +143,7 @@ class VectorState:
         """
         state_type = "vector_swap"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "index1" : indexes[0],
@@ -161,6 +169,7 @@ class VectorState:
         """
         state_type = "vector_compare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "index1" : indexes[0],
@@ -195,7 +204,8 @@ class VectorIterator:
         self._index += 1
         return v
 
-class Vector:
+@serialize
+class Vector(ARgorithmStructure):
     """The Vector class provides a wrapped around the python list class to
     emulate it as a vector.
 
@@ -217,7 +227,8 @@ class Vector:
     def __init__(self,name,algo,data=None,comments=""):
         try:
             assert isinstance(name,str)
-            self.state_generator = VectorState(name)
+            self._id = str(id(self))
+            self.state_generator = VectorState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError('Give valid name to data structure') from e
         try:

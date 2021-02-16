@@ -106,4 +106,3 @@ def test_swap():
     assert last_state.content["state_def"]["index1"] == 0
     assert last_state.content["state_def"]["index2"] == 1
     assert last_state.content["state_def"]["body"] == arr.body
-

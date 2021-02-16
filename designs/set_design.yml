@@ -1,0 +1,109 @@
+date: '2021-02-09'
+category: Set
+author: Yatharth Mathur
+
+states: 
+  - set_declare:
+      description : creates new set
+      definition:
+        id : id of the datastructure
+        variable_name : The name of the set [required]
+        body : list with elements inside working set [required]
+        init_list : list with objects to add to set [optional]
+  
+  - set_add:
+    description : add new element to the set
+    definition :
+      id : id of the datastructure
+      variable_name : The name of the set [required]
+      body : list with elements inside working set [required]
+      key : key to be added in the set
+
+  - set_remove:
+    description : remove key from the set
+    definition :
+      id : id of the datastructure
+      variable_name : The name of the set [required]
+      body : list with elements inside working set [required]
+      key : key to be remove in the set [required]
+
+  - set_find:
+    description : lookup key in set
+    definition : 
+      id : id of the datastructure
+      variable_name : The name of the set [required]
+      body : list with elements inside working set [required]
+      key : key being looked up in the set [required]
+      found : true if found else false
+
+        
+classes:
+  - ARgorithmToolkit.set.Set:
+      description: Class that manages the set interface
+  - ARgorithmToolkit.set.SetState:
+      description: State template manager for set related states
+
+functions:
+  - initialize:
+      description: create new set
+      function:
+        name: ARgorithmToolkit.set.Set.__init__
+        parameters:
+          required:
+            - algo
+      state: set_declare
+        
+  - add:
+      description: add new key to set
+      function:
+        name: ARgorithmToolkit.set.Set.add
+        parameters:
+          required:
+            - key
+      state: set_add
+
+  - remove:
+    description: removes a key entry from set
+    function:
+      name: ARgorithmToolkit.set.Set.remove
+      parameters:
+          required:
+            - key
+    state: set_remove
+
+  - find:
+    description: lookup key in set
+    function:
+      name: ARgorithmToolkit.set.Set.find
+      parameters:
+          required:
+            - key
+    state: set_lookup
+
+  - intersection:
+    description: find and create new set with intersection of the two sets
+    function:
+      name: ARgorithmToolkit.set.Set.intersection
+      parameters:
+        required:
+          - B (Set)
+    state: set_declare
+
+  - union:
+    description: find and create new set with union of the two sets
+    function:
+      name: ARgorithmToolkit.set.Set.union
+      parameters:
+        required:
+          - B (Set)
+    state: set_declare
+
+  - difference:
+    description: find and create new set with difference of the two sets
+    function:
+      name: ARgorithmToolkit.set.Set.difference
+      parameters:
+        required:
+          - B (Set)
+    state: set_declare
+  

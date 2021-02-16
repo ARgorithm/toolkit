@@ -9,7 +9,8 @@ module:
     >>> pq = ARgorithmToolkit.PriorityQueue(name="pq",algo=algo)
 """
 import heapq
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
 class PriorityQueueState():
     """This class is used to generate states for various actions performed on
@@ -18,9 +19,11 @@ class PriorityQueueState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def priorityqueue_declare(self,comments=""):
         """Generates the `priorityqueue_declare` state when an instance of
@@ -35,6 +38,7 @@ class PriorityQueueState():
         """
         state_type = "priorityqueue_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : []
         }
@@ -58,6 +62,7 @@ class PriorityQueueState():
         """
         state_type = "priorityqueue_offer"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "element" : element
@@ -81,6 +86,7 @@ class PriorityQueueState():
         """
         state_type = "priorityqueue_poll"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -103,6 +109,7 @@ class PriorityQueueState():
         """
         state_type = "priorityqueue_peek"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -112,7 +119,8 @@ class PriorityQueueState():
             comments=comments
         )
 
-class PriorityQueue:
+@serialize
+class PriorityQueue(ARgorithmStructure):
     """The PriorityQueue class offes a priority queue container that stores
     states in its stateset which later are used to make dynamic Augmented
     reality visualizations.
@@ -133,7 +141,8 @@ class PriorityQueue:
     def __init__(self, name:str, algo:StateSet, comments:str = ""):
         try:
             assert isinstance(name,str)
-            self.state_generator = PriorityQueueState(name)
+            self._id = str(id(self))
+            self.state_generator = PriorityQueueState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError('Give valid name to data structure') from e
         try:

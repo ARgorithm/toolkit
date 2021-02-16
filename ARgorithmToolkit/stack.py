@@ -7,7 +7,8 @@ library without having to import from the stack module:
     >>> st = ARgorithmToolkit.Stack(name="st",algo=algo)
 """
 
-from ARgorithmToolkit.utils import State, StateSet, ARgorithmError
+from ARgorithmToolkit.utils import State, StateSet, ARgorithmError, ARgorithmStructure
+from ARgorithmToolkit.encoders import serialize
 
 class StackState():
     """This class is used to generate states for various actions performed on
@@ -16,6 +17,7 @@ class StackState():
     Attributes:
 
         name (str) : Name of the variable for whom we are generating states
+        _id (str) : id of the variable for whom we are generating states
     """
 
     def __init__(self,name):
@@ -108,7 +110,8 @@ class StackState():
             comments=comments
         )
 
-class Stack:
+@serialize
+class Stack(ARgorithmStructure):
     """The Stack class is a container interface for the stack, a linear
     container implementation of LIFO.
 
