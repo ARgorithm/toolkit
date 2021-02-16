@@ -1,5 +1,9 @@
-### 0.1.2
+## 0.2.0
 
+- Map and Set implementation
+- Serialisation feature added for nested ARgorithmStructures
+- Verification of files before submission to server
+- Updated designs for all data structures focussing on object ID
 - Updated config file format
 - Added CLI client for generating config files
 - user input for testing argorithms hosted on servers

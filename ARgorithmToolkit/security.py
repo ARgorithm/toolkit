@@ -50,8 +50,8 @@ def execution_check(filename:str,config:dict):
     """Executes the file on kwargs provided by programmer in the config file's `example` key
 
     Args:
-        filename (str): [description]
-        config (dict): [description]
+        filename (str): The file with the ARgorithm code to be checked
+        config (dict): The config file for ARgorithm
     """
     module_name = filename.split('/')[-1][:-3]
     spec = importlib.util.spec_from_file_location(module_name,filename)
