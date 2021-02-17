@@ -21,14 +21,11 @@ refer documentation at https://argorithm.github.io/toolkit/ to learn how to use 
 chech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples
 
 $ ls
-hello_world.config.json  hello_world.py
+hello_world.py
 ```
 </div>
 
-This will generate your `.py` file and your `.config.json` file.
-
-1.  The  `<name>.py` file will store your code that you will submit to the server hosting all ARgorithms
-2.  The `<name>.config.json`  stores important details about your ARgorithm such as its purpose and parameters required
+This will generate your `.py` file. The  `<name>.py` file will store your code that you will submit to the server hosting all ARgorithms
 
 The `<name>.py` file initially looks like this
 
@@ -48,22 +45,30 @@ def run(**kwargs):
 You can add whatever code you want to this file using all the tools and classes present in ARgorithmToolkit but be sure that
 
 1. Your file should have one function which takes `**kwargs` input (refer [here](https://book.pythontips.com/en/latest/args_and_kwargs.html) to know more about kwargs) that will should perform whatever you desire and should return the stateset. You can check out later in the document on how to use this stateset
-2.  you can create classes and additional functions in your code. Support for importing external modules is not yet added so its advisable not to add those.
+2.  you can create classes and additional functions in your code. Support for importing external modules is not yet added so its advisable not to use those.
 
-the `<name>.config.json` file is a JSON file storing all the metadata
+Once you have created your code, you need to create a `<name>.config.json` in which you will describe metadata regarding your argorithm. You can create a blank config file by using the `--config` flag in `init` command and enter your values. You can also create a `.config.json` later using the `configure` command.
+
+the `<name>.config.json` file is a JSON file storing all the metadata. Below is an example of the config.json for [bubblesort](/toolkit/tutorials/bubblesort). You can understand the `.config.json` file [here](/toolkit/tutorials/config)
 
 ```json
 {
-    "argorithmID" : "<name>",
-    "file" : "<name>.py",
-    "function" : "<function to be called>",
-    "parameters" : {
-        "variable-name" : "<data-type>"
-    } , 
-    "default" : {
-        "variable-name" : "<value>"
-    },
-    "description" : "Tell us about your ARgorithm"
+    "argorithmID": "bubblesort", 
+    "file": "bubblesort.py", 
+    "function": "run", 
+    "parameters": {
+        "array" : {
+            "description" : "Array to be sorted",
+            "type" : "ARRAY",
+            "item-type" : "INT"
+        }
+    }, 
+    "example": {
+        "array" : [
+            6,3,2,4,5,1
+        ]
+    }, 
+    "description": "demonstrate bubble sort"
 }
 ```
 
@@ -73,7 +78,7 @@ the `<name>.config.json` file is a JSON file storing all the metadata
 | file        | The file containing your codefile                            |
 | function    | The function that is going to be called                      |
 | parameters  | the parameters that your ARgorithm would need, this helps in anyone using your ARgorithm to understand what is the input format |
-| default     | default parameters in case no parameters are passed          |
+| example     | default parameters in case no parameters are passed          |
 | description | The description of ARgorithm. Helpful to people using your ARgorithm as well as other developers |
 
 You can check out ARgorithm examples in our Github Repo.

@@ -6,6 +6,7 @@ states:
   - llnode_declare:
         description: Indicates that a new Node has been created
         definition:
+          id : id of the datastructure
           variable_name: The id of the linkedlist Node
           value: The value in the node
           next: The id of the next linkedlist node. Default "none"
@@ -13,6 +14,7 @@ states:
   - llnode_iter:
         description: Highlights an node in case the value is changed
         definition:
+          id : id of the datastructure
           variable_name: The id of the linkedlist Node
           value: The value in the node
           last_value : value of the data in the node before it was changed
@@ -21,6 +23,7 @@ states:
   - llnode_next:
         description: Indicates that the reference to next node has been changed
         definition:
+          id : id of the datastructure
           variable_name: The id of the linkedlist Node
           value: The value in the node
           next: The id of the next linkedlist node. Default "none"
@@ -28,17 +31,20 @@ states:
   - llnode_delete:
         description: Deletes the node
         definition:
+          id : id of the datastructure
           variable_name: The id of the linkedlist Node
        
   - ll_declare:
         description: Creates a head pointer for start of singly linkedlist
         definition:
+          id : id of the datastructure
           variable_name: The id of the linkedlist Node
           head: The id of the head linkedlist node. Default "none"
   
   - ll_head:
         description: Changes head pointer of singly linkedlist
         definition:
+          id : id of the datastructure
           variable_name: The id of the linkedlist Node
           head: The id of the head linkedlist node. Default "none"
   

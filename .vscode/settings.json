@@ -3,5 +3,5 @@
     "yaml.schemas": {
         "./designs/design.json": ".design.yml"
     },
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": false
 }

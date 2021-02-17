@@ -6,6 +6,7 @@ states:
   - dllnode_declare:
         description: Indicates that a new Node has been created
         definition:
+          id : id of the datastructure
           variable_name: The id of the doubly doubly linked list Node
           value: The value in the node
           next: The id of the next doubly doubly linked list node. Default "none"
@@ -14,6 +15,7 @@ states:
   - dllnode_iter:
         description: Highlights an node in case the value is changed
         definition:
+          id : id of the datastructure
           variable_name: The id of the doubly doubly linked list Node
           value: The value in the node
           last_value : the value of the data in the node before it was changed
@@ -23,6 +25,7 @@ states:
   - dllnode_next:
         description: Indicates that the reference to next node has been changed
         definition:
+          id : id of the datastructure
           variable_name: The id of the doubly doubly linked list Node
           value: The value in the node
           next: The id of the next doubly doubly linked list node. Default "none"
@@ -31,11 +34,13 @@ states:
   - dllnode_delete:
         description: Deletes the node
         definition:
+          id : id of the datastructure
           variable_name: The id of the doubly doubly linked list Node
        
   - dll_declare:
         description: Creates a head pointer for start of doubly doubly linked list
         definition:
+          id : id of the datastructure
           variable_name: The id of the doubly doubly linked list Node
           head: The id of the head doubly doubly linked list node. Default "none"
           tail: The id of the tail doubly doubly linked list node. Default "none"
@@ -43,6 +48,7 @@ states:
   - dll_head:
         description: Changes head pointer of doubly doubly linked list
         definition:
+          id : id of the datastructure
           variable_name: The id of the doubly doubly linked list Node
           head: The id of the head doubly doubly linked list node. Default "none"
           tail: The id of the tail doubly doubly linked list node. Default "none"

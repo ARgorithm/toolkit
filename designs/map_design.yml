@@ -1,0 +1,92 @@
+date: '2021-02-07'
+category: Map
+author: Yatharth Mathur
+
+states: 
+  - map_declare:
+      description : creates new map
+      definition:
+        id : id of the datastructure
+        variable_name : The name of the map [required]
+        body : dict with object_id to object_id mapping or key to value mapping [required]
+  
+  - map_get:
+    description : get the value for the key
+    definition:
+      id : id of the datastructure
+      variable_name : name of the map [required]
+      body : dict with object_id to object_id mapping or key to value mapping [required]
+      key : object reference or key to access value for
+      value : value / object reference at the given key
+
+  - map_set:
+    description : set the value for the given key
+    definition :
+      id : id of the datastructure
+      variable_name : name of the map [required]
+      body : dict with object_id to object_id mapping or key to value mapping [required]
+      key : object reference or key to access value for
+      value : value / object reference at the given key
+      last_value : value / object reference at the last key
+
+  - map_remove:
+    description : remove the entry for the given key
+    definition :
+      id : id of the datastructure
+      variable_name : name of the map [required]
+      body : dict with object_id to object_id mapping or key to value mapping [required]
+      key : object reference or key to access value for
+      value : value / object reference at the given key
+
+        
+classes:
+  - ARgorithmToolkit.map.Map:
+      description: Class that manages the map interface
+  - ARgorithmToolkit.map.MapState:
+      description: State template manager for map related states
+  - ARgorithmToolkit.map.MapIterator:
+      description: Iterator for the map class
+
+functions:
+  - initialize:
+      description: create new map
+      function:
+        name: ARgorithmToolkit.map.Map.__init__
+        parameters:
+          required:
+            - algo
+      state: map_declare
+        
+  - get:
+      description: return map item by key
+      function:
+        name: ARgorithmToolkit.set.Set.__getitem__
+        parameters:
+          required:
+            - key
+      state: map_get
+
+  - iterator:
+      description: returns a iterator object for the map
+      function: 
+        name: ARgorithmToolkit.map.Map.__iter__
+      state: None
+ 
+  - set:
+    description: sets the value to a specific key
+    function: 
+      name: ARgorithmToolkit.map.Map.__setitem__
+    state: map_set
+
+  - remove:
+    description: removes a key/value entry from map
+    function:
+      name: ARgorithmToolkit.map.Map.__delitem__
+    state: map_remove
+  
+
+  - size:
+    description: returns the size of the dictionary (number of key/value pairs)
+    function:
+      name: ARgorithmToolkit.map.Map.__len__
+    state: None

@@ -12,8 +12,8 @@ The server is built using FastAPI. The requirements for running the application 
 
 - Python 3.6+
   - fastapi
-  - uvicorn
-  - gunicorn (for production use)
+  - uvicorn[standard]
+  - gunicorn
   - jinja2
   - aiofiles
   - python-multipart
@@ -21,8 +21,13 @@ The server is built using FastAPI. The requirements for running the application 
   - python-jose
   - passlib[bcrypt]
   - motor
+  - tornado
+  - dnspython
+  - pytest
   - ARgorithmToolkit
   - PyJWT
+  - aioredis
+  - prometheus-client
 
 To run it in production, use gunicorn to run as a production server. Docker-ce will be required if server image is being used
 
@@ -57,13 +62,13 @@ Status: Downloaded new image alanjohn/argorithm-server
 
 The application can be run in different modes
 
-1. In-app database
+#### In-app database
 
-   No authentication or authorization services. Data stored using sqlite database. By default, it runs in this mode
+No authentication or authorization services. Data stored using sqlite database. By default, it runs in this mode
 
-2. mongodb database
+#### mongodb database
 
-   No authentication or authorization services. Data stored in mongodb database of your choice. For this you will need to set some environment variables:
+No authentication or authorization services. Data stored in mongodb database of your choice. For this you will need to set some environment variables:
 
    - `DATABASE=mongodb`
    - `DB_USERNAME=yourdbusername`
@@ -74,13 +79,32 @@ The application can be run in different modes
 !!! info
     If using a cloud mongo database like atlas which provides mongo+srv url as endpoint, you just need to paste that URL as your `DB_ENDPOINT`. You can ignore the `DB_USERNAME` and `DB_PASSWORD` env variables.
 
-3. mongodb with auth
+#### mongodb with auth
 
-   Authorization on all basic routes. Data stored in mongodb database of your choice. This is an enhancement to the previous mode so along with the required envs previously.
+Authorization on all basic routes. Data stored in mongodb database of your choice. This is an enhancement to the previous mode so along with the required envs previously.
 
    - `SECRET_KEY=yoursecretkey`
    - `ADMIN_EMAIL=sample@email.com`
    - `ADMIN_PASSWORD=test123`
+
+#### caching
+
+Caching on state generation when execution request comes on `/argorithms/run`. Uses [redis](https://redis.io) for implementing LRU cache. The following environment variables have to be set
+
+   - `CACHING=ENABLED`
+   - `REDIS_HOST=redis`
+   - `REDIS_PORT=6379`
+   - `REDIS_PASSWORD=notmypassword`
+
+#### monitoring
+
+By default, [prometheus](https://prometheus.io) metrics have been implemented and can be accessed at `/metrics` route. Programmer can secure the route by using the `METRICS_TOKEN` environment variable to add authorization bearer token. If not given then by default, there is no authorization required
+
+   - `METRICS_TOKEN=yourmetricstoken`
+
+You can check out the grafana folder in the code repository for a ARgorithm specific dashboard
+
+### Docker-compose examples
 
 Check the `Dockerfile` for the default values of these environment variables.
 The repo comes with two docker compose configuration files
@@ -101,9 +125,12 @@ The repo comes with two docker compose configuration files
 
     ```
     
-- `docker-compose.prod.yml` : runs application with mongodb and auth and will setup mongodb database as well. will read env variables from `.env` file
+- `docker-compose.prod.yml` : runs application with mongodb and auth and will setup mongodb database. A redis server is launched to handle caching and prometheus and grafana nodes are created for monitoring It will read environment variables from `.env` file
 
     ```yaml
+    # Sets up multiple services to demonstrate how a server cluster would run with cloud storage, authorization, caching and monitoring
+    # This file requires the existense of .env with neccessary variable
+    # The docker-compose file is added for emulation of how the application can be setup with full functionality
     version: "3"
     services:
         mongodb:
@@ -115,6 +142,13 @@ The repo comes with two docker compose configuration files
                 - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
             volumes:
                 - mongo-data:/data/db
+        redis:
+            image: redis
+            ports:
+                - 6379:6379
+            volumes:
+                - ./redis.conf:/usr/local/etc/redis/redis.conf
+            command: redis-server /usr/local/etc/redis/redis.conf
         arserver:
             image: alanjohn/argorithm-server:latest
             ports: 
@@ -127,24 +161,54 @@ The repo comes with two docker compose configuration files
                 - DB_PASSWORD=${DB_PASSWORD}
                 - DB_ENDPOINT=mongodb
                 - DB_PORT=27017
-                - ADMIN_EMAIL=${ADMIN_EMAIL}
-                - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-            volumes:
-                - local-uploads:/tmp/argorithm
-    volumes:
-        mongo-data:
-            driver: local
-        uploads:
-            driver: local
-    ```
+            - ADMIN_EMAIL=${ADMIN_EMAIL}
+	            - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+	            - CACHING=ENABLED
+	            - REDIS_HOST=redis
+	            - REDIS_PORT=6379
+	            - REDIS_PASSWORD=notmypassword
+	        volumes:
+	            - uploads:/tmp/argorithm
+	        depends_on:
+	            - mongodb
+	            - redis
+	    prometheus:
+	        image: prom/prometheus
+	        ports:
+	        - 9090:9090
+	        command:
+	        - --config.file=/etc/prometheus/prometheus.yml
+	        volumes:
+	        - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+	        depends_on:
+	        - arserver
+	    grafana:
+	        image: grafana/grafana
+	        ports:
+	        - 3000:3000
+	        volumes:
+	        - ./grafana/datasource.yml:/etc/grafana/provisioning/datasource.yml
+	        env_file:
+	        - ./grafana/config.monitoring
+	        depends_on:
+	        - prometheus
+	volumes:
+	    mongo-data:
+	        driver: local
+	    uploads:
+	        driver: local
+	
+	```
 
-	The environment variables in above compose files are read from `.env` file.You can create strong secret keys using
+The environment variables in above compose files are read from `.env` file.You can create strong secret keys using
 
 <div class="termy">
+
 ```console
 $ openssl rand -hex 32
 09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
 ```
+
 </div>
 
 ## Running the server
@@ -195,6 +259,8 @@ Attaching to server_mongodb_1,server_arserver_1
     - `Programmer`
     - `User`
 
-3. The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI [account new](\cli#new) command, it create both a progammer and a user account for that email. The mobile application can only create user accounts.
+3. The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI [account new](/toolkit/cli#new) command, it create both a progammer and a user account for that email. The mobile application can only create user accounts.
 
-4. logs are generated in server.log file which you will find in `\uploads`. The `server.log` file contains request based logs for every path. The `process.log` has logs regarding state generation for argorithm.
+4. logs are generated in server.log file which you will find in `/tmp/argorithm`. The `server.log` file contains request based logs for every path.
+
+5. Application metrics are available at `/metrics`

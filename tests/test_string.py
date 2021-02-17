@@ -56,6 +56,3 @@ def test_iteration():
         last_state = algo.states[-1]
         assert last_state.content["state_type"] == 'string_iter'
         assert last_state.content["state_def"]["index"] == i
-
-
-

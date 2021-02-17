@@ -6,12 +6,14 @@ states:
   - variable_declare:
       description : creates a instance of a int , char or boolean
       definition:
+        id : id of the datastructure
         variable_name: name of the variable [required] 
         value: value [required]
   
   - variable_highlight:
       description : highlights the variable and records the changes done to it.
       definition:
+        id : id of the datastructure
         variable_name: name of the variable [required] 
         last_value: value of the variable before it was changed [required]
         value: value [required]

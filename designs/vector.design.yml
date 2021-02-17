@@ -6,12 +6,14 @@ states:
   - vector_declare:
       description : creates new vector
       definition:
+        id : id of the datastructure
         variable_name: The name of the vector [required]
         body: contents of the vector [required]
 
   - vector_insert:
       description : to insert or assign elements
       definition:
+        id : id of the datastructure
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
         element : element to be added [required]
@@ -20,6 +22,7 @@ states:
   - vector_remove:
       description : to remove element 
       definition:
+        id : id of the datastructure
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
         index : index at which element has to be removed [required]
@@ -27,6 +30,7 @@ states:
   - vector_iter:
       description : highlight element to indicate iteration and records the changes done to the element
       definition:
+        id : id of the datastructure
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
         index : index at which element has to be highlighted [required]
@@ -36,6 +40,7 @@ states:
   - vector_compare:
       description : highlight elements to indicate comparision
       definition:
+        id : id of the datastructure
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
         index_1 : first index at which element has to be highlighted [required]
@@ -44,6 +49,7 @@ states:
   - vector_swap:
       description : highlight elements to indicate swap
       definition:
+        id : id of the datastructure
         variable_name: The name of the vector [required]
         body: contents of the vector after the operation [required]
         index_1 : first index at which element has to be highlighted [required]

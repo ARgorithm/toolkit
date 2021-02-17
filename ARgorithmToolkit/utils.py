@@ -101,7 +101,16 @@ class StateSet:
         )
         self.add_state(comment_state)
 
-class Variable:
+class ARgorithmHashable:
+    """Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
+    This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
+    """
+
+class ARgorithmStructure:
+    """Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
+    """
+
+class Variable(ARgorithmStructure, ARgorithmHashable):
     """Some programs might need us to listen and store states of primitive
     datatypes like int, str , bool etc. For tha purpose, we have the Variable
     class.
@@ -123,8 +132,10 @@ class Variable:
         self.name = name
         self.__flag = False
         self.value = value
+        self._id = str(id(self))
         state_type = "variable_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : name ,
             "value" : value
         }
@@ -148,6 +159,7 @@ class Variable:
         if(key == 'value' and self.__flag):
             state_type = "variable_highlight"
             state_def = {
+                "id" : self._id,
                 "variable_name" : self.name,
                 "value" : self.value,
             }

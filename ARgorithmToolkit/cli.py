@@ -1,4 +1,6 @@
 # pylint: disable=no-self-use
+# pylint: disable=too-many-statements
+# pylint: disable=raise-missing-from
 """CLI tool for ARgorithm made using typer
 """
 import os
@@ -7,6 +9,9 @@ import json
 import requests
 import typer
 from halo import Halo
+import ARgorithmToolkit
+from ARgorithmToolkit.parser import ARgorithmConfig,ValidationError,input_data
+from ARgorithmToolkit.security import injection_check,execution_check
 
 CLOUD_URL = "https://argorithm.el.r.appspot.com"
 CACHE_DIR = typer.get_app_dir("ARgorithm")
@@ -53,7 +58,7 @@ class Messager():
         typer.secho(f"\tby {argorithm['maintainer']}",fg=typer.colors.CYAN)
         typer.echo("\tParameters")
         for key in argorithm['parameters']:
-            typer.echo(f"\t\t{key} : {argorithm['parameters'][key]}")
+            typer.echo(f"\t\t{key} : {argorithm['parameters'][key]['description']}")
 
     def state(self,states):
         """pretty print states
@@ -164,14 +169,11 @@ class AuthManager():
             raise typer.Abort()
         if rq.status_code == 404:
             msg.warn("User not found","please enter valid email")
-            raise typer.Exit(1)
-        if rq.status_code == 500:
+        elif rq.status_code == 500:
             msg.fail("Server error","contact developer")
-            raise typer.Exit(2)
-        if rq.status_code == 401:
+        elif rq.status_code == 401:
             msg.warn("incorrect password")
-            raise typer.Exit(1)
-        if rq.status_code == 200:
+        elif rq.status_code == 200:
             msg.good("logged in successfully","credentials saved in cache")
             token = json.loads(rq.content)['access_token']
             with open(self.credfile,'w+') as cred:
@@ -210,12 +212,13 @@ class AuthManager():
                     rq = requests.get(url)
             except requests.RequestException as rqe:
                 msg.fail("Connection failed",str(rqe))
-                raise typer.Abort()    
+                raise typer.Abort()
             if rq.status_code == 200:
                 return True
             return False
         except Exception as ex:
             msg.warn("authentication error",str(ex))
+            raise typer.Abort()
 
 authmanager = AuthManager()
 
@@ -241,46 +244,38 @@ def name_check(value:str):
 
 @app.command()
 def init(
-        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check)
+        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check),
+        create_config:bool = typer.Option(False,'--config','-c',help="creates blank config file as well",show_default=False)
     ):
     """
     Create Blank code template and config template for ARgorithm
     """
     typer.echo(f"Creating empty template for {name}")
 
+    with open(os.path.join(ARgorithmToolkit.__path__[0],'data/template.py',),'rb') as template:
+        starter = template.read()
+
     filename = f"{name}.py"
-    with open(filename , "w") as codefile:
-        code_starter = """
-import ARgorithmToolkit
+    with open(filename , "wb") as codefile:
+        codefile.write(starter)
 
-def run(**kwargs):
-    algo = ARgorithmToolkit.StateSet()
-
-    #
-    # Your code
-    #
-
-    return algo
-
-        """
-        codefile.write(code_starter)
-
-    config = {
-        "argorithmID" : name,
-        "file" : name+".py",
-        "function" : "run",
-        "parameters" : {},
-        "default" : {},
-        "description" : ""
-    }
-    config_file=f"{name}.config.json"
-    with open(config_file, "w") as configfile:
-        json.dump(config,configfile)
+    if create_config:
+        config = {
+            "argorithmID" : name,
+            "file" : name+".py",
+            "function" : "run",
+            "parameters" : {},
+            "default" : {},
+            "description" : ""
+        }
+        config_file=f"{name}.config.json"
+        with open(config_file, "w") as configfile:
+            json.dump(config,configfile)
 
     msg.good("Template generated","refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples")
 
 @app.command()
-def configure():
+def connect():
     """
     Connect to your endpoint
     """
@@ -294,48 +289,72 @@ def autocomplete(incomplete:str):
     l = len(incomplete)
     for filename in files:
         if filename[:l] == incomplete and filename[-3:] == '.py':
-            res.append(filename[:-4])
+            res.append(filename[:-3])
     return res
 
 def file_reader(filename):
     """finds anf checks argorithm files"""
     directory = os.getcwd()
     if os.path.isfile( os.path.join(directory,filename+".py")):
-        if os.path.isfile( os.path.join(directory , f"{filename}.config.json") ):
-            pass
-        else:
-            msg.warn(f"cant find {filename}.config.json")
+        try:
+            data = ARgorithmConfig(f"{filename}.config.json")
+            injection_check(os.path.join(directory,filename+".py"))
+        except FileNotFoundError:
+            msg.warn("config missing",f"you can use edit the {filename}.config.json \nor use CLI based config generator")
+            raise typer.Exit()
+        except ValidationError:
+            msg.warn("config file is not configured properly","try the configure command to fix it \ncheck out docs for more info")
+            raise typer.Exit(1)
+        except ARgorithmToolkit.ARgorithmError:
+            msg.warn("possible code injection","- remove imports other than ARgorithmToolkit\n- rename user-defined objects,classes and functions")
             raise typer.Exit(1)
     else:
         msg.warn(f"{filename}.py not found")
         raise typer.Exit(1)
-    msg.good('files found')
-
-    required_tags = {
-        "argorithmID" : filename,
-        "file" : filename+".py",
-        "function" : "run",
-        "parameters" : {},
-        "default" : {},
-        "description" : ""
-    }
-
-    with open(os.path.join(directory , f"{filename}.config.json") , 'r') as configfile:
-        data = json.load(configfile)
-        for key in required_tags:
-            if key not in data:
-                msg.warn(f"please check {filename}.config.json {key} is missing")
-                raise typer.Exit(1)
-        for key in data:
-            if key not in required_tags:
-                msg.warn(f"please check {filename}.config.json {key} is uneccessary")
-                raise typer.Exit(1)
-            if type(data[key]) != type(required_tags[key]):
-                msg.warn(f"please check {key} in {filename}.config.json")
-                raise typer.Exit(1)
-
     msg.good("Files Verified")
-    return data
+    try:
+        execution_check(os.path.join(directory,filename+".py"),data.config)
+    except AssertionError:
+        msg.warn('Testing Failed','Function should return ARgorithmToolkit.StateSet object')
+        raise typer.Exit(1)
+    except Exception:
+        msg.warn('Testing Failed','ARgorithm execution with example kwargs failed')
+        raise typer.Exit(1)
+    msg.good("Files Tested")
+    return data.config
+
+@app.command()
+def configure(filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+    ):
+    """Starts CLI config generator"""
+    codefile = filename.split('.')[0] + ".py"
+    if not os.path.isfile(os.path.join(os.getcwd(),codefile)):
+        msg.warn("Python file not found",'use the init command first')
+        raise typer.Abort()
+    filepath = filename.split('.')[0] + ".config.json"
+    try:
+        existing_config = {
+            "argorithmID" : filename,
+            "file" : filename+".py",
+            "function" : "run",
+            "parameters" : {},
+            "default" : {},
+            "description" : ""
+        }
+        if os.path.isfile( os.path.join(os.getcwd() , f"{filepath}") ):
+            with open(os.path.join(os.getcwd(), f"{filepath}") , 'r') as configfile:
+                existing_config = json.load(configfile)
+            os.remove(os.path.join(os.getcwd() , f"{filepath}"))
+        ARgorithmConfig(filepath)
+    except FileNotFoundError:
+        msg.warn("Operation cancelled by user")
+        with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
+            json.dump(existing_config,configfile)
+        typer.Abort()
+    except Exception:
+        msg.fail("Some error occured, try again")
+        with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
+            json.dump(existing_config,configfile)
 
 @app.command()
 def submit(
@@ -453,14 +472,12 @@ def list_argorithms():
 @app.command()
 def test(
     argorithm_id:str = typer.Argument(... , help="argorithmID of function to be called. If not passed then menu will be presented"),
-    output:bool = typer.Option(False,'--output','-o',help="print results in json format",show_default=False)
-    # user_input:bool = typer.Option(False,'--user-input','-u',help="if present, parses input from user",show_default=False)
+    output:bool = typer.Option(False,'--output','-o',help="print results in json format",show_default=False),
+    user_input:bool = typer.Option(False,'--user-input','-u',help="if present, takes input from user",show_default=False)
     ):
     """test argorithms stored in server
     """
     params = search(argorithm_id,show=not output)
-    # if user_input:
-    #     pass
     header=None
     if authmanager.auth_check():
         token = authmanager.get_token()
@@ -470,6 +487,8 @@ def test(
         "argorithmID" : params["argorithmID"],
         "parameters" : params["example"]
     }
+    if user_input:
+        data["parameters"] = input_data(params["parameters"])
     url = settings.get_endpoint()+"/argorithms/run"
     try:
         with Halo(text='Connecting', spinner='dots'):
