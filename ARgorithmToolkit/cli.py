@@ -146,9 +146,9 @@ class AuthManager():
         if rq.status_code == 200:
             msg.good("Account created","These credentials will be used as both programmer and user credentials")
             return
-        if rq.status_code == 409:
+        elif rq.status_code == 409:
             msg.warn("Invalid email","email is already in use. Try login")
-            typer.Exit(0)
+            raise typer.Exit(0)
         msg.fail("Error","Contact developer")
 
     def login_prompt(self):

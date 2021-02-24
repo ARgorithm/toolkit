@@ -24,7 +24,25 @@ class ARgorithmError(Exception):
     def __str__(self):
         if self.message:
             return f'{self.message}'
-        return "There's an error within ARgorithm template usage"
+        return "There's an error within ARgorithm"
+
+class ARgorithmClientError(Exception):
+    """The error class for programmers to use in their ARgorithm.
+
+    Programmers can throw this error from their program when they want to raise an error
+    For example when user gives incorrect input to program
+    """
+    def __init__(self,*args):
+        super().__init__(*args)
+        if args:
+            self.message = args[0]
+        else:
+            self.message = None
+
+    def __str__(self):
+        if self.message:
+            return f'{self.message}'
+        return "User has entered faulty data"
 
 class State:
     """The Instance of State class can be considered as an event in the

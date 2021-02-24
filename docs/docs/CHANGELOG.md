@@ -1,6 +1,8 @@
 ### 0.2.1
 
 - Dependecy fixes
+- Added a ClientError for programmers to use in the their code to raise errors
+- CLI minor bug fixes
 
 ## 0.2.0
 
