@@ -1,3 +1,7 @@
+### 0.2.1
+
+- Dependecy fixes
+
 ## 0.2.0
 
 - Map and Set implementation
