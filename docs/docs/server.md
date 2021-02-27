@@ -1,8 +1,8 @@
 # Setting up your own server
 
 ARgorithm has a common server endpoint where the community can create
-and contribute their own ARgorithms. This is by default the endpoint for
-the toolkit command line. But in case , a programmer wants to setup a
+and contribute their own ARgorithms. This, by default, is the endpoint for
+the toolkit command line. But in case a programmer wants to setup a
 local server for testing purposes or wants to setup a specific server
 for their class or organisation. The following steps are to be followed.
 
@@ -29,7 +29,7 @@ The server is built using FastAPI. The requirements for running the application 
   - aioredis
   - prometheus-client
 
-To run it in production, use gunicorn to run as a production server. Docker-ce will be required if server image is being used
+Use gunicorn to run as a production server. Docker-ce will be required if server image is being used.
 
 ## Installation
 
@@ -60,15 +60,15 @@ Status: Downloaded new image alanjohn/argorithm-server
 </div>
 ## Configuring the Server
 
-The application can be run in different modes
+The application can be run in several different modes:
 
 #### In-app database
 
-No authentication or authorization services. Data stored using sqlite database. By default, it runs in this mode
+No authentication or authorization services. Data is stored using sqlite database. By default, it runs in this mode.
 
 #### mongodb database
 
-No authentication or authorization services. Data stored in mongodb database of your choice. For this you will need to set some environment variables:
+No authentication or authorization services. Data is stored in a mongodb database of your choice. Requires setting some environment variables:
 
    - `DATABASE=mongodb`
    - `DB_USERNAME=yourdbusername`
@@ -81,7 +81,7 @@ No authentication or authorization services. Data stored in mongodb database of 
 
 #### mongodb with auth
 
-Authorization on all basic routes. Data stored in mongodb database of your choice. This is an enhancement to the previous mode so along with the required envs previously.
+Authorization on all basic routes. Data is stored in a mongodb database of your choice. This is an enhancement to the previous mode so along with the same required envs.
 
    - `SECRET_KEY=yoursecretkey`
    - `ADMIN_EMAIL=sample@email.com`
@@ -106,8 +106,8 @@ You can check out the grafana folder in the code repository for a ARgorithm spec
 
 ### Docker-compose examples
 
-Check the `Dockerfile` for the default values of these environment variables.
-The repo comes with two docker compose configuration files
+Refer to the `Dockerfile` for the default values of these environment variables.
+The repo comes with two docker compose configuration files.
 
 - `docker-compose.local.yml` : runs application in default mode
     ```yaml
@@ -200,7 +200,7 @@ The repo comes with two docker compose configuration files
 	
 	```
 
-The environment variables in above compose files are read from `.env` file.You can create strong secret keys using
+The environment variables in above compose files are read from `.env` file. You can create strong secret keys using
 
 <div class="termy">
 
@@ -250,7 +250,7 @@ Attaching to server_mongodb_1,server_arserver_1
 
 ## Interacting with server
 
-1. Once the server is running, you can check whether its running by entering the public IP on the browswer. You should get the server running page. you can check the api routes on `/docs` page with help of FastAPI Swagger UI. You can get the api routes in json format at the `/openapi.json`.
+1. Once the server is running, you can check whether its running by entering the public IP in a browswer.  You can check the api routes on `/docs` page with the help of FastAPI Swagger UI. You can get the api routes in json format at the `/openapi.json`.
 
     ![](https://user-images.githubusercontent.com/35735486/104831190-97d6fb80-58ac-11eb-92d3-bd7a6d823cfe.png)
 
@@ -259,8 +259,8 @@ Attaching to server_mongodb_1,server_arserver_1
     - `Programmer`
     - `User`
 
-3. The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI [account new](/toolkit/cli#new) command, it create both a progammer and a user account for that email. The mobile application can only create user accounts.
+3. The programmer account allows you to create and manage argorithms. The user account allows you to run argorithms and get states. When using the CLI [account new](/toolkit/cli#new) command, it creates both, a programmer and a user account for that email. The mobile application can only create user accounts.
 
-4. logs are generated in server.log file which you will find in `/tmp/argorithm`. The `server.log` file contains request based logs for every path.
+4. Logs are generated in the server.log file which you will find in `/tmp/argorithm`. The `server.log` file contains request based logs for every path.
 
 5. Application metrics are available at `/metrics`

@@ -1,7 +1,7 @@
 # Command line interface
 
-The command line interface for ARgorithmToolkit helps programmers to
-create and manage their argorithms along with control and manage their
+The command line interface for ARgorithmToolkit grants programmers control and helps them to
+create and manage their argorithms as well as manage their
 server.
 
 <div class="termy">
@@ -24,7 +24,7 @@ Options:
 
 ## Connect
 
-This command can be used to set your own server IP. All your requests will be sent to this IP. If you are running server locally you dont need to configure IP, instead you can use the `-l` or `--local` flag to connect to local servers.
+This command can be used to set your own server IP. All your requests will be sent to this IP. If you are running the server locally you don't need to configure the IP, instead you can use the `-l` or `--local` flag to connect to local servers.
 
 !!! info
 	when using the local flag before use it before the command
@@ -43,13 +43,13 @@ Cloud requests will now go to http://myserverendpoint.com
 
 ## Account
 
-This command can only be used if the server you are connected to has authorization feature enabled. Refer the [configuration section](/toolkit/server/#configuring-the-server) in [server setup](/toolkit/server) to learn more about authentication and authorization setup.
+This command can only be used if the server you are connected to, has the authorization feature enabled. Refer to the [configuration section](/toolkit/server/#configuring-the-server) in [server setup](/toolkit/server) to learn more about authentication and authorization setup.
 
 The account command consists of two subcommands which are shown below
 
 ### New
 
-The new subcommand in account creates a new account in the server. The email you will use will be registered as both ``programmer`` account and `user` account. Learn more [here](/toolkit/server#interacting-with-server).
+The new subcommand in account creates a new account in the server. The email you use will be registered as both, a ``programmer`` account and a `user` account. Learn more [here](/toolkit/server#interacting-with-server).
 
 <div class="termy">
 ```console
@@ -172,14 +172,14 @@ Description: name of user
 ```
 </div>
 
-The `configure` should be used only after you are done programming. You can check out the config schema [here](/toolkit/tutorials/config)
+The `configure` command should be used only after you are done programming. You can check out the config schema [here](/toolkit/tutorials/config)
 
 !!!warning
 	The simulation here might be different according to your function code.
 
 ## Submit
 
-The submit command is used to submit new ARgorithm to server. This comand takes the name of the argorithm for eg: `fibonacci`. In this case , it will search for `fibonacci.py` and `fibonacci.config.json` and after verification send them to server.
+The submit command is used to submit new ARgorithms to server. This command takes the name of the argorithm. Eg: `fibonacci`. In this case, it will search for `fibonacci.py` and `fibonacci.config.json` and after verification send them to the server.
 
 <div class="termy">
 ```console
@@ -192,7 +192,7 @@ $ ARgorithm submit fibonacci
 
 ## List
 
-The list command can be used to check what all ARgorithms are available in server. When `AUTH` is enabled, it shows the programmer email that created it, if not it shows the admin email.
+The list command can be used to obtain a list of all the ARgorithms that are available in the server. When `AUTH` is enabled, it shows the programmer email that created it, if not it shows the admin email.
 
 <div class="termy">
 ```console
@@ -206,7 +206,7 @@ $ ARgorithm list
 
 ## Update
 
-The update command is used to overwrite/update pre-existing ARgorithm with different code or/and configuration. If `AUTH` is enabled, then ARgorithm can only be updated by its author or by a programmer with admin priveleges.
+The update command is used to overwrite/update pre-existing ARgorithms with different code or/and configuration. If `AUTH` is enabled, then ARgorithm can only be updated by its author or by a programmer with admin privileges.
 
 <div class="termy">
 ```console
@@ -219,7 +219,7 @@ $ ARgorithm update fibonacci
 
 ## Test
 
-The test command is used to run the argorithms in the server and observe the states. Here the states are not being printed as that can be long output. You can print the the states in json format using the `--output` or `-o` option. By default, the data given in the configuration example is taken as input. By using the `--user-input` flag you can enter your own input to the argorithm. 
+The test command is used to run the argorithms in the server and observe the states. The states are not being printed in order to keep the output short. You can print the states in json format using the `--output` or `-o` option. By default, the data given in the configuration example is taken as input. By using the `--user-input` flag you can enter your own input to the argorithm. 
 
 <div class="termy">
 ```console
@@ -237,7 +237,7 @@ Found argorithm
 
 ## Delete
 
-The delete command is used to delete ARgorithm from server. If `AUTH` is enabled, then ARgorithm can only be deleted by its author or by a programmer with admin priveleges.
+The delete command is used to delete ARgorithms from the server. If `AUTH` is enabled, then ARgorithm can only be deleted by its author or by a programmer with admin priveleges.
 
 <div class="termy">
 ```console
@@ -281,7 +281,7 @@ $ ARgorithm admin revoke sample@user.com
 
 ### Blacklist
 
-The blacklist command can be used to block programmer accounts from submitting and testing ARgorithms and user accounts from running ARgorithms. This command can be used to handle cases of misconduct with server.
+The blacklist command can be used to block programmer accounts from submitting and testing ARgorithms and user accounts from running ARgorithms. This command can be used to handle cases of misconduct with the server.
 
 <div class="termy">
 ```console
@@ -292,7 +292,7 @@ $ ARgorithm admin blacklist sample@user.com
 
 ### Whitelist
 
-The whitelist command can be used to whitelist previously blacklisted
+The whitelist command can be used to whitelist a previously blacklisted
 accounts.
 
 <div class="termy">

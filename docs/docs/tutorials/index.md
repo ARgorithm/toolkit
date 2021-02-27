@@ -22,7 +22,7 @@ This creates the template `.py` file  This file was covered once in the [getting
 
 ## Executing the code
 
-One thing to be kept in mind while running an argorithm code file is that what you want to return is the output of the object but the stateset called. Thus, it becomes fundamentally important to be able to decipher stateset.
+One thing to be kept in mind while running an argorithm code file is that what you have to return is the stateset. Thus, it becomes fundamentally important to be able to decipher the stateset.
 
 The [`Stateset`](/toolkit/api//utils#ARgorithmToolkit.utils.StateSet) is an list of [`State`](/toolkit/api//utils#ARgorithmToolkit.utils.State) objects. Each state is an event that occurs during the execution of the program.
 
@@ -48,4 +48,4 @@ The [`Stateset`](/toolkit/api//utils#ARgorithmToolkit.utils.StateSet) is an list
 - The `state_def` gives data about the particular event. 
 - The `comments` are used to add descriptive text to the AR visualisation. 
 
-You can refer all the state types and what they do in the [designs folder](https://github.com/ARgorithm/toolkit/tree/master/designs)
+You can look up all the state types and what they do in the [designs folder](https://github.com/ARgorithm/toolkit/tree/master/designs)

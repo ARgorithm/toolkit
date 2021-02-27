@@ -1,4 +1,4 @@
- You can install the ARgorithmToolkit using pip 
+ The ARgorithmToolkit can be installed using pip.
 
 <div class="termy">
 
@@ -10,7 +10,7 @@ Successfully installed ARgorithmToolkit
 ```
 </div>
 
-You can setup auto completion for your shell by using --install-completion option provided by `Typer`. After that you can get started with your own ARgorithm
+Auto completion for the shell can be setup by using --install-completion option provided by `Typer`. After that you can get started with your own ARgorithm.
 
 <div class="termy">
 ```console
@@ -25,7 +25,7 @@ hello_world.py
 ```
 </div>
 
-This will generate your `.py` file. The  `<name>.py` file will store your code that you will submit to the server hosting all ARgorithms
+This will generate the `.py` file. The  `<name>.py` file will store the code that you will submit to the server hosting all ARgorithms
 
 The `<name>.py` file initially looks like this
 
@@ -42,14 +42,14 @@ def run(**kwargs):
     return
 ```
 
-You can add whatever code you want to this file using all the tools and classes present in ARgorithmToolkit but be sure that
+Any code you wish to add to this file, can be added using all the tools and classes present in the ARgorithmToolkit but ensure that
 
-1. Your file should have one function which takes `**kwargs` input (refer [here](https://book.pythontips.com/en/latest/args_and_kwargs.html) to know more about kwargs) that will should perform whatever you desire and should return the stateset. You can check out later in the document on how to use this stateset
-2.  you can create classes and additional functions in your code. Support for importing external modules is not yet added so its advisable not to use those.
+1. Your file should have one function which takes `**kwargs` input (refer [here](https://book.pythontips.com/en/latest/args_and_kwargs.html) to know more about kwargs) that will perform whatever you desire and should return the stateset. You can check out how to use this stateset later in the document.
+2. You aren’t using any external modules as support for importing external modules has not yet been added. You are free to create classes and additional functions in your code.
 
-Once you have created your code, you need to create a `<name>.config.json` in which you will describe metadata regarding your argorithm. You can create a blank config file by using the `--config` flag in `init` command and enter your values. You can also create a `.config.json` later using the `configure` command.
+Once you have created your code, you need to create a `<name>.config.json` in which you will describe metadata regarding your argorithm. You can create a blank config file by using the `--config` flag in the `init` command and entering your values. You can also create a `.config.json` later using the `configure` command.
 
-the `<name>.config.json` file is a JSON file storing all the metadata. Below is an example of the config.json for [bubblesort](/toolkit/tutorials/bubblesort). You can understand the `.config.json` file [here](/toolkit/tutorials/config)
+the `<name>.config.json` file is a JSON file storing all the metadata. Below is an example of the config.json for [bubblesort](/toolkit/tutorials/bubblesort). You can understand the `.config.json` file [here](/toolkit/tutorials/config).
 
 ```json
 {
@@ -81,12 +81,12 @@ the `<name>.config.json` file is a JSON file storing all the metadata. Below is 
 | example     | default parameters in case no parameters are passed          |
 | description | The description of ARgorithm. Helpful to people using your ARgorithm as well as other developers |
 
-You can check out ARgorithm examples in our Github Repo.
-Check out the commandline interface for more details
+Check out ARgorithm examples in our Github Repo and
+check out the commandline interface for more details.
 
 ## Using ARgorithmToolkit
 
-ARgorithmToolkit adds a few extra steps when it comes to initializing instances whose states you want to record but thats because a lot of data has to be maintained in order for smooth transitions
+ARgorithmToolkit adds a few extra steps when it comes to initializing instances whose states you wish to record because a lot of data has to be maintained to be able to provide smooth transitions.
 
 ```python hl_lines="1-3"
 >>> import ARgorithmToolkit
@@ -110,21 +110,21 @@ ARgorithmToolkit adds a few extra steps when it comes to initializing instances 
 }
 ```
 
-As ARgorithm is tool for creating visual demonstration , you can add comments parameter to most functions. These comments get included in states and get featured as text when that state is rendered in AR.
+As ARgorithm is tool for creating visual demonstration, you can add comments to most functions. These comments get included in states and are featured as text when that state is rendered in AR.
 
-Make sure you design the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** this is important to identify arrays when rendering them
+Ensure that you design the objects you want to keep track of as part of the same stateset. Each object is instantiated with a **name** to be able to identify arrays when rendering them.
 
-You can refer the docs and samples in the [repo](https://github.com/ARgorithm/toolkit) to understand more clearly.
+Please refer to the docs and samples present in the [repo](https://github.com/ARgorithm/toolkit) to understand better.
 
 
 
 ## StateSet
 
-The core class to all algorithm and data structures in ARgorithmToolkit
-You will always need a object of this class when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to ARgorithm App. So obviously all your ARgorithms are supposed to return this
+The core class to all algorithms and data structures in ARgorithmToolkit.
+An object of this class will always be needed when using different ARgorithmToolkit features. This is where the states are stored that later get rendered to the ARgorithm App. So, all the ARgorithms are supposed to return this.
 
-You wont have to interact with it much other than while initialising objects and returning results.
-It has a `add_comment` method that allows you to create blank states carrying description in the form of comments that you might want to show to the client while the ARgorithm is being rendered. This will prove handy when creating good demonstrations
+You won't have to interact with it much other than while initialising objects and returning results.
+It has an `add_comment` method that allows you to create blank states carrying description in the form of comments that you might want to show to the client while the ARgorithm is being rendered. This will prove handy when creating good demonstrations.
 
 ```python
 >>> import ARgorithmToolkit
