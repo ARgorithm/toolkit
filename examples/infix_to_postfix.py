@@ -8,7 +8,7 @@ def precedence(a,b) -> bool:
         "-" : 1,
         "*" : 2,
         "/" : 2,
-        "^" : 3 
+        "^" : 3
     }
     return order[a] <= order[b]
 
@@ -16,18 +16,18 @@ def run(**kwargs):
     algo = ARgorithmToolkit.StateSet()
 
     exp = ARgorithmToolkit.String(
-        name="expr" , 
-        algo=algo , 
-        body=kwargs["expression"] , 
+        name="expr" ,
+        algo=algo ,
+        body=kwargs["expression"] ,
         comments="The infix expression"
         )
 
     st = ARgorithmToolkit.Stack(
         name="stack",
         algo=algo,
-        comments="We will use a stack to convert infix to postfix" 
+        comments="We will use a stack to convert infix to postfix"
         )
-    
+
     output = ARgorithmToolkit.String(
         name="output",
         algo=algo,

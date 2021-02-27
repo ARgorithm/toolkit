@@ -3,6 +3,7 @@ whenever an ARgorithm Class object is serialized in the StateSet (which only hap
 """
 import inspect
 from json import JSONEncoder
+import numpy as np
 import ARgorithmToolkit
 
 def serialize(cls):
@@ -30,9 +31,23 @@ class StateEncoder(JSONEncoder):
         classes = tuple([x for _,x in classes])
         if isinstance(ARgorithmToolkit.Variable,classes) :
             return super().default(o.value)
-        elif isinstance(o, classes):
+        if isinstance(o, classes):
             try:
                 return o.to_json()
             except Exception as ex:
                 raise TypeError("Unserializable ARgorithm class",) from ex
+        if isinstance(o, (np.int_, np.intc, np.intp, np.int8,
+                            np.int16, np.int32, np.int64, np.uint8,
+                            np.uint16, np.uint32, np.uint64)):
+            return int(o)
+        if isinstance(o, (np.float_, np.float16, np.float32, np.float64)):
+            return float(o)
+        if isinstance(o, (np.complex_, np.complex64, np.complex128)):
+            return {'real': o.real, 'imag': o.imag}
+        if isinstance(o, (np.ndarray,)):
+            return o.tolist()
+        if isinstance(o, (np.bool_)):
+            return bool(o)
+        if isinstance(o, (np.void)):
+            return None
         return super().default(o)

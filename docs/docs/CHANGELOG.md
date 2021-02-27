@@ -2,7 +2,8 @@
 
 - Dependecy fixes
 - Added a ClientError for programmers to use in the their code to raise errors
-- CLI minor bug fixes
+- Expanded StateEncoder to handle numpy types
+- Refactored CLI to remove redundancies and bugs
 
 ## 0.2.0
 
