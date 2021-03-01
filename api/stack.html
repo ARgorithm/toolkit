@@ -609,14 +609,15 @@ False
 <span>def <span class="ident">to_json</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use
+in application.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def to_json(self):
-    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use
+    in application.&#34;&#34;&#34;
     class_name = type(self).__name__
     obj_id = id(self)
     return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>

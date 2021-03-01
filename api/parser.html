@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
 <title>ARgorithmToolkit.parser API documentation</title>
-<meta name="description" content="Parser module deals with parsing .config.json files" />
+<meta name="description" content="Parser module deals with parsing .config.json files." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,14 +23,13 @@
 <h1 class="title">Module <code>ARgorithmToolkit.parser</code></h1>
 </header>
 <section id="section-intro">
-<p>Parser module deals with parsing .config.json files</p>
+<p>Parser module deals with parsing .config.json files.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python"># pylint: skip-file
-&#34;&#34;&#34;Parser module deals with parsing .config.json files
-&#34;&#34;&#34;
+&#34;&#34;&#34;Parser module deals with parsing .config.json files.&#34;&#34;&#34;
 import os
 import json
 import re
@@ -53,9 +52,16 @@ config_cli_heading =&#34;&#34;&#34;
     +-----------------------------+
 &#34;&#34;&#34;
 
+PRIORITY = {
+    &#34;INT&#34; : 0,
+    &#34;STRING&#34; : 2,
+    &#34;FLOAT&#34; : 1,
+    &#34;ARRAY&#34; : 3,
+    &#34;MATRIX&#34; : 4
+}
+
 def multiline():
-    &#34;&#34;&#34;takes multiline input
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;takes multiline input.&#34;&#34;&#34;
     buffer = &#39;&#39;
     while True:
         try:
@@ -68,20 +74,19 @@ def multiline():
     return buffer[:-1]
 
 def master_heading():
-    &#34;&#34;&#34;Renders the ARgorithm config generator heading
-    &#34;&#34;&#34;
-    text = typer.style(config_cli_heading,fg=typer.colors.BLUE,bold=True)
+    &#34;&#34;&#34;Renders the ARgorithm config generator heading.&#34;&#34;&#34;
+    text = typer.style(config_cli_heading,fg=typer.colors.WHITE,bold=True)
     typer.echo(text)
 
 def heading(title,message):
-    &#34;&#34;&#34;Create a heading text
+    &#34;&#34;&#34;Create a heading text.
 
     Args:
         title (str): The title of the heading
         message (str): The message that
     &#34;&#34;&#34;
     # typer.clear()
-    text = typer.style(title.upper(),fg=typer.colors.BLUE,bold=True)
+    text = typer.style(title.upper(),fg=typer.colors.WHITE,bold=True)
     typer.echo(&#39;-&#39;*(len(text)+2))
     typer.echo(text)
     typer.echo(&#39;-&#39;*(len(text)+2))
@@ -89,7 +94,7 @@ def heading(title,message):
     return typer
 
 def input_prompt(message,default=None,type=str,show_default=True):
-    &#34;&#34;&#34;Uses typer to create a single input field in CLI
+    &#34;&#34;&#34;Uses typer to create a single input field in CLI.
 
     Args:
         message (str): The input field text
@@ -100,7 +105,7 @@ def input_prompt(message,default=None,type=str,show_default=True):
     Returns:
         ip : The data entered by user
     &#34;&#34;&#34;
-    text = typer.style(message,fg=typer.colors.BLUE)
+    text = typer.style(message,fg=typer.colors.WHITE)
     if default:
         ip = typer.prompt(text,default=default,type=type,show_default=show_default)
     else:
@@ -108,7 +113,7 @@ def input_prompt(message,default=None,type=str,show_default=True):
     return ip
 
 def confirm_prompt(message):
-    &#34;&#34;&#34;Uses typer to create a confirmation prompt
+    &#34;&#34;&#34;Uses typer to create a confirmation prompt.
 
     Args:
         message (str): The text for confirmation
@@ -116,12 +121,13 @@ def confirm_prompt(message):
     Returns:
         flag: boolean value as entered by user
     &#34;&#34;&#34;
-    text = typer.style(message,fg=typer.colors.BLUE)
+    text = typer.style(message,fg=typer.colors.WHITE)
     flag = typer.confirm(text)
     return flag
 
 def multiline_input_prompt(message):
-    &#34;&#34;&#34;Uses typer and ARgorithmToolkit.parser.multiline to create a multiline input prompt
+    &#34;&#34;&#34;Uses typer and ARgorithmToolkit.parser.multiline to create a multiline
+    input prompt.
 
     Args:
         message (str): The text for prompt
@@ -129,7 +135,7 @@ def multiline_input_prompt(message):
     Returns:
         ip: data entered by user
     &#34;&#34;&#34;
-    text = typer.style(message + &#39;:&#39;,fg=typer.colors.BLUE)
+    text = typer.style(message + &#39;:&#39;,fg=typer.colors.WHITE)
     helptext = typer.style(&#34;Press ENTER on empty line to leave multiline input&#34;,fg=typer.colors.CYAN)
     typer.echo(text)
     typer.echo(helptext)
@@ -137,18 +143,18 @@ def multiline_input_prompt(message):
     return ip
 
 def info(message,data):
-    &#34;&#34;&#34;Display information using typer
+    &#34;&#34;&#34;Display information using typer.
 
     Args:
         message (str): Description of the information
         data : The data to be displayed
     &#34;&#34;&#34;
-    message = typer.style(message,fg=typer.colors.BLUE)
+    message = typer.style(message,fg=typer.colors.WHITE)
     data = typer.style(str(data),fg=typer.colors.GREEN)
     typer.echo(message+&#34;: &#34;+data)
 
 def warning(message):
-    &#34;&#34;&#34;Generate warning message using typer
+    &#34;&#34;&#34;Generate warning message using typer.
 
     Args:
         message (str): warning text
@@ -157,7 +163,7 @@ def warning(message):
     typer.echo(text)
 
 def find_parameters(filename,function):
-    &#34;&#34;&#34;Finds the keyword arguments accessed in the file
+    &#34;&#34;&#34;Finds the keyword arguments accessed in the file.
 
     find_parameters parses the code line by line and check which all keywords
     were accessed in the function code within the code file
@@ -172,9 +178,11 @@ def find_parameters(filename,function):
     function_regex = re.compile(f&#34;^def.([A-Za-z0-9]+).?\(\*\*kwargs\)&#34;)
     kwarg_regex = r&#34;kwargs\[[\&#39;\&#34;]([A-Za-z0-9]+)[\&#39;\&#34;]\]&#34;
     with open(filename,&#39;r&#39;) as codefile:
-        parameters = set()
+        parameters = dict()
         flag = False
+        line_count = -1
         for line in codefile.readlines():
+            line_count += 1
             search = re.search(function_regex,line)
             if search:
                 func = list(search.groups())[0]
@@ -184,11 +192,81 @@ def find_parameters(filename,function):
                 if search:
                     params = list(search.groups())
                     for p in params:
-                        parameters.add(p)
+                        if p not in parameters:
+                            parameters[p] = line_count
+        param_list = sorted(
+            list(parameters.keys()) ,
+            key=lambda x: parameters[x]
+        )
         return list(parameters)
 
+def validateconfig(filepath):
+    &#34;&#34;&#34;Validates and stores argorithm config.&#34;&#34;&#34;
+    validator = Draft7Validator(CONFIG_SCHEMA)
+    if os.path.isfile(filepath):
+        with open(filepath,&#39;r&#39;) as configfile:
+            data = json.load(configfile)
+            try:
+                validator.validate(data)
+            except ValidationError as ve:
+                warning(&#34;Invalid config&#34;)
+                errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+                for e in errors:
+                    print(e.message)
+                raise ve
+            return data
+    else:
+        raise FileNotFoundError(&#34;No config file&#34;)
+
+def numeric_input(param,input_type):
+    &#34;&#34;&#34;Initiates numeric input from user for `INT` and `FLOAT` types.
+
+    Args:
+        param (dict): The parameter details
+        input_type ([type]): The type of numerical value
+
+    Returns:
+        value: value of type `input_type`
+    &#34;&#34;&#34;
+    retry = True
+    while retry:
+        retry = False
+        value = input_prompt(&#34;Enter integer value&#34;,type=input_type)
+        if &#34;start&#34; in param:
+            if value &lt; param[&#34;start&#34;]:
+                warning(f&#34;Please enter value larger than {param[&#39;start&#39;]}&#34;)
+                retry = True
+        if &#34;end&#34; in param:
+            if value &gt; param[&#34;end&#34;]:
+                warning(f&#34;Please enter value less than {param[&#39;end&#39;]}&#34;)
+                retry = True
+    return input_type(value)
+
+def check_size(value,param,example):
+    &#34;&#34;&#34;Checks size of input with respect to parameter constraints.
+
+    Args:
+        value (list or str): The value entered by user
+        param (dict): The parameter details
+        example (dict): The output dictionary in which parameter values are stored
+
+    Returns:
+        example: returns updated output dictionary
+    &#34;&#34;&#34;
+    if &#34;size&#34; in param:
+        if isinstance(param[&#34;size&#34;],str):
+            assert isinstance(example[param[&#34;size&#34;]],int)
+            if len(value) != example[param[&#34;size&#34;]]:
+                warning(f&#34;length of input should be {example[param[&#39;size&#39;]]}&#34;)
+                return True
+        else:
+            if len(value) != param[&#34;size&#34;]:
+                warning(f&#34;length of input should be {param[&#39;size&#39;]}&#34;)
+                return True
+    return False
+
 def input_data(parameters):
-    &#34;&#34;&#34;Generates a input form based on the parameters in config
+    &#34;&#34;&#34;Generates a input form based on the parameters in config.
 
     Args:
         parameters (dict): The config parameters which will be used to generate the input fields
@@ -202,40 +280,17 @@ def input_data(parameters):
         &#34;FLOAT&#34; : float,
         &#34;STRING&#34; : str,
     }
+
+    param_list = sorted(
+            list(parameters.keys()) ,
+            key=lambda x: PRIORITY[parameters[x][&#39;type&#39;]]
+        )
     heading(&#34;Enter input for ARgorithm&#34;,&#34;Based on argorithm parameters, input will be taken&#34;)
-    for key in parameters:
+    for key in param_list:
         param = parameters[key]
         # typer.clear()
         info(&#34;\ninput keyword&#34;,key)
         info(&#34;Description&#34;,param[&#39;description&#39;])
-
-        def numeric_input(param,input_type):
-            retry = True
-            while retry:
-                retry = False
-                value = input_prompt(&#34;Enter integer value&#34;,type=input_type)
-                if &#34;start&#34; in param:
-                    if value &lt;= param[&#34;start&#34;]:
-                        warning(f&#34;Please enter value larger than {param[&#39;start&#39;]}&#34;)
-                        retry = True
-                if &#34;end&#34; in param:
-                    if value &gt;= param[&#34;end&#34;]:
-                        warning(f&#34;Please enter value less than {param[&#39;end&#39;]}&#34;)
-                        retry = True
-            return input_type(value)
-
-        def check_size(value,param,example):
-            if &#34;size&#34; in param:
-                if isinstance(param[&#34;size&#34;],str):
-                    assert isinstance(example[param[&#34;size&#34;]],int)
-                    if len(value) != example[param[&#34;size&#34;]]:
-                        warning(f&#34;length of string should be {example[param[&#39;size&#39;]]}&#34;)
-                        return True
-                else:
-                    if len(value) != param[&#34;size&#34;]:
-                        warning(f&#34;length of string should be {param[&#39;size&#39;]}&#34;)
-                        return True
-            return False
 
         if param[&#34;type&#34;] == &#34;INT&#34;:
             value = numeric_input(param,int)
@@ -260,7 +315,7 @@ def input_data(parameters):
                 except:
                     warning(f&#34;elements must be of type {types[param[&#39;item-type&#39;]]}&#34;)
                     retry = True
-                retry = check_size(value,param,example)
+                retry = retry or check_size(value,param,example)
 
         elif param[&#34;type&#34;] == &#34;MATRIX&#34;:
             retry = True
@@ -294,174 +349,160 @@ def input_data(parameters):
         example[key] = value
     return example
 
-class ARgorithmConfig:
-    &#34;&#34;&#34;Validates and stores argorithm config
+def range_input(config,parameter_name):
+    &#34;&#34;&#34;Update config with the range for `INT` and `FLOAT` parameters.
+
+    Args:
+        config (dict): The config object where the parameter data has to be updated
+        parameter_name (str): The parameter whose metadata is being collected
     &#34;&#34;&#34;
-    def __init__(self,filepath):
-        self.validator = Draft7Validator(CONFIG_SCHEMA)
-        directory = os.getcwd()
-        if os.path.isfile( os.path.join(directory , f&#34;{filepath}&#34;) ):
-            with open(os.path.join(directory , f&#34;{filepath}&#34;) , &#39;r&#39;) as configfile:
-                data = json.load(configfile)
-                try:
-                    self.validator.validate(data)
-                except ValidationError as ve:
-                    raise ve
-                self.config = data
-        else:
-            confirm = typer.confirm(&#34;Start CLI config generator? &#34;)
-            if confirm:
-                self.create(filepath)
-            else:
-                raise FileNotFoundError(&#34;No config file&#34;)
+    range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
+    if range_confirm:
+        start = input_prompt(&#34;Enter lower limit&#34;,type=int,default=-math.inf,show_default=False)
+        if start != -math.inf:
+            config[&#34;parameters&#34;][parameter_name][&#34;start&#34;] = start
+        end = input_prompt(&#34;Enter upper limit&#34;,type=int,default=math.inf,show_default=False)
+        if end != math.inf:
+            config[&#34;parameters&#34;][parameter_name][&#34;end&#34;] = end
+    return config
 
-    def create(self,filepath):
-        &#34;&#34;&#34;implements the CLI config generator to run create config files using CLI
-        &#34;&#34;&#34;
-        master_heading()
+def size_ref(config,parameter_name,data_field):
+    &#34;&#34;&#34;Inputs size constraint for `STRING`,`ARRAY` and `MATRIX` parameters.
 
-        config = {}
+    Args:
+        data_field (str): What is the size constraint being used as
 
-        info(&#34;ARgorithmID&#34;, filepath.split(&#34;.&#34;)[0])
-        config[&#34;argorithmID&#34;] = filepath.split(&#34;.&#34;)[0]
-        config[&#34;file&#34;] = config[&#34;argorithmID&#34;]+&#34;.py&#34;
+    Returns:
+        size: Returns size constraint
+    &#34;&#34;&#34;
+    size = input_prompt(f&#34;Enter integer value or name of INT type parameter for {data_field}&#34;)
+    try:
+        size = int(size)
+    except ValueError:
+        if size not in config[&#34;parameters&#34;]:
+            info(&#34;creating INT parameter&#34; , size)
+            config[&#34;parameters&#34;][size] = {
+                &#34;description&#34; : f&#34;defines {data_field} of {parameter_name} ({config[&#39;parameters&#39;][parameter_name][&#39;type&#39;]})&#34;,
+                &#34;type&#34; : &#34;INT&#34;
+                }
+            config = range_input(config,size)        
+    config[&#34;parameters&#34;][parameter_name][data_field] = size
+    return config
 
-        function_regex = re.compile(&#34;def.([A-Za-z]+).?\(\*\*kwargs\)&#34;)
-        with open(config[&#34;file&#34;],&#34;r&#34;) as codefile:
-            text = codefile.read()
-        func_list = list(re.search(function_regex,text).groups())
-        if len(func_list) == 0:
-            raise KeyError(&#34;No valid function in ARgorithm code&#34;)
-        info(&#34;Codefile found&#34;,config[&#39;file&#39;])
-        function = input_prompt(&#34;which function should be called&#34;,default=func_list[0])
-        while function not in func_list:
-            warning(&#34;function not found in code&#34;)
-            function = input_prompt(&#34;enter valid function name&#34;,default=func_list[0])
-        config[&#34;function&#34;] = function
+def define_parameter(config,parameter_name):
+    &#34;&#34;&#34;Nested function that asks use information regarding parameter.
 
-        config[&#34;description&#34;] = multiline_input_prompt(&#39;Enter ARgorithm Description&#39;)
-        config[&#34;parameters&#34;] = {}
+    Args:
+        config (dict): The config object where the parameter data has to be updated
+        parameter_name (str): The parameter whose metadata is being collected
 
-        def define_parameter(config,parameter_name):
-            &#34;&#34;&#34;Nested function that asks use information regarding parameter
+    Returns:
+        config: Returns updated config object
+    &#34;&#34;&#34;
+    parameter_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;,&#34;ARRAY&#34;,&#34;MATRIX&#34;]
+    parameter_type = input_prompt(&#34;Enter parameter type&#34;)
+    while parameter_type not in parameter_types:
+        warning(&#34;Invalid parameter type. Accepted values: INT FLOAT ARRAY MATRIX STRING&#34;)
+        parameter_type = input_prompt(&#34;Enter parameter type&#34;)
+    config[&#34;parameters&#34;][parameter_name][&#34;type&#34;] = parameter_type
 
-            Args:
-                config (dict): The config object where the parameter data has to be updated
-                parameter_name (str): The parameter whose metadata is being collected
+    if parameter_type == &#34;INT&#34;:
+        config = range_input(config,parameter_name)
 
-            Returns:
-                config: Returns updated config object
-            &#34;&#34;&#34;
-            parameter_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;,&#34;ARRAY&#34;,&#34;MATRIX&#34;]
-            parameter_type = input_prompt(&#34;Enter parameter type&#34;)
-            while parameter_type not in parameter_types:
-                warning(&#34;Invalid parameter type. Accepted values: INT FLOAT ARRAY MATRIX STRING&#34;)
-                parameter_type = input_prompt(&#34;Enter parameter type&#34;)
-            config[&#34;parameters&#34;][parameter_name][&#34;type&#34;] = parameter_type
+    elif parameter_type == &#34;FLOAT&#34;:
+        config = range_input(config,parameter_name)
 
-            def range_input(config,parameter_name):
-                &#34;&#34;&#34;Update config with the range for `INT` and `FLOAT` parameters
+    elif parameter_type == &#34;STRING&#34;:
+        range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
+        if range_confirm:
+            config = size_ref(config,parameter_name,&#34;size&#34;)
 
-                Args:
-                    config (dict): The config object where the parameter data has to be updated
-                    parameter_name (str): The parameter whose metadata is being collected
-                &#34;&#34;&#34;
-                start = input_prompt(&#34;Enter lower limit&#34;,type=int,default=-math.inf,show_default=False)
-                if start != -math.inf:
-                    config[&#34;parameters&#34;][parameter_name][&#34;start&#34;] = start
-                end = input_prompt(&#34;Enter upper limit&#34;,type=int,default=math.inf,show_default=False)
-                if end != math.inf:
-                    config[&#34;parameters&#34;][parameter_name][&#34;end&#34;] = end
+    elif parameter_type == &#34;ARRAY&#34;:
+        item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
+        item_type = input_prompt(&#34;Enter type of array element&#34;)
+        while item_type not in item_types:
+            warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
+            item_type = input_prompt(&#34;Enter item type&#34;)
+        config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
+        range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
+        if range_confirm:
+            config = size_ref(config,parameter_name,&#34;size&#34;)
 
-            def size_ref(data_field):
-                &#34;&#34;&#34;Inputs size constraint for `STRING`,`ARRAY` and `MATRIX` parameters
+    elif parameter_type == &#34;MATRIX&#34;:
+        item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
+        item_type = input_prompt(&#34;Enter type of array element&#34;)
+        while item_type not in item_types:
+            warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
+            item_type = input_prompt(&#34;Enter item type&#34;)
+        config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
+        config = size_ref(config,parameter_name,&#34;row&#34;)
+        config = size_ref(config,parameter_name,&#34;col&#34;)
 
-                Args:
-                    data_field (str): What is the size constraint being used as
+    parameter_description = multiline_input_prompt(&#34;Enter parameter description&#34;)
+    config[&#34;parameters&#34;][parameter_name][&#34;description&#34;] = parameter_description
 
-                Returns:
-                    size: Returns size constraint
-                &#34;&#34;&#34;
-                size = input_prompt(f&#34;Enter integer {data_field} or name of pre-existing INT type parameter&#34;)
-                try:
-                    size = int(size)
-                except ValueError:
-                    assert size in config[&#34;parameters&#34;]
-                return size
+    return config
 
-            if parameter_type == &#34;INT&#34;:
-                range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
-                if range_confirm:
-                    range_input(config,parameter_name)
 
-            elif parameter_type == &#34;FLOAT&#34;:
-                range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
-                if range_confirm:
-                    range_input(config,parameter_name)
+def create(filepath):
+    &#34;&#34;&#34;implements the CLI config generator to run create config files using
+    CLI.&#34;&#34;&#34;
+    master_heading()
 
-            elif parameter_type == &#34;STRING&#34;:
-                range_confirm = confirm_prompt(f&#34;Do you want to set a size constraint to {parameter_name}&#34;)
-                if range_confirm:
-                    config[&#34;parameters&#34;][parameter_name][&#34;size&#34;] = size_ref(&#34;size&#34;)
+    config = {}
+    directory,filename = os.path.split(filepath)
+    info(&#34;ARgorithmID&#34;, filename.split(&#34;.&#34;)[0])
+    config[&#34;argorithmID&#34;] = filename.split(&#34;.&#34;)[0]
+    config[&#34;file&#34;] = config[&#34;argorithmID&#34;]+&#34;.py&#34;
 
-            elif parameter_type == &#34;ARRAY&#34;:
-                item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
-                item_type = input_prompt(&#34;Enter type of array element&#34;)
-                while item_type not in item_types:
-                    warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
-                    item_type = input_prompt(&#34;Enter item type&#34;)
-                config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
-                range_confirm = confirm_prompt(f&#34;Do you want to set a size constraint to {parameter_name}&#34;)
-                if range_confirm:
-                    config[&#34;parameters&#34;][parameter_name][&#34;size&#34;] = size_ref(&#34;size&#34;)
+    function_regex = re.compile(&#34;def.([A-Za-z]+).?\(\*\*kwargs\)&#34;)
+    with open(os.path.join(directory,config[&#39;file&#39;]),&#34;r&#34;) as codefile:
+        text = codefile.read()
+    func_list = list(re.search(function_regex,text).groups())
+    if len(func_list) == 0:
+        raise KeyError(&#34;No valid function in ARgorithm code&#34;)
+    info(&#34;Codefile found&#34;,config[&#39;file&#39;])
+    function = input_prompt(&#34;which function should be called&#34;,default=func_list[0])
+    while function not in func_list:
+        warning(&#34;function not found in code&#34;)
+        function = input_prompt(&#34;enter valid function name&#34;,default=func_list[0])
+    config[&#34;function&#34;] = function
 
-            elif parameter_type == &#34;MATRIX&#34;:
-                item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
-                item_type = input_prompt(&#34;Enter type of array element&#34;)
-                while item_type not in item_types:
-                    warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
-                    item_type = input_prompt(&#34;Enter item type&#34;)
-                config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
-                config[&#34;parameters&#34;][parameter_name][&#34;row&#34;] = size_ref(&#39;row size&#39;)
-                config[&#34;parameters&#34;][parameter_name][&#34;col&#34;] = size_ref(&#39;col_size&#39;)
+    config[&#34;description&#34;] = multiline_input_prompt(&#39;Enter ARgorithm Description&#39;)
+    
+    config[&#34;parameters&#34;] = {}
+    typer.echo(&#34;Setting up parameters for your argorithm&#34;)
+    typer.echo(&#34;input keywords are used to map the input passed to your function as kwargs&#34;)
+    existing_parameters = find_parameters(os.path.join(directory,config[&#39;file&#39;]),config[&#39;function&#39;])
+    if len(existing_parameters) &gt; 0:
+        text = typer.style(&#39;The following input keywords were found in code&#39;)
+        typer.echo(text)
+    for param in existing_parameters:
+        typer.echo(typer.style(&#34;- &#34;+param,fg=typer.colors.GREEN))
 
-            parameter_description = multiline_input_prompt(&#34;Enter parameter description&#34;)
-            config[&#34;parameters&#34;][parameter_name][&#34;description&#34;] = parameter_description
+    for param in existing_parameters:
+        if param in config[&#39;parameters&#39;]:
+            continue
+        info(&#34;input keyword&#34;,param)
+        config[&#34;parameters&#34;][param] = {}
+        config = define_parameter(config,param)
 
-            return config
+    confirm = confirm_prompt(&#34;Do you want to another input keyword&#34;)
+    while(confirm):
+        typer.echo(&#34;add details for parameter&#34;)
+        parameter_name = input_prompt(&#34;Enter parameter name&#34;)
+        name_regex = r&#34;^[A-Za-z].*$&#34;
+        while re.match(name_regex,parameter_name) is None:
+            warning(&#34;Invalid name&#34;)
+            parameter_name = input_prompt(&#34;re-enter parameter name&#34;)
+        config[&#34;parameters&#34;][parameter_name] = {}
+        config = define_parameter(config,parameter_name)
 
-        typer.echo(&#34;Setting up parameters for your argorithm&#34;)
-        typer.echo(&#34;input keywords are used to map the input passed to your function as kwargs&#34;)
-        print()
-        existing_parameters = find_parameters(config[&#39;file&#39;],config[&#39;function&#39;])
-        if len(existing_parameters) &gt; 0:
-            text = typer.style(&#39;The following input keywords were found in code&#39;)
-            typer.echo(text)
-        for param in existing_parameters:
-            typer.echo(typer.style(&#34;- &#34;+param,fg=typer.colors.GREEN))
-            config[&#34;parameters&#34;][param] = {}
-
-        for param in existing_parameters:
-            info(&#34;input keyword&#34;,param)
-            config = define_parameter(config,param)
-
-        confirm = confirm_prompt(&#34;Do you want to another input keyword&#34;)
-        while(confirm):
-            typer.echo(&#34;add details for parameter&#34;)
-            parameter_name = input_prompt(&#34;Enter parameter name&#34;)
-            name_regex = r&#34;^[A-Za-z].*$&#34;
-            while re.match(name_regex,parameter_name) is None:
-                warning(&#34;Invalid name&#34;)
-                parameter_name = input_prompt(&#34;re-enter parameter name&#34;)
-            config[&#34;parameters&#34;][parameter_name] = {}
-            config = define_parameter(config,parameter_name)
-
-            confirm = confirm_prompt(&#34;Do you want to add parameter?&#34;)
-        example = input_data(config[&#34;parameters&#34;])
-        config[&#34;example&#34;] = example
-        directory = os.getcwd()
-        with open(os.path.join(directory , f&#34;{filepath}&#34;) , &#39;w&#39;) as configfile:
-            json.dump(config,configfile)</code></pre>
+        confirm = confirm_prompt(&#34;Do you want to add parameter?&#34;)
+    example = input_data(config[&#34;parameters&#34;])
+    config[&#34;example&#34;] = example
+    with open(os.path.join(os.getcwd(),directory , filename) , &#39;w&#39;) as configfile:
+        json.dump(config,configfile,indent=4)</code></pre>
 </details>
 </section>
 <section>
@@ -471,11 +512,58 @@ class ARgorithmConfig:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="ARgorithmToolkit.parser.check_size"><code class="name flex">
+<span>def <span class="ident">check_size</span></span>(<span>value, param, example)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks size of input with respect to parameter constraints.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>value</code></strong> :&ensp;<code>list</code> or <code>str</code></dt>
+<dd>The value entered by user</dd>
+<dt><strong><code>param</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The parameter details</dd>
+<dt><strong><code>example</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The output dictionary in which parameter values are stored</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>example</code></dt>
+<dd>returns updated output dictionary</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_size(value,param,example):
+    &#34;&#34;&#34;Checks size of input with respect to parameter constraints.
+
+    Args:
+        value (list or str): The value entered by user
+        param (dict): The parameter details
+        example (dict): The output dictionary in which parameter values are stored
+
+    Returns:
+        example: returns updated output dictionary
+    &#34;&#34;&#34;
+    if &#34;size&#34; in param:
+        if isinstance(param[&#34;size&#34;],str):
+            assert isinstance(example[param[&#34;size&#34;]],int)
+            if len(value) != example[param[&#34;size&#34;]]:
+                warning(f&#34;length of input should be {example[param[&#39;size&#39;]]}&#34;)
+                return True
+        else:
+            if len(value) != param[&#34;size&#34;]:
+                warning(f&#34;length of input should be {param[&#39;size&#39;]}&#34;)
+                return True
+    return False</code></pre>
+</details>
+</dd>
 <dt id="ARgorithmToolkit.parser.confirm_prompt"><code class="name flex">
 <span>def <span class="ident">confirm_prompt</span></span>(<span>message)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Uses typer to create a confirmation prompt</p>
+<div class="desc"><p>Uses typer to create a confirmation prompt.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>message</code></strong> :&ensp;<code>str</code></dt>
@@ -491,7 +579,7 @@ class ARgorithmConfig:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def confirm_prompt(message):
-    &#34;&#34;&#34;Uses typer to create a confirmation prompt
+    &#34;&#34;&#34;Uses typer to create a confirmation prompt.
 
     Args:
         message (str): The text for confirmation
@@ -499,16 +587,163 @@ class ARgorithmConfig:
     Returns:
         flag: boolean value as entered by user
     &#34;&#34;&#34;
-    text = typer.style(message,fg=typer.colors.BLUE)
+    text = typer.style(message,fg=typer.colors.WHITE)
     flag = typer.confirm(text)
     return flag</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.parser.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>filepath)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>implements the CLI config generator to run create config files using
+CLI.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create(filepath):
+    &#34;&#34;&#34;implements the CLI config generator to run create config files using
+    CLI.&#34;&#34;&#34;
+    master_heading()
+
+    config = {}
+    directory,filename = os.path.split(filepath)
+    info(&#34;ARgorithmID&#34;, filename.split(&#34;.&#34;)[0])
+    config[&#34;argorithmID&#34;] = filename.split(&#34;.&#34;)[0]
+    config[&#34;file&#34;] = config[&#34;argorithmID&#34;]+&#34;.py&#34;
+
+    function_regex = re.compile(&#34;def.([A-Za-z]+).?\(\*\*kwargs\)&#34;)
+    with open(os.path.join(directory,config[&#39;file&#39;]),&#34;r&#34;) as codefile:
+        text = codefile.read()
+    func_list = list(re.search(function_regex,text).groups())
+    if len(func_list) == 0:
+        raise KeyError(&#34;No valid function in ARgorithm code&#34;)
+    info(&#34;Codefile found&#34;,config[&#39;file&#39;])
+    function = input_prompt(&#34;which function should be called&#34;,default=func_list[0])
+    while function not in func_list:
+        warning(&#34;function not found in code&#34;)
+        function = input_prompt(&#34;enter valid function name&#34;,default=func_list[0])
+    config[&#34;function&#34;] = function
+
+    config[&#34;description&#34;] = multiline_input_prompt(&#39;Enter ARgorithm Description&#39;)
+    
+    config[&#34;parameters&#34;] = {}
+    typer.echo(&#34;Setting up parameters for your argorithm&#34;)
+    typer.echo(&#34;input keywords are used to map the input passed to your function as kwargs&#34;)
+    existing_parameters = find_parameters(os.path.join(directory,config[&#39;file&#39;]),config[&#39;function&#39;])
+    if len(existing_parameters) &gt; 0:
+        text = typer.style(&#39;The following input keywords were found in code&#39;)
+        typer.echo(text)
+    for param in existing_parameters:
+        typer.echo(typer.style(&#34;- &#34;+param,fg=typer.colors.GREEN))
+
+    for param in existing_parameters:
+        if param in config[&#39;parameters&#39;]:
+            continue
+        info(&#34;input keyword&#34;,param)
+        config[&#34;parameters&#34;][param] = {}
+        config = define_parameter(config,param)
+
+    confirm = confirm_prompt(&#34;Do you want to another input keyword&#34;)
+    while(confirm):
+        typer.echo(&#34;add details for parameter&#34;)
+        parameter_name = input_prompt(&#34;Enter parameter name&#34;)
+        name_regex = r&#34;^[A-Za-z].*$&#34;
+        while re.match(name_regex,parameter_name) is None:
+            warning(&#34;Invalid name&#34;)
+            parameter_name = input_prompt(&#34;re-enter parameter name&#34;)
+        config[&#34;parameters&#34;][parameter_name] = {}
+        config = define_parameter(config,parameter_name)
+
+        confirm = confirm_prompt(&#34;Do you want to add parameter?&#34;)
+    example = input_data(config[&#34;parameters&#34;])
+    config[&#34;example&#34;] = example
+    with open(os.path.join(os.getcwd(),directory , filename) , &#39;w&#39;) as configfile:
+        json.dump(config,configfile,indent=4)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.parser.define_parameter"><code class="name flex">
+<span>def <span class="ident">define_parameter</span></span>(<span>config, parameter_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Nested function that asks use information regarding parameter.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The config object where the parameter data has to be updated</dd>
+<dt><strong><code>parameter_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The parameter whose metadata is being collected</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>config</code></dt>
+<dd>Returns updated config object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def define_parameter(config,parameter_name):
+    &#34;&#34;&#34;Nested function that asks use information regarding parameter.
+
+    Args:
+        config (dict): The config object where the parameter data has to be updated
+        parameter_name (str): The parameter whose metadata is being collected
+
+    Returns:
+        config: Returns updated config object
+    &#34;&#34;&#34;
+    parameter_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;,&#34;ARRAY&#34;,&#34;MATRIX&#34;]
+    parameter_type = input_prompt(&#34;Enter parameter type&#34;)
+    while parameter_type not in parameter_types:
+        warning(&#34;Invalid parameter type. Accepted values: INT FLOAT ARRAY MATRIX STRING&#34;)
+        parameter_type = input_prompt(&#34;Enter parameter type&#34;)
+    config[&#34;parameters&#34;][parameter_name][&#34;type&#34;] = parameter_type
+
+    if parameter_type == &#34;INT&#34;:
+        config = range_input(config,parameter_name)
+
+    elif parameter_type == &#34;FLOAT&#34;:
+        config = range_input(config,parameter_name)
+
+    elif parameter_type == &#34;STRING&#34;:
+        range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
+        if range_confirm:
+            config = size_ref(config,parameter_name,&#34;size&#34;)
+
+    elif parameter_type == &#34;ARRAY&#34;:
+        item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
+        item_type = input_prompt(&#34;Enter type of array element&#34;)
+        while item_type not in item_types:
+            warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
+            item_type = input_prompt(&#34;Enter item type&#34;)
+        config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
+        range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
+        if range_confirm:
+            config = size_ref(config,parameter_name,&#34;size&#34;)
+
+    elif parameter_type == &#34;MATRIX&#34;:
+        item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
+        item_type = input_prompt(&#34;Enter type of array element&#34;)
+        while item_type not in item_types:
+            warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
+            item_type = input_prompt(&#34;Enter item type&#34;)
+        config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
+        config = size_ref(config,parameter_name,&#34;row&#34;)
+        config = size_ref(config,parameter_name,&#34;col&#34;)
+
+    parameter_description = multiline_input_prompt(&#34;Enter parameter description&#34;)
+    config[&#34;parameters&#34;][parameter_name][&#34;description&#34;] = parameter_description
+
+    return config</code></pre>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.parser.find_parameters"><code class="name flex">
 <span>def <span class="ident">find_parameters</span></span>(<span>filename, function)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Finds the keyword arguments accessed in the file</p>
+<div class="desc"><p>Finds the keyword arguments accessed in the file.</p>
 <p>find_parameters parses the code line by line and check which all keywords
 were accessed in the function code within the code file</p>
 <h2 id="args">Args</h2>
@@ -528,7 +763,7 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def find_parameters(filename,function):
-    &#34;&#34;&#34;Finds the keyword arguments accessed in the file
+    &#34;&#34;&#34;Finds the keyword arguments accessed in the file.
 
     find_parameters parses the code line by line and check which all keywords
     were accessed in the function code within the code file
@@ -543,9 +778,11 @@ were accessed in the function code within the code file</p>
     function_regex = re.compile(f&#34;^def.([A-Za-z0-9]+).?\(\*\*kwargs\)&#34;)
     kwarg_regex = r&#34;kwargs\[[\&#39;\&#34;]([A-Za-z0-9]+)[\&#39;\&#34;]\]&#34;
     with open(filename,&#39;r&#39;) as codefile:
-        parameters = set()
+        parameters = dict()
         flag = False
+        line_count = -1
         for line in codefile.readlines():
+            line_count += 1
             search = re.search(function_regex,line)
             if search:
                 func = list(search.groups())[0]
@@ -555,7 +792,12 @@ were accessed in the function code within the code file</p>
                 if search:
                     params = list(search.groups())
                     for p in params:
-                        parameters.add(p)
+                        if p not in parameters:
+                            parameters[p] = line_count
+        param_list = sorted(
+            list(parameters.keys()) ,
+            key=lambda x: parameters[x]
+        )
         return list(parameters)</code></pre>
 </details>
 </dd>
@@ -563,7 +805,7 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">heading</span></span>(<span>title, message)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create a heading text</p>
+<div class="desc"><p>Create a heading text.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>title</code></strong> :&ensp;<code>str</code></dt>
@@ -576,14 +818,14 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def heading(title,message):
-    &#34;&#34;&#34;Create a heading text
+    &#34;&#34;&#34;Create a heading text.
 
     Args:
         title (str): The title of the heading
         message (str): The message that
     &#34;&#34;&#34;
     # typer.clear()
-    text = typer.style(title.upper(),fg=typer.colors.BLUE,bold=True)
+    text = typer.style(title.upper(),fg=typer.colors.WHITE,bold=True)
     typer.echo(&#39;-&#39;*(len(text)+2))
     typer.echo(text)
     typer.echo(&#39;-&#39;*(len(text)+2))
@@ -595,7 +837,7 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">info</span></span>(<span>message, data)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Display information using typer</p>
+<div class="desc"><p>Display information using typer.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>message</code></strong> :&ensp;<code>str</code></dt>
@@ -607,13 +849,13 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def info(message,data):
-    &#34;&#34;&#34;Display information using typer
+    &#34;&#34;&#34;Display information using typer.
 
     Args:
         message (str): Description of the information
         data : The data to be displayed
     &#34;&#34;&#34;
-    message = typer.style(message,fg=typer.colors.BLUE)
+    message = typer.style(message,fg=typer.colors.WHITE)
     data = typer.style(str(data),fg=typer.colors.GREEN)
     typer.echo(message+&#34;: &#34;+data)</code></pre>
 </details>
@@ -622,7 +864,7 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">input_data</span></span>(<span>parameters)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Generates a input form based on the parameters in config</p>
+<div class="desc"><p>Generates a input form based on the parameters in config.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>parameters</code></strong> :&ensp;<code>dict</code></dt>
@@ -638,7 +880,7 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def input_data(parameters):
-    &#34;&#34;&#34;Generates a input form based on the parameters in config
+    &#34;&#34;&#34;Generates a input form based on the parameters in config.
 
     Args:
         parameters (dict): The config parameters which will be used to generate the input fields
@@ -652,40 +894,17 @@ were accessed in the function code within the code file</p>
         &#34;FLOAT&#34; : float,
         &#34;STRING&#34; : str,
     }
+
+    param_list = sorted(
+            list(parameters.keys()) ,
+            key=lambda x: PRIORITY[parameters[x][&#39;type&#39;]]
+        )
     heading(&#34;Enter input for ARgorithm&#34;,&#34;Based on argorithm parameters, input will be taken&#34;)
-    for key in parameters:
+    for key in param_list:
         param = parameters[key]
         # typer.clear()
         info(&#34;\ninput keyword&#34;,key)
         info(&#34;Description&#34;,param[&#39;description&#39;])
-
-        def numeric_input(param,input_type):
-            retry = True
-            while retry:
-                retry = False
-                value = input_prompt(&#34;Enter integer value&#34;,type=input_type)
-                if &#34;start&#34; in param:
-                    if value &lt;= param[&#34;start&#34;]:
-                        warning(f&#34;Please enter value larger than {param[&#39;start&#39;]}&#34;)
-                        retry = True
-                if &#34;end&#34; in param:
-                    if value &gt;= param[&#34;end&#34;]:
-                        warning(f&#34;Please enter value less than {param[&#39;end&#39;]}&#34;)
-                        retry = True
-            return input_type(value)
-
-        def check_size(value,param,example):
-            if &#34;size&#34; in param:
-                if isinstance(param[&#34;size&#34;],str):
-                    assert isinstance(example[param[&#34;size&#34;]],int)
-                    if len(value) != example[param[&#34;size&#34;]]:
-                        warning(f&#34;length of string should be {example[param[&#39;size&#39;]]}&#34;)
-                        return True
-                else:
-                    if len(value) != param[&#34;size&#34;]:
-                        warning(f&#34;length of string should be {param[&#39;size&#39;]}&#34;)
-                        return True
-            return False
 
         if param[&#34;type&#34;] == &#34;INT&#34;:
             value = numeric_input(param,int)
@@ -710,7 +929,7 @@ were accessed in the function code within the code file</p>
                 except:
                     warning(f&#34;elements must be of type {types[param[&#39;item-type&#39;]]}&#34;)
                     retry = True
-                retry = check_size(value,param,example)
+                retry = retry or check_size(value,param,example)
 
         elif param[&#34;type&#34;] == &#34;MATRIX&#34;:
             retry = True
@@ -749,7 +968,7 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">input_prompt</span></span>(<span>message, default=None, type=builtins.str, show_default=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Uses typer to create a single input field in CLI</p>
+<div class="desc"><p>Uses typer to create a single input field in CLI.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>message</code></strong> :&ensp;<code>str</code></dt>
@@ -771,7 +990,7 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def input_prompt(message,default=None,type=str,show_default=True):
-    &#34;&#34;&#34;Uses typer to create a single input field in CLI
+    &#34;&#34;&#34;Uses typer to create a single input field in CLI.
 
     Args:
         message (str): The input field text
@@ -782,7 +1001,7 @@ were accessed in the function code within the code file</p>
     Returns:
         ip : The data entered by user
     &#34;&#34;&#34;
-    text = typer.style(message,fg=typer.colors.BLUE)
+    text = typer.style(message,fg=typer.colors.WHITE)
     if default:
         ip = typer.prompt(text,default=default,type=type,show_default=show_default)
     else:
@@ -794,15 +1013,14 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">master_heading</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Renders the ARgorithm config generator heading</p></div>
+<div class="desc"><p>Renders the ARgorithm config generator heading.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def master_heading():
-    &#34;&#34;&#34;Renders the ARgorithm config generator heading
-    &#34;&#34;&#34;
-    text = typer.style(config_cli_heading,fg=typer.colors.BLUE,bold=True)
+    &#34;&#34;&#34;Renders the ARgorithm config generator heading.&#34;&#34;&#34;
+    text = typer.style(config_cli_heading,fg=typer.colors.WHITE,bold=True)
     typer.echo(text)</code></pre>
 </details>
 </dd>
@@ -810,14 +1028,13 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">multiline</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>takes multiline input</p></div>
+<div class="desc"><p>takes multiline input.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def multiline():
-    &#34;&#34;&#34;takes multiline input
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;takes multiline input.&#34;&#34;&#34;
     buffer = &#39;&#39;
     while True:
         try:
@@ -834,7 +1051,8 @@ were accessed in the function code within the code file</p>
 <span>def <span class="ident">multiline_input_prompt</span></span>(<span>message)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Uses typer and ARgorithmToolkit.parser.multiline to create a multiline input prompt</p>
+<div class="desc"><p>Uses typer and ARgorithmToolkit.parser.multiline to create a multiline
+input prompt.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>message</code></strong> :&ensp;<code>str</code></dt>
@@ -850,7 +1068,8 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def multiline_input_prompt(message):
-    &#34;&#34;&#34;Uses typer and ARgorithmToolkit.parser.multiline to create a multiline input prompt
+    &#34;&#34;&#34;Uses typer and ARgorithmToolkit.parser.multiline to create a multiline
+    input prompt.
 
     Args:
         message (str): The text for prompt
@@ -858,7 +1077,7 @@ were accessed in the function code within the code file</p>
     Returns:
         ip: data entered by user
     &#34;&#34;&#34;
-    text = typer.style(message + &#39;:&#39;,fg=typer.colors.BLUE)
+    text = typer.style(message + &#39;:&#39;,fg=typer.colors.WHITE)
     helptext = typer.style(&#34;Press ENTER on empty line to leave multiline input&#34;,fg=typer.colors.CYAN)
     typer.echo(text)
     typer.echo(helptext)
@@ -866,11 +1085,162 @@ were accessed in the function code within the code file</p>
     return ip</code></pre>
 </details>
 </dd>
+<dt id="ARgorithmToolkit.parser.numeric_input"><code class="name flex">
+<span>def <span class="ident">numeric_input</span></span>(<span>param, input_type)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initiates numeric input from user for <code>INT</code> and <code>FLOAT</code> types.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>param</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The parameter details</dd>
+<dt><strong><code>input_type</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>The type of numerical value</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>value</code></dt>
+<dd>value of type <code>input_type</code></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def numeric_input(param,input_type):
+    &#34;&#34;&#34;Initiates numeric input from user for `INT` and `FLOAT` types.
+
+    Args:
+        param (dict): The parameter details
+        input_type ([type]): The type of numerical value
+
+    Returns:
+        value: value of type `input_type`
+    &#34;&#34;&#34;
+    retry = True
+    while retry:
+        retry = False
+        value = input_prompt(&#34;Enter integer value&#34;,type=input_type)
+        if &#34;start&#34; in param:
+            if value &lt; param[&#34;start&#34;]:
+                warning(f&#34;Please enter value larger than {param[&#39;start&#39;]}&#34;)
+                retry = True
+        if &#34;end&#34; in param:
+            if value &gt; param[&#34;end&#34;]:
+                warning(f&#34;Please enter value less than {param[&#39;end&#39;]}&#34;)
+                retry = True
+    return input_type(value)</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.parser.range_input"><code class="name flex">
+<span>def <span class="ident">range_input</span></span>(<span>config, parameter_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update config with the range for <code>INT</code> and <code>FLOAT</code> parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The config object where the parameter data has to be updated</dd>
+<dt><strong><code>parameter_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The parameter whose metadata is being collected</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def range_input(config,parameter_name):
+    &#34;&#34;&#34;Update config with the range for `INT` and `FLOAT` parameters.
+
+    Args:
+        config (dict): The config object where the parameter data has to be updated
+        parameter_name (str): The parameter whose metadata is being collected
+    &#34;&#34;&#34;
+    range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
+    if range_confirm:
+        start = input_prompt(&#34;Enter lower limit&#34;,type=int,default=-math.inf,show_default=False)
+        if start != -math.inf:
+            config[&#34;parameters&#34;][parameter_name][&#34;start&#34;] = start
+        end = input_prompt(&#34;Enter upper limit&#34;,type=int,default=math.inf,show_default=False)
+        if end != math.inf:
+            config[&#34;parameters&#34;][parameter_name][&#34;end&#34;] = end
+    return config</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.parser.size_ref"><code class="name flex">
+<span>def <span class="ident">size_ref</span></span>(<span>config, parameter_name, data_field)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inputs size constraint for <code>STRING</code>,<code>ARRAY</code> and <code>MATRIX</code> parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data_field</code></strong> :&ensp;<code>str</code></dt>
+<dd>What is the size constraint being used as</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>size</code></dt>
+<dd>Returns size constraint</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def size_ref(config,parameter_name,data_field):
+    &#34;&#34;&#34;Inputs size constraint for `STRING`,`ARRAY` and `MATRIX` parameters.
+
+    Args:
+        data_field (str): What is the size constraint being used as
+
+    Returns:
+        size: Returns size constraint
+    &#34;&#34;&#34;
+    size = input_prompt(f&#34;Enter integer value or name of INT type parameter for {data_field}&#34;)
+    try:
+        size = int(size)
+    except ValueError:
+        if size not in config[&#34;parameters&#34;]:
+            info(&#34;creating INT parameter&#34; , size)
+            config[&#34;parameters&#34;][size] = {
+                &#34;description&#34; : f&#34;defines {data_field} of {parameter_name} ({config[&#39;parameters&#39;][parameter_name][&#39;type&#39;]})&#34;,
+                &#34;type&#34; : &#34;INT&#34;
+                }
+            config = range_input(config,size)        
+    config[&#34;parameters&#34;][parameter_name][data_field] = size
+    return config</code></pre>
+</details>
+</dd>
+<dt id="ARgorithmToolkit.parser.validateconfig"><code class="name flex">
+<span>def <span class="ident">validateconfig</span></span>(<span>filepath)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Validates and stores argorithm config.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validateconfig(filepath):
+    &#34;&#34;&#34;Validates and stores argorithm config.&#34;&#34;&#34;
+    validator = Draft7Validator(CONFIG_SCHEMA)
+    if os.path.isfile(filepath):
+        with open(filepath,&#39;r&#39;) as configfile:
+            data = json.load(configfile)
+            try:
+                validator.validate(data)
+            except ValidationError as ve:
+                warning(&#34;Invalid config&#34;)
+                errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+                for e in errors:
+                    print(e.message)
+                raise ve
+            return data
+    else:
+        raise FileNotFoundError(&#34;No config file&#34;)</code></pre>
+</details>
+</dd>
 <dt id="ARgorithmToolkit.parser.warning"><code class="name flex">
 <span>def <span class="ident">warning</span></span>(<span>message)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Generate warning message using typer</p>
+<div class="desc"><p>Generate warning message using typer.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>message</code></strong> :&ensp;<code>str</code></dt>
@@ -881,7 +1251,7 @@ were accessed in the function code within the code file</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def warning(message):
-    &#34;&#34;&#34;Generate warning message using typer
+    &#34;&#34;&#34;Generate warning message using typer.
 
     Args:
         message (str): warning text
@@ -893,350 +1263,6 @@ were accessed in the function code within the code file</p>
 </dl>
 </section>
 <section>
-<h2 class="section-title" id="header-classes">Classes</h2>
-<dl>
-<dt id="ARgorithmToolkit.parser.ARgorithmConfig"><code class="flex name class">
-<span>class <span class="ident">ARgorithmConfig</span></span>
-<span>(</span><span>filepath)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Validates and stores argorithm config</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class ARgorithmConfig:
-    &#34;&#34;&#34;Validates and stores argorithm config
-    &#34;&#34;&#34;
-    def __init__(self,filepath):
-        self.validator = Draft7Validator(CONFIG_SCHEMA)
-        directory = os.getcwd()
-        if os.path.isfile( os.path.join(directory , f&#34;{filepath}&#34;) ):
-            with open(os.path.join(directory , f&#34;{filepath}&#34;) , &#39;r&#39;) as configfile:
-                data = json.load(configfile)
-                try:
-                    self.validator.validate(data)
-                except ValidationError as ve:
-                    raise ve
-                self.config = data
-        else:
-            confirm = typer.confirm(&#34;Start CLI config generator? &#34;)
-            if confirm:
-                self.create(filepath)
-            else:
-                raise FileNotFoundError(&#34;No config file&#34;)
-
-    def create(self,filepath):
-        &#34;&#34;&#34;implements the CLI config generator to run create config files using CLI
-        &#34;&#34;&#34;
-        master_heading()
-
-        config = {}
-
-        info(&#34;ARgorithmID&#34;, filepath.split(&#34;.&#34;)[0])
-        config[&#34;argorithmID&#34;] = filepath.split(&#34;.&#34;)[0]
-        config[&#34;file&#34;] = config[&#34;argorithmID&#34;]+&#34;.py&#34;
-
-        function_regex = re.compile(&#34;def.([A-Za-z]+).?\(\*\*kwargs\)&#34;)
-        with open(config[&#34;file&#34;],&#34;r&#34;) as codefile:
-            text = codefile.read()
-        func_list = list(re.search(function_regex,text).groups())
-        if len(func_list) == 0:
-            raise KeyError(&#34;No valid function in ARgorithm code&#34;)
-        info(&#34;Codefile found&#34;,config[&#39;file&#39;])
-        function = input_prompt(&#34;which function should be called&#34;,default=func_list[0])
-        while function not in func_list:
-            warning(&#34;function not found in code&#34;)
-            function = input_prompt(&#34;enter valid function name&#34;,default=func_list[0])
-        config[&#34;function&#34;] = function
-
-        config[&#34;description&#34;] = multiline_input_prompt(&#39;Enter ARgorithm Description&#39;)
-        config[&#34;parameters&#34;] = {}
-
-        def define_parameter(config,parameter_name):
-            &#34;&#34;&#34;Nested function that asks use information regarding parameter
-
-            Args:
-                config (dict): The config object where the parameter data has to be updated
-                parameter_name (str): The parameter whose metadata is being collected
-
-            Returns:
-                config: Returns updated config object
-            &#34;&#34;&#34;
-            parameter_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;,&#34;ARRAY&#34;,&#34;MATRIX&#34;]
-            parameter_type = input_prompt(&#34;Enter parameter type&#34;)
-            while parameter_type not in parameter_types:
-                warning(&#34;Invalid parameter type. Accepted values: INT FLOAT ARRAY MATRIX STRING&#34;)
-                parameter_type = input_prompt(&#34;Enter parameter type&#34;)
-            config[&#34;parameters&#34;][parameter_name][&#34;type&#34;] = parameter_type
-
-            def range_input(config,parameter_name):
-                &#34;&#34;&#34;Update config with the range for `INT` and `FLOAT` parameters
-
-                Args:
-                    config (dict): The config object where the parameter data has to be updated
-                    parameter_name (str): The parameter whose metadata is being collected
-                &#34;&#34;&#34;
-                start = input_prompt(&#34;Enter lower limit&#34;,type=int,default=-math.inf,show_default=False)
-                if start != -math.inf:
-                    config[&#34;parameters&#34;][parameter_name][&#34;start&#34;] = start
-                end = input_prompt(&#34;Enter upper limit&#34;,type=int,default=math.inf,show_default=False)
-                if end != math.inf:
-                    config[&#34;parameters&#34;][parameter_name][&#34;end&#34;] = end
-
-            def size_ref(data_field):
-                &#34;&#34;&#34;Inputs size constraint for `STRING`,`ARRAY` and `MATRIX` parameters
-
-                Args:
-                    data_field (str): What is the size constraint being used as
-
-                Returns:
-                    size: Returns size constraint
-                &#34;&#34;&#34;
-                size = input_prompt(f&#34;Enter integer {data_field} or name of pre-existing INT type parameter&#34;)
-                try:
-                    size = int(size)
-                except ValueError:
-                    assert size in config[&#34;parameters&#34;]
-                return size
-
-            if parameter_type == &#34;INT&#34;:
-                range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
-                if range_confirm:
-                    range_input(config,parameter_name)
-
-            elif parameter_type == &#34;FLOAT&#34;:
-                range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
-                if range_confirm:
-                    range_input(config,parameter_name)
-
-            elif parameter_type == &#34;STRING&#34;:
-                range_confirm = confirm_prompt(f&#34;Do you want to set a size constraint to {parameter_name}&#34;)
-                if range_confirm:
-                    config[&#34;parameters&#34;][parameter_name][&#34;size&#34;] = size_ref(&#34;size&#34;)
-
-            elif parameter_type == &#34;ARRAY&#34;:
-                item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
-                item_type = input_prompt(&#34;Enter type of array element&#34;)
-                while item_type not in item_types:
-                    warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
-                    item_type = input_prompt(&#34;Enter item type&#34;)
-                config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
-                range_confirm = confirm_prompt(f&#34;Do you want to set a size constraint to {parameter_name}&#34;)
-                if range_confirm:
-                    config[&#34;parameters&#34;][parameter_name][&#34;size&#34;] = size_ref(&#34;size&#34;)
-
-            elif parameter_type == &#34;MATRIX&#34;:
-                item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
-                item_type = input_prompt(&#34;Enter type of array element&#34;)
-                while item_type not in item_types:
-                    warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
-                    item_type = input_prompt(&#34;Enter item type&#34;)
-                config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
-                config[&#34;parameters&#34;][parameter_name][&#34;row&#34;] = size_ref(&#39;row size&#39;)
-                config[&#34;parameters&#34;][parameter_name][&#34;col&#34;] = size_ref(&#39;col_size&#39;)
-
-            parameter_description = multiline_input_prompt(&#34;Enter parameter description&#34;)
-            config[&#34;parameters&#34;][parameter_name][&#34;description&#34;] = parameter_description
-
-            return config
-
-        typer.echo(&#34;Setting up parameters for your argorithm&#34;)
-        typer.echo(&#34;input keywords are used to map the input passed to your function as kwargs&#34;)
-        print()
-        existing_parameters = find_parameters(config[&#39;file&#39;],config[&#39;function&#39;])
-        if len(existing_parameters) &gt; 0:
-            text = typer.style(&#39;The following input keywords were found in code&#39;)
-            typer.echo(text)
-        for param in existing_parameters:
-            typer.echo(typer.style(&#34;- &#34;+param,fg=typer.colors.GREEN))
-            config[&#34;parameters&#34;][param] = {}
-
-        for param in existing_parameters:
-            info(&#34;input keyword&#34;,param)
-            config = define_parameter(config,param)
-
-        confirm = confirm_prompt(&#34;Do you want to another input keyword&#34;)
-        while(confirm):
-            typer.echo(&#34;add details for parameter&#34;)
-            parameter_name = input_prompt(&#34;Enter parameter name&#34;)
-            name_regex = r&#34;^[A-Za-z].*$&#34;
-            while re.match(name_regex,parameter_name) is None:
-                warning(&#34;Invalid name&#34;)
-                parameter_name = input_prompt(&#34;re-enter parameter name&#34;)
-            config[&#34;parameters&#34;][parameter_name] = {}
-            config = define_parameter(config,parameter_name)
-
-            confirm = confirm_prompt(&#34;Do you want to add parameter?&#34;)
-        example = input_data(config[&#34;parameters&#34;])
-        config[&#34;example&#34;] = example
-        directory = os.getcwd()
-        with open(os.path.join(directory , f&#34;{filepath}&#34;) , &#39;w&#39;) as configfile:
-            json.dump(config,configfile)</code></pre>
-</details>
-<h3>Methods</h3>
-<dl>
-<dt id="ARgorithmToolkit.parser.ARgorithmConfig.create"><code class="name flex">
-<span>def <span class="ident">create</span></span>(<span>self, filepath)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>implements the CLI config generator to run create config files using CLI</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def create(self,filepath):
-    &#34;&#34;&#34;implements the CLI config generator to run create config files using CLI
-    &#34;&#34;&#34;
-    master_heading()
-
-    config = {}
-
-    info(&#34;ARgorithmID&#34;, filepath.split(&#34;.&#34;)[0])
-    config[&#34;argorithmID&#34;] = filepath.split(&#34;.&#34;)[0]
-    config[&#34;file&#34;] = config[&#34;argorithmID&#34;]+&#34;.py&#34;
-
-    function_regex = re.compile(&#34;def.([A-Za-z]+).?\(\*\*kwargs\)&#34;)
-    with open(config[&#34;file&#34;],&#34;r&#34;) as codefile:
-        text = codefile.read()
-    func_list = list(re.search(function_regex,text).groups())
-    if len(func_list) == 0:
-        raise KeyError(&#34;No valid function in ARgorithm code&#34;)
-    info(&#34;Codefile found&#34;,config[&#39;file&#39;])
-    function = input_prompt(&#34;which function should be called&#34;,default=func_list[0])
-    while function not in func_list:
-        warning(&#34;function not found in code&#34;)
-        function = input_prompt(&#34;enter valid function name&#34;,default=func_list[0])
-    config[&#34;function&#34;] = function
-
-    config[&#34;description&#34;] = multiline_input_prompt(&#39;Enter ARgorithm Description&#39;)
-    config[&#34;parameters&#34;] = {}
-
-    def define_parameter(config,parameter_name):
-        &#34;&#34;&#34;Nested function that asks use information regarding parameter
-
-        Args:
-            config (dict): The config object where the parameter data has to be updated
-            parameter_name (str): The parameter whose metadata is being collected
-
-        Returns:
-            config: Returns updated config object
-        &#34;&#34;&#34;
-        parameter_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;,&#34;ARRAY&#34;,&#34;MATRIX&#34;]
-        parameter_type = input_prompt(&#34;Enter parameter type&#34;)
-        while parameter_type not in parameter_types:
-            warning(&#34;Invalid parameter type. Accepted values: INT FLOAT ARRAY MATRIX STRING&#34;)
-            parameter_type = input_prompt(&#34;Enter parameter type&#34;)
-        config[&#34;parameters&#34;][parameter_name][&#34;type&#34;] = parameter_type
-
-        def range_input(config,parameter_name):
-            &#34;&#34;&#34;Update config with the range for `INT` and `FLOAT` parameters
-
-            Args:
-                config (dict): The config object where the parameter data has to be updated
-                parameter_name (str): The parameter whose metadata is being collected
-            &#34;&#34;&#34;
-            start = input_prompt(&#34;Enter lower limit&#34;,type=int,default=-math.inf,show_default=False)
-            if start != -math.inf:
-                config[&#34;parameters&#34;][parameter_name][&#34;start&#34;] = start
-            end = input_prompt(&#34;Enter upper limit&#34;,type=int,default=math.inf,show_default=False)
-            if end != math.inf:
-                config[&#34;parameters&#34;][parameter_name][&#34;end&#34;] = end
-
-        def size_ref(data_field):
-            &#34;&#34;&#34;Inputs size constraint for `STRING`,`ARRAY` and `MATRIX` parameters
-
-            Args:
-                data_field (str): What is the size constraint being used as
-
-            Returns:
-                size: Returns size constraint
-            &#34;&#34;&#34;
-            size = input_prompt(f&#34;Enter integer {data_field} or name of pre-existing INT type parameter&#34;)
-            try:
-                size = int(size)
-            except ValueError:
-                assert size in config[&#34;parameters&#34;]
-            return size
-
-        if parameter_type == &#34;INT&#34;:
-            range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
-            if range_confirm:
-                range_input(config,parameter_name)
-
-        elif parameter_type == &#34;FLOAT&#34;:
-            range_confirm = confirm_prompt(f&#34;Do you want to add range constraints to {parameter_name}&#34;)
-            if range_confirm:
-                range_input(config,parameter_name)
-
-        elif parameter_type == &#34;STRING&#34;:
-            range_confirm = confirm_prompt(f&#34;Do you want to set a size constraint to {parameter_name}&#34;)
-            if range_confirm:
-                config[&#34;parameters&#34;][parameter_name][&#34;size&#34;] = size_ref(&#34;size&#34;)
-
-        elif parameter_type == &#34;ARRAY&#34;:
-            item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
-            item_type = input_prompt(&#34;Enter type of array element&#34;)
-            while item_type not in item_types:
-                warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
-                item_type = input_prompt(&#34;Enter item type&#34;)
-            config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
-            range_confirm = confirm_prompt(f&#34;Do you want to set a size constraint to {parameter_name}&#34;)
-            if range_confirm:
-                config[&#34;parameters&#34;][parameter_name][&#34;size&#34;] = size_ref(&#34;size&#34;)
-
-        elif parameter_type == &#34;MATRIX&#34;:
-            item_types = [&#34;INT&#34;,&#34;FLOAT&#34;,&#34;STRING&#34;]
-            item_type = input_prompt(&#34;Enter type of array element&#34;)
-            while item_type not in item_types:
-                warning(&#34;Invalid element type. Accepted values: INT FLOAT STRING&#34;)
-                item_type = input_prompt(&#34;Enter item type&#34;)
-            config[&#34;parameters&#34;][parameter_name][&#34;item-type&#34;] = item_type
-            config[&#34;parameters&#34;][parameter_name][&#34;row&#34;] = size_ref(&#39;row size&#39;)
-            config[&#34;parameters&#34;][parameter_name][&#34;col&#34;] = size_ref(&#39;col_size&#39;)
-
-        parameter_description = multiline_input_prompt(&#34;Enter parameter description&#34;)
-        config[&#34;parameters&#34;][parameter_name][&#34;description&#34;] = parameter_description
-
-        return config
-
-    typer.echo(&#34;Setting up parameters for your argorithm&#34;)
-    typer.echo(&#34;input keywords are used to map the input passed to your function as kwargs&#34;)
-    print()
-    existing_parameters = find_parameters(config[&#39;file&#39;],config[&#39;function&#39;])
-    if len(existing_parameters) &gt; 0:
-        text = typer.style(&#39;The following input keywords were found in code&#39;)
-        typer.echo(text)
-    for param in existing_parameters:
-        typer.echo(typer.style(&#34;- &#34;+param,fg=typer.colors.GREEN))
-        config[&#34;parameters&#34;][param] = {}
-
-    for param in existing_parameters:
-        info(&#34;input keyword&#34;,param)
-        config = define_parameter(config,param)
-
-    confirm = confirm_prompt(&#34;Do you want to another input keyword&#34;)
-    while(confirm):
-        typer.echo(&#34;add details for parameter&#34;)
-        parameter_name = input_prompt(&#34;Enter parameter name&#34;)
-        name_regex = r&#34;^[A-Za-z].*$&#34;
-        while re.match(name_regex,parameter_name) is None:
-            warning(&#34;Invalid name&#34;)
-            parameter_name = input_prompt(&#34;re-enter parameter name&#34;)
-        config[&#34;parameters&#34;][parameter_name] = {}
-        config = define_parameter(config,parameter_name)
-
-        confirm = confirm_prompt(&#34;Do you want to add parameter?&#34;)
-    example = input_data(config[&#34;parameters&#34;])
-    config[&#34;example&#34;] = example
-    directory = os.getcwd()
-    with open(os.path.join(directory , f&#34;{filepath}&#34;) , &#39;w&#39;) as configfile:
-        json.dump(config,configfile)</code></pre>
-</details>
-</dd>
-</dl>
-</dd>
-</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -1267,7 +1293,10 @@ text-decoration: none;
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="ARgorithmToolkit.parser.check_size" href="#ARgorithmToolkit.parser.check_size">check_size</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.confirm_prompt" href="#ARgorithmToolkit.parser.confirm_prompt">confirm_prompt</a></code></li>
+<li><code><a title="ARgorithmToolkit.parser.create" href="#ARgorithmToolkit.parser.create">create</a></code></li>
+<li><code><a title="ARgorithmToolkit.parser.define_parameter" href="#ARgorithmToolkit.parser.define_parameter">define_parameter</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.find_parameters" href="#ARgorithmToolkit.parser.find_parameters">find_parameters</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.heading" href="#ARgorithmToolkit.parser.heading">heading</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.info" href="#ARgorithmToolkit.parser.info">info</a></code></li>
@@ -1276,17 +1305,11 @@ text-decoration: none;
 <li><code><a title="ARgorithmToolkit.parser.master_heading" href="#ARgorithmToolkit.parser.master_heading">master_heading</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.multiline" href="#ARgorithmToolkit.parser.multiline">multiline</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.multiline_input_prompt" href="#ARgorithmToolkit.parser.multiline_input_prompt">multiline_input_prompt</a></code></li>
+<li><code><a title="ARgorithmToolkit.parser.numeric_input" href="#ARgorithmToolkit.parser.numeric_input">numeric_input</a></code></li>
+<li><code><a title="ARgorithmToolkit.parser.range_input" href="#ARgorithmToolkit.parser.range_input">range_input</a></code></li>
+<li><code><a title="ARgorithmToolkit.parser.size_ref" href="#ARgorithmToolkit.parser.size_ref">size_ref</a></code></li>
+<li><code><a title="ARgorithmToolkit.parser.validateconfig" href="#ARgorithmToolkit.parser.validateconfig">validateconfig</a></code></li>
 <li><code><a title="ARgorithmToolkit.parser.warning" href="#ARgorithmToolkit.parser.warning">warning</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="ARgorithmToolkit.parser.ARgorithmConfig" href="#ARgorithmToolkit.parser.ARgorithmConfig">ARgorithmConfig</a></code></h4>
-<ul class="">
-<li><code><a title="ARgorithmToolkit.parser.ARgorithmConfig.create" href="#ARgorithmToolkit.parser.ARgorithmConfig.create">create</a></code></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

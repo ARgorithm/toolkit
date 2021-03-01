@@ -55,7 +55,6 @@ These three classes can be directly imported from the toolkit:
     &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     &gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&#34;dllnode&#34;,algo)
     &gt;&gt;&gt; dl = ARgorithmToolkit.List(&#34;dl&#34;,algo)
-
 &#34;&#34;&#34;
 
 from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
@@ -229,7 +228,6 @@ class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
         &gt;&gt;&gt; temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
         &gt;&gt;&gt; temp.next = dllnode
         &gt;&gt;&gt; dllnode.prev = temp
-
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
@@ -427,7 +425,6 @@ class DoublyLinkedList(ARgorithmStructure, ARgorithmHashable):
         &gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&#34;llnode&#34;,algo)
         &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
         &gt;&gt;&gt; dll.head = llnode
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=&#34;&#34;):
@@ -526,7 +523,6 @@ class List(DoublyLinkedList):
         &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
         &gt;&gt;&gt; lis
         List([])
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
@@ -542,7 +538,6 @@ class List(DoublyLinkedList):
         Example:
 
             &gt;&gt;&gt; len(lis)
-
         &#34;&#34;&#34;
         return self.size
 
@@ -562,7 +557,6 @@ class List(DoublyLinkedList):
             &gt;&gt;&gt; lis.insert(2,1)
             &gt;&gt;&gt; lis
             List([1, 2, 3])
-
         &#34;&#34;&#34;
         if self.size == 0 or index == 0:
             self.push_front(value)
@@ -622,7 +616,6 @@ class List(DoublyLinkedList):
             &gt;&gt;&gt; lis.push_back(3)
             &gt;&gt;&gt; lis
             List([1, 3])
-
         &#34;&#34;&#34;
         curr = DoublyLinkedListNode(self.algo,value)
         if self.tail:
@@ -653,7 +646,6 @@ class List(DoublyLinkedList):
             5
             &gt;&gt;&gt; lis
             List([1, 2, 3, 7])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -682,7 +674,6 @@ class List(DoublyLinkedList):
             7
             &gt;&gt;&gt; lis
             List([1, 2, 3])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -712,7 +703,6 @@ class List(DoublyLinkedList):
             1
             &gt;&gt;&gt; lis
             List([1, 2, 3])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -735,7 +725,6 @@ class List(DoublyLinkedList):
             3
             &gt;&gt;&gt; lis
             List([2, 3, 5, 4, 4, 3, 3])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -751,7 +740,6 @@ class List(DoublyLinkedList):
 
             &gt;&gt;&gt; [x for x in lis]
             [2, 3, 5, 4, 4, 3, 3]
-
         &#34;&#34;&#34;
         return ListIterator(self)
 
@@ -771,7 +759,6 @@ class List(DoublyLinkedList):
             &gt;&gt;&gt; lis.remove(3)
             &gt;&gt;&gt; lis
             List([2, 5, 4, 4])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -807,7 +794,6 @@ class List(DoublyLinkedList):
             List([2, 5, 4, 4])
             &gt;&gt;&gt; lis.tolist()
             [2, 5, 4, 4]
-
         &#34;&#34;&#34;
         curr = self.head
         data = []
@@ -884,7 +870,6 @@ the nodes. Only contains head attribute and no methods</p>
         &gt;&gt;&gt; dll = ARgorithmToolkit.DoublyLinkedList(&#34;llnode&#34;,algo)
         &gt;&gt;&gt; dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
         &gt;&gt;&gt; dll.head = llnode
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=&#34;&#34;):
@@ -954,14 +939,15 @@ the nodes. Only contains head attribute and no methods</p>
 <span>def <span class="ident">to_json</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use
+in application.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def to_json(self):
-    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use
+    in application.&#34;&#34;&#34;
     class_name = type(self).__name__
     obj_id = id(self)
     return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
@@ -1027,7 +1013,6 @@ in the DoublyLinkedListNode Class.</p>
         &gt;&gt;&gt; temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
         &gt;&gt;&gt; temp.next = dllnode
         &gt;&gt;&gt; dllnode.prev = temp
-
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
@@ -1126,14 +1111,15 @@ in the DoublyLinkedListNode Class.</p>
 <span>def <span class="ident">to_json</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use
+in application.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def to_json(self):
-    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use
+    in application.&#34;&#34;&#34;
     class_name = type(self).__name__
     obj_id = id(self)
     return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
@@ -1870,7 +1856,6 @@ List([])
         &gt;&gt;&gt; lis = ARgorithmToolkit.List(&#34;list&#34;,algo)
         &gt;&gt;&gt; lis
         List([])
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
@@ -1886,7 +1871,6 @@ List([])
         Example:
 
             &gt;&gt;&gt; len(lis)
-
         &#34;&#34;&#34;
         return self.size
 
@@ -1906,7 +1890,6 @@ List([])
             &gt;&gt;&gt; lis.insert(2,1)
             &gt;&gt;&gt; lis
             List([1, 2, 3])
-
         &#34;&#34;&#34;
         if self.size == 0 or index == 0:
             self.push_front(value)
@@ -1966,7 +1949,6 @@ List([])
             &gt;&gt;&gt; lis.push_back(3)
             &gt;&gt;&gt; lis
             List([1, 3])
-
         &#34;&#34;&#34;
         curr = DoublyLinkedListNode(self.algo,value)
         if self.tail:
@@ -1997,7 +1979,6 @@ List([])
             5
             &gt;&gt;&gt; lis
             List([1, 2, 3, 7])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -2026,7 +2007,6 @@ List([])
             7
             &gt;&gt;&gt; lis
             List([1, 2, 3])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -2056,7 +2036,6 @@ List([])
             1
             &gt;&gt;&gt; lis
             List([1, 2, 3])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -2079,7 +2058,6 @@ List([])
             3
             &gt;&gt;&gt; lis
             List([2, 3, 5, 4, 4, 3, 3])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -2095,7 +2073,6 @@ List([])
 
             &gt;&gt;&gt; [x for x in lis]
             [2, 3, 5, 4, 4, 3, 3]
-
         &#34;&#34;&#34;
         return ListIterator(self)
 
@@ -2115,7 +2092,6 @@ List([])
             &gt;&gt;&gt; lis.remove(3)
             &gt;&gt;&gt; lis
             List([2, 5, 4, 4])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -2151,7 +2127,6 @@ List([])
             List([2, 5, 4, 4])
             &gt;&gt;&gt; lis.tolist()
             [2, 5, 4, 4]
-
         &#34;&#34;&#34;
         curr = self.head
         data = []
@@ -2218,7 +2193,6 @@ List([2, 3, 5, 4, 4, 3, 3])
         3
         &gt;&gt;&gt; lis
         List([2, 3, 5, 4, 4, 3, 3])
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -2269,7 +2243,6 @@ List([1, 2, 3])
         1
         &gt;&gt;&gt; lis
         List([1, 2, 3])
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -2316,7 +2289,6 @@ List([1, 2, 3])
         &gt;&gt;&gt; lis.insert(2,1)
         &gt;&gt;&gt; lis
         List([1, 2, 3])
-
     &#34;&#34;&#34;
     if self.size == 0 or index == 0:
         self.push_front(value)
@@ -2380,7 +2352,6 @@ List([1, 2, 3])
         7
         &gt;&gt;&gt; lis
         List([1, 2, 3])
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -2438,7 +2409,6 @@ List([1, 2, 3, 7])
         5
         &gt;&gt;&gt; lis
         List([1, 2, 3, 7])
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -2483,7 +2453,6 @@ List([1, 3])
         &gt;&gt;&gt; lis.push_back(3)
         &gt;&gt;&gt; lis
         List([1, 3])
-
     &#34;&#34;&#34;
     curr = DoublyLinkedListNode(self.algo,value)
     if self.tail:
@@ -2581,7 +2550,6 @@ List([2, 5, 4, 4])
         &gt;&gt;&gt; lis.remove(3)
         &gt;&gt;&gt; lis
         List([2, 5, 4, 4])
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -2638,7 +2606,6 @@ List([2, 5, 4, 4])
         List([2, 5, 4, 4])
         &gt;&gt;&gt; lis.tolist()
         [2, 5, 4, 4]
-
     &#34;&#34;&#34;
     curr = self.head
     data = []

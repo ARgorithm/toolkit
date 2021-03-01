@@ -61,7 +61,26 @@ class ARgorithmError(Exception):
     def __str__(self):
         if self.message:
             return f&#39;{self.message}&#39;
-        return &#34;There&#39;s an error within ARgorithm template usage&#34;
+        return &#34;There&#39;s an error within ARgorithm&#34;
+
+class ARgorithmClientError(Exception):
+    &#34;&#34;&#34;The error class for programmers to use in their ARgorithm.
+
+    Programmers can throw this error from their program when they want
+    to raise an error For example when user gives incorrect input to
+    program
+    &#34;&#34;&#34;
+    def __init__(self,*args):
+        super().__init__(*args)
+        if args:
+            self.message = args[0]
+        else:
+            self.message = None
+
+    def __str__(self):
+        if self.message:
+            return f&#39;{self.message}&#39;
+        return &#34;User has entered faulty data&#34;
 
 class State:
     &#34;&#34;&#34;The Instance of State class can be considered as an event in the
@@ -139,12 +158,18 @@ class StateSet:
         self.add_state(comment_state)
 
 class ARgorithmHashable:
-    &#34;&#34;&#34;Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
-    This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
+    &#34;&#34;&#34;Interface from which main classes for datastructures can inherit to make
+    them hashable in Set and Map implementations.
+
+    This interface will enable different classes to be keys in Map(hash-
+    map) and Set(hash-set) implementations.
     &#34;&#34;&#34;
 
 class ARgorithmStructure:
-    &#34;&#34;&#34;Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
+    &#34;&#34;&#34;Interface from which main classes for datastructures.
+
+    This interface enables different classes to be a values in Map(hash-
+    map) implementations.
     &#34;&#34;&#34;
 
 class Variable(ARgorithmStructure, ARgorithmHashable):
@@ -223,6 +248,44 @@ class Variable(ARgorithmStructure, ARgorithmHashable):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
+<dt id="ARgorithmToolkit.utils.ARgorithmClientError"><code class="flex name class">
+<span>class <span class="ident">ARgorithmClientError</span></span>
+<span>(</span><span>*args)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The error class for programmers to use in their ARgorithm.</p>
+<p>Programmers can throw this error from their program when they want
+to raise an error For example when user gives incorrect input to
+program</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ARgorithmClientError(Exception):
+    &#34;&#34;&#34;The error class for programmers to use in their ARgorithm.
+
+    Programmers can throw this error from their program when they want
+    to raise an error For example when user gives incorrect input to
+    program
+    &#34;&#34;&#34;
+    def __init__(self,*args):
+        super().__init__(*args)
+        if args:
+            self.message = args[0]
+        else:
+            self.message = None
+
+    def __str__(self):
+        if self.message:
+            return f&#39;{self.message}&#39;
+        return &#34;User has entered faulty data&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
 <dt id="ARgorithmToolkit.utils.ARgorithmError"><code class="flex name class">
 <span>class <span class="ident">ARgorithmError</span></span>
 <span>(</span><span>*args)</span>
@@ -251,7 +314,7 @@ workings of ARgorithmToolkit</p></div>
     def __str__(self):
         if self.message:
             return f&#39;{self.message}&#39;
-        return &#34;There&#39;s an error within ARgorithm template usage&#34;</code></pre>
+        return &#34;There&#39;s an error within ARgorithm&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -263,15 +326,20 @@ workings of ARgorithmToolkit</p></div>
 <span>class <span class="ident">ARgorithmHashable</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
-This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.</p></div>
+<div class="desc"><p>Interface from which main classes for datastructures can inherit to make
+them hashable in Set and Map implementations.</p>
+<p>This interface will enable different classes to be keys in Map(hash-
+map) and Set(hash-set) implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ARgorithmHashable:
-    &#34;&#34;&#34;Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
-    This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
+    &#34;&#34;&#34;Interface from which main classes for datastructures can inherit to make
+    them hashable in Set and Map implementations.
+
+    This interface will enable different classes to be keys in Map(hash-
+    map) and Set(hash-set) implementations.
     &#34;&#34;&#34;</code></pre>
 </details>
 <h3>Subclasses</h3>
@@ -288,13 +356,18 @@ This interface will enable different classes to be keys in Map(hash-map) and Set
 <span>class <span class="ident">ARgorithmStructure</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.</p></div>
+<div class="desc"><p>Interface from which main classes for datastructures.</p>
+<p>This interface enables different classes to be a values in Map(hash-
+map) implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ARgorithmStructure:
-    &#34;&#34;&#34;Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
+    &#34;&#34;&#34;Interface from which main classes for datastructures.
+
+    This interface enables different classes to be a values in Map(hash-
+    map) implementations.
     &#34;&#34;&#34;</code></pre>
 </details>
 <h3>Subclasses</h3>
@@ -625,6 +698,9 @@ text-decoration: none;
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
+<li>
+<h4><code><a title="ARgorithmToolkit.utils.ARgorithmClientError" href="#ARgorithmToolkit.utils.ARgorithmClientError">ARgorithmClientError</a></code></h4>
+</li>
 <li>
 <h4><code><a title="ARgorithmToolkit.utils.ARgorithmError" href="#ARgorithmToolkit.utils.ARgorithmError">ARgorithmError</a></code></h4>
 </li>

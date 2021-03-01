@@ -54,7 +54,6 @@ These three classes can be directly imported from the toolkit:
     &gt;&gt;&gt; llnode = ARgorithmToolkit.LinkedListNode(algo,7)
     &gt;&gt;&gt; ll = ARgorithmToolkit.LinkedList(&#34;llnode&#34;,algo,llnode)
     &gt;&gt;&gt; fl = ARgorithmToolkit.ForwardList(&#34;fl&#34;,algo)
-
 &#34;&#34;&#34;
 
 from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
@@ -192,7 +191,6 @@ class LinkedListNode(ARgorithmStructure, ARgorithmHashable):
         &gt;&gt;&gt; temp = = ARgorithmToolkit.LinkedListNode(algo,7)
         &gt;&gt;&gt; temp.next = llnode
         &gt;&gt;&gt; llnode = temp
-
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
@@ -343,7 +341,6 @@ class LinkedList(ARgorithmStructure, ARgorithmHashable):
         &gt;&gt;&gt; ll = ARgorithmToolkit.LinkedList(&#34;llnode&#34;,algo)
         &gt;&gt;&gt; llnode = ARgorithmToolkit.LinkedListNode(algo,7)
         &gt;&gt;&gt; ll.head = llnode
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=&#34;&#34;):
@@ -430,7 +427,6 @@ class ForwardList(LinkedList):
     Example:
 
         &gt;&gt;&gt; fl = ARgorithmToolkit.ForwardList(&#34;fl&#34;,algo)
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
@@ -449,7 +445,6 @@ class ForwardList(LinkedList):
             &gt;&gt;&gt; fl.push_front(1)
             &gt;&gt;&gt; fl.size()
             1
-
         &#34;&#34;&#34;
         return self.size
 
@@ -469,7 +464,6 @@ class ForwardList(LinkedList):
             &gt;&gt;&gt; fl.insert(3,1)
             &gt;&gt;&gt; fl
             ForwardList([4, 3, 2])
-
         &#34;&#34;&#34;
         if self.size == 0 or index == 0:
             self.push_front(value)
@@ -504,7 +498,6 @@ class ForwardList(LinkedList):
             &gt;&gt;&gt; fl.push_front(1)
             &gt;&gt;&gt; fl
             ForwardList([1])
-
         &#34;&#34;&#34;
         curr = LinkedListNode(self.algo,value)
         if self.head:
@@ -530,7 +523,6 @@ class ForwardList(LinkedList):
             ForwardList([2, 1])
             &gt;&gt;&gt; fl.pop_front()
             2
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -556,7 +548,6 @@ class ForwardList(LinkedList):
             ForwardList([2, 1])
             &gt;&gt;&gt; fl.front()
             2
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -573,7 +564,6 @@ class ForwardList(LinkedList):
 
             &gt;&gt;&gt; [x for x in fl]
             [2, 2, 1]
-
         &#34;&#34;&#34;
         return ForwardListIterator(self)
 
@@ -593,7 +583,6 @@ class ForwardList(LinkedList):
             &gt;&gt;&gt; fl.remove(2)
             &gt;&gt;&gt; fl
             ForwardList([1])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -627,7 +616,6 @@ class ForwardList(LinkedList):
             ForwardList([3, 1])
             &gt;&gt;&gt; fl.tolist()
             [3, 1]
-
         &#34;&#34;&#34;
         curr = self.head
         data = []
@@ -703,7 +691,6 @@ programmer will have to make their own methods.</p>
     Example:
 
         &gt;&gt;&gt; fl = ARgorithmToolkit.ForwardList(&#34;fl&#34;,algo)
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
@@ -722,7 +709,6 @@ programmer will have to make their own methods.</p>
             &gt;&gt;&gt; fl.push_front(1)
             &gt;&gt;&gt; fl.size()
             1
-
         &#34;&#34;&#34;
         return self.size
 
@@ -742,7 +728,6 @@ programmer will have to make their own methods.</p>
             &gt;&gt;&gt; fl.insert(3,1)
             &gt;&gt;&gt; fl
             ForwardList([4, 3, 2])
-
         &#34;&#34;&#34;
         if self.size == 0 or index == 0:
             self.push_front(value)
@@ -777,7 +762,6 @@ programmer will have to make their own methods.</p>
             &gt;&gt;&gt; fl.push_front(1)
             &gt;&gt;&gt; fl
             ForwardList([1])
-
         &#34;&#34;&#34;
         curr = LinkedListNode(self.algo,value)
         if self.head:
@@ -803,7 +787,6 @@ programmer will have to make their own methods.</p>
             ForwardList([2, 1])
             &gt;&gt;&gt; fl.pop_front()
             2
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -829,7 +812,6 @@ programmer will have to make their own methods.</p>
             ForwardList([2, 1])
             &gt;&gt;&gt; fl.front()
             2
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -846,7 +828,6 @@ programmer will have to make their own methods.</p>
 
             &gt;&gt;&gt; [x for x in fl]
             [2, 2, 1]
-
         &#34;&#34;&#34;
         return ForwardListIterator(self)
 
@@ -866,7 +847,6 @@ programmer will have to make their own methods.</p>
             &gt;&gt;&gt; fl.remove(2)
             &gt;&gt;&gt; fl
             ForwardList([1])
-
         &#34;&#34;&#34;
         if self.head is None:
             raise ARgorithmError(&#34;Empty list&#34;)
@@ -900,7 +880,6 @@ programmer will have to make their own methods.</p>
             ForwardList([3, 1])
             &gt;&gt;&gt; fl.tolist()
             [3, 1]
-
         &#34;&#34;&#34;
         curr = self.head
         data = []
@@ -963,7 +942,6 @@ ForwardList([2, 1])
         ForwardList([2, 1])
         &gt;&gt;&gt; fl.front()
         2
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -1010,7 +988,6 @@ ForwardList([4, 3, 2])
         &gt;&gt;&gt; fl.insert(3,1)
         &gt;&gt;&gt; fl
         ForwardList([4, 3, 2])
-
     &#34;&#34;&#34;
     if self.size == 0 or index == 0:
         self.push_front(value)
@@ -1073,7 +1050,6 @@ ForwardList([2, 1])
         ForwardList([2, 1])
         &gt;&gt;&gt; fl.pop_front()
         2
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -1117,7 +1093,6 @@ ForwardList([1])
         &gt;&gt;&gt; fl.push_front(1)
         &gt;&gt;&gt; fl
         ForwardList([1])
-
     &#34;&#34;&#34;
     curr = LinkedListNode(self.algo,value)
     if self.head:
@@ -1168,7 +1143,6 @@ ForwardList([1])
         &gt;&gt;&gt; fl.remove(2)
         &gt;&gt;&gt; fl
         ForwardList([1])
-
     &#34;&#34;&#34;
     if self.head is None:
         raise ARgorithmError(&#34;Empty list&#34;)
@@ -1223,7 +1197,6 @@ ForwardList([3, 1])
         ForwardList([3, 1])
         &gt;&gt;&gt; fl.tolist()
         [3, 1]
-
     &#34;&#34;&#34;
     curr = self.head
     data = []
@@ -1333,7 +1306,6 @@ the nodes. Only contains head attribute and no methods</p>
         &gt;&gt;&gt; ll = ARgorithmToolkit.LinkedList(&#34;llnode&#34;,algo)
         &gt;&gt;&gt; llnode = ARgorithmToolkit.LinkedListNode(algo,7)
         &gt;&gt;&gt; ll.head = llnode
-
     &#34;&#34;&#34;
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=&#34;&#34;):
@@ -1395,14 +1367,15 @@ the nodes. Only contains head attribute and no methods</p>
 <span>def <span class="ident">to_json</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use
+in application.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def to_json(self):
-    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use
+    in application.&#34;&#34;&#34;
     class_name = type(self).__name__
     obj_id = id(self)
     return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
@@ -1465,7 +1438,6 @@ LinkedListNode Class.</p>
         &gt;&gt;&gt; temp = = ARgorithmToolkit.LinkedListNode(algo,7)
         &gt;&gt;&gt; temp.next = llnode
         &gt;&gt;&gt; llnode = temp
-
     &#34;&#34;&#34;
 
     def __init__(self,algo:StateSet,value=None,comments=&#34;&#34;):
@@ -1548,14 +1520,15 @@ LinkedListNode Class.</p>
 <span>def <span class="ident">to_json</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use in application</p></div>
+<div class="desc"><p>Creates a string representing a reference to ARgorithmObject for use
+in application.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def to_json(self):
-    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use in application
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;Creates a string representing a reference to ARgorithmObject for use
+    in application.&#34;&#34;&#34;
     class_name = type(self).__name__
     obj_id = id(self)
     return f&#34;$ARgorithmToolkit.{class_name}:{obj_id}&#34;</code></pre>
