@@ -29,8 +29,9 @@ class ARgorithmError(Exception):
 class ARgorithmClientError(Exception):
     """The error class for programmers to use in their ARgorithm.
 
-    Programmers can throw this error from their program when they want to raise an error
-    For example when user gives incorrect input to program
+    Programmers can throw this error from their program when they want
+    to raise an error For example when user gives incorrect input to
+    program
     """
     def __init__(self,*args):
         super().__init__(*args)
@@ -120,12 +121,18 @@ class StateSet:
         self.add_state(comment_state)
 
 class ARgorithmHashable:
-    """Interface from which main classes for datastructures can inherit to make them hashable in Set and Map implementations.
-    This interface will enable different classes to be keys in Map(hash-map) and Set(hash-set) implementations.
+    """Interface from which main classes for datastructures can inherit to make
+    them hashable in Set and Map implementations.
+
+    This interface will enable different classes to be keys in Map(hash-
+    map) and Set(hash-set) implementations.
     """
 
 class ARgorithmStructure:
-    """Interface from which main classes for datastructures. This interface enables different classes to be a values in Map(hash-map) implementations.
+    """Interface from which main classes for datastructures.
+
+    This interface enables different classes to be a values in Map(hash-
+    map) implementations.
     """
 
 class Variable(ARgorithmStructure, ARgorithmHashable):

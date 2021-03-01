@@ -1,5 +1,5 @@
-"""Security module contains functions to secure code files and prevent harmful code injection at server side
-"""
+"""Security module contains functions to secure code files and prevent harmful
+code injection at server side."""
 import re
 import json
 import importlib
@@ -13,7 +13,8 @@ FORBIDDEN = [
 ]
 
 def injection_check(filename:str):
-    """Checks whether given code file does not contain harmful code to server operation
+    """Checks whether given code file does not contain harmful code to server
+    operation.
 
     Args:
         filename (str): the code file to check
@@ -48,7 +49,8 @@ def injection_check(filename:str):
             raise ARgorithmError('possible code injection')
 
 def execution_check(filename:str,configpath:str,parameters:dict):
-    """Executes the file on kwargs provided by programmer in the config file's `example` key
+    """Executes the file on kwargs provided by programmer in the config file's
+    `example` key.
 
     Args:
         filename (str): The file with the ARgorithm code to be checked

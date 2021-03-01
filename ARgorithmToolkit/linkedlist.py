@@ -12,7 +12,6 @@ These three classes can be directly imported from the toolkit:
     >>> llnode = ARgorithmToolkit.LinkedListNode(algo,7)
     >>> ll = ARgorithmToolkit.LinkedList("llnode",algo,llnode)
     >>> fl = ARgorithmToolkit.ForwardList("fl",algo)
-
 """
 
 from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
@@ -150,7 +149,6 @@ class LinkedListNode(ARgorithmStructure, ARgorithmHashable):
         >>> temp = = ARgorithmToolkit.LinkedListNode(algo,7)
         >>> temp.next = llnode
         >>> llnode = temp
-
     """
 
     def __init__(self,algo:StateSet,value=None,comments=""):
@@ -301,7 +299,6 @@ class LinkedList(ARgorithmStructure, ARgorithmHashable):
         >>> ll = ARgorithmToolkit.LinkedList("llnode",algo)
         >>> llnode = ARgorithmToolkit.LinkedListNode(algo,7)
         >>> ll.head = llnode
-
     """
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=""):
@@ -388,7 +385,6 @@ class ForwardList(LinkedList):
     Example:
 
         >>> fl = ARgorithmToolkit.ForwardList("fl",algo)
-
     """
 
     def __init__(self,name:str,algo:StateSet,comments=""):
@@ -407,7 +403,6 @@ class ForwardList(LinkedList):
             >>> fl.push_front(1)
             >>> fl.size()
             1
-
         """
         return self.size
 
@@ -427,7 +422,6 @@ class ForwardList(LinkedList):
             >>> fl.insert(3,1)
             >>> fl
             ForwardList([4, 3, 2])
-
         """
         if self.size == 0 or index == 0:
             self.push_front(value)
@@ -462,7 +456,6 @@ class ForwardList(LinkedList):
             >>> fl.push_front(1)
             >>> fl
             ForwardList([1])
-
         """
         curr = LinkedListNode(self.algo,value)
         if self.head:
@@ -488,7 +481,6 @@ class ForwardList(LinkedList):
             ForwardList([2, 1])
             >>> fl.pop_front()
             2
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -514,7 +506,6 @@ class ForwardList(LinkedList):
             ForwardList([2, 1])
             >>> fl.front()
             2
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -531,7 +522,6 @@ class ForwardList(LinkedList):
 
             >>> [x for x in fl]
             [2, 2, 1]
-
         """
         return ForwardListIterator(self)
 
@@ -551,7 +541,6 @@ class ForwardList(LinkedList):
             >>> fl.remove(2)
             >>> fl
             ForwardList([1])
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -585,7 +574,6 @@ class ForwardList(LinkedList):
             ForwardList([3, 1])
             >>> fl.tolist()
             [3, 1]
-
         """
         curr = self.head
         data = []

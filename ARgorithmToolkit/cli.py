@@ -1,7 +1,7 @@
 # pylint: disable=no-self-use
 # pylint: disable=too-many-statements
 # pylint: disable=raise-missing-from
-"""CLI tool for ARgorithm made using typer
+"""CLI tool for ARgorithm made using typer.
 
 Example:
     $ ARgorithm --help
@@ -25,39 +25,32 @@ CACHE_DIR = typer.get_app_dir("ARgorithm")
 app = typer.Typer(help="ARgorithm CLI")
 
 class Messager():
-    """Class for pretty printing messages using typer
-    """
+    """Class for pretty printing messages using typer."""
     def msg(self,tag:str,title:str,message:str,color:str):
-        """Pretty messaging for standard log messages
-        """
+        """Pretty messaging for standard log messages."""
         code = typer.style(f"[{tag.upper()}]: {title.upper()}" , fg=color , bold=True)
         typer.echo(code)
         if message:
             typer.echo(message)
 
     def info(self,title:str,message:str=""):
-        """Information message
-        """
+        """Information message."""
         self.msg("info",title,message,typer.colors.BLUE)
 
     def warn(self,title:str,message:str=""):
-        """Warning message
-        """
+        """Warning message."""
         self.msg("error",title,message,typer.colors.YELLOW)
 
     def fail(self,title:str,message:str=""):
-        """Error message
-        """
+        """Error message."""
         self.msg("critical error",title,message,typer.colors.RED)
 
     def good(self,title:str,message:str=""):
-        """Success message
-        """
+        """Success message."""
         self.msg("success",title,message,typer.colors.GREEN)
 
     def menuitem(self,argorithm):
-        """pretty print argorithm details
-        """
+        """pretty print argorithm details."""
         head = typer.style(f"- {argorithm['argorithmID']}",fg=typer.colors.GREEN,bold=True)
         typer.echo(head)
         typer.secho(f"by {argorithm['maintainer']}",fg=typer.colors.CYAN)
@@ -73,8 +66,7 @@ class Messager():
         typer.echo()
 
     def state(self,states):
-        """pretty print states
-        """
+        """pretty print states."""
         states = states['data']
         for state in states:
             typer.echo('\n'+'-'*50)
@@ -88,12 +80,11 @@ msg = Messager()
 
 
 class Settings():
-    """handles connection endpoints
-    """
+    """handles connection endpoints."""
     endpoint:str=CLOUD_URL
 
     def get_endpoint(self):
-        """returns required endpoint"""
+        """returns required endpoint."""
         config_file = os.path.join(CACHE_DIR , "config")
         if os.path.isfile(config_file):
             with open(config_file,"r") as conf:
@@ -101,7 +92,7 @@ class Settings():
         return self.endpoint
 
     def set_endpoint(self,url):
-        """set up cloud endpoint"""
+        """set up cloud endpoint."""
         try:
             with Halo(text='Connecting', spinner='dots'):
                 rq = requests.get(url+"/argorithm")
@@ -126,16 +117,13 @@ class Settings():
 app_settings = Settings()
 
 class AuthManager():
-    """Handles authentication
-    """
+    """Handles authentication."""
     def __init__(self):
-        """sets up credfile to store credentials
-        """
+        """sets up credfile to store credentials."""
         self.credfile = os.path.join(CACHE_DIR,".credentials")
 
     def register(self):
-        """registers account
-        """
+        """registers account."""
         email = typer.prompt("Enter email address")
         msg.info("Password criteria",'- between 8 to 25 characters\n - contains atleast one number\n - contains atleast lower case alphabet\n - contains atleast uppercase alphabet')
         rules = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$"
@@ -164,8 +152,7 @@ class AuthManager():
         msg.fail("Error","Contact developer")
 
     def login_prompt(self):
-        """login prompt to enter credentials
-        """
+        """login prompt to enter credentials."""
         email = typer.prompt("Enter email address")
         password = typer.prompt("Enter password",hide_input=True)
         url = f"{app_settings.get_endpoint()}/programmers/login"
@@ -185,6 +172,8 @@ class AuthManager():
             msg.fail("Server error","contact developer")
         elif rq.status_code == 401:
             msg.warn("incorrect password")
+        elif rq.status_code == 402:
+            msg.warn("please verify account first")
         elif rq.status_code == 200:
             msg.good("logged in successfully","credentials saved in cache")
             token = json.loads(rq.content)['access_token']
@@ -194,8 +183,7 @@ class AuthManager():
         raise typer.Exit(1)
 
     def get_token(self,flag=False):
-        """returns valid authorization token
-        """
+        """returns valid authorization token."""
         url = app_settings.get_endpoint()
         if os.path.isfile(self.credfile):
             with open(self.credfile,'r') as cred:
@@ -220,8 +208,7 @@ class AuthManager():
         return token
 
     def get_header(self):
-        """Get authentication header
-        """
+        """Get authentication header."""
         header=None
         if self.auth_check():
             token = self.get_token()
@@ -229,8 +216,7 @@ class AuthManager():
         return header
 
     def auth_check(self):
-        """checks if AUTH is enabled on server
-        """
+        """checks if AUTH is enabled on server."""
         try:
             url = app_settings.get_endpoint() + "/auth"
             try:
@@ -247,8 +233,7 @@ class AuthManager():
             raise typer.Abort()
 
     def remove_token(self):
-        """logout by deleting access token
-        """
+        """logout by deleting access token."""
         try:
             os.remove(self.credfile)
             msg.good("Logged out")
@@ -258,8 +243,7 @@ class AuthManager():
 authmanager = AuthManager()
 
 def name_check(value:str):
-    """checks validity of argorithmID
-    """
+    """checks validity of argorithmID."""
     rules = r"^[A-Za-z_]+$"
     m = re.search(rules,value)
     if m is None:
@@ -268,7 +252,7 @@ def name_check(value:str):
     return value
 
 def autocomplete(incomplete:str):
-    """autocomplete function for finding argorithms"""
+    """autocomplete function for finding argorithms."""
     local_directory , incomplete  = os.path.split(incomplete)
     if local_directory == '':
         local_directory = '.'
@@ -284,11 +268,9 @@ def autocomplete(incomplete:str):
     return res
 
 class CodeManager():
-    """Handles file verification, testing and submissions
-    """
+    """Handles file verification, testing and submissions."""
     def __init__(self,filename):
-        """gets filepath for code file and config file
-        """
+        """gets filepath for code file and config file."""
         directory , argorithm_file = os.path.split(filename)
         argorithmID = name_check(argorithm_file[:-3])
         directory = os.getcwd() if not directory else directory
@@ -302,14 +284,12 @@ class CodeManager():
             raise typer.Abort()
 
     def verify(self):
-        """checks whether files are valid or not
-        """
+        """checks whether files are valid or not."""
         injection_check(self.codepath)
         validateconfig(self.configpath)
 
     def test(self,prompt:bool=False):
-        """Execute code locally
-        """
+        """Execute code locally."""
         try:
             with open(self.configpath,'r') as configfile:
                 config = json.load(configfile)
@@ -331,9 +311,8 @@ class CodeManager():
             traceback.print_exception(*sys.exc_info())
             raise typer.Exit(1)
 
-    def submit(self):
-        """Submit code to server
-        """
+    def generate_submission(self):
+        """Generate the files for submission."""
         _ , local_file = os.path.split(self.codepath)
         with open(self.configpath,'r') as configfile:
             data = json.load(configfile)
@@ -342,6 +321,11 @@ class CodeManager():
             ('data', ('data', json.dumps(data), 'application/json')),
         ]
         header = authmanager.get_header()
+        return files,header
+
+    def submit(self):
+        """Submit code to server."""
+        files,header = self.generate_submission()
         url = app_settings.get_endpoint()+"/argorithms/insert"
         try:
             with Halo(text='Connecting', spinner='dots'):
@@ -361,16 +345,8 @@ class CodeManager():
             msg.fail("Application error")
 
     def update(self):
-        """Update code in servers
-        """
-        _ , local_file = os.path.split(self.codepath)
-        with open(self.configpath,'r') as configfile:
-            data = json.load(configfile)
-        files = [
-            ('file', (local_file, open(local_file, 'rb'), 'application/octet')),
-            ('data', ('data', json.dumps(data), 'application/json')),
-        ]
-        header = authmanager.get_header()
+        """Update code in servers."""
+        files,header = self.generate_submission()
         url = app_settings.get_endpoint()+"/argorithms/update"
         try:
             with Halo(text='Connecting', spinner='dots'):
@@ -391,8 +367,8 @@ class CodeManager():
 def connect(
     local:bool = typer.Option(False,"--local",'-l',help="Connects to server running on localhost",show_default=False)
 ):
-    """
-    Connect to your endpoint.
+    """Connect to your endpoint.
+
     More info at https://argorithm.github.io/toolkit/cli#connect
     """
     if local:
@@ -405,8 +381,8 @@ def connect(
 def init(
         name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check)
     ):
-    """
-    Create Blank code template and config template for ARgorithm.
+    """Create Blank code template and config template for ARgorithm.
+
     More info at https://argorithm.github.io/toolkit/cli#init
     """
     typer.echo(f"Creating empty template for {name}")
@@ -425,8 +401,8 @@ def configure(
     blank:bool=typer.Option(False,'-b','--blank',help="create blank config file"),
     validate:bool=typer.Option(False,'-v','--validate',help="only validate existing config file,Dont create")
     ):
-    """
-    Create configuration file for argorithm.
+    """Create configuration file for argorithm.
+
     More info at https://argorithm.github.io/toolkit/cli#configure
     """
     directory,filename = os.path.split(filepath)
@@ -464,15 +440,15 @@ def configure(
         "description" : ""
     }
     with open(configpath, "w") as configfile:
-        json.dump(config,configfile)
+        json.dump(config,configfile,indent=4)
 
 
 @app.command()
 def submit(
         filename:str=typer.Argument(... , help="The code file to be submitted" , autocompletion=autocomplete)
     ):
-    """
-    Submit argorithms to server.
+    """Submit argorithms to server.
+
     More info at https://argorithm.github.io/toolkit/cli#submit
     """
     code = CodeManager(filename)
@@ -488,8 +464,8 @@ def submit(
 def update(
         filename:str=typer.Argument(... , help="The code file to be submitted" , autocompletion=autocomplete)
     ):
-    """
-    Updates pre existing argorithms at server.
+    """Updates pre existing argorithms at server.
+
     More info at https://argorithm.github.io/toolkit/cli#update
     """
     code = CodeManager(filename)
@@ -506,8 +482,8 @@ def update(
 def delete(
     argorithm_id:str = typer.Argument(... , help="argorithmID of function to be deleted.")
     ):
-    """
-    Deletes argorithm from server.
+    """Deletes argorithm from server.
+
     More info at https://argorithm.github.io/toolkit/cli#delete
     """
     params = search(argorithm_id)
@@ -535,9 +511,7 @@ def delete(
         msg.fail("application error")
 
 def search(argid,show=True):
-    """
-    Searches argorithm on server
-    """
+    """Searches argorithm on server."""
     url = app_settings.get_endpoint()+"/argorithms/view/"+argid
     try:
         with Halo(text='Connecting', spinner='dots'):
@@ -559,8 +533,8 @@ def search(argid,show=True):
 
 @app.command("list")
 def list_argorithms():
-    """
-    Get list of argorithms in server.
+    """Get list of argorithms in server.
+
     More info at https://argorithm.github.io/toolkit/cli#list
     """
     url = app_settings.get_endpoint()+"/argorithms/list"
@@ -584,8 +558,8 @@ def test(
     output:bool = typer.Option(False,'--output','-o',help="print results in json format",show_default=False),
     user_input:bool = typer.Option(False,'--user-input','-u',help="if present, takes input from user",show_default=False),
     ):
-    """
-    Test argorithms stored in server.
+    """Test argorithms stored in server.
+
     More info at https://argorithm.github.io/toolkit/cli#test
     """
     params = search(argorithm_id,show=not output)
@@ -618,8 +592,8 @@ def test(
 def execute(
     filename:str=typer.Argument(... , help="The code file to be submitted" , autocompletion=autocomplete)
     ):
-    """
-    Execute locally stored ARgorithms.
+    """Execute locally stored ARgorithms.
+
     More info at https://argorithm.github.io/toolkit/cli#execute
     """
     code = CodeManager(filename)
@@ -633,9 +607,10 @@ app.add_typer(account_app,name="account")
 
 @account_app.command()
 def login():
-    """
-    Log in to ARgorithmServer. Only is AUTH is enabled on server.
-    More info at https://argorithm.github.io/toolkit/cli#login
+    """Log in to ARgorithmServer.
+
+    Only is AUTH is enabled on server. More info at
+    https://argorithm.github.io/toolkit/cli#login
     """
     if not authmanager.auth_check():
         msg.warn("AUTH disabled at server")
@@ -644,9 +619,10 @@ def login():
 
 @account_app.command()
 def signup():
-    """
-    Create new programmer and user account in ARgorithmServer. Only is AUTH is enabled on server.
-    More info at https://argorithm.github.io/toolkit/cli#signup
+    """Create new programmer and user account in ARgorithmServer.
+
+    Only is AUTH is enabled on server. More info at
+    https://argorithm.github.io/toolkit/cli#signup
     """
     if not authmanager.auth_check():
         msg.warn("AUTH disabled at server")
@@ -655,8 +631,8 @@ def signup():
 
 @account_app.command()
 def logout():
-    """
-    Remove pre-existing login credentials.
+    """Remove pre-existing login credentials.
+
     More info at https://argorithm.github.io/toolkit/cli#logout
     """
     authmanager.remove_token()
@@ -666,8 +642,7 @@ app.add_typer(admin_app,name="admin")
 
 @admin_app.callback()
 def admin_auth_check():
-    """Check if auth is enabled for admin routes
-    """
+    """Check if auth is enabled for admin routes."""
     if not authmanager.auth_check():
         msg.warn("AUTH is disabled at this endpoint")
         raise typer.Exit(1)
@@ -676,8 +651,8 @@ def admin_auth_check():
 def grant(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access")
     ):
-    """
-    Grants admin acess.
+    """Grants admin acess.
+
     More info at https://argorithm.github.io/toolkit/cli#grant
     """
     data = {
@@ -706,8 +681,8 @@ def grant(
 def revoke(
         email:str=typer.Argument( ... , help="The account email that would be lose admin access")
     ):
-    """
-    Revokes admin acess.
+    """Revokes admin acess.
+
     More info at https://argorithm.github.io/toolkit/cli#revoke
     """
     data = {
@@ -735,9 +710,10 @@ def account_delete(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access"),
         user:bool=typer.Option(False,'-u','--user',help="If flag is present, it will delete the user account")
     ):
-    """
-    Deletes account. Requires admin priveleges.
-    More info at https://argorithm.github.io/toolkit/cli#delete_1
+    """Deletes account.
+
+    Requires admin priveleges. More info at
+    https://argorithm.github.io/toolkit/cli#delete_1
     """
     data = {
         "email" : email
@@ -766,9 +742,10 @@ def account_delete(
 def blacklist(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access")
     ):
-    """
-    Blacklists account. Requires admin priveleges.
-    More info at https://argorithm.github.io/toolkit/cli#blacklist
+    """Blacklists account.
+
+    Requires admin priveleges. More info at
+    https://argorithm.github.io/toolkit/cli#blacklist
     """
     data = {
         "email" : email
@@ -794,9 +771,10 @@ def blacklist(
 def whitelist(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access")
     ):
-    """
-    Whitelist accounts. Requires admin priveleges.
-    More info at https://argorithm.github.io/toolkit/cli#whitelist
+    """Whitelist accounts.
+
+    Requires admin priveleges. More info at
+    https://argorithm.github.io/toolkit/cli#whitelist
     """
     data = {
         "email" : email
