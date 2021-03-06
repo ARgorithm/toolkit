@@ -317,7 +317,7 @@ class CodeManager():
         with open(self.configpath,'r') as configfile:
             data = json.load(configfile)
         files = [
-            ('file', (local_file, open(local_file, 'rb'), 'application/octet')),
+            ('file', (local_file, open(self.codepath, 'rb'), 'application/octet')),
             ('data', ('data', json.dumps(data), 'application/json')),
         ]
         header = authmanager.get_header()
