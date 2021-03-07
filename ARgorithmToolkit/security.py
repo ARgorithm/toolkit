@@ -1,6 +1,7 @@
-"""Security module contains functions to secure code files and prevent harmful code injection at server side
-"""
+"""Security module contains functions to secure code files and prevent harmful
+code injection at server side."""
 import re
+import json
 import importlib
 from pyflakes import checker
 from ARgorithmToolkit import ARgorithmError,StateSet
@@ -8,11 +9,12 @@ from ARgorithmToolkit import ARgorithmError,StateSet
 FORBIDDEN = [
     'STORAGE_FOLDER','config',
     'LRUCache','logger','PerformanceMonitor',
-    'eval'
+    'eval','exec'
 ]
 
 def injection_check(filename:str):
-    """Checks whether given code file does not contain harmful code to server operation
+    """Checks whether given code file does not contain harmful code to server
+    operation.
 
     Args:
         filename (str): the code file to check
@@ -46,8 +48,9 @@ def injection_check(filename:str):
         if len(not_allowed) > 0:
             raise ARgorithmError('possible code injection')
 
-def execution_check(filename:str,config:dict):
-    """Executes the file on kwargs provided by programmer in the config file's `example` key
+def execution_check(filename:str,configpath:str,parameters:dict):
+    """Executes the file on kwargs provided by programmer in the config file's
+    `example` key.
 
     Args:
         filename (str): The file with the ARgorithm code to be checked
@@ -57,7 +60,9 @@ def execution_check(filename:str,config:dict):
     spec = importlib.util.spec_from_file_location(module_name,filename)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+    with open(configpath,'r') as configfile:
+        config = json.load(configfile)
     func = getattr(module , config["function"])
-    parameters = config['example']
     output = func(**parameters)
     assert isinstance(output,StateSet)
+    return output.states

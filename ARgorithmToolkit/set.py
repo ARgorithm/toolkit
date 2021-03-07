@@ -1,10 +1,9 @@
-"""The set module provides support for set data structure for the Toolkit.
-It stores keys and avoid duplication.
-Provides O(1) average case and O(n) amortized worst case complexity for element lookup.
-The main class in this module is the Set class. The
-other classes act as support class to Set class. For this reason the Set
-class can directly be imported from the ARgorithmToolkit library without having
-to import from the set module :
+"""The set module provides support for set data structure for the Toolkit. It
+stores keys and avoid duplication. Provides O(1) average case and O(n)
+amortized worst case complexity for element lookup. The main class in this
+module is the Set class. The other classes act as support class to Set class.
+For this reason the Set class can directly be imported from the
+ARgorithmToolkit library without having to import from the set module :
 
     >>> set1 = ARgorithmToolkit.Set(name='set1',algo=algo,data=data)
     >>> set1 = ARgorithmToolkit.set.Set(name='set1',algo=algo,data=data)
@@ -29,8 +28,8 @@ class SetState:
         self._id = _id
 
     def set_declare(self, body, comments="") -> State:
-        """Generates the `set_declare` state when an instance of Set class
-        is created.
+        """Generates the `set_declare` state when an instance of Set class is
+        created.
 
         Args:
             body: The contents of the set that are to be sent along with the state
@@ -101,7 +100,8 @@ class SetState:
         )
 
     def set_find(self, body, key, found, comments="") -> State:
-        """Generates the `set_find` state when a particular key is searched for.
+        """Generates the `set_find` state when a particular key is searched
+        for.
 
         Args:
             body : The contents of the set that are to be sent along with the state
@@ -128,8 +128,8 @@ class SetState:
 
 @serialize
 class Set(ARgorithmStructure):
-    """The Set class used to emulate set datastructure that can be
-    rendered in the ARgorithm Application as series of unique keys.
+    """The Set class used to emulate set datastructure that can be rendered in
+    the ARgorithm Application as series of unique keys.
 
     Attributes:
         name (str): name given to the rendered block in augmented reality. Essential. Should not be altered after initialisation
@@ -366,7 +366,7 @@ class Set(ARgorithmStructure):
         return f"Set({self.__working_set.__repr__() if len(self.__working_set) > 0 else empty})"
 
     def __str__(self) -> str:
-        """Return string conversion for Set
+        """Return string conversion for Set.
 
         Returns:
             str: string conversion for Set

@@ -1,6 +1,6 @@
 # Creating your configuration file
 
-The `.config.json` plays an important role in creating argorithms. It stores metadata and useful information that can be used to manage, run and customise input to argorithm. In this tutorial, we will be covering the .config.json step by step created using `configure` command. So lets get started. We'll be creating a `sample.config.json` for `sample.py`
+The `.config.json` plays an important role in creating argorithms. It stores metadata and other information that can be used to manage, run and customise the input to the argorithm. In this tutorial, we will be covering the step by step creation of .config.json using `configure` command. So, let's get started. We'll be creating a `sample.config.json` for `sample.py`.
 
 <div class="termy">
 
@@ -21,7 +21,7 @@ $ ARgorithm configure sample
 
 ## ARgorithm details
 
-as seen in the [Getting started](/toolkit/start), the configuration has the following properties
+as seen in [Getting started](/toolkit/start), the configuration has the following properties
 
 | Key         | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
@@ -32,9 +32,9 @@ as seen in the [Getting started](/toolkit/start), the configuration has the foll
 | example     | default parameters in case no parameters are passed          |
 | description | The description of ARgorithm. Helpful to people using your ARgorithm as well as other developers |
 
-The `argorithmID` and `file` are read from the filename. The `sample.py` file is parsed by the CLI to list out eligible functions. an eligible function is one that can be called by ARgorithm. Your ARgorithm code file must have a function of the form `def foo(**kwargs)`. The input will be passed as keyword arguments according to metadata in config file. If you have more than one eligible function, you can decide which one to call.
+The `argorithmID` and `file` are read from the filename. The `sample.py` file is parsed by the CLI to list out eligible functions. An eligible function is one that can be called by ARgorithm. Your ARgorithm code file must have a function of the form `def foo(**kwargs)`. The input will be passed as keyword arguments according to metadata in the config file. If you have more than one eligible function, you can decide which one to call.
 
-The `description` describe what the argorithm does so users know what the argorithm does and renders.
+The `description` describes what the argorithm does so that users are aware of what the argorithm is doing and rendering.
 
 <div class="termy">
 
@@ -55,9 +55,9 @@ Press ENTER on empty line to leave multiline input
 
 ## Input parameters
 
-The `parameters` property is what defines the input to your argorithm. The properties defined inside `parameters` as passed in keyword arguments to your function. Inside the `parameters`, we define the type and input constraints and in `example`, we give a default value that can be used as input on that keyword.
+The `parameters` property is what defines the input to your argorithm. The properties defined inside `parameters` are passed in keyword arguments to your function. Inside the `parameters`, we define the type and input constraints and in `example`, we give a default value that can be used as input on that keyword.
 
-The CLI reads your code and shows you what iinput keywords your code looks for so that you can define its properties. you can add more parameters if you want but you will have to update your function to read that keyword argument.
+The CLI reads your code and shows you what input keywords your code looks for so that you can define its properties. You can add more parameters if required but you will have to update your function to read that keyword argument.
 
 !!!info
 	Our current sample.py does not have any function code utilising keyword arguments. If your code does utilise some keyword arguments than you'll be asked to describe those particular input keywords.
@@ -76,12 +76,12 @@ The following input keywords were found in code
 
 Each parameter has two neccessary fields: `type` and `description`.
 
-- `type`  : Decides the kind of input that is required to be taken from user. It can be of 5 types: `INT`,`FLOAT`,`STRING`,`ARRAY`,`MATRIX`. We'll cover creating parameters of each type below in detail.
-- `description` : Tells the user what this input parameter is for. This is useful in telling the user about the importance of this input and how it will be processed.
+- `type`  : Decides the kind of input that is required to be taken from the user. It can be of 5 types: `INT`,`FLOAT`,`STRING`,`ARRAY`,`MATRIX`. We'll cover creating parameters of each type below in detail.
+- `description` : Tells the user what this input parameter is for. This is useful as it informs the user about the importance of this input and how it will be processed.
 
 ### INT
 
-Parameters with `INT` type expect an integer input. You can add constraint to the range in which the integer input should be by using the `start` and `end` properties. Below is the schema of a parameter with type `INT`
+Parameters with `INT` type expect an integer input. You can add a constraint to the range in which the integer input should be, by using the `start` and `end` properties. Below is the schema of a parameter with type `INT`.
 
 ```json
 "properties" : {
@@ -116,7 +116,7 @@ Press ENTER on empty line to leave multiline input
 
 </div>
 
-In this example, we have created a input keyword `n` which requires a integer input larger than 0. Please note that the range specified by `start` and `end` is inclusive of the values
+In this example, we have created an input keyword `n` which requires an integer input larger than 0. Please note that the range specified by `start` and `end` is inclusive of the values.
 
 $$
 n\in [start,end]
@@ -128,7 +128,7 @@ $$
 
 ### FLOAT
 
-Parameters with `FLOAT` type expect an numerical input which include both integers and floating point numbers. You can add constraint to the range in which the numerical input should be by using the `start` and `end` properties. Below is the schema of a parameter with type `FLOAT`
+Parameters with `FLOAT` type expect an numerical input which includes both integers and floating point numbers. You can also add a constraint to the range in which the numerical input should be by using the `start` and `end` properties. Below is the schema of a parameter with the type `FLOAT`.
 
 ```json
 "properties" : {
@@ -161,7 +161,7 @@ Press ENTER on empty line to leave multiline input
 
 </div>
 
-In this example, we have defined input keyword `f` as a `float` which has no range constraints. Ranges in `FLOAT` works similar to `INT`.
+In this example, we have defined an input keyword `f` as a `float` which has no range constraints. Ranges in `FLOAT` works similar to `INT`.
 
 ```json hl_lines="8"
 {!../../examples/sample.config.json!}
@@ -169,7 +169,7 @@ In this example, we have defined input keyword `f` as a `float` which has no ran
 
 ### STRING
 
-Parameters with type `STRING` take a single line string input from the user. This length of this string can be defined using the `size` property. `size` can store a integer value defining the size or can store the name of an `INT` type parameter so that size is input at runtime. `size` is an optional property, in case it is absent the user can enter a string of any length. Below is the schema of `STRING`
+Parameters with type `STRING` take a single line string input from the user. This length of the string can be defined using the `size` property. `size` can store an integer value defining the size or can store the name of an `INT` type parameter so that the size is an input at runtime. `size` is an optional property, in case it is absent the user can enter a string of any length. Below is the schema of `STRING`.
 
 ```json
 "properties": {
@@ -200,7 +200,7 @@ Press ENTER on empty line to leave multiline input
 
 </div>
 
-Here we have defined `s` which is on type `string` and the length of string must be value stored in `n`.
+Here, we have defined `s` which is of type `string` and the length of string must be value stored in `n`.
 
 $$
 len(s) = n
@@ -215,7 +215,7 @@ $$
 
 ### ARRAY
 
-Parameters with type `ARRAY` will expect a 1-dimensional series of items. The number of items in the series is controlled similarly to length of string i.e. using the `size` property. If `size` is not defined then the series can be of any size > 0. When using `ARRAY`, you need to define the `item-type` property as well. `item-type` can be `INT`,`FLOAT` or `STRING`. Below is the schema for `ARRAY` type parameters.
+Parameters with type `ARRAY` will expect a 1-dimensional series of items. The number of items in the series is controlled in a manner similar to the length of a string i.e. using the `size` property. If `size` is not defined then the series can be of any size > 0. When using `ARRAY`, you need to define the `item-type` property as well. `item-type` can be `INT`,`FLOAT` or `STRING`. Below is the schema for `ARRAY` type parameters.
 
 ```json
 "properties": {
@@ -248,7 +248,7 @@ Press ENTER on empty line to leave multiline input
 # :$ array input
 ```
 
-Here we have defined `arr` of type `ARRAY` where each element has to be of type `INT`. The `size` of `arr` has not been defined so it can be of any size. 
+Here, we have defined `arr` of type `ARRAY` where each element has to be of type `INT`. The `size` of `arr` has not been defined so it can be of any size. 
 
 </div>
 
@@ -258,7 +258,7 @@ Here we have defined `arr` of type `ARRAY` where each element has to be of type 
 
 ### MATRIX
 
-Parameters with type `MATRIX` will expect a1-dimensional series of items. The dimensions are controlled by `row` and `column` which is parsed similar to the `size` property. Unlike `size`, `row` and `col` are neccessary properties.. When using `MATRIX`, you need to define the `item-type` property as well. `item-type` can be `INT`,`FLOAT` or `STRING`. Below is the schema for `MATRIX` type parameters.
+Parameters with the type `MATRIX` will expect a1-dimensional series of items. The dimensions are controlled by `row` and `column` which is parsed similar to the `size` property. Unlike `size`, `row` and `col` are neccessary properties. When using `MATRIX`, you need to define the `item-type` property as well. `item-type` can be `INT`,`FLOAT` or `STRING`. Below is the schema for `MATRIX` type parameters.
 
 ```json
 "properties": {
@@ -297,7 +297,7 @@ Press ENTER on empty line to leave multiline input
 
 </div>
 
-Here we have defined `mat` as a 4x3 matrix in which elements are type of `INT`.
+Here, we have defined `mat` as a 4x3 matrix in which elements are of type `INT`.
 
 ```json hl_lines="15-21"
 {!../../examples/sample.config.json!}
@@ -307,10 +307,10 @@ Here we have defined `mat` as a 4x3 matrix in which elements are type of `INT`.
 
 Now that we have defined our input parameters, we need to provide some default values to these in the `example` property.
 
-1. These values are used in case the user doesnt want to give custom input or gives faulty input to keywords
-2. These values are used for testing purposes as well
+1. These values are used in case the user doesnt want to give custom inputs or gives a faulty input to keywords.
+2. These values are used for testing purposes as well.
 
-The CLI generates input fields according to the parameters in which you can enter you details.
+The CLI generates input fields according to the parameters in which you can enter your details.
 
 <div class="termy">
 

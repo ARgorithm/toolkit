@@ -1,68 +1,72 @@
 # pylint: disable=no-self-use
 # pylint: disable=too-many-statements
 # pylint: disable=raise-missing-from
-"""CLI tool for ARgorithm made using typer
+"""CLI tool for ARgorithm made using typer.
+
+Example:
+    $ ARgorithm --help
 """
+
 import os
+import sys
 import re
 import json
+import traceback
 import requests
 import typer
 from halo import Halo
 import ARgorithmToolkit
-from ARgorithmToolkit.parser import ARgorithmConfig,ValidationError,input_data
 from ARgorithmToolkit.security import injection_check,execution_check
+from ARgorithmToolkit.parser import input_data,create,validateconfig,ValidationError
 
 CLOUD_URL = "https://argorithm.el.r.appspot.com"
 CACHE_DIR = typer.get_app_dir("ARgorithm")
 
-if not os.path.isdir(CACHE_DIR):
-    os.mkdir(CACHE_DIR)
+app = typer.Typer(help="ARgorithm CLI")
 
 class Messager():
-    """Class for pretty printing messages using typer
-    """
+    """Class for pretty printing messages using typer."""
     def msg(self,tag:str,title:str,message:str,color:str):
-        """Pretty messaging for standard log messages
-        """
+        """Pretty messaging for standard log messages."""
         code = typer.style(f"[{tag.upper()}]: {title.upper()}" , fg=color , bold=True)
         typer.echo(code)
         if message:
             typer.echo(message)
 
     def info(self,title:str,message:str=""):
-        """Information message
-        """
+        """Information message."""
         self.msg("info",title,message,typer.colors.BLUE)
 
     def warn(self,title:str,message:str=""):
-        """Warning message
-        """
+        """Warning message."""
         self.msg("error",title,message,typer.colors.YELLOW)
 
     def fail(self,title:str,message:str=""):
-        """Error message
-        """
+        """Error message."""
         self.msg("critical error",title,message,typer.colors.RED)
 
     def good(self,title:str,message:str=""):
-        """Success message
-        """
+        """Success message."""
         self.msg("success",title,message,typer.colors.GREEN)
 
     def menuitem(self,argorithm):
-        """pretty print argorithm details
-        """
-        head = typer.style(f"- {argorithm['argorithmID']}",fg=typer.colors.GREEN)
+        """pretty print argorithm details."""
+        head = typer.style(f"- {argorithm['argorithmID']}",fg=typer.colors.GREEN,bold=True)
         typer.echo(head)
-        typer.secho(f"\tby {argorithm['maintainer']}",fg=typer.colors.CYAN)
-        typer.echo("\tParameters")
-        for key in argorithm['parameters']:
-            typer.echo(f"\t\t{key} : {argorithm['parameters'][key]['description']}")
+        typer.secho(f"by {argorithm['maintainer']}",fg=typer.colors.CYAN)
+        if argorithm['description']:
+            typer.echo(f"{argorithm['description']}")
+        if argorithm['parameters']:
+            typer.echo("Parameters")
+            for key in argorithm['parameters']:
+                if argorithm['parameters'][key]['description']:
+                    typer.echo(f"- {key} : {argorithm['parameters'][key]['description']}")
+                else:
+                    typer.echo(f"- {key}")
+        typer.echo()
 
     def state(self,states):
-        """pretty print states
-        """
+        """pretty print states."""
         states = states['data']
         for state in states:
             typer.echo('\n'+'-'*50)
@@ -74,15 +78,13 @@ class Messager():
 
 msg = Messager()
 
+
 class Settings():
-    """handles endpoint settings"""
-    local:bool = False
+    """handles connection endpoints."""
     endpoint:str=CLOUD_URL
 
     def get_endpoint(self):
-        """returns required endpoint"""
-        if self.local:
-            return "http://127.0.0.1"
+        """returns required endpoint."""
         config_file = os.path.join(CACHE_DIR , "config")
         if os.path.isfile(config_file):
             with open(config_file,"r") as conf:
@@ -90,12 +92,12 @@ class Settings():
         return self.endpoint
 
     def set_endpoint(self,url):
-        """set up cloud endpoint"""
+        """set up cloud endpoint."""
         try:
             with Halo(text='Connecting', spinner='dots'):
-                rq = requests.get(url+"/argorithms/list")
+                rq = requests.get(url+"/argorithm")
             if rq.status_code == 200:
-                msg.good("Connected",f"Cloud requests will now go to {url}")
+                msg.good("Connected",f"web requests will now go to {url}")
             else:
                 raise AttributeError("Not a server endpoint")
         except ValueError as ve:
@@ -106,24 +108,22 @@ class Settings():
             raise typer.Exit(1) from ex
         except Exception as ex:
             msg.fail("Endpoint couldnt be found.")
+            print(ex)
             raise typer.Exit(2) from ex
         config_file = os.path.join(CACHE_DIR , "config")
         with open(config_file,'w') as config:
             config.write(url)
 
-settings = Settings()
+app_settings = Settings()
 
 class AuthManager():
-    """AuthManager handles authentication tokens for AUTH enabled servers
-    """
+    """Handles authentication."""
     def __init__(self):
-        """sets up credfile to store credentials
-        """
+        """sets up credfile to store credentials."""
         self.credfile = os.path.join(CACHE_DIR,".credentials")
 
     def register(self):
-        """registers account
-        """
+        """registers account."""
         email = typer.prompt("Enter email address")
         msg.info("Password criteria",'- between 8 to 25 characters\n - contains atleast one number\n - contains atleast lower case alphabet\n - contains atleast uppercase alphabet')
         rules = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,25}$"
@@ -132,7 +132,7 @@ class AuthManager():
             msg.warn("password unacceptable")
             typer.Exit(1)
             return
-        url = settings.get_endpoint()+'/programmers/register'
+        url = app_settings.get_endpoint()+'/programmers/register'
         data = {
             "username" : email,
             "password" : password
@@ -148,15 +148,14 @@ class AuthManager():
             return
         if rq.status_code == 409:
             msg.warn("Invalid email","email is already in use. Try login")
-            typer.Exit(0)
+            raise typer.Exit(0)
         msg.fail("Error","Contact developer")
 
     def login_prompt(self):
-        """login prompt to enter credentials
-        """
+        """login prompt to enter credentials."""
         email = typer.prompt("Enter email address")
         password = typer.prompt("Enter password",hide_input=True)
-        url = f"{settings.get_endpoint()}/programmers/login"
+        url = f"{app_settings.get_endpoint()}/programmers/login"
         data = {
             "username" : email,
             "password" : password
@@ -173,6 +172,8 @@ class AuthManager():
             msg.fail("Server error","contact developer")
         elif rq.status_code == 401:
             msg.warn("incorrect password")
+        elif rq.status_code == 402:
+            msg.warn("please verify account first")
         elif rq.status_code == 200:
             msg.good("logged in successfully","credentials saved in cache")
             token = json.loads(rq.content)['access_token']
@@ -181,10 +182,9 @@ class AuthManager():
             return token
         raise typer.Exit(1)
 
-    def get_token(self):
-        """returns valid authorization token
-        """
-        url = settings.get_endpoint()
+    def get_token(self,flag=False):
+        """returns valid authorization token."""
+        url = app_settings.get_endpoint()
         if os.path.isfile(self.credfile):
             with open(self.credfile,'r') as cred:
                 token = cred.read()
@@ -195,18 +195,30 @@ class AuthManager():
                 msg.fail("Connection failed",str(rqe))
                 raise typer.Abort()
             if rq.status_code == 200:
-                return token
-            msg.warn("Token expired","Please enter login credentials again")
+                override = False
+                if flag:
+                    override = typer.confirm("Found existing valid token. do you want to login again?")
+                if not override:
+                    return token
+            else:
+                msg.warn("Valid credentials not found","Please enter login credentials again")
         token = self.login_prompt()
         with open(self.credfile,'w+') as cred:
             cred.write(token)
         return token
 
+    def get_header(self):
+        """Get authentication header."""
+        header=None
+        if self.auth_check():
+            token = self.get_token()
+            header={"authorization":"Bearer "+token}
+        return header
+
     def auth_check(self):
-        """checks if AUTH is enabled on server
-        """
+        """checks if AUTH is enabled on server."""
         try:
-            url = settings.get_endpoint() + "/auth"
+            url = app_settings.get_endpoint() + "/auth"
             try:
                 with Halo(text='Connecting', spinner='dots'):
                     rq = requests.get(url)
@@ -220,21 +232,18 @@ class AuthManager():
             msg.warn("authentication error",str(ex))
             raise typer.Abort()
 
+    def remove_token(self):
+        """logout by deleting access token."""
+        try:
+            os.remove(self.credfile)
+            msg.good("Logged out")
+        except Exception:
+            msg.warn("No credentials found")
+
 authmanager = AuthManager()
 
-app = typer.Typer(help="ARgorithm CLI")
-
-@app.callback()
-def main(
-        local:bool = typer.Option(False,"--local",'-l',help="Connects to server running on localhost",show_default=False)
-    ):
-    """callback that adds the local option to app
-    """
-    settings.local = local
-
 def name_check(value:str):
-    """checks validity of argorithmID
-    """
+    """checks validity of argorithmID."""
     rules = r"^[A-Za-z_]+$"
     m = re.search(rules,value)
     if m is None:
@@ -242,16 +251,141 @@ def name_check(value:str):
         raise typer.Exit(code=1)
     return value
 
+def autocomplete(incomplete:str):
+    """autocomplete function for finding argorithms."""
+    local_directory , incomplete  = os.path.split(incomplete)
+    if local_directory == '':
+        local_directory = '.'
+    files = os.listdir(local_directory)
+    res = []
+    l = len(incomplete)
+    for filename in files:
+        if filename[:l] == incomplete and filename[-3:] == '.py':
+            if local_directory == '.':
+                res.append(filename)
+            else:
+                res.append(os.path.join(local_directory,filename))
+    return res
+
+class CodeManager():
+    """Handles file verification, testing and submissions."""
+    def __init__(self,filename):
+        """gets filepath for code file and config file."""
+        directory , argorithm_file = os.path.split(filename)
+        argorithmID = name_check(argorithm_file[:-3])
+        directory = os.getcwd() if not directory else directory
+        self.codepath = os.path.join(directory,argorithm_file)
+        self.configpath = os.path.join(directory,argorithmID+".config.json")
+        if not os.path.isfile(self.codepath):
+            msg.warn("Python file not found",'use the init command first')
+            raise typer.Abort()
+        if not os.path.isfile(self.configpath):
+            msg.warn("config file not found",'use the configure command first')
+            raise typer.Abort()
+
+    def verify(self):
+        """checks whether files are valid or not."""
+        injection_check(self.codepath)
+        validateconfig(self.configpath)
+
+    def test(self,prompt:bool=False):
+        """Execute code locally."""
+        try:
+            with open(self.configpath,'r') as configfile:
+                config = json.load(configfile)
+                parameters = config['example']
+            if prompt:
+                user = typer.confirm("Do you want to add user input?")
+                if user:
+                    parameters = input_data(config['parameters'])
+            if parameters and prompt:
+                typer.echo("using parameters:")
+                for key in parameters:
+                    typer.echo(f"- {key} : {parameters[key]}")
+            return execution_check(self.codepath,self.configpath,parameters)
+        except AssertionError:
+            msg.warn("Execution Failed","execution should return ARgorithmToolkit.StateSet")
+            raise typer.Exit(1)
+        except Exception:
+            msg.warn("Execution Failed")
+            traceback.print_exception(*sys.exc_info())
+            raise typer.Exit(1)
+
+    def generate_submission(self):
+        """Generate the files for submission."""
+        _ , local_file = os.path.split(self.codepath)
+        with open(self.configpath,'r') as configfile:
+            data = json.load(configfile)
+        files = [
+            ('file', (local_file, open(self.codepath, 'rb'), 'application/octet')),
+            ('data', ('data', json.dumps(data), 'application/json')),
+        ]
+        header = authmanager.get_header()
+        return files,header
+
+    def submit(self):
+        """Submit code to server."""
+        files,header = self.generate_submission()
+        url = app_settings.get_endpoint()+"/argorithms/insert"
+        try:
+            with Halo(text='Connecting', spinner='dots'):
+                rq = requests.post(url,files=files,headers=header)
+        except requests.RequestException as rqe:
+            msg.fail("Connection failed",str(rqe))
+            raise typer.Abort()
+        if rq.status_code == 200:
+            msg.good("Submitted")
+        elif rq.status_code == 409:
+            msg.warn("Already exists","An argorithm with this name already exists,try another argorithm name")
+        elif rq.status_code == 406:
+            msg.warn("File name was invalid","The name shoud be of type [A-Za-z_]")
+        elif rq.status_code == 400:
+            msg.warn("Incorrect file format","please refer documentation")
+        else:
+            msg.fail("Application error")
+
+    def update(self):
+        """Update code in servers."""
+        files,header = self.generate_submission()
+        url = app_settings.get_endpoint()+"/argorithms/update"
+        try:
+            with Halo(text='Connecting', spinner='dots'):
+                rq = requests.post(url,files=files,headers=header)
+        except requests.RequestException as rqe:
+            msg.fail("Connection failed",str(rqe))
+            raise typer.Abort()
+        if rq.status_code == 200:
+            msg.good("updated")
+        elif rq.status_code == 404:
+            msg.warn("Not found","Try submit command to add argorithm to server")
+        elif rq.status_code == 401:
+            msg.warn("Unauthorized","Only author of argorithm or admin is allowed to alter argorithms")
+        else:
+            msg.fail("Application error")
+
+@app.command()
+def connect(
+    local:bool = typer.Option(False,"--local",'-l',help="Connects to server running on localhost",show_default=False)
+):
+    """Connect to your endpoint.
+
+    More info at https://argorithm.github.io/toolkit/cli#connect
+    """
+    if local:
+        endpoint = "http://localhost"
+    else:
+        endpoint = typer.prompt("Enter server endpoint",default=app_settings.get_endpoint())
+    app_settings.set_endpoint(endpoint)
+
 @app.command()
 def init(
-        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check),
-        create_config:bool = typer.Option(False,'--config','-c',help="creates blank config file as well",show_default=False)
+        name:str = typer.Argument(...,help="The name given to the argorithm [A-Za-z_]",callback=name_check)
     ):
-    """
-    Create Blank code template and config template for ARgorithm
+    """Create Blank code template and config template for ARgorithm.
+
+    More info at https://argorithm.github.io/toolkit/cli#init
     """
     typer.echo(f"Creating empty template for {name}")
-
     with open(os.path.join(ARgorithmToolkit.__path__[0],'data/template.py',),'rb') as template:
         starter = template.read()
 
@@ -259,179 +393,126 @@ def init(
     with open(filename , "wb") as codefile:
         codefile.write(starter)
 
-    if create_config:
-        config = {
-            "argorithmID" : name,
-            "file" : name+".py",
-            "function" : "run",
-            "parameters" : {},
-            "default" : {},
-            "description" : ""
-        }
-        config_file=f"{name}.config.json"
-        with open(config_file, "w") as configfile:
-            json.dump(config,configfile)
-
-    msg.good("Template generated","refer documentation at https://argorithm.github.io/toolkit/ to learn how to use it\nchech out examples at https://github.com/ARgorithm/toolkit/tree/master/examples")
+    msg.good("Template generated","refer documentation at https://argorithm.github.io/toolkit")
 
 @app.command()
-def connect():
-    """
-    Connect to your endpoint
-    """
-    endpoint = typer.prompt("Enter server endpoint",default=settings.get_endpoint())
-    settings.set_endpoint(endpoint)
-
-def autocomplete(incomplete:str):
-    """autocomplete function for finding argorithms"""
-    files = os.listdir('.')
-    res = []
-    l = len(incomplete)
-    for filename in files:
-        if filename[:l] == incomplete and filename[-3:] == '.py':
-            res.append(filename[:-3])
-    return res
-
-def file_reader(filename):
-    """finds anf checks argorithm files"""
-    directory = os.getcwd()
-    if os.path.isfile( os.path.join(directory,filename+".py")):
-        try:
-            data = ARgorithmConfig(f"{filename}.config.json")
-            injection_check(os.path.join(directory,filename+".py"))
-        except FileNotFoundError:
-            msg.warn("config missing",f"you can use edit the {filename}.config.json \nor use CLI based config generator")
-            raise typer.Exit()
-        except ValidationError:
-            msg.warn("config file is not configured properly","try the configure command to fix it \ncheck out docs for more info")
-            raise typer.Exit(1)
-        except ARgorithmToolkit.ARgorithmError:
-            msg.warn("possible code injection","- remove imports other than ARgorithmToolkit\n- rename user-defined objects,classes and functions")
-            raise typer.Exit(1)
-    else:
-        msg.warn(f"{filename}.py not found")
-        raise typer.Exit(1)
-    msg.good("Files Verified")
-    try:
-        execution_check(os.path.join(directory,filename+".py"),data.config)
-    except AssertionError:
-        msg.warn('Testing Failed','Function should return ARgorithmToolkit.StateSet object')
-        raise typer.Exit(1)
-    except Exception:
-        msg.warn('Testing Failed','ARgorithm execution with example kwargs failed')
-        raise typer.Exit(1)
-    msg.good("Files Tested")
-    return data.config
-
-@app.command()
-def configure(filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+def configure(
+    filepath:str=typer.Argument(... , help="The code file to be configured" , autocompletion=autocomplete),
+    blank:bool=typer.Option(False,'-b','--blank',help="create blank config file"),
+    validate:bool=typer.Option(False,'-v','--validate',help="only validate existing config file,Dont create")
     ):
-    """Starts CLI config generator"""
-    codefile = filename.split('.')[0] + ".py"
-    if not os.path.isfile(os.path.join(os.getcwd(),codefile)):
+    """Create configuration file for argorithm.
+
+    More info at https://argorithm.github.io/toolkit/cli#configure
+    """
+    directory,filename = os.path.split(filepath)
+    name = filename[:-3]
+    if not os.path.isfile(filepath):
         msg.warn("Python file not found",'use the init command first')
         raise typer.Abort()
-    filepath = filename.split('.')[0] + ".config.json"
+    configpath = os.path.join(os.getcwd(),directory,name+".config.json")
     try:
-        existing_config = {
-            "argorithmID" : filename,
-            "file" : filename+".py",
-            "function" : "run",
-            "parameters" : {},
-            "default" : {},
-            "description" : ""
-        }
-        if os.path.isfile( os.path.join(os.getcwd() , f"{filepath}") ):
-            with open(os.path.join(os.getcwd(), f"{filepath}") , 'r') as configfile:
-                existing_config = json.load(configfile)
-            os.remove(os.path.join(os.getcwd() , f"{filepath}"))
-        ARgorithmConfig(filepath)
+        validateconfig(configpath)
+        typer.echo("Valid config file found")
+        if not blank:
+            if not validate:
+                redo = typer.confirm(f"Do you remake the {name}.config.json?")
+                if redo:
+                    create(configpath)
+            raise typer.Exit(0)
+    except ValidationError:
+        if not validate and not blank:
+            create(configpath)
+            raise typer.Exit(0)
     except FileNotFoundError:
-        msg.warn("Operation cancelled by user")
-        with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
-            json.dump(existing_config,configfile)
-        typer.Abort()
-    except Exception:
-        msg.fail("Some error occured, try again")
-        with open(os.path.join(os.getcwd(), f"{filepath}") , 'w') as configfile:
-            json.dump(existing_config,configfile)
+        if validate:
+            msg.warn("Config file not found")
+            raise typer.Exit(0)
+        if not blank:
+            create(configpath)
+            raise typer.Exit(0)
+    config = {
+        "argorithmID" : name,
+        "file" : name+".py",
+        "function" : "run",
+        "parameters" : {},
+        "example" : {},
+        "description" : ""
+    }
+    with open(configpath, "w") as configfile:
+        json.dump(config,configfile,indent=4)
+
 
 @app.command()
 def submit(
-        filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+        filename:str=typer.Argument(... , help="The code file to be submitted" , autocompletion=autocomplete)
     ):
-    """submit argorithms to server"""
+    """Submit argorithms to server.
 
-    filename = filename.split('.')[0]
-    data = file_reader(filename)
-
-    header=None
-    if authmanager.auth_check():
-        token = authmanager.get_token()
-        header={"authorization":"Bearer "+token}
-
-    url = settings.get_endpoint()+"/argorithms/insert"
-    local_file = filename+".py"
-    files = [
-        ('file', (local_file, open(local_file, 'rb'), 'application/octet')),
-        ('data', ('data', json.dumps(data), 'application/json')),
-    ]
-    try:
-        with Halo(text='Connecting', spinner='dots'):
-            rq = requests.post(url,files=files,headers=header)
-    except requests.RequestException as rqe:
-        msg.fail("Connection failed",str(rqe))
-        raise typer.Abort()
-    if rq.status_code == 200:
-        msg.good("Submitted")
-    elif rq.status_code == 409:
-        msg.warn("Already exists","An argorithm with this name already exists,try another argorithm name")
-    elif rq.status_code == 406:
-        msg.warn("File name was invalid","The name shoud be of type [A-Za-z_]")
-    elif rq.status_code == 400:
-        msg.warn("Incorrect file format","please refer documentation")
-    else:
-        msg.fail("Application error")
+    More info at https://argorithm.github.io/toolkit/cli#submit
+    """
+    code = CodeManager(filename)
+    with Halo(text='Verifying', spinner='dots'):
+        code.verify()
+    msg.good("Files verified")
+    with Halo(text='Testing', spinner='dots'):
+        code.test(prompt=False)
+    msg.good("Files verified")
+    code.submit()
 
 @app.command()
 def update(
-        filename:str=typer.Argument(... , help="name of argorithm" , autocompletion=autocomplete)
+        filename:str=typer.Argument(... , help="The code file to be submitted" , autocompletion=autocomplete)
     ):
-    """updates pre existing argorithms to server"""
+    """Updates pre existing argorithms at server.
 
-    filename = filename.split('.')[0]
-    data = file_reader(filename)
+    More info at https://argorithm.github.io/toolkit/cli#update
+    """
+    code = CodeManager(filename)
+    with Halo(text='Verifying', spinner='dots'):
+        code.verify()
+    msg.good("Files verified")
+    with Halo(text='Testing', spinner='dots'):
+        code.test(prompt=False)
+    msg.good("Files verified")
+    code.update()
 
-    header=None
-    if authmanager.auth_check():
-        token = authmanager.get_token()
-        header={"authorization":"Bearer "+token}
 
-    url = settings.get_endpoint()+"/argorithms/update"
-    local_file = filename+".py"
-    files = [
-        ('file', (local_file, open(local_file, 'rb'), 'application/octet')),
-        ('data', ('data', json.dumps(data), 'application/json')),
-    ]
+@app.command()
+def delete(
+    argorithm_id:str = typer.Argument(... , help="argorithmID of function to be deleted.")
+    ):
+    """Deletes argorithm from server.
+
+    More info at https://argorithm.github.io/toolkit/cli#delete
+    """
+    params = search(argorithm_id)
+    flag = typer.confirm("Are you sure you want to delete it?")
+    if not flag:
+        typer.echo("Not deleting")
+        raise typer.Abort()
+    header=authmanager.get_header()
+
+    data = {
+        "argorithmID" : params["argorithmID"],
+    }
+    url = app_settings.get_endpoint()+"/argorithms/delete"
     try:
         with Halo(text='Connecting', spinner='dots'):
-            rq = requests.post(url,files=files,headers=header)
+            rq = requests.post(url,json=data,headers=header)
     except requests.RequestException as rqe:
         msg.fail("Connection failed",str(rqe))
         raise typer.Abort()
     if rq.status_code == 200:
-        msg.good("updated")
-    elif rq.status_code == 404:
-        msg.warn("Not found","Try submit command to add argorithm to server")
+        msg.info("Deleted successfully",)
     elif rq.status_code == 401:
-        msg.warn("Unauthorized","Only author of argorithm or admin is allowed to alter argorithms")
+        msg.warn("Not authorized","only author of argorithm or admin can delete it")
     else:
-        msg.fail("Application error")
+        msg.fail("application error")
 
 def search(argid,show=True):
-    """Searches argorithm on server
-    """
-    url = settings.get_endpoint()+"/argorithms/view/"+argid
+    """Searches argorithm on server."""
+    url = app_settings.get_endpoint()+"/argorithms/view/"+argid
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.get(url)
@@ -452,9 +533,11 @@ def search(argid,show=True):
 
 @app.command("list")
 def list_argorithms():
-    """Get list of argorithms in server
+    """Get list of argorithms in server.
+
+    More info at https://argorithm.github.io/toolkit/cli#list
     """
-    url = settings.get_endpoint()+"/argorithms/list"
+    url = app_settings.get_endpoint()+"/argorithms/list"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.get(url)
@@ -473,15 +556,14 @@ def list_argorithms():
 def test(
     argorithm_id:str = typer.Argument(... , help="argorithmID of function to be called. If not passed then menu will be presented"),
     output:bool = typer.Option(False,'--output','-o',help="print results in json format",show_default=False),
-    user_input:bool = typer.Option(False,'--user-input','-u',help="if present, takes input from user",show_default=False)
+    user_input:bool = typer.Option(False,'--user-input','-u',help="if present, takes input from user",show_default=False),
     ):
-    """test argorithms stored in server
+    """Test argorithms stored in server.
+
+    More info at https://argorithm.github.io/toolkit/cli#test
     """
     params = search(argorithm_id,show=not output)
-    header=None
-    if authmanager.auth_check():
-        token = authmanager.get_token()
-        header={"authorization":"Bearer "+token}
+    header=authmanager.get_header()
 
     data = {
         "argorithmID" : params["argorithmID"],
@@ -489,7 +571,7 @@ def test(
     }
     if user_input:
         data["parameters"] = input_data(params["parameters"])
-    url = settings.get_endpoint()+"/argorithms/run"
+    url = app_settings.get_endpoint()+"/argorithms/run"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.post(url,json=data,headers=header)
@@ -507,83 +589,77 @@ def test(
         msg.fail("application error")
 
 @app.command()
-def delete(
-    argorithm_id:str = typer.Argument(... , help="argorithmID of function to be called. If not passed then menu will be presented")
+def execute(
+    filename:str=typer.Argument(... , help="The code file to be submitted" , autocompletion=autocomplete)
     ):
-    """Deletes argorithm from server
-    """
-    params = search(argorithm_id)
-    flag = typer.confirm("Are you sure you want to delete it?")
-    if not flag:
-        typer.echo("Not deleting")
-        raise typer.Abort()
-    header=None
-    if authmanager.auth_check():
-        token = authmanager.get_token()
-        header={"authorization":"Bearer "+token}
+    """Execute locally stored ARgorithms.
 
-    data = {
-        "argorithmID" : params["argorithmID"],
-    }
-    url = settings.get_endpoint()+"/argorithms/delete"
-    try:
-        with Halo(text='Connecting', spinner='dots'):
-            rq = requests.post(url,json=data,headers=header)
-    except requests.RequestException as rqe:
-        msg.fail("Connection failed",str(rqe))
-        raise typer.Abort()
-    if rq.status_code == 200:
-        msg.info("Deleted successfully",)
-    elif rq.status_code == 401:
-        msg.warn("Not authorized","only author of argorithm or admin can delete it")
-    else:
-        msg.fail("application error")
+    More info at https://argorithm.github.io/toolkit/cli#execute
+    """
+    code = CodeManager(filename)
+    code.verify()
+    states = [x.content for x in code.test(prompt=True)]
+    msg.state({"data" : states})
 
 
 account_app = typer.Typer(help="Manages account")
 app.add_typer(account_app,name="account")
 
 @account_app.command()
-def login(
-        override:bool=typer.Option(False,'--override','-o',show_default=False,help="Enter new credentials")
-    ):
-    """Log in to ARgorithmServer. Only is AUTH is enabled on server.
+def login():
+    """Log in to ARgorithmServer.
+
+    Only is AUTH is enabled on server. More info at
+    https://argorithm.github.io/toolkit/cli#login
     """
     if not authmanager.auth_check():
         msg.warn("AUTH disabled at server")
         raise typer.Exit(0)
-    if override:
-        authmanager.login_prompt()
-    else:
-        authmanager.get_token()
+    authmanager.get_token(flag=True)
 
 @account_app.command()
-def new():
-    """Create new programmer and user account in ARgorithmServer. Only is AUTH is enabled on server.
+def signup():
+    """Create new programmer and user account in ARgorithmServer.
+
+    Only is AUTH is enabled on server. More info at
+    https://argorithm.github.io/toolkit/cli#signup
     """
     if not authmanager.auth_check():
         msg.warn("AUTH disabled at server")
         raise typer.Exit(0)
     authmanager.register()
 
+@account_app.command()
+def logout():
+    """Remove pre-existing login credentials.
+
+    More info at https://argorithm.github.io/toolkit/cli#logout
+    """
+    authmanager.remove_token()
+
 admin_app = typer.Typer(help="Administrator level methods")
 app.add_typer(admin_app,name="admin")
+
+@admin_app.callback()
+def admin_auth_check():
+    """Check if auth is enabled for admin routes."""
+    if not authmanager.auth_check():
+        msg.warn("AUTH is disabled at this endpoint")
+        raise typer.Exit(1)
 
 @admin_app.command()
 def grant(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access")
     ):
-    """grants admin acess
+    """Grants admin acess.
+
+    More info at https://argorithm.github.io/toolkit/cli#grant
     """
-    if not authmanager.auth_check():
-        msg.warn("AUTH is disabled at this endpoint")
-        raise typer.Exit(1)
     data = {
         "email" : email
     }
-    token = authmanager.get_token()
-    header={"authorization":"Bearer "+token}
-    url = settings.get_endpoint()+"/admin/grant"
+    header=authmanager.get_header()
+    url = app_settings.get_endpoint()+"/admin/grant"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.post(url,json=data,headers=header)
@@ -603,19 +679,17 @@ def grant(
 
 @admin_app.command()
 def revoke(
-        email:str=typer.Argument( ... , help="The account email that would be granted admin access")
+        email:str=typer.Argument( ... , help="The account email that would be lose admin access")
     ):
-    """grants admin acess
+    """Revokes admin acess.
+
+    More info at https://argorithm.github.io/toolkit/cli#revoke
     """
-    if not authmanager.auth_check():
-        msg.warn("AUTH is disabled at this endpoint")
-        raise typer.Exit(1)
     data = {
         "email" : email
     }
-    token = authmanager.get_token()
-    header={"authorization":"Bearer "+token}
-    url = settings.get_endpoint()+"/admin/revoke"
+    header=authmanager.get_header()
+    url = app_settings.get_endpoint()+"/admin/revoke"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.post(url,json=data,headers=header)
@@ -634,22 +708,21 @@ def revoke(
 @admin_app.command("delete")
 def account_delete(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access"),
-        programmer:bool=typer.Option(False,'-p','--programmer',help="If flag is present, it will delete the programmer account")
+        user:bool=typer.Option(False,'-u','--user',help="If flag is present, it will delete the user account")
     ):
-    """Deletes account. Requires admin priveleges
+    """Deletes account.
+
+    Requires admin priveleges. More info at
+    https://argorithm.github.io/toolkit/cli#delete_1
     """
-    if not authmanager.auth_check():
-        msg.warn("AUTH is disabled at this endpoint")
-        raise typer.Exit(1)
     data = {
         "email" : email
     }
-    token = authmanager.get_token()
-    header={"authorization":"Bearer "+token}
-    if programmer:
-        url = settings.get_endpoint()+"/admin/delete_programmer"
+    header=authmanager.get_header()
+    if user:
+        url = app_settings.get_endpoint()+"/admin/delete_user"
     else:
-        url = settings.get_endpoint()+"/admin/delete_user"
+        url = app_settings.get_endpoint()+"/admin/delete_programmer"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.post(url,json=data,headers=header)
@@ -669,17 +742,16 @@ def account_delete(
 def blacklist(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access")
     ):
-    """blacklists account. Requires admin priveleges
+    """Blacklists account.
+
+    Requires admin priveleges. More info at
+    https://argorithm.github.io/toolkit/cli#blacklist
     """
-    if not authmanager.auth_check():
-        msg.warn("AUTH is disabled at this endpoint")
-        raise typer.Exit(1)
     data = {
         "email" : email
     }
-    token = authmanager.get_token()
-    header={"authorization":"Bearer "+token}
-    url = settings.get_endpoint()+"/admin/black_list"
+    header=authmanager.get_header()
+    url = app_settings.get_endpoint()+"/admin/black_list"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.post(url,json=data,headers=header)
@@ -699,17 +771,16 @@ def blacklist(
 def whitelist(
         email:str=typer.Argument( ... , help="The account email that would be granted admin access")
     ):
-    """whitelist accounts. Requires admin priveleges
+    """Whitelist accounts.
+
+    Requires admin priveleges. More info at
+    https://argorithm.github.io/toolkit/cli#whitelist
     """
-    if not authmanager.auth_check():
-        msg.warn("AUTH is disabled at this endpoint")
-        raise typer.Exit(1)
     data = {
         "email" : email
     }
-    token = authmanager.get_token()
-    header={"authorization":"Bearer "+token}
-    url = settings.get_endpoint()+"/admin/white_list"
+    header=authmanager.get_header()
+    url = app_settings.get_endpoint()+"/admin/white_list"
     try:
         with Halo(text='Connecting', spinner='dots'):
             rq = requests.post(url,json=data,headers=header)

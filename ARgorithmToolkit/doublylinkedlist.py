@@ -12,7 +12,6 @@ These three classes can be directly imported from the toolkit:
     >>> dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     >>> dll = ARgorithmToolkit.DoublyLinkedList("dllnode",algo)
     >>> dl = ARgorithmToolkit.List("dl",algo)
-
 """
 
 from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
@@ -186,7 +185,6 @@ class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
         >>> temp = = ARgorithmToolkit.DoublyLinkedListNode(algo,6)
         >>> temp.next = dllnode
         >>> dllnode.prev = temp
-
     """
 
     def __init__(self,algo:StateSet,value=None,comments=""):
@@ -384,7 +382,6 @@ class DoublyLinkedList(ARgorithmStructure, ARgorithmHashable):
         >>> dll = ARgorithmToolkit.DoublyLinkedList("llnode",algo)
         >>> dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
         >>> dll.head = llnode
-
     """
 
     def __init__(self,name:str,algo:StateSet,head=None,comments=""):
@@ -483,7 +480,6 @@ class List(DoublyLinkedList):
         >>> lis = ARgorithmToolkit.List("list",algo)
         >>> lis
         List([])
-
     """
 
     def __init__(self,name:str,algo:StateSet,comments=""):
@@ -499,7 +495,6 @@ class List(DoublyLinkedList):
         Example:
 
             >>> len(lis)
-
         """
         return self.size
 
@@ -519,7 +514,6 @@ class List(DoublyLinkedList):
             >>> lis.insert(2,1)
             >>> lis
             List([1, 2, 3])
-
         """
         if self.size == 0 or index == 0:
             self.push_front(value)
@@ -579,7 +573,6 @@ class List(DoublyLinkedList):
             >>> lis.push_back(3)
             >>> lis
             List([1, 3])
-
         """
         curr = DoublyLinkedListNode(self.algo,value)
         if self.tail:
@@ -610,7 +603,6 @@ class List(DoublyLinkedList):
             5
             >>> lis
             List([1, 2, 3, 7])
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -639,7 +631,6 @@ class List(DoublyLinkedList):
             7
             >>> lis
             List([1, 2, 3])
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -669,7 +660,6 @@ class List(DoublyLinkedList):
             1
             >>> lis
             List([1, 2, 3])
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -692,7 +682,6 @@ class List(DoublyLinkedList):
             3
             >>> lis
             List([2, 3, 5, 4, 4, 3, 3])
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -708,7 +697,6 @@ class List(DoublyLinkedList):
 
             >>> [x for x in lis]
             [2, 3, 5, 4, 4, 3, 3]
-
         """
         return ListIterator(self)
 
@@ -728,7 +716,6 @@ class List(DoublyLinkedList):
             >>> lis.remove(3)
             >>> lis
             List([2, 5, 4, 4])
-
         """
         if self.head is None:
             raise ARgorithmError("Empty list")
@@ -764,7 +751,6 @@ class List(DoublyLinkedList):
             List([2, 5, 4, 4])
             >>> lis.tolist()
             [2, 5, 4, 4]
-
         """
         curr = self.head
         data = []

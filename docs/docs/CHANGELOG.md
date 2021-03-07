@@ -1,3 +1,10 @@
+### 0.2.1
+
+- Dependecy fixes
+- Added a ClientError for programmers to use in the their code to raise errors
+- Expanded StateEncoder to handle numpy types
+- Refactored CLI to remove redundancies and bugs
+
 ## 0.2.0
 
 - Map and Set implementation

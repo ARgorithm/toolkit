@@ -175,7 +175,7 @@ class String(ARgorithmStructure, ARgorithmHashable):
         """
         return len(self.body)
 
-    def __getitem__(self,key,comments=""):
+    def __getitem__(self,key):
         """The operator overload for string indexing as well as string
         splicing.
 

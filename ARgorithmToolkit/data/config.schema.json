@@ -96,7 +96,7 @@
                         {
                             "properties" : {
                                 "type" : {
-                                    "const" : "ARRAY"
+                                    "const" : "MATRIX"
                                 },
                                 "description" : {
                                     "type" : "string"

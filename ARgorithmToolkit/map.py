@@ -1,10 +1,9 @@
-"""The map module provides support for hash-map or dictionary data structure for the Toolkit.
-It maps key to a value provided.
-Provides O(1) average case and O(n) amortized worst case complexity for element lookup.
-The main class in this module is the Map class. The
-other classes act as support class to Map class. For this reason the Map
-class can directly be imported from the ARgorithmToolkit library without having
-to import from the map module :
+"""The map module provides support for hash-map or dictionary data structure
+for the Toolkit. It maps key to a value provided. Provides O(1) average case
+and O(n) amortized worst case complexity for element lookup. The main class in
+this module is the Map class. The other classes act as support class to Map
+class. For this reason the Map class can directly be imported from the
+ARgorithmToolkit library without having to import from the map module :
 
     >>> map = ARgorithmToolkit.Map(name='map',algo=algo)
     >>> map = ARgorithmToolkit.map.Map(name='map',algo=algo)
@@ -27,8 +26,8 @@ class MapState:
         self._id = _id
 
     def map_declare(self, body, comments="") -> State:
-        """Generates the `map_declare` state when an instance of Map class
-        is created.
+        """Generates the `map_declare` state when an instance of Map class is
+        created.
 
         Args:
             body: The contents of the map that are to be sent along with the state
@@ -76,7 +75,8 @@ class MapState:
         )
 
     def map_set(self,body,key,value,last_value=None,comments="") -> State:
-        """Generates the `map_set` state when a particular key is set for a new value.
+        """Generates the `map_set` state when a particular key is set for a new
+        value.
 
         Args:
             body : The contents of the map that are to be sent along with the state
@@ -351,7 +351,7 @@ class Map(ARgorithmStructure):
         self.algo.add_state(state)
 
     def __iter__(self):
-        """Generates a iterator object to iterate the map key/value pairs
+        """Generates a iterator object to iterate the map key/value pairs.
 
         Returns:
             MapIterator: Iterator object
@@ -436,7 +436,7 @@ class Map(ARgorithmStructure):
         return f"Map({self.__working_dict.__repr__()})"
 
     def __str__(self) -> str:
-        """Return string conversion for map
+        """Return string conversion for map.
 
         Returns:
             str: string conversion for Map
@@ -444,7 +444,7 @@ class Map(ARgorithmStructure):
         return f"Map({self.__working_dict.__str__()})"
 
     def keys(self):
-        """Returns a list of key entries in the map
+        """Returns a list of key entries in the map.
 
         Returns:
             list: list of keys
@@ -453,7 +453,7 @@ class Map(ARgorithmStructure):
         return self.__working_dict.keys()
 
     def values(self):
-        """Returns a list of values in the map
+        """Returns a list of values in the map.
 
         Returns:
             list: list of values
