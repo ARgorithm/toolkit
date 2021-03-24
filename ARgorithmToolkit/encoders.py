@@ -31,7 +31,10 @@ class StateEncoder(JSONEncoder):
         """
         classes = inspect.getmembers(ARgorithmToolkit,inspect.isclass)
         classes = tuple([x for _,x in classes])
-        if isinstance(ARgorithmToolkit.Variable,classes) :
+        if isinstance(o, ARgorithmToolkit.State):
+            content = o.__dict__
+            return content
+        if isinstance(o, ARgorithmToolkit.Variable) :
             return super().default(o.value)
         if isinstance(o, classes):
             try:

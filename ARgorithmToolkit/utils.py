@@ -58,10 +58,10 @@ class State:
         comments (str) : Description of state event that can be given by user or auto-generated
         autoplay (bool) : Flag that suggested whether this state can automatically trigger the next in rendering process
     """
-    state_type:str = ""
-    state_def:dict = {}
-    comments:str = ""
-    autoplay:bool = False
+    state_type:str
+    state_def:dict
+    comments:str
+    autoplay:bool
 
     def __init__(self,**kwargs):
         for x in ['state_type','state_def','comments']:
@@ -71,6 +71,8 @@ class State:
                 raise ARgorithmError(f"{x} should be present in State arguments") from e
         if 'autoplay' in kwargs:
             self.autoplay = kwargs['autoplay']
+        else:
+            self.autoplay = False
 
     def __str__(self):
         content = {
