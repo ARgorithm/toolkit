@@ -19,7 +19,7 @@ def test_init():
     myset = ARgorithmToolkit.Set('myset',algo,vec)
 
     state = last_state(algo)
-    assert state['state_type'] == "set_declare"
+    assert state.state_type == "set_declare"
     assert myset.body == set([1,2,3])
 
 def test_add_remove_find():
@@ -42,8 +42,8 @@ def test_add_remove_find():
         pass
 
     state = last_state(algo)
-    assert state['state_type'] == "set_add"
-    assert state['comments'] == "adding an ARgorithmToolkit.String"
+    assert state.state_type == "set_add"
+    assert state.comments == "adding an ARgorithmToolkit.String"
 
     myset.remove(3,comments="remove 3")
     myset.remove(st,comments="remove ARgorithmToolkit.String object")
@@ -56,14 +56,14 @@ def test_add_remove_find():
     assert myset.body == set([3.14,'abc',True])
 
     state = last_state(algo)
-    assert state['state_type'] == "set_remove"
-    assert state['comments'] == "remove ARgorithmToolkit.String object"
+    assert state.state_type == "set_remove"
+    assert state.comments == "remove ARgorithmToolkit.String object"
 
     assert myset.find(3.14)
     assert not myset.find(3)
 
     state = last_state(algo)
-    assert state['state_type'] == "set_find"
+    assert state.state_type == "set_find"
 
 def test_union_intersection_difference():
     """test operations between sets"""
@@ -78,8 +78,8 @@ def test_union_intersection_difference():
     assert inter_set.body == set([2])
 
     state = last_state(algo)
-    assert state["state_type"] == "set_declare"
+    assert state.state_type == "set_declare"
     state = last_state(algo)
-    assert state["state_type"] == "set_declare"
+    assert state.state_type == "set_declare"
     state = last_state(algo)
-    assert state["state_type"] == "set_declare"
+    assert state.state_type == "set_declare"

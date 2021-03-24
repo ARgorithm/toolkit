@@ -9,7 +9,7 @@ def test_declare():
     """Test stack creation
     """
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "stack_declare"
+    assert last_state.state_type == "stack_declare"
 
 def test_operations():
     """Test stack operations
@@ -19,17 +19,17 @@ def test_operations():
     assert stack.body == [3,9]
 
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "stack_push"
-    assert last_state.content["state_def"]["body"] == stack.body
-    assert last_state.content["state_def"]["element"] == 9
+    assert last_state.state_type == "stack_push"
+    assert last_state.state_def["body"] == stack.body
+    assert last_state.state_def["element"] == 9
 
     assert stack.top() == 9
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "stack_top"
+    assert last_state.state_type == "stack_top"
 
     assert stack.top() == stack.pop()
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "stack_pop"
+    assert last_state.state_type == "stack_pop"
     assert stack.body == [3]
 
     stack.pop()

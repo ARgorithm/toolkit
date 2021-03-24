@@ -10,4 +10,4 @@ def last_state(algo):
         dict: The state metadata
     """
     state = algo.states.pop()
-    return state.content
+    return state

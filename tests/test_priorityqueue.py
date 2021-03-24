@@ -10,7 +10,7 @@ def test_declare():
     """Test priority queue creation
     """
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "priorityqueue_declare"
+    assert last_state.state_type == "priorityqueue_declare"
 
 def test_operations():
     """Test priority quque operations
@@ -28,19 +28,19 @@ def test_operations():
     assert queue_object.body[0] == (1, {"A":1})
 
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "priorityqueue_offer"
-    assert last_state.content["state_def"]["body"] == queue_object.body
-    assert last_state.content["state_def"]["element"] == (3,a)
+    assert last_state.state_type == "priorityqueue_offer"
+    assert last_state.state_def["body"] == queue_object.body
+    assert last_state.state_def["element"] == (3,a)
 
     assert queue.peek() == 3
     assert queue_object.peek() == (1, {"A":1})
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "priorityqueue_peek"
+    assert last_state.state_type == "priorityqueue_peek"
 
     assert queue.peek() == queue.poll()
     assert queue_object.peek() == queue_object.poll()
     last_state = algo.states[-1]
-    assert last_state.content["state_type"] == "priorityqueue_poll"
+    assert last_state.state_type == "priorityqueue_poll"
     queue.poll()
     queue_object.poll()
     assert queue.body == [9]
