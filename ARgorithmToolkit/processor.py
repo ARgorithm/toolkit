@@ -6,7 +6,6 @@ from ARgorithmToolkit.encoders import StateEncoder
 
 def post_process(algo:StateSet):
     size = len(algo.states)
-    
     if algo.autoplay is not None:
         for state in algo.states:
             state.autoplay = algo.autoplay

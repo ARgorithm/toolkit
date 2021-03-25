@@ -60,7 +60,7 @@ functions:
   - get:
       description: return map item by key
       function:
-        name: ARgorithmToolkit.set.Set.__getitem__
+        name: ARgorithmToolkit.map.Map.__getitem__
         parameters:
           required:
             - key
@@ -73,20 +73,20 @@ functions:
       state: None
  
   - set:
-    description: sets the value to a specific key
-    function: 
-      name: ARgorithmToolkit.map.Map.__setitem__
-    state: map_set
+      description: sets the value to a specific key
+      function: 
+        name: ARgorithmToolkit.map.Map.__setitem__
+      state: map_set
 
   - remove:
-    description: removes a key/value entry from map
-    function:
-      name: ARgorithmToolkit.map.Map.__delitem__
-    state: map_remove
+      description: removes a key/value entry from map
+      function:
+        name: ARgorithmToolkit.map.Map.__delitem__
+      state: map_remove
   
 
   - size:
-    description: returns the size of the dictionary (number of key/value pairs)
-    function:
-      name: ARgorithmToolkit.map.Map.__len__
-    state: None
+      description: returns the size of the dictionary (number of key/value pairs)
+      function:
+        name: ARgorithmToolkit.map.Map.__len__
+      state: None

@@ -7,7 +7,10 @@ from os.path import join
 
 def get_files():
     mypath = 'designs'
-    onlyfiles = [join(mypath,x) for x in listdir("designs") if x[-9:]=='design.yml']
+    onlyfiles = [join(mypath,x) for x in listdir("designs") if x[-10:]=='design.yml']
+    print("files found:")
+    for x in onlyfiles:
+        print(f"\t{x}")
     return onlyfiles
 
 def get_schema(x):
@@ -35,14 +38,14 @@ def check_schema(x):
         if r not in schema.keys():
             return "error"
     status = {
-        "class" : {},
+        "classes" : {},
         "functions" : {}
     }
-    classflag ='class' in schema
+    classflag ='classes' in schema
     if classflag:
-        for c in schema['class']:
+        for c in schema['classes']:
             loc = list(c.keys())[0]
-            status['class'][loc] = "present" if is_present(loc) else "error"
+            status['classes'][loc] = "present" if is_present(loc) else "error"
     for f in schema['functions']:
         func_name = list(f.keys())[0]
         function = f[func_name]['function']
@@ -63,7 +66,11 @@ if __name__ == "__main__":
     files = get_files()
     status = {}
     for x in files:
-        status[x] = check_schema(x)
+        try:
+            status[x] = check_schema(x)
+        except Exception as ex:
+            print(f"Validation error while parsing {x}")
+            raise SystemExit()
     flat_status = flatten_dict(status,separator="/")
     count = {
         "total" : 0,

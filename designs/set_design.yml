@@ -63,47 +63,47 @@ functions:
       state: set_add
 
   - remove:
-    description: removes a key entry from set
-    function:
-      name: ARgorithmToolkit.set.Set.remove
-      parameters:
-          required:
-            - key
-    state: set_remove
+      description: removes a key entry from set
+      function:
+        name: ARgorithmToolkit.set.Set.remove
+        parameters:
+            required:
+              - key
+      state: set_remove
 
   - find:
-    description: lookup key in set
-    function:
-      name: ARgorithmToolkit.set.Set.find
-      parameters:
-          required:
-            - key
-    state: set_lookup
+      description: lookup key in set
+      function:
+        name: ARgorithmToolkit.set.Set.find
+        parameters:
+            required:
+              - key
+      state: set_lookup
 
   - intersection:
-    description: find and create new set with intersection of the two sets
-    function:
-      name: ARgorithmToolkit.set.Set.intersection
-      parameters:
-        required:
-          - B (Set)
-    state: set_declare
+      description: find and create new set with intersection of the two sets
+      function:
+        name: ARgorithmToolkit.set.Set.intersection
+        parameters:
+          required:
+            - B (Set)
+      state: set_declare
 
   - union:
-    description: find and create new set with union of the two sets
-    function:
-      name: ARgorithmToolkit.set.Set.union
-      parameters:
-        required:
-          - B (Set)
-    state: set_declare
+      description: find and create new set with union of the two sets
+      function:
+        name: ARgorithmToolkit.set.Set.union
+        parameters:
+          required:
+            - B (Set)
+      state: set_declare
 
   - difference:
-    description: find and create new set with difference of the two sets
-    function:
-      name: ARgorithmToolkit.set.Set.difference
-      parameters:
-        required:
-          - B (Set)
-    state: set_declare
+      description: find and create new set with difference of the two sets
+      function:
+        name: ARgorithmToolkit.set.Set.difference
+        parameters:
+          required:
+            - B (Set)
+      state: set_declare
   
