@@ -74,6 +74,24 @@ class State:
         else:
             self.autoplay = False
 
+    def __eq__(self,other):
+        """Equality operator overload for State
+
+        Two states are equal if and only if state_def and state_type are the
+        same. This is useful for removing duplicate states
+
+        Args:
+            other (State): The state to be compared
+
+        Returns:
+            bool: True if both States are equivalent else False
+        """
+        if not isinstance(other,State):
+            raise TypeError(f"Instance of State cannot be compared with {type(other).__name__}")
+        cmp1 = self.state_type == other.state_type
+        cmp2 = self.state_def == other.state_def
+        return cmp1 and cmp2
+
     def __str__(self):
         content = {
             "state_type" : self.state_type,
@@ -119,7 +137,12 @@ class StateSet:
             >>> algo.add_state(state)
         """
         assert isinstance(state,State) , ARgorithmError("state should be of Type state")
-        self.states.append(state)
+        if len(self.states) == 0:
+            self.states.append(state)
+            return
+        last = self.states[-1]
+        if last != state and state.state_type != "comment":
+            self.states.append(state)
 
     def __str__(self):
         """String representation of StateSet.
