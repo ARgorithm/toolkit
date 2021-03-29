@@ -1,5 +1,4 @@
-"""Testing JSON Encoder for ARgorithm containers
-"""
+"""Testing JSON Encoder for ARgorithm containers."""
 import json
 import ARgorithmToolkit
 
@@ -16,8 +15,7 @@ s = ARgorithmToolkit.string.String(name="s",algo=algo,body="hello world")
 vec = ARgorithmToolkit.Vector(name='vec',algo=algo)
 
 def test_encoder():
-    """Tests serializability of all classes
-    """
+    """Tests serializability of all classes."""
     objects = [
         arr,dllnode,dll,ll,llnode,pq,q,s,vec,st
     ]

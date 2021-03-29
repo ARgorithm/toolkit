@@ -355,7 +355,7 @@ def size_ref(config,parameter_name,data_field):
                 "description" : f"defines {data_field} of {parameter_name} ({config['parameters'][parameter_name]['type']})",
                 "type" : "INT"
                 }
-            config = range_input(config,size)        
+            config = range_input(config,size)
     config["parameters"][parameter_name][data_field] = size
     return config
 
@@ -439,7 +439,7 @@ def create(filepath):
     config["function"] = function
 
     config["description"] = multiline_input_prompt('Enter ARgorithm Description')
-    
+
     config["parameters"] = {}
     typer.echo("Setting up parameters for your argorithm")
     typer.echo("input keywords are used to map the input passed to your function as kwargs")

@@ -1,4 +1,4 @@
-"""Test module for ARgorithmToolkit.Set"""
+"""Test module for ARgorithmToolkit.Set."""
 
 import ARgorithmToolkit
 from tests.utils import last_state
@@ -6,7 +6,7 @@ from tests.utils import last_state
 algo = ARgorithmToolkit.StateSet()
 
 def test_init():
-    """test set declaration"""
+    """test set declaration."""
     l = [1,2,3]
     t = (1,2,3)
     vec = ARgorithmToolkit.Vector('vec',algo,[1,2,3])
@@ -23,7 +23,7 @@ def test_init():
     assert myset.body == set([1,2,3])
 
 def test_add_remove_find():
-    """test internal set operations such as add,find,remove"""
+    """test internal set operations such as add,find,remove."""
     myset = ARgorithmToolkit.Set('myset',algo)
     myset.add(3)
     myset.add(3)
@@ -66,7 +66,7 @@ def test_add_remove_find():
     assert state.state_type == "set_find"
 
 def test_union_intersection_difference():
-    """test operations between sets"""
+    """test operations between sets."""
     set1 = ARgorithmToolkit.Set('set1',algo,[1,2,3])
     set2 = ARgorithmToolkit.Set('set1',algo,[2,4,5])
 

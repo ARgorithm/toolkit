@@ -1,5 +1,5 @@
-"""The processor module consists of tools and pipeline to process and optimise StateSet which simplifies rendering
-"""
+"""The processor module consists of tools and pipeline to process and optimise
+StateSet which simplifies rendering."""
 import json
 from ARgorithmToolkit.utils import StateSet
 from ARgorithmToolkit.encoders import StateEncoder
@@ -13,8 +13,8 @@ def post_process(algo:StateSet):
         for i in range(1,size):
             if algo.states[i].state_type == 'comment':
                 algo.states[i-1].autoplay = True
-    
+
     data = json.dumps(algo.states,cls=StateEncoder)
     return data
 
-    
+

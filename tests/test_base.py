@@ -1,17 +1,14 @@
-"""Test main ARgorithmToolkit classes
-"""
+"""Test main ARgorithmToolkit classes."""
 import ARgorithmToolkit
 
 def test_base():
-    """Test Stateset add_state
-    """
+    """Test Stateset add_state."""
     a = ARgorithmToolkit.StateSet()
     a.states.append('test state')
     assert len(a.states) == 1
 
 def test_state():
-    """Test State exception handling
-    """
+    """Test State exception handling."""
     try:
         ARgorithmToolkit.State(state_def="ErrorTest")
         assert False , 'No error raised'
@@ -19,8 +16,7 @@ def test_state():
         pass
 
 def test_variable():
-    """Test Variable
-    """
+    """Test Variable."""
     algo = ARgorithmToolkit.StateSet()
     s = ARgorithmToolkit.Variable("s",algo,10)
     last_state = algo.states[-1]
@@ -31,8 +27,7 @@ def test_variable():
     assert last_state.state_type == 'variable_highlight'
 
 def test_comment_state():
-    """Test comment state
-    """
+    """Test comment state."""
     algo = ARgorithmToolkit.StateSet()
     algo.add_comment("Hello world")
     last_state = algo.states[-1]

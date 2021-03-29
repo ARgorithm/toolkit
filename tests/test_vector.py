@@ -1,21 +1,18 @@
-"""Test vector
-"""
+"""Test vector."""
 import ARgorithmToolkit
 
 algo = ARgorithmToolkit.StateSet()
 arr = ARgorithmToolkit.Vector('arr',algo,[1,2,3,5,2])
 
 def test_body():
-    """Test vector contents
-    """
+    """Test vector contents."""
     assert arr.body == [1, 2, 3, 5, 2]
     last_state = algo.states[-1]
     assert last_state.state_type == 'vector_declare'
     assert last_state.state_def["body"] == [1, 2, 3, 5, 2]
 
 def test_insert_remove():
-    """test vector modifiers
-    """
+    """test vector modifiers."""
     arr.insert(12)
     assert arr.body == [1, 2, 3, 5, 2 , 12]
     last_state = algo.states[-1]
@@ -49,8 +46,7 @@ def test_insert_remove():
         pass
 
 def test_indexing():
-    """Test vector indexing
-    """
+    """Test vector indexing."""
     assert arr[1] == arr.body[1]
     last_state = algo.states[-1]
     assert last_state.state_type == 'vector_iter'
@@ -65,8 +61,7 @@ def test_indexing():
 
 
 def test_iteration():
-    """Test vector iteration
-    """
+    """Test vector iteration."""
     for i,(a,b) in enumerate(zip(arr,arr.body)):
         assert a==b
         last_state = algo.states[-1]
@@ -75,8 +70,7 @@ def test_iteration():
 
 
 def test_compare():
-    """Test vector comparision
-    """
+    """Test vector comparision."""
     func = lambda x,y : x+2 > y/2
     elemA = arr[0]
     elemB = arr[1]
@@ -95,8 +89,7 @@ def test_compare():
 
 
 def test_swap():
-    """Test vector swapping
-    """
+    """Test vector swapping."""
     elemA = arr[0]
     elemB = arr[1]
     arr.swap(0,1)

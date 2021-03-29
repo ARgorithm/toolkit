@@ -1,5 +1,4 @@
-"""Testing Array
-"""
+"""Testing Array."""
 import numpy as np
 import ARgorithmToolkit
 
@@ -8,8 +7,7 @@ test_data = [[1,2,3],[4,5,6]]
 arr = ARgorithmToolkit.Array(name='arr',algo=algo,data=test_data)
 
 def test_body():
-    """Test array contents
-    """
+    """Test array contents."""
     assert np.all(arr.body == test_data)
     last_state = algo.states[-1]
     assert last_state.state_type == 'array_declare'
@@ -17,8 +15,7 @@ def test_body():
 
 
 def test_indexing():
-    """Test array indexing
-    """
+    """Test array indexing."""
     assert arr[1].tolist() == list(arr.body[1])
     last_state = algo.states[-2]
 
@@ -53,8 +50,7 @@ def test_indexing():
 
 
 def test_iteration():
-    """Test Array iteration
-    """
+    """Test Array iteration."""
     for i in range(2):
         for j in range(2):
             arr[i,j] = arr[j,i]
@@ -70,8 +66,7 @@ def test_iteration():
             assert last_state.state_def["index"] == (i,j)
 
 def test_compare():
-    """Test Array compare
-    """
+    """Test Array compare."""
     func = lambda x,y : x+2 > y/2
     elemA = arr[0,1]
     elemB = arr[1,1]
@@ -90,8 +85,7 @@ def test_compare():
 
 
 def test_swap():
-    """Test array swap
-    """
+    """Test array swap."""
     elemA = arr[0,2]
     elemB = arr[1,2]
     arr.swap((0,2),(1,2))
@@ -103,8 +97,7 @@ def test_swap():
     assert np.all(last_state.state_def["body"] == arr.body)
 
 def test_dimension_check():
-    """Test array dimension check
-    """
+    """Test array dimension check."""
     assert isinstance(arr[1],ARgorithmToolkit.Array)
     last_state = algo.states[-1]
     second_last_state = algo.states[-2]

@@ -1,11 +1,10 @@
-"""Test module for ARgorithmToolkit.Map"""
+"""Test module for ARgorithmToolkit.Map."""
 import ARgorithmToolkit
 algo = ARgorithmToolkit.StateSet()
 str1 = ARgorithmToolkit.String("str1", algo, "xyz")
 map1 = ARgorithmToolkit.Map("map1", algo)
 def test_map():
-    """Tests Map body, states, and get/set methods
-    """
+    """Tests Map body, states, and get/set methods."""
     assert algo.states[-1].state_type == "map_declare"
     map1["abcd"] = 123
     map1.set(2,"hello")
@@ -20,8 +19,7 @@ def test_map():
     assert algo.states[-1].state_def['value'] == -1
 
 def test_remove():
-    """Tests map item deletion
-    """
+    """Tests map item deletion."""
     map1.remove("abcd")
     assert algo.states[-1].state_type == "map_remove"
     map1.remove("abcd")
@@ -33,8 +31,7 @@ def test_remove():
     print(map1)
 
 def test_iteration():
-    """Tests map iteration
-    """
+    """Tests map iteration."""
     map1['123']=123
     res = []
     for key, value in map1:

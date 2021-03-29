@@ -1,5 +1,4 @@
-"""Test priority queue
-"""
+"""Test priority queue."""
 import ARgorithmToolkit
 
 algo = ARgorithmToolkit.StateSet()
@@ -7,14 +6,12 @@ queue = ARgorithmToolkit.PriorityQueue("pq",algo)
 queue_object = ARgorithmToolkit.PriorityQueue("pq2",algo)
 
 def test_declare():
-    """Test priority queue creation
-    """
+    """Test priority queue creation."""
     last_state = algo.states[-1]
     assert last_state.state_type == "priorityqueue_declare"
 
 def test_operations():
-    """Test priority quque operations
-    """
+    """Test priority quque operations."""
     queue.offer(9)
     queue.offer(3)
     queue.offer(7)
@@ -53,6 +50,5 @@ def test_operations():
         pass
 
 def test_size():
-    """Test priorityqueue size
-    """
+    """Test priorityqueue size."""
     assert queue.empty() and len(queue)==0

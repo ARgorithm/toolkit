@@ -75,7 +75,7 @@ class State:
             self.autoplay = False
 
     def __eq__(self,other):
-        """Equality operator overload for State
+        """Equality operator overload for State.
 
         Two states are equal if and only if state_def and state_type are the
         same. This is useful for removing duplicate states
@@ -137,11 +137,11 @@ class StateSet:
             >>> algo.add_state(state)
         """
         assert isinstance(state,State) , ARgorithmError("state should be of Type state")
-        if len(self.states) == 0:
+        if len(self.states) == 0 or state.state_type == "comment":
             self.states.append(state)
             return
         last = self.states[-1]
-        if last != state and state.state_type != "comment":
+        if last != state:
             self.states.append(state)
 
     def __str__(self):

@@ -1,17 +1,18 @@
+# pylint: disable=protected-access
 """The Doubly linked list module provides support for rendering doubly linked
 lists.
 
 The classes are designed similar to that of classes in linkedlist module.
 
 - The DoublyLinkedListNode class is used to represent a node.
-- The DoublyLinkedList class is used to store the head pointer.
-- The List class is a complete implementation of doubly linked list
+- The DoublyLinkedList class is a complete implementation of doubly linked list
+which provide various functions and record the head and tail nodes as well
 
 These three classes can be directly imported from the toolkit:
 
     >>> dllnode = ARgorithmToolkit.DoublyLinkedListNode(algo,7)
     >>> dll = ARgorithmToolkit.DoublyLinkedList("dllnode",algo)
-    >>> dl = ARgorithmToolkit.List("dl",algo)
+
 """
 
 from ARgorithmToolkit.utils import ARgorithmHashable, ARgorithmStructure, State, StateSet, ARgorithmError
@@ -48,8 +49,8 @@ class DoublyLinkedListNodeState:
             "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
-            "next" : next_node.name if next_node else "none",
-            "prev" : prev_node.name if prev_node else "none",
+            "next" : next_node._id if next_node else "none",
+            "prev" : prev_node._id if prev_node else "none",
         }
         return State(
             state_type=state_type,
@@ -76,8 +77,8 @@ class DoublyLinkedListNodeState:
             "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
-            "next" : next_node.name if next_node else "none",
-            "prev" : prev_node.name if prev_node else "none",
+            "next" : next_node._id if next_node else "none",
+            "prev" : prev_node._id if prev_node else "none",
         }
         if last_value is not None:
             state_def["last_value"] = last_value
@@ -104,9 +105,9 @@ class DoublyLinkedListNodeState:
             "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
-            "next" : next_node.name if next_node else "none",
-            "prev" : prev_node.name if prev_node else "none",
-            "last_next" : last_next.name if last_next else "none",
+            "next" : next_node._id if next_node else "none",
+            "prev" : prev_node._id if prev_node else "none",
+            "last_next" : last_next if last_next else "none",
         }
         return State(
             state_type=state_type,
@@ -131,9 +132,9 @@ class DoublyLinkedListNodeState:
             "id" : self._id,
             "variable_name" : self.name,
             "value" : value,
-            "next" : next_node.name if next_node else "none",
-            "prev" : prev_node.name if prev_node else "none",
-            "last_prev" : last_prev.name if last_prev else "none",
+            "next" : next_node._id if next_node else "none",
+            "prev" : prev_node._id if prev_node else "none",
+            "last_prev" : last_prev if last_prev else "none",
         }
         return State(
             state_type=state_type,
@@ -244,7 +245,7 @@ class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
         """Getter function for the next node
 
         Example:
-            >>> ll.next            
+            >>> ll.next
         """
         if self._next:
             self._next.highlight()
@@ -260,17 +261,23 @@ class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
         Raises:
             TypeError: if the next node is not None or of type `DoublyLinkedListNode`
         """
+        try:
+            assert n is None or isinstance(n,DoublyLinkedListNode)
+        except AssertionError as ae:
+            raise TypeError("next attribute can only set as None or instance of DoublyLinkedListNode")
+        last = self._next
         last = self._next._id if self._next else None
         self._next = n
-        state = self.state_generator.dllnode_next(self._value,self._next,self._prev,last_next=last)
-        self.algo.add_state(state)
+        if self._next is not None or last is not None:
+            state = self.state_generator.dllnode_next(self._value,self._next,self._prev,last_next=last)
+            self.algo.add_state(state)
 
     @property
     def prev(self):
         """Getter function for the prev node
 
         Example:
-            >>> ll.prev            
+            >>> ll.prev
         """
         if self._prev:
             self._prev.highlight()
@@ -286,11 +293,16 @@ class DoublyLinkedListNode(ARgorithmStructure, ARgorithmHashable):
         Raises:
             TypeError: if the prev node is not None or of type `DoublyLinkedListNode`
         """
+        try:
+            assert n is None or isinstance(n,DoublyLinkedListNode)
+        except AssertionError as ae:
+            raise TypeError("prev attribute can only set as None or instance of DoublyLinkedListNode")
         last = self._prev._id if self._prev else None
         self._prev = n
-        state = self.state_generator.dllnode_prev(self._value,self._next,self._prev,last_prev=last)
-        self.algo.add_state(state)
-    
+        if self._prev is not None or last is not None:
+            state = self.state_generator.dllnode_prev(self._value,self._next,self._prev,last_prev=last)
+            self.algo.add_state(state)
+
     def __del__(self):
         """The __del__ function is overriden is there to listen to node
         deletion."""
@@ -402,7 +414,7 @@ class ListIterator:
         Value of List Node
 
     Raises:
-        AssertionError: If not declared with an instance of ARgorithmToolkit.doublylinkedlist.List
+        AssertionError: If not declared with an instance of ARgorithmToolkit.doublylinkedlist.DoublyLinkedList
     """
     def __init__(self,doublylist):
         assert isinstance(doublylist,DoublyLinkedList)
@@ -417,27 +429,22 @@ class ListIterator:
 
 @serialize
 class DoublyLinkedList:
-    """The List class is proper implementation of doubly linked list.
-
-    The difference between DoublyLinkedList and List class is that List
-    is a ready implementation of singly linked list. In the DoublyLinkedList class the
-    programmer will have to make their own methods.
+    """The DoublyLinkedList class is proper implementation of doubly linked list.
 
     Attributes:
         name (str): The name given to the linked list
-        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of List Class
+        algo (ARgorithmToolkit.utils.StateSet): The stateset that will store the states generated by the instance of DoublyLinkedList Class
         head (DoublyLinkedListNode): The referece to head of linked list
         tail (DoublyLinkedListNode): The referece to tail of linked list
-        size (int): Number of nodes i.e size of list
 
     Raises:
         ARgorithmError: Raised if algo is not of type StateSet
 
     Example:
 
-        >>> lis = ARgorithmToolkit.List("list",algo)
+        >>> lis = ARgorithmToolkit.DoublyLinkedList("list",algo)
         >>> lis
-        List([])
+        DoublyLinkedList([])
     """
 
     def __init__(self,name:str,algo:StateSet,comments=""):
@@ -454,16 +461,12 @@ class DoublyLinkedList:
 
         self._head = None
         self._tail = None
-        self.size = 0
-        
+
         state = self.state_generator.dll_declare(self._head,comments)
         self.algo.add_state(state)
 
     @property
     def head(self):
-        if self._head:
-            state = self.state_generator.dll_head(self._head,self._tail, comments="head pointer")
-            self.algo.add_state(state)
         return self._head
 
     @head.setter
@@ -477,9 +480,6 @@ class DoublyLinkedList:
 
     @property
     def tail(self):
-        if self._tail:
-            state = self.state_generator.dll_tail(self._head,self._tail, comments="tail pointer")
-            self.algo.add_state(state)
         return self._tail
 
     @tail.setter
@@ -501,7 +501,8 @@ class DoublyLinkedList:
 
             >>> len(lis)
         """
-        return self.size
+        size = len(self.tolist())
+        return size
 
     def insert(self,value,index=None):
         """Insert node with given value at particular index. If index is not
@@ -520,10 +521,8 @@ class DoublyLinkedList:
             >>> lis
             List([1, 2, 3])
         """
-        if self.size == 0 or index == 0:
+        if self._head is None or index == 0:
             self.push_front(value)
-        elif index is None or self.size < index:
-            self.push_back(value)
         else:
             count = 1
             temp = self.head
@@ -533,11 +532,10 @@ class DoublyLinkedList:
             curr = DoublyLinkedListNode(self.algo,value)
             curr.next = temp.next
             curr.prev = temp
-            if curr.next:
-                curr.next.prev = curr
-            if curr.prev:
-                curr.prev.next = curr
-            self.size += 1
+            if curr._next:
+                curr._next.prev = curr
+            if curr._prev:
+                curr._prev.next = curr
 
     def push_front(self,value):
         """Pushes value to front.
@@ -563,7 +561,6 @@ class DoublyLinkedList:
             curr.prev = None
             self.head = curr
             self.tail = curr
-        self.size+=1
 
     def push_back(self,value):
         """Pushes value to back.
@@ -588,8 +585,6 @@ class DoublyLinkedList:
             curr.next = None
             self.head = curr
             self.tail = curr
-        self.size+=1
-
 
     def pop_front(self):
         """Pops first element of List.
@@ -617,7 +612,6 @@ class DoublyLinkedList:
             self.head.prev = None
         else:
             self.tail = None
-        self.size -= 1
         return data
 
     def pop_back(self):
@@ -645,7 +639,6 @@ class DoublyLinkedList:
             self.tail.next = None
         else:
             self.head = None
-        self.size -= 1
         return data
 
     def front(self):
@@ -727,22 +720,21 @@ class DoublyLinkedList:
         curr = self.head
         while curr:
             if curr.value == value:
-                self.size -= 1
-                if self.size == 1:
+                if self._head is curr and self._tail is curr:
                     self.head = None
                     self.tail = None
                     break
                 if curr._prev:
-                    curr.prev.next = curr.next
+                    curr._prev.next = curr.next
                 else:
                     self.head = curr.next
                     self.head.prev = None
                 if curr._next:
-                    curr.next.prev = curr.prev
+                    curr._next.prev = curr.prev
                 else:
                     self.tail = curr.prev
                     self.tail.next = None
-            curr = curr.next
+            curr = curr._next
 
     def tolist(self):
         """Converts the List to python list.
@@ -765,7 +757,7 @@ class DoublyLinkedList:
         return data
 
     def __repr__(self):
-        return f"List({self.tolist()})"
+        return f"DoublyLinkedList({self.tolist()})"
 
     def __str__(self):
-        return f"List({self.tolist()})"
+        return f"DoublyLinkedList({self.tolist()})"
