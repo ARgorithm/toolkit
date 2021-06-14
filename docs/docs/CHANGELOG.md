@@ -1,6 +1,8 @@
+### 0.2.3
+- Hotfix for popped values in stack, queue, priorityqueue to enable undo operations
+
 ### 0.2.2
-- Hotfix
-- Fixed id key not being present in states for stack.
+- Hotfix to fix id key not being present in states for stack.
 
 ### 0.2.1
 

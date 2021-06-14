@@ -70,13 +70,14 @@ class StackState():
             comments=comments
         )
 
-    def stack_pop(self,body,comments=""):
+    def stack_pop(self,body,element,comments=""):
         """Generates the `stack_pop` state when an element is popped from
         stack.
 
         Args:
             body (list): contents of stack
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
+            element : element that was popped from the stack.
 
         Returns:
             State: Returns the `stack_pop` state for respective stack
@@ -86,6 +87,7 @@ class StackState():
             "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
+            "element" : element,
         }
         return State(
             state_type=state_type,
@@ -212,7 +214,7 @@ class Stack(ARgorithmStructure):
             raise ARgorithmError('Stack is empty')
         item = self.body[-1]
         self.body.pop()
-        state = self.state_generator.stack_pop(self.body,comments)
+        state = self.state_generator.stack_pop(body=self.body,element=item, comments=comments)
         self.algo.add_state(state)
         return item
 

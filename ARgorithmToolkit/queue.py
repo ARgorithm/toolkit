@@ -69,13 +69,14 @@ class QueueState():
             comments=comments
         )
 
-    def queue_pop(self,body,comments=""):
+    def queue_pop(self,body, element, comments=""):
         """Generates the `queue_pop` state when an element is removed from
         queue.
 
         Args:
             body (list): Body of queue
             comments (str, optional): Comments for descriptive purpose. Defaults to "".
+            element : element that was popped from the queue.
 
         Returns:
             State: Returns the `queue_pop` state for respective queue
@@ -85,6 +86,7 @@ class QueueState():
             "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
+            "element" : element,
         }
         return State(
             state_type=state_type,
@@ -242,7 +244,7 @@ class Queue(ARgorithmStructure):
             raise ARgorithmError('queue is empty')
         item = self.body[0]
         self.body = self.body[1:]
-        state = self.state_generator.queue_pop(self.body,comments)
+        state = self.state_generator.queue_pop(body=self.body,element=item, comments=comments)
         self.algo.add_state(state)
         return item
 
