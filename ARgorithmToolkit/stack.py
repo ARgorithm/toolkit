@@ -20,8 +20,9 @@ class StackState():
         _id (str) : id of the variable for whom we are generating states
     """
 
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def stack_declare(self,comments=""):
         """Generates the `stack_declare` state when an instance of stack is
@@ -35,6 +36,7 @@ class StackState():
         """
         state_type = "stack_declare"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : []
         }
@@ -57,6 +59,7 @@ class StackState():
         """
         state_type = "stack_push"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
             "element" : element
@@ -80,6 +83,7 @@ class StackState():
         """
         state_type = "stack_pop"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -101,6 +105,7 @@ class StackState():
         """
         state_type = "stack_top"
         state_def = {
+            "id" : self._id,
             "variable_name" : self.name,
             "body" : list(body),
         }
@@ -130,7 +135,8 @@ class Stack(ARgorithmStructure):
     def __init__(self,name:str,algo:StateSet,comments=""):
         try:
             assert isinstance(name,str)
-            self.state_generator = StackState(name)
+            self._id = str(id(self))
+            self.state_generator = StackState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError('Give valid name to data structure') from e
         try:
