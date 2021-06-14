@@ -136,7 +136,7 @@ class Stack(ARgorithmStructure):
         try:
             assert isinstance(name,str)
             self._id = str(id(self))
-            self.state_generator = StackState(name)
+            self.state_generator = StackState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError('Give valid name to data structure') from e
         try:
