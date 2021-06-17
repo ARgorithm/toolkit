@@ -2,19 +2,30 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: 'enhancement'
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+> The issue template is for suggesting new features or enhancements
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**First Check**
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+- [ ] Have you read the Contributing Guidelines?
+- [ ] Have you checked if someone else has suggested a similar feature?
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Mention Links to Issues**
+
+If the feature that you are suggesting is linked to some bug in the program, then you can either link that bug report issue to here or elaborate the bug here.
+
+**Describe the Solution**
+
+Elaborate the solution you have in mind, code blocks and diagrams are appreciated as they help in other people to understand better
+
+**Describe the Alternatives**
+
+Before suggesting a feature, it's always smart to consider alternatives. Elaborate on the possible alternatives that you might have checked so we can work towards the best possible solution.
+
+**Additional information**
+
+You ought to [join our discord server](https://discord.gg/YAEcbUFn) and discuss your ideas with fellow developers to gain insight and support 
