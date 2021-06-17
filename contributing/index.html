@@ -1,0 +1,970 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AR visualizations of data structures">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
+    
+    
+      
+        <title>Contributing - ARgorithm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.15aa0b43.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.75751829.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/termynal.css">
+    
+      <link rel="stylesheet" href="../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue-grey">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contributing-to-argorithm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="ARgorithm" class="md-header-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../img/Logo_black.svg" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            ARgorithm
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              Contributing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ARgorithm/toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/toolkit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARgorithm" class="md-nav__button md-logo" aria-label="ARgorithm">
+      
+  <img src="../img/Logo_black.svg" alt="logo">
+
+    </a>
+    ARgorithm
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ARgorithm/toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARgorithm/toolkit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../start/" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" class="md-nav__link">
+      Command Line Interface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    
+    <label class="md-nav__link" for="nav-4">
+      Tutorials
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/config/" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/bubblesort/" class="md-nav__link">
+      Bubblesort
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/fibonacci/" class="md-nav__link">
+      Fibonacci
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/" class="md-nav__link">
+      API Documentation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="https://argorithm.github.io/Server/" class="md-nav__link">
+      Server Docs
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Contributing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Contributing
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-of-conduct" class="md-nav__link">
+    Code of conduct
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-contribute" class="md-nav__link">
+    How can I contribute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-argorithm" class="md-nav__link">
+    About ARgorithm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-issues" class="md-nav__link">
+    Creating Issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-report" class="md-nav__link">
+    Bug report
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-request" class="md-nav__link">
+    Feature request
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    Question
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-pull-requests" class="md-nav__link">
+    Creating Pull requests
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    Contact
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../CHANGELOG/" class="md-nav__link">
+      Releases
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../help/" class="md-nav__link">
+      Need help?
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-of-conduct" class="md-nav__link">
+    Code of conduct
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-contribute" class="md-nav__link">
+    How can I contribute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-argorithm" class="md-nav__link">
+    About ARgorithm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-issues" class="md-nav__link">
+    Creating Issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-report" class="md-nav__link">
+    Bug report
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-request" class="md-nav__link">
+    Feature request
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    Question
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-pull-requests" class="md-nav__link">
+    Creating Pull requests
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    Contact
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="contributing-to-argorithm">Contributing to ARgorithm<a class="headerlink" href="#contributing-to-argorithm" title="Permanent link">&para;</a></h1>
+<p><img alt="+1" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" /><img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png" /> First off, thanks for taking the time to contribute! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png" /><img alt="+1" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" /></p>
+<p>The following is a set of guidelines for contributing to ARgorithm Toolkit, which are hosted in the ARgorithm Organization on GitHub. These are mostly guidelines, not rules. Use your best  judgment, and feel free to propose changes to this document in a pull  request.</p>
+<p><strong>Table of contents</strong></p>
+<ul>
+<li><a href="#code-of-conduct">Code of Conduct</a></li>
+<li><a href="#how-can-I-contribute">How do I contribute</a></li>
+<li><a href="#about-argorithm">About ARgorithm</a></li>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#creating-issues">Issues</a></li>
+<li><a href="#creating-pull-requests">Pull requests</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<h2 id="code-of-conduct">Code of conduct<a class="headerlink" href="#code-of-conduct" title="Permanent link">&para;</a></h2>
+<p>You can read the code of conduct <a href="https://github.com/ARgorithm/toolkit/blob/master/CODE_OF_CONDUCT.md">here</a></p>
+<h2 id="how-can-i-contribute">How can I contribute<a class="headerlink" href="#how-can-i-contribute" title="Permanent link">&para;</a></h2>
+<p>We love your input! There are many ways to be contributor to our project:</p>
+<ul>
+<li>Reporting a bug</li>
+<li>Discussing the current state of the code</li>
+<li>Submitting a fix</li>
+<li>Proposing new features</li>
+<li>Becoming a maintainer</li>
+</ul>
+<h2 id="about-argorithm">About ARgorithm<a class="headerlink" href="#about-argorithm" title="Permanent link">&para;</a></h2>
+<p>You can read more about our project <a href="https://argorithm.github.io/">here</a></p>
+<p>You can read more about the internal workings of ARgorithm in the <a href="https://github.com/ARgorithm/toolkit/wiki">wiki</a></p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Python Programming and Packaging</li>
+<li>YAML</li>
+<li>JSON schema</li>
+<li>Testing using PyTest</li>
+<li>Python documentation using mkdocs</li>
+<li>Docker</li>
+</ul>
+<h3 id="environment-setup">Environment setup<a class="headerlink" href="#environment-setup" title="Permanent link">&para;</a></h3>
+<p>For the toolkit, we use a Makefile to make the process simpler</p>
+<div class="highlight"><pre><span></span><code><span class="nf">init</span><span class="o">:</span>
+    pip install -r requirements.txt
+    python setup.py install
+
+<span class="nf">clean</span><span class="o">:</span>
+    rm -rf ARgorithmToolkit.egg-info/ build/ dist/
+
+<span class="nf">lint</span><span class="o">:</span>
+    pylint ARgorithmToolkit
+    pylint tests/
+
+<span class="nf">test</span><span class="o">:</span>
+    pytest tests
+
+<span class="nf">server</span><span class="o">:</span>
+    docker build . -t argorithm-server:local
+    docker run --rm -p <span class="m">80</span>:80 argorithm-server:local
+
+<span class="nf">verify</span><span class="o">:</span>
+    python schema.py
+
+<span class="nf">dist</span><span class="o">:</span>
+    python setup.py sdist
+    python setup.py bdist_wheel
+
+<span class="nf">deploy</span><span class="o">:</span>
+    python3 -m pip install --user --upgrade twine <span class="o">&amp;&amp;</span> python3 -m twine upload dist/*
+
+<span class="nf">testdeploy</span><span class="o">:</span>
+    python3 -m pip install --user --upgrade twine <span class="o">&amp;&amp;</span> python3 -m twine upload --repository testpypi dist/*
+</code></pre></div>
+<p>Here is a description of commands</p>
+<table>
+<thead>
+<tr>
+<th>Make command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>init</code></td>
+<td>Sets up the environment with the requirements</td>
+</tr>
+<tr>
+<td><code>clean</code></td>
+<td>Cleans the build files</td>
+</tr>
+<tr>
+<td><code>lint</code></td>
+<td>lints the code files according to repositories <code>.pylintrc</code> file</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>runs the tests written in the <code>test/</code> directory using Pytest</td>
+</tr>
+<tr>
+<td><code>server</code></td>
+<td>Starts a local instance of server with which uses your instance of <code>ARgorithmToolkit</code> for server testing</td>
+</tr>
+<tr>
+<td><code>verify</code></td>
+<td>Checks if  code is up to date with designs written in<code>designs/</code></td>
+</tr>
+<tr>
+<td><code>dist</code></td>
+<td>Creates the python build package for deployment</td>
+</tr>
+</tbody>
+</table>
+<p>Documentation has its own makefile to use. When making changes to the md files in <code>docs/docs/</code> or <code>mkdocs.yml</code> or whenever you want to see how the documentation builds as, do the following  </p>
+<div class="highlight"><pre><span></span><code>user@os :toolkit$ <span class="nb">cd</span> docs/
+user@os :toolkit/docs$ make serve
+</code></pre></div>
+<p><strong>Writing designs</strong></p>
+<p>Writing designs forms a critical part of our application thus please use the schema provided when writing the <code>.design.yml</code> file.
+Create an issue for feature request where you suggest an design and get involved with maintainers on the discord server.</p>
+<p><strong>Writing examples</strong></p>
+<p>The examples in the <code>examples/</code> directory are for users to understand how ARgorithms can be created. If adding more examples, please ensure the code is readable and visualises some popular algorithm for convenience.</p>
+<h2 id="creating-issues">Creating Issues<a class="headerlink" href="#creating-issues" title="Permanent link">&para;</a></h2>
+<p>Issues are divided into 3 types for simplicity</p>
+<ol>
+<li>Bug Report (<a href="https://github.com/ARgorithm/toolkit/blob/master/.github/ISSUE_TEMPLATE/bug_report.md">template</a>)</li>
+<li>Feature Request (<a href="https://github.com/ARgorithm/toolkit/blob/master/.github/ISSUE_TEMPLATE/feature_request.md">template</a>)</li>
+<li>Question (<a href="https://github.com/ARgorithm/toolkit/blob/master/.github/ISSUE_TEMPLATE/question.md">template</a>)</li>
+</ol>
+<h3 id="bug-report">Bug report<a class="headerlink" href="#bug-report" title="Permanent link">&para;</a></h3>
+<p>Before submitting a bug report, <a href="https://github.com/ARgorithm/toolkit/issues?q=is%3Aissue+label%3Abug">check for similar bug reports</a></p>
+<p>Explain the problem and include additional details to help maintainers reproduce the problem:</p>
+<ul>
+<li><strong>Use the bug report template</strong></li>
+<li><strong>Use a clear and descriptive title</strong> for the issue to identify the problem.</li>
+<li><strong>Describe the exact steps which reproduce the problem</strong> in as many details as possible. For example, start by explaining how you used ARgorithm, e.g. which command exactly you used in the terminal. When listing steps, <strong>don't just say what you did, but explain how you did it</strong>.</li>
+<li><strong>Provide specific examples to demonstrate the steps</strong>. Include links to files or GitHub projects, or copy/pasteable snippets,  which you use in those examples. If you're providing snippets in the  issue, use <a href="https://help.github.com/articles/markdown-basics/#multiple-lines">Markdown code blocks</a>.</li>
+<li><strong>Describe the behavior you observed after following the steps</strong> and point out what exactly is the problem with that behavior.</li>
+<li><strong>Explain which behavior you expected to see instead and why.</strong></li>
+<li><strong>Include screenshots and animated GIFs</strong> which show  you following the described steps and clearly demonstrate the problem.  If you use the keyboard while following the steps, <strong>record the GIF with the <a href="https://github.com/atom/keybinding-resolver">Keybinding Resolver</a> shown</strong>. You can use <a href="https://www.cockos.com/licecap/">this tool</a> to record GIFs on macOS and Windows, and <a href="https://github.com/colinkeenan/silentcast">this tool</a> or <a href="https://github.com/GNOME/byzanz">this tool</a> on Linux.</li>
+<li><strong>If you're reporting that ARgorithm crashed</strong>, include a crash report with a stack trace.</li>
+<li><strong>If the problem is related to performance or memory</strong>, include a <a href="https://flight-manual.atom.io/hacking-atom/sections/debugging/#diagnose-runtime-performance">CPU profile capture</a> with your report.</li>
+<li><strong>If the problem wasn't triggered by a specific action</strong>, describe what you were doing before the problem happened and share more information using the guidelines below.</li>
+</ul>
+<p>Provide more context by answering these questions:</p>
+<ul>
+<li><strong>Did the problem start happening recently</strong> (e.g. after updating to a new version of ARgorithm) or was this always a problem?</li>
+<li>If the problem started happening recently, <strong>can you reproduce the problem in an older version of ARgorithm?</strong> What's the most recent version in which the problem doesn't happen?</li>
+<li><strong>Can you reliably reproduce the issue?</strong> If not, provide details about how often the problem happens and under which conditions it normally happens.</li>
+<li>If the problem is related to working with files (e.g. opening and editing files), <strong>does the problem happen for all files or only some?</strong></li>
+</ul>
+<p>Include details about your configuration and environment:</p>
+<ul>
+<li><strong>Which version of ARgorithm are you using?</strong> You can get that by using your python package manager</li>
+<li><strong>What's the name and version of the OS you're using</strong>?</li>
+<li><strong>Are you running ARgorithm in a virtual machine?</strong> If so, which VM software are you using and which operating systems and versions are used for the host and the guest?</li>
+<li><strong>Which packages do you have installed?</strong> You can get that list by running <code>pip list</code>.</li>
+</ul>
+<h3 id="feature-request">Feature request<a class="headerlink" href="#feature-request" title="Permanent link">&para;</a></h3>
+<p>Before creating enhancement suggestions, please check for <a href="https://github.com/ARgorithm/toolkit/issues?q=is%3Aissue+label%3Aenhancement+">similar already existing requests</a> as you might find out that you don't need to create one. When you are creating an enhancement suggestion, please include as many details as possible. Fill in the template, including the steps that you imagine you would take if the feature you're requesting existed.</p>
+<ul>
+<li><strong>Use the feature request template</strong></li>
+<li><strong>Use a clear and descriptive title</strong> for the issue to identify the suggestion.</li>
+<li><strong>Provide a step-by-step description of the suggested enhancement</strong> in as many details as possible.</li>
+<li><strong>Provide specific examples to demonstrate the steps</strong>. Include copy/pasteable snippets which you use in those examples, as <a href="https://help.github.com/articles/markdown-basics/#multiple-lines">Markdown code blocks</a>.</li>
+<li><strong>Describe the current behavior</strong> and <strong>explain which behavior you expected to see instead</strong> and why.</li>
+<li><strong>Include screenshots and animated GIFs</strong> which help you demonstrate the steps or point out the part of Atom which the suggestion is related to. You can use <a href="https://www.cockos.com/licecap/">this tool</a> to record GIFs on macOS and Windows, and <a href="https://github.com/colinkeenan/silentcast">this tool</a> or <a href="https://github.com/GNOME/byzanz">this tool</a> on Linux.</li>
+<li><strong>Explain why this enhancement would be useful</strong> to most ARgorithm users</li>
+</ul>
+<h3 id="question">Question<a class="headerlink" href="#question" title="Permanent link">&para;</a></h3>
+<p>Question issues are so that users to ask how to use different features of ARgorithm toolkit</p>
+<p>Before creating question issues check for <a href="is:issue label:" title="question">existing questions</a>. Keep the following in mind when creating question issues:</p>
+<ul>
+<li><strong>Use the question template</strong></li>
+<li><strong>Use a clear and descriptive title</strong> for the issue to identify the question</li>
+<li><strong>Provide a explanation of what you want to do</strong>. Include examples, input/output descriptions etc.</li>
+<li><strong>Describe your system</strong> to understand your environment better</li>
+</ul>
+<blockquote>
+<p>You may later mention this question in the discord help channel to get better insights about your problem as well</p>
+</blockquote>
+<p><strong>Issue tags</strong></p>
+<p>These extra tags can help maintainers and contributors to better resolve issues </p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>documentation</code></td>
+<td>if changes in documentation are made</td>
+</tr>
+<tr>
+<td><code>structure</code></td>
+<td>if support for more template class has been added or previous template classes have been fixed</td>
+</tr>
+<tr>
+<td><code>cli</code></td>
+<td>if command line interface has been improved</td>
+</tr>
+<tr>
+<td><code>base</code></td>
+<td>if changes are made in the way intermediate data is generated or structures and states are handled</td>
+</tr>
+</tbody>
+</table>
+<h2 id="creating-pull-requests">Creating Pull requests<a class="headerlink" href="#creating-pull-requests" title="Permanent link">&para;</a></h2>
+<p>All pull requests should be linked to an issue pertaining to a bug or a feature enhancement, This is important as it prevents duplication of work. Early contributors can find issues to work on that have the <a href="https://github.com/ARgorithm/toolkit/issues?q=is%3Aissue+label%3A%22good+first+issue%22+">good first issue</a> tag.</p>
+<p>We request you to use the <a href="https://github.com/ARgorithm/toolkit/blob/master/.github/PULL_REQUEST_TEMPLATE.md">Pull request template</a> to</p>
+<ul>
+<li>Maintain ARgorithm Toolkit's quality</li>
+<li>Fix problems that are important to users</li>
+<li>Engage the community in working toward the best possible ARgorithm</li>
+<li>Enable a sustainable system for maintainers to review contributions</li>
+</ul>
+<h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
+<p><strong>Current Maintainers</strong></p>
+<ul>
+<li><a href="https://github.com/TheForeverLost">TheForeverLost</a></li>
+<li><a href="https://github.com/yatharthmathur">YatharthMathur</a></li>
+<li><a href="https://github.com/Vin-dictive">Vin-dictive</a></li>
+<li><a href="https://github.com/UtkG07">UtkG07</a></li>
+</ul>
+<p>Join our discord server to get in touch with us and fellow contributors</p>
+<p><a href="https://discord.gg/W7QPh35snP"><img alt="Discord Server" src="https://img.shields.io/discord/854962642790383648.svg?label=Discord&amp;logo=Discord&amp;colorB=7289da&amp;style=for-the-badge" /></a></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../api/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                API Documentation
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../CHANGELOG/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Releases
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ARgorithm/toolkit" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['search.suggest', 'search.highlight'],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="../js/mathjaxhelper.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js"></script>
+      
+        <script src="../js/termynal.js"></script>
+      
+        <script src="../js/custom.js"></script>
+      
+    
+  </body>
+</html>

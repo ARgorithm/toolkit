@@ -106,13 +106,14 @@ class QueueState():
             comments=comments
         )
 
-    def queue_pop(self,body,comments=&#34;&#34;):
+    def queue_pop(self,body, element, comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `queue_pop` state when an element is removed from
         queue.
 
         Args:
             body (list): Body of queue
             comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+            element : element that was popped from the queue.
 
         Returns:
             State: Returns the `queue_pop` state for respective queue
@@ -122,6 +123,7 @@ class QueueState():
             &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
+            &#34;element&#34; : element,
         }
         return State(
             state_type=state_type,
@@ -279,7 +281,7 @@ class Queue(ARgorithmStructure):
             raise ARgorithmError(&#39;queue is empty&#39;)
         item = self.body[0]
         self.body = self.body[1:]
-        state = self.state_generator.queue_pop(self.body,comments)
+        state = self.state_generator.queue_pop(body=self.body,element=item, comments=comments)
         self.algo.add_state(state)
         return item
 
@@ -493,7 +495,7 @@ container implementation of FIFO.</p>
             raise ARgorithmError(&#39;queue is empty&#39;)
         item = self.body[0]
         self.body = self.body[1:]
-        state = self.state_generator.queue_pop(self.body,comments)
+        state = self.state_generator.queue_pop(body=self.body,element=item, comments=comments)
         self.algo.add_state(state)
         return item
 
@@ -778,7 +780,7 @@ Queue([4])
         raise ARgorithmError(&#39;queue is empty&#39;)
     item = self.body[0]
     self.body = self.body[1:]
-    state = self.state_generator.queue_pop(self.body,comments)
+    state = self.state_generator.queue_pop(body=self.body,element=item, comments=comments)
     self.algo.add_state(state)
     return item</code></pre>
 </details>
@@ -919,13 +921,14 @@ _id (str) : id of the variable for whom we are generating states</p></div>
             comments=comments
         )
 
-    def queue_pop(self,body,comments=&#34;&#34;):
+    def queue_pop(self,body, element, comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `queue_pop` state when an element is removed from
         queue.
 
         Args:
             body (list): Body of queue
             comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+            element : element that was popped from the queue.
 
         Returns:
             State: Returns the `queue_pop` state for respective queue
@@ -935,6 +938,7 @@ _id (str) : id of the variable for whom we are generating states</p></div>
             &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
+            &#34;element&#34; : element,
         }
         return State(
             state_type=state_type,
@@ -1120,7 +1124,7 @@ created.</p>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.queue.QueueState.queue_pop"><code class="name flex">
-<span>def <span class="ident">queue_pop</span></span>(<span>self, body, comments='')</span>
+<span>def <span class="ident">queue_pop</span></span>(<span>self, body, element, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>queue_pop</code> state when an element is removed from
@@ -1132,6 +1136,7 @@ queue.</p>
 <dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>Comments for descriptive purpose. Defaults to "".</dd>
 </dl>
+<p>element : element that was popped from the queue.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>State</code></dt>
@@ -1141,13 +1146,14 @@ queue.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def queue_pop(self,body,comments=&#34;&#34;):
+<pre><code class="python">def queue_pop(self,body, element, comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `queue_pop` state when an element is removed from
     queue.
 
     Args:
         body (list): Body of queue
         comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+        element : element that was popped from the queue.
 
     Returns:
         State: Returns the `queue_pop` state for respective queue
@@ -1157,6 +1163,7 @@ queue.</p>
         &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
+        &#34;element&#34; : element,
     }
     return State(
         state_type=state_type,

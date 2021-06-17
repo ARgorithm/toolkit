@@ -57,8 +57,9 @@ class StackState():
         _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def stack_declare(self,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `stack_declare` state when an instance of stack is
@@ -72,6 +73,7 @@ class StackState():
         &#34;&#34;&#34;
         state_type = &#34;stack_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : []
         }
@@ -94,6 +96,7 @@ class StackState():
         &#34;&#34;&#34;
         state_type = &#34;stack_push&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element
@@ -104,21 +107,24 @@ class StackState():
             comments=comments
         )
 
-    def stack_pop(self,body,comments=&#34;&#34;):
+    def stack_pop(self,body,element,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `stack_pop` state when an element is popped from
         stack.
 
         Args:
             body (list): contents of stack
             comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+            element : element that was popped from the stack.
 
         Returns:
             State: Returns the `stack_pop` state for respective stack
         &#34;&#34;&#34;
         state_type = &#34;stack_pop&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
+            &#34;element&#34; : element,
         }
         return State(
             state_type=state_type,
@@ -138,6 +144,7 @@ class StackState():
         &#34;&#34;&#34;
         state_type = &#34;stack_top&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -167,7 +174,8 @@ class Stack(ARgorithmStructure):
     def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = StackState(name)
+            self._id = str(id(self))
+            self.state_generator = StackState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -243,7 +251,7 @@ class Stack(ARgorithmStructure):
             raise ARgorithmError(&#39;Stack is empty&#39;)
         item = self.body[-1]
         self.body.pop()
-        state = self.state_generator.stack_pop(self.body,comments)
+        state = self.state_generator.stack_pop(body=self.body,element=item, comments=comments)
         self.algo.add_state(state)
         return item
 
@@ -347,7 +355,8 @@ container implementation of LIFO.</p>
     def __init__(self,name:str,algo:StateSet,comments=&#34;&#34;):
         try:
             assert isinstance(name,str)
-            self.state_generator = StackState(name)
+            self._id = str(id(self))
+            self.state_generator = StackState(name, self._id)
         except AssertionError as e:
             raise ARgorithmError(&#39;Give valid name to data structure&#39;) from e
         try:
@@ -423,7 +432,7 @@ container implementation of LIFO.</p>
             raise ARgorithmError(&#39;Stack is empty&#39;)
         item = self.body[-1]
         self.body.pop()
-        state = self.state_generator.stack_pop(self.body,comments)
+        state = self.state_generator.stack_pop(body=self.body,element=item, comments=comments)
         self.algo.add_state(state)
         return item
 
@@ -566,7 +575,7 @@ False
         raise ARgorithmError(&#39;Stack is empty&#39;)
     item = self.body[-1]
     self.body.pop()
-    state = self.state_generator.stack_pop(self.body,comments)
+    state = self.state_generator.stack_pop(body=self.body,element=item, comments=comments)
     self.algo.add_state(state)
     return item</code></pre>
 </details>
@@ -685,7 +694,7 @@ in application.</p></div>
 </dd>
 <dt id="ARgorithmToolkit.stack.StackState"><code class="flex name class">
 <span>class <span class="ident">StackState</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, _id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This class is used to generate states for various actions performed on
@@ -707,8 +716,9 @@ _id (str) : id of the variable for whom we are generating states</p></div>
         _id (str) : id of the variable for whom we are generating states
     &#34;&#34;&#34;
 
-    def __init__(self,name):
+    def __init__(self,name,_id):
         self.name = name
+        self._id = _id
 
     def stack_declare(self,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `stack_declare` state when an instance of stack is
@@ -722,6 +732,7 @@ _id (str) : id of the variable for whom we are generating states</p></div>
         &#34;&#34;&#34;
         state_type = &#34;stack_declare&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : []
         }
@@ -744,6 +755,7 @@ _id (str) : id of the variable for whom we are generating states</p></div>
         &#34;&#34;&#34;
         state_type = &#34;stack_push&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
             &#34;element&#34; : element
@@ -754,21 +766,24 @@ _id (str) : id of the variable for whom we are generating states</p></div>
             comments=comments
         )
 
-    def stack_pop(self,body,comments=&#34;&#34;):
+    def stack_pop(self,body,element,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `stack_pop` state when an element is popped from
         stack.
 
         Args:
             body (list): contents of stack
             comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+            element : element that was popped from the stack.
 
         Returns:
             State: Returns the `stack_pop` state for respective stack
         &#34;&#34;&#34;
         state_type = &#34;stack_pop&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
+            &#34;element&#34; : element,
         }
         return State(
             state_type=state_type,
@@ -788,6 +803,7 @@ _id (str) : id of the variable for whom we are generating states</p></div>
         &#34;&#34;&#34;
         state_type = &#34;stack_top&#34;
         state_def = {
+            &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
         }
@@ -831,6 +847,7 @@ created.</p>
     &#34;&#34;&#34;
     state_type = &#34;stack_declare&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : []
     }
@@ -842,7 +859,7 @@ created.</p>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.stack.StackState.stack_pop"><code class="name flex">
-<span>def <span class="ident">stack_pop</span></span>(<span>self, body, comments='')</span>
+<span>def <span class="ident">stack_pop</span></span>(<span>self, body, element, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>stack_pop</code> state when an element is popped from
@@ -854,6 +871,7 @@ stack.</p>
 <dt><strong><code>comments</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>Comments for descriptive purpose. Defaults to "".</dd>
 </dl>
+<p>element : element that was popped from the stack.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>State</code></dt>
@@ -863,21 +881,24 @@ stack.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def stack_pop(self,body,comments=&#34;&#34;):
+<pre><code class="python">def stack_pop(self,body,element,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `stack_pop` state when an element is popped from
     stack.
 
     Args:
         body (list): contents of stack
         comments (str, optional): Comments for descriptive purpose. Defaults to &#34;&#34;.
+        element : element that was popped from the stack.
 
     Returns:
         State: Returns the `stack_pop` state for respective stack
     &#34;&#34;&#34;
     state_type = &#34;stack_pop&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
+        &#34;element&#34; : element,
     }
     return State(
         state_type=state_type,
@@ -921,6 +942,7 @@ stack.</p>
     &#34;&#34;&#34;
     state_type = &#34;stack_push&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
         &#34;element&#34; : element
@@ -965,6 +987,7 @@ stack.</p>
     &#34;&#34;&#34;
     state_type = &#34;stack_top&#34;
     state_def = {
+        &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
     }

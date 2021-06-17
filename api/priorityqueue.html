@@ -112,13 +112,14 @@ class PriorityQueueState():
             comments=comments
         )
 
-    def priorityqueue_poll(self,body,comments=&#34;&#34;):
+    def priorityqueue_poll(self,body,element,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is popped from
         priority queue.
 
         Args:
             body: The contents of the PriorityQueue that are to be sent along with the state
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+            element : the element that was polled from the priorityqueue.
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
@@ -128,6 +129,7 @@ class PriorityQueueState():
             &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
+            &#34;element&#34; : element,
         }
         return State(
             state_type=state_type,
@@ -265,7 +267,7 @@ class PriorityQueue(ARgorithmStructure):
         if self.empty():
             raise ARgorithmError(&#39;queue is empty&#39;)
         item = heapq.heappop(self.body)
-        state = self.state_generator.priorityqueue_poll(self.body,comments)
+        state = self.state_generator.priorityqueue_poll(body=self.body,element=item,comments=comments)
         self.algo.add_state(state)
         return item
 
@@ -459,7 +461,7 @@ reality visualizations.</p>
         if self.empty():
             raise ARgorithmError(&#39;queue is empty&#39;)
         item = heapq.heappop(self.body)
-        state = self.state_generator.priorityqueue_poll(self.body,comments)
+        state = self.state_generator.priorityqueue_poll(body=self.body,element=item,comments=comments)
         self.algo.add_state(state)
         return item
 
@@ -716,7 +718,7 @@ PriorityQueue([3, 4, 5])
     if self.empty():
         raise ARgorithmError(&#39;queue is empty&#39;)
     item = heapq.heappop(self.body)
-    state = self.state_generator.priorityqueue_poll(self.body,comments)
+    state = self.state_generator.priorityqueue_poll(body=self.body,element=item,comments=comments)
     self.algo.add_state(state)
     return item</code></pre>
 </details>
@@ -816,13 +818,14 @@ _id (str) : id of the variable for whom we are generating states</p></div>
             comments=comments
         )
 
-    def priorityqueue_poll(self,body,comments=&#34;&#34;):
+    def priorityqueue_poll(self,body,element,comments=&#34;&#34;):
         &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is popped from
         priority queue.
 
         Args:
             body: The contents of the PriorityQueue that are to be sent along with the state
             comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+            element : the element that was polled from the priorityqueue.
 
         Returns:
             ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
@@ -832,6 +835,7 @@ _id (str) : id of the variable for whom we are generating states</p></div>
             &#34;id&#34; : self._id,
             &#34;variable_name&#34; : self.name,
             &#34;body&#34; : list(body),
+            &#34;element&#34; : element,
         }
         return State(
             state_type=state_type,
@@ -1007,7 +1011,7 @@ queue is accessed.</p>
 </details>
 </dd>
 <dt id="ARgorithmToolkit.priorityqueue.PriorityQueueState.priorityqueue_poll"><code class="name flex">
-<span>def <span class="ident">priorityqueue_poll</span></span>(<span>self, body, comments='')</span>
+<span>def <span class="ident">priorityqueue_poll</span></span>(<span>self, body, element, comments='')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates the <code>priorityqueue_offer</code> when an element is popped from
@@ -1019,6 +1023,7 @@ priority queue.</p>
 <dt><strong><code>comments</code></strong> :&ensp;<code>optional</code></dt>
 <dd>The comments that are supposed to rendered with the state for descriptive purpose. Defaults to "".</dd>
 </dl>
+<p>element : the element that was polled from the priorityqueue.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code><a title="ARgorithmToolkit.utils.State" href="utils.html#ARgorithmToolkit.utils.State">State</a></code></dt>
@@ -1028,13 +1033,14 @@ priority queue.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def priorityqueue_poll(self,body,comments=&#34;&#34;):
+<pre><code class="python">def priorityqueue_poll(self,body,element,comments=&#34;&#34;):
     &#34;&#34;&#34;Generates the `priorityqueue_offer` when an element is popped from
     priority queue.
 
     Args:
         body: The contents of the PriorityQueue that are to be sent along with the state
         comments (optional): The comments that are supposed to rendered with the state for descriptive purpose. Defaults to &#34;&#34;.
+        element : the element that was polled from the priorityqueue.
 
     Returns:
         ARgorithmToolkit.utils.State: returns the ``priorityqueue_poll`` state for the respective PriorityQueue mentioned
@@ -1044,6 +1050,7 @@ priority queue.</p>
         &#34;id&#34; : self._id,
         &#34;variable_name&#34; : self.name,
         &#34;body&#34; : list(body),
+        &#34;element&#34; : element,
     }
     return State(
         state_type=state_type,
