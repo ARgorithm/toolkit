@@ -20,3 +20,5 @@ $ pip install ARgorithmToolkit
 **See Mobile application** : [Unity-App](https://github.com/ARgorithm/Unity-App)
 
 **Setup Server** : [FastAPI based REST API](https://github.com/ARgorithm/Server)
+
+**Join our discord Server** : [![Discord Server](https://img.shields.io/discord/854962642790383648.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/W7QPh35snP)
