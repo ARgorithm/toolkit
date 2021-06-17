@@ -91,7 +91,3 @@ ENV/
 
 # Alan's test file
 DevTest.ipynb
-
-# testdocs
-testdocs/*
-docs/docs/api/*

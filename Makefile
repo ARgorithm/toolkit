@@ -13,6 +13,10 @@ lint:
 test:
 	pytest tests
 
+server:
+	docker build . -t argorithm-server:local
+	docker run --rm -p 80:80 argorithm-server:local
+
 verify:
 	python schema.py
 

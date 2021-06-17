@@ -16,7 +16,7 @@ setuptools.setup(
     url="https://github.com/ARgorithm",
     packages=setuptools.find_packages(),
     classifiers=[
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License",
         'Programming Language :: Python :: 3',
     ],
     python_requires='>=3.6',

@@ -32,6 +32,7 @@ nav:
   - Fibonacci: tutorials/fibonacci.md
 - API Documentation: api/index.html
 - Server Docs: https://argorithm.github.io/Server/
+- Contributing: contributing.md
 - Releases: CHANGELOG.md
 - Need help?: help.md
 markdown_extensions:
