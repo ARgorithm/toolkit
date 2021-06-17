@@ -102,6 +102,15 @@ user@os :toolkit$ cd docs/
 user@os :toolkit/docs$ make serve
 ```
 
+**Writing designs**
+
+Writing designs forms a critical part of our application thus please use the schema provided when writing the `.design.yml` file.
+Create an issue for feature request where you suggest an design and get involved with maintainers on the discord server.
+
+**Writing examples**
+
+The examples in the `examples/` directory are for users to understand how ARgorithms can be created. If adding more examples, please ensure the code is readable and visualises some popular algorithm for convenience.
+
 ## Creating Issues
 
 Issues are divided into 3 types for simplicity

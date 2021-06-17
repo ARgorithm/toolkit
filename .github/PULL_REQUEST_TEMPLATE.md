@@ -1,4 +1,4 @@
-**Pull requests that do not have issues linked will not be accepted**
+**Pull requests that do not have issues linked will not be accepted unless changes are made in documentation or examples**
 
 ### All Submissions:
 
