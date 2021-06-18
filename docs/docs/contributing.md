@@ -131,9 +131,9 @@ Explain the problem and include additional details to help maintainers reproduce
 - **Provide specific examples to demonstrate the steps**. Include links to files or GitHub projects, or copy/pasteable snippets,  which you use in those examples. If you're providing snippets in the  issue, use [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
 - **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
 - **Explain which behavior you expected to see instead and why.**
-- **Include screenshots and animated GIFs** which show  you following the described steps and clearly demonstrate the problem.  If you use the keyboard while following the steps, **record the GIF with the [Keybinding Resolver](https://github.com/atom/keybinding-resolver) shown**. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
+- **Include screenshots and animated GIFs** which show  you following the described steps and clearly demonstrate the problem. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
 - **If you're reporting that ARgorithm crashed**, include a crash report with a stack trace.
-- **If the problem is related to performance or memory**, include a [CPU profile capture](https://flight-manual.atom.io/hacking-atom/sections/debugging/#diagnose-runtime-performance) with your report.
+- **If the problem is related to performance or memory**, include a CPU profile capture with your report.
 - **If the problem wasn't triggered by a specific action**, describe what you were doing before the problem happened and share more information using the guidelines below.
 
 Provide more context by answering these questions:
@@ -166,7 +166,7 @@ Before creating enhancement suggestions, please check for [similar already exist
 
 Question issues are so that users to ask how to use different features of ARgorithm toolkit
 
-Before creating question issues check for [existing questions](is:issue label:"question" ). Keep the following in mind when creating question issues:
+Before creating question issues check for [existing questions](https://github.com/ARgorithm/toolkit/issues?q=is%3Aissue+label%3Aquestion). Keep the following in mind when creating question issues:
 
 - **Use the question template**
 - **Use a clear and descriptive title** for the issue to identify the question
@@ -188,7 +188,7 @@ These extra tags can help maintainers and contributors to better resolve issues
 
 ## Creating Pull requests
 
-All pull requests should be linked to an issue pertaining to a bug or a feature enhancement, This is important as it prevents duplication of work. Early contributors can find issues to work on that have the [good first issue](https://github.com/ARgorithm/toolkit/issues?q=is%3Aissue+label%3A%22good+first+issue%22+) tag.
+All pull requests should be linked to an issue pertaining to a bug or a feature enhancement, This is important as it prevents duplication of work. Early contributors can find issues to work on that have the [good first issue](https://github.com/ARgorithm/toolkit/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen) tag.
 
 We request you to use the [Pull request template](https://github.com/ARgorithm/toolkit/blob/master/.github/PULL_REQUEST_TEMPLATE.md) to
 
