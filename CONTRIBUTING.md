@@ -1,1 +1,1 @@
-Please read the [Contributing guidelines]() in the documentation site.
+Please read the [Contributing guidelines](https://argorithm.github.io/toolkit/contributing/) in the documentation site.
