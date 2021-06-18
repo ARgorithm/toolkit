@@ -3,7 +3,7 @@
 ### All Submissions:
 
 - [ ] Have you followed the guidelines in our Contributing document?
-- [ ] Have you checked to ensure there aren't other open [Pull Requests](https://github.com/stevemao/github-issue-templates/pulls) for the same update/change?
+- [ ] Have you checked to ensure there aren't other open [Pull Requests](https://github.com/ARgorithm/toolkit/pulls) for the same update/change?
 
 ### New Feature Submissions:
 
