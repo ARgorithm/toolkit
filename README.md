@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/ARgorithm/toolkit/documentation/docs/docs/img/LogoForGithub.svg" style="margin: 0 auto;"/>
+> This project is no longer maintained.
 
 ![](https://byob.yarr.is/ARgorithm/toolkit/Schema/master/shields.json)
 ![Tests](https://github.com/ARgorithm/toolkit/workflows/Tests/badge.svg)
